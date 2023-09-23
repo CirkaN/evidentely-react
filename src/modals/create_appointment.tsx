@@ -4,7 +4,7 @@ import { useState } from "react";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
-    saveFunction: Function,
+    saveFunction: (title: string) => void,
     isOpen: boolean
 }
 
@@ -45,7 +45,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button onClick={()=>{props.saveFunction(title)}}>Save</Button>
+                        <Button onClick={() => { props.saveFunction(title) }}>Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>

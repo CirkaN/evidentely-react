@@ -4,7 +4,7 @@ import timeGridWeek from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 import { useEffect, useState } from 'react';
 import CreateAppointmentModal from './modals/create_appointment';
-import axios_instance from './api_defaults';
+import axios_instance from './config/api_defaults';
 
 
 interface AppointmentInterface {
