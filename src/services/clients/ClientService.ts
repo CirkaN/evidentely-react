@@ -55,15 +55,12 @@ type getClientResponse = | GetClientsSuccessResponse | getClientsErrorResponse
 
 export const getClientsRecords = async (): Promise<getClientResponse> => {
     try {
-
-        console.log('ss');
-
-        const response = await axios_instance.get('clients');
-        const data: BackendResponse = await response.data;
+        
+        const response = await axios_instance.get<BackendResponse>('clients');
 
 
         let transformedData: Clients[] = []
-        data.data.forEach((element: Clients) => {
+        response.data.data.forEach((element: Clients) => {
             transformedData.push(
                 {
                     id: element.id,

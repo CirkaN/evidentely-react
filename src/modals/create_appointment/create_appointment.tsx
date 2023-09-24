@@ -19,7 +19,12 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const [remindClient, setRemindClient] = useState(false)
     const [price, setPrice] = useState('0');
     const [searchValue, setSearchValue] = useState("");
-    const [clientList,setClientList] = useState<Clients[]>([]);
+    const [clientList, setClientList] = useState<Clients[]>([]);
+    const [remindDayBefore, setRemindDayBefore] = useState(true);
+    const [remindSameDay, setRemindSameDay] = useState(true);
+    const [remindForUpcoming, setRemindForUpcoming] = useState(false);
+
+    //settigns for upcoming
 
 
     const myFetchFunc = async () => {
@@ -33,11 +38,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     useEffect(() => {
         myFetchFunc();
     }, [])
- 
+
 
     const matches = useMemo(() => {
-        return matchSorter(clientList, searchValue, { keys: ['full_name'] }) 
-    }, [searchValue]);
+        return matchSorter(clientList, searchValue, { keys: ['full_name'] })
+    }, [searchValue, clientList]);
 
     return (<>
         <Dialog.Root open={props.isOpen} >
@@ -64,6 +69,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     </label>
                 </Flex>
                 <div className="wrapper">
+
                     <Ariakit.ComboboxProvider
                         resetValueOnHide
                         setValue={(value) => {
@@ -115,7 +121,37 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
 
                 {remindClient && (
-                    <h1>hello world</h1>
+                    <><Flex direction="column" gap="3">
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Remind day before
+                            </Text>
+                            <Switch
+                                checked={remindDayBefore}
+                                onCheckedChange={setRemindDayBefore} />
+
+                        </label>
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Remind same day
+                            </Text>
+                            <Switch
+                                checked={remindSameDay}
+                                onCheckedChange={setRemindSameDay} />
+
+                        </label>
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                Remind for upcoming
+                            </Text>
+                            <Switch
+                                checked={remindForUpcoming}
+                                onCheckedChange={setRemindForUpcoming} />
+
+                        </label>
+                    </Flex>
+
+                    </>
                 )}
 
                 <Flex direction="column" gap="3">

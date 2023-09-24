@@ -10,7 +10,7 @@ import axios_instance from './config/api_defaults';
 const abortController = new AbortController;
 
 interface AppointmentInterface {
-  title: string | null,
+  title: string | undefined,
   start: string,
   end: string,
   price: number | null,
@@ -22,7 +22,7 @@ interface BackendResponse {
 
 interface dataFromBackend {
   id: string,
-  title: string | null,
+  title: string | undefined,
   start: string,
   end: string,
   price: number | null,
@@ -31,7 +31,7 @@ interface dataFromBackend {
 
 
 const MyCalendar = () => {
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 100, remind_client: false });
 
@@ -147,7 +147,7 @@ const MyCalendar = () => {
     let preparedJson: AppointmentInterface = {
       start: start,
       end: end,
-      title: null,
+      title: "",
       price: null,
       remind_client: false
     };
