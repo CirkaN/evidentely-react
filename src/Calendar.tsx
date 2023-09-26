@@ -5,6 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 import { useEffect, useState } from 'react';
 import CreateAppointmentModal from './modals/create_appointment/create_appointment';
 import axios_instance from './config/api_defaults';
+import { Toaster, toast } from 'react-hot-toast';
 
 const abortController = new AbortController;
 
@@ -106,6 +107,7 @@ const MyCalendar = () => {
 
   return (
     <>
+      <div><Toaster /></div>
       <CreateAppointmentModal cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
       <div>
         <h1>My Calendar</h1>
@@ -117,12 +119,11 @@ const MyCalendar = () => {
           editable={true}
           nowIndicator={true}
           selectable={true}
-          eventContent={renderEventContent}
-          eventDrop={handleDrop}
+          eventContent={(e) => renderEventContent(e.timeText, e.event.title)}
+          eventDrop={(e) => { handleDrop(e.event.startStr, e.event.endStr, e.event.id) }}
           select={(e) => handleSelect(e.startStr, e.endStr)}
           eventClick={(e) => handleClick(e.event.id)}
           eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert)}
-        //  eventsSet={handleEvents} // called after events are initialized/added/changed/removed
         />
       </div>
     </>
@@ -137,6 +138,7 @@ const MyCalendar = () => {
   }
 
   function handleClick(id: string) {
+    //todo open edit modal
     console.log('ovo klikcem' + id);
   }
 
@@ -155,17 +157,19 @@ const MyCalendar = () => {
     setAppointmentData(preparedJson);
   }
 
-  function handleDrop(eventDragged) {
-    if (eventDragged.event.start && eventDragged.event.end) {
-      let json = {
-        start: eventDragged.event._instance.range.start.toJSON(),
-        end: eventDragged.event._instance.range.end.toJSON(),
-        id: eventDragged.event.id
-      }
-
-      console.log(json);
-      //handle update to DB..
+  function handleDrop(start: string, end: string, id: string) {
+    let jsonPrepared = {
+      start: start,
+      end: end,
+      update_via: 'drop',
     }
+
+    axios_instance.put('appointments/' + id, jsonPrepared).then(response => {
+      if (response.status === 200) {
+        toast.success('Event Successfully Updated!')
+      }
+    })
+
   }
 
   function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: { (): void; revert?: any; }) {
@@ -173,23 +177,26 @@ const MyCalendar = () => {
       revert.revert();
     } else {
       let json = {
-        id: id,
-        start:startStr,
+        start: startStr,
+        update_via: 'drop',
         end: endStr,
       }
 
-      //update event
-      console.log(json);
+      axios_instance.put('appointments/' + id, json).then(response => {
+        console.log(response);
+        if (response.status === 200) {
+          toast.success('Event Successfully Updated!')
+        }
+      })
     }
 
   }
 
-  // a custom render function
-  function renderEventContent(eventInfo) {
+  function renderEventContent(timeText: string, title: string) {
     return (
       <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
+        <b>{timeText}</b>
+        <i>{title}</i>
       </>
     )
   }
