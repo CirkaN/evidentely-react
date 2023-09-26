@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import CreateAppointmentModal from './modals/create_appointment/create_appointment';
 import axios_instance from './config/api_defaults';
 
-
 const abortController = new AbortController;
 
 interface AppointmentInterface {
@@ -16,6 +15,7 @@ interface AppointmentInterface {
   price: number | null,
   remind_client: boolean
 }
+
 interface BackendResponse {
   data: dataFromBackend[];
 }
