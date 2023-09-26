@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import CreateAppointmentModal from './modals/create_appointment/create_appointment';
 import axios_instance from './config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
-
+import SweetAlert2 from 'react-sweetalert2';
 const abortController = new AbortController;
 
 interface AppointmentInterface {
@@ -35,6 +35,7 @@ const MyCalendar = () => {
   const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 100, remind_client: false });
+  const [swalProps, setSwalProps] = useState({});
 
   const setAppointmentData = (data: AppointmentInterface) => {
     setCreateAppointmentData(data);
@@ -71,6 +72,7 @@ const MyCalendar = () => {
 
   }
   const updateAppointmentData = (title: string) => {
+
     let dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
     dataCopied.title = title;
 
@@ -108,6 +110,7 @@ const MyCalendar = () => {
   return (
     <>
       <div><Toaster /></div>
+      <SweetAlert2 {...swalProps} />
       <CreateAppointmentModal cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
       <div>
         <h1>My Calendar</h1>
@@ -137,8 +140,20 @@ const MyCalendar = () => {
     closeAppointmentCreateModal();
   }
 
+  function setSwalOff() {
+    let dataCopied = JSON.parse(JSON.stringify(swalProps));
+    dataCopied.show = false;
+    setSwalProps(dataCopied);
+  }
+
   function handleClick(id: string) {
     //todo open edit modal
+    setSwalProps({
+      show: true,
+      title: 'Basic Usage',
+      text: 'Hello World',
+      onConfirm: setSwalOff,
+    });
     console.log('ovo klikcem' + id);
   }
 
@@ -167,6 +182,7 @@ const MyCalendar = () => {
     axios_instance.put('appointments/' + id, jsonPrepared).then(response => {
       if (response.status === 200) {
         toast.success('Event Successfully Updated!')
+
       }
     })
 
