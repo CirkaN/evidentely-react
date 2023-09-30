@@ -3,8 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridWeek from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'; // for selectable
 import { useEffect, useState } from 'react';
-import CreateAppointmentModal from './modals/create_appointment/create_appointment';
-import axios_instance from './config/api_defaults';
+import CreateAppointmentModal from '../../modals/create_appointment/create_appointment';
+import axios_instance from '../../config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
 import SweetAlert2 from 'react-sweetalert2';
 const abortController = new AbortController;
