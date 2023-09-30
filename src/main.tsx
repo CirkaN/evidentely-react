@@ -4,11 +4,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import '@radix-ui/themes/styles.css';
 import MyCalendar from './Calendar.tsx';
 import { Theme } from '@radix-ui/themes';
+import Login from './routes/login/login.tsx';
 
 const router = createBrowserRouter([
   {
     path:"/calendar",
     element: <MyCalendar/>
+  },
+  {
+    path:"/login",
+    element: <Login/>
   }
 ]);
 
