@@ -5,6 +5,7 @@ import '@radix-ui/themes/styles.css';
 import MyCalendar from './routes/calendar/Calendar.tsx';
 import { Theme } from '@radix-ui/themes';
 import Login from './routes/login/login.tsx';
+import Clients from './routes/clients/Clients.tsx';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path:"/login",
     element: <Login/>
+  },
+  {
+    path:"/clients",
+    element:<Clients/>
   }
 ]);
 
