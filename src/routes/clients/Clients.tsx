@@ -10,10 +10,12 @@ interface Record {
     email: string
 }
 interface Records {
-    data: Record[]
+    data: Record[];
 }
 const Clients = () => {
-    const [records, setRecords] = useState<Records | []>([]);
+
+    const [records, setRecords] = useState<Records>({ data: [] });
+
     const [Page, setPage] = useState(1);
     const [lastPage, setLastPage] = useState(1);
 
@@ -31,13 +33,13 @@ const Clients = () => {
 
     useEffect(() => {
         axios_instance.get('clients?per_page=1&page=' + Page).then((response) => {
-            setRecords(response.data.data);
+            setRecords(response.data);
             setLastPage(response.data.meta.total);
         })
     }, [Page])
 
 
-    const preparedRecords = records ? records.map((element: Record) => {
+    const preparedRecords= records ? records.data.map((element: Record) => {
 
         return (<tr key={element.id}>
             <td className="p-2 whitespace-nowrap">
@@ -65,7 +67,8 @@ const Clients = () => {
             </td>
         </tr>)
     }) : []
-        ;
+
+
     return (
 
         <section className="antialiased bg-gray-100 text-gray-600 h-screen px-4">
