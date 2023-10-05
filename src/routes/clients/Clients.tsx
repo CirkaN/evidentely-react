@@ -56,7 +56,7 @@ const Clients = () => {
     }
 
     const logChange = (field: string, id: string, value: string) => {
-        
+
         axios_instance.put('clients/' + id, {
             [field]: value
         }).catch(e => {
@@ -113,7 +113,7 @@ const Clients = () => {
             <td className="p-2 whitespace-nowrap">
                 <div className="flex items-center">
                     <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                        <img className="rounded-full" src="https://raw.githubusercontent.com/cruip/vuejs-admin-dashboard-template/main/src/images/user-36-05.jpg" width="40" height="40" alt="Alex Shatov"></img></div>
+                        <img className="rounded-full" src="https://doodleipsum.com/700?i=74943b7fc5a9da2affe8c2d8b8558812" width="30" height="30" alt="Alex Shatov"></img></div>
                     <div className="font-medium text-gray-800">
                         <input type="text"
                             defaultValue={element.name}
