@@ -60,10 +60,11 @@ const Clients = () => {
         axios_instance.put('clients/' + id, {
             [field]: value
         }).catch(e => {
-            console.log(e.response.data.errors);
+            console.log(e.response)
+            toast.error(e.response.data.message)
         })
             .then(response => {
-                toast.success('Client Successfully Updated!')
+                console.log('s');
                 console.log(response);
             })
 
@@ -123,7 +124,13 @@ const Clients = () => {
                 </div>
             </td>
             <td className="p-2 whitespace-nowrap">
-                <div className="text-left">{element.email}</div>
+                <div className="text-left">
+                <input type="text"
+                            defaultValue={element.email}
+                            onKeyDown={(e) => { handleEnter(e,'email',element.id) }}
+                            onBlur={(e) => logChange('email', element.id, e.target.value)} />
+                    
+                </div>
             </td>
             <td className="p-2 whitespace-nowrap">
                 <div className="text-left font-medium">{element.address}</div>
