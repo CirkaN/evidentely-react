@@ -24,7 +24,7 @@ const Login = () => {
                 navigate('/calendar');
             }
         }
-    });
+    },[isUserLogged]);
 
     const form = useFormStore({ defaultValues: { password: "", email: "" } });
     const [formErrors, setFormErrors] = useState([]);
@@ -38,7 +38,8 @@ const Login = () => {
             .then((response: AxiosResponse<BEData> | void) => {
                 if (response && response.status === 200) {
                     const data: BEData = response.data;
-                    localStorage.setItem("auth_key", data.access_token);
+                    localStorage.setItem("auth_token", data.access_token);
+                    navigate('/calendar');
                 }
             });
     }
@@ -56,7 +57,7 @@ const Login = () => {
         <>
             <div className="flex flex-col">
                 <div>
-                    <p className="text-2xl">Welcome Backs!</p>
+                    <p className="text-2xl">Welcome Back!</p>
                     {listItems}
 
                 </div>

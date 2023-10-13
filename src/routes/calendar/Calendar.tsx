@@ -182,7 +182,6 @@ const MyCalendar = () => {
     axios_instance.put('appointments/' + id, jsonPrepared).then(response => {
       if (response.status === 200) {
         toast.success('Event Successfully Updated!')
-
       }
     })
 

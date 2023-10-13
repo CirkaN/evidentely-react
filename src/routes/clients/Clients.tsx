@@ -1,8 +1,9 @@
-import { KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
-import { Edit, Trash2 } from "react-feather";
+import { Eye, Trash2 } from "react-feather";
 import SweetAlert2 from "react-sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface Record {
     id: string,
@@ -15,8 +16,10 @@ interface Record {
 interface Records {
     data: Record[];
 }
-const Clients = () => {
 
+
+const Clients = () => {
+    const navigate = useNavigate();
     const [records, setRecords] = useState<Records>({ data: [] });
 
     const [Page, setPage] = useState(1);
@@ -29,7 +32,7 @@ const Clients = () => {
     const increasePage = () => {
         if (Page < lastPage) {
             setPage(Page + 1);
-        }
+        }1
 
     }
     const decreasePage = () => {
@@ -50,7 +53,7 @@ const Clients = () => {
     }
 
     function setSwalOff() {
-        let dataCopied = JSON.parse(JSON.stringify(swalProps));
+        const dataCopied = JSON.parse(JSON.stringify(swalProps));
         dataCopied.show = false;
         setSwalProps(dataCopied);
     }
@@ -59,13 +62,15 @@ const Clients = () => {
 
         axios_instance.put('clients/' + id, {
             [field]: value
-        }).catch(e => {
-            console.log(e.response)
-            toast.error(e.response.data.message)
         })
+            .catch(e => {
+                //todo make this better
+                toast.error(e.response.data.message)
+            })
             .then(response => {
-                console.log('s');
-                console.log(response);
+                if (response) {
+                    toast.success('Client updated succesfully')
+                }
             })
 
     }
@@ -89,24 +94,26 @@ const Clients = () => {
                 onResolve: setSwalOff
             });
             //proceed to delete record from the database
+        } else {
+            navigate('/clients/' + id);
         }
     }
 
     useEffect(() => {
-        axios_instance.get('clients?per_page=' + perPage + '&page=' + Page).then((response) => {
+        axios_instance.get(`clients?per_page=${perPage}&page=${Page}`).then((response) => {
             setRecords(response.data);
             setLastPage(response.data.meta.last_page);
         })
-    }, [Page])
+    }, [Page, perPage])
 
-    const handleEnter = (e: KeyboardEvent<HTMLInputElement>,field:string,id:string) => {
-      if(e.key === 'Enter'){
-        const input = e.target as HTMLInputElement;
-        if(input){
-            const value = input.value;
-            logChange(field,id,value)
+    const handleEnter = (e: KeyboardEvent<HTMLInputElement>, field: string, id: string) => {
+        if (e.key === 'Enter') {
+            const input = e.target as HTMLInputElement;
+            if (input) {
+                const value = input.value;
+                logChange(field, id, value)
+            }
         }
-      }
     }
     const preparedRecords = records ? records.data.map((element: Record) => {
 
@@ -118,33 +125,49 @@ const Clients = () => {
                     <div className="font-medium text-gray-800">
                         <input type="text"
                             defaultValue={element.name}
-                            onKeyDown={(e) => { handleEnter(e,'name',element.id) }}
-                            onBlur={(e) => logChange('name', element.id, e.target.value)} />
+                            onKeyDown={(e) => { handleEnter(e, 'name', element.id) }}
+                            onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('name', element.id, e.target.value)} />
                     </div>
                 </div>
             </td>
             <td className="p-2 whitespace-nowrap">
                 <div className="text-left">
-                <input type="text"
-                            defaultValue={element.email}
-                            onKeyDown={(e) => { handleEnter(e,'email',element.id) }}
-                            onBlur={(e) => logChange('email', element.id, e.target.value)} />
-                    
+                    <input type="text"
+                        defaultValue={element.email}
+                        onKeyDown={(e) => { handleEnter(e, 'email', element.id) }}
+                        onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('email', element.id, e.target.value)} />
+
                 </div>
             </td>
             <td className="p-2 whitespace-nowrap">
-                <div className="text-left font-medium">{element.address}</div>
+                <div className="text-left font-medium">
+                    <input type="text"
+                        defaultValue={element.address}
+                        onKeyDown={(e) => { handleEnter(e, 'address_1', element.id) }}
+                        onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('address_1', element.id, e.target.value)} />
+                </div>
             </td>
             <td className="p-2 whitespace-nowrap">
-                <div className="text-left text-center">{element.phone}</div>
-            </td>
-            <td className="p-2 whitespace-nowrap">
-                <div className="text-lg text-center">??</div>
+                <div className="text-left text-center">
+                    <input type="text"
+                        defaultValue={element.phone}
+                        onKeyDown={(e) => { handleEnter(e, 'phone', element.id) }}
+                        onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('phone', element.id, e.target.value)} />
+                </div>
             </td>
             <td className="p-2 whitespace-nowrap">
                 <div className="text-lg text-center">
-                    <button onClick={() => { runAction('del', element.id) }}><Trash2 /></button>
-                    <button onClick={() => { runAction('edit', element.id) }}> <Edit /></button>
+
+                    <input type="text"
+                        defaultValue={element.note}
+                        onKeyDown={(e) => { handleEnter(e, 'note', element.id) }}
+                        onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('note', element.id, e.target.value)} />
+                </div>
+            </td>
+            <td className="p-2 whitespace-nowrap">
+                <div className="text-lg text-center">
+                    <button onClick={() => { runAction('show', element.id) }}> <Eye /></button>
+                    <button onClick={() => { runAction('del', element.id) }}><Trash2 color="red" /></button>
                 </div>
             </td>
         </tr>)
@@ -152,7 +175,6 @@ const Clients = () => {
 
 
     return (
-        //run sweetAlert
         <>
             <Toaster />
             <SweetAlert2 {...swalProps} /><section className="antialiased bg-gray-100 text-gray-600 h-screen px-4">
