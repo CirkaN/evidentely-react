@@ -28,38 +28,13 @@ type getClientsErrorResponse = {
 type getClientResponse = | GetClientsSuccessResponse | getClientsErrorResponse
 
 
-// const getClientDetails(id:number) = async (): Promise<getClientResponse> => {
-//     try {
-
-
-//         const response = await axios_instance.get('clients/'+{id});
-//         const data: ClientDTO = await response.data;
-
-//         const transformedData: Client = {
-//             id: parseInt(data.id),
-//             full_name: data.full_name
-//         }
-//         return {
-//             isOk: true,
-//             data: transformedData,
-//             error: null
-//         }
-//     } catch (e) {
-//         return {
-//             isOk: false,
-//             data: null,
-//             error: (e as Error).message
-//         }
-//     }
-// }
-
 export const getClientsRecords = async (): Promise<getClientResponse> => {
     try {
         
         const response = await axios_instance.get<BackendResponse>('clients');
 
 
-        let transformedData: Clients[] = []
+        const transformedData: Clients[] = []
         response.data.data.forEach((element: Clients) => {
             transformedData.push(
                 {
