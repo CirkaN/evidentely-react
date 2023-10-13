@@ -27,7 +27,6 @@ export const useLoggedUser = () => {
                 setLoggedUser(response.data);
             });
         }else{
-            console.log('setam undefined')
             setLoggedUser(undefined);
         }
 
