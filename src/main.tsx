@@ -10,27 +10,33 @@ import Clients from './routes/clients/Clients.tsx';
 import ClientShow from './routes/clients/ClientShow.tsx';
 import ClientAppointments from './routes/clients/show/ClientAppointments.tsx';
 import ClientSettings from './routes/clients/show/ClientSettings.tsx';
+import ClientDetails from './routes/clients/show/ClientDetails.tsx';
 
 const router = createBrowserRouter([
   {
-    path:"/calendar",
-    element: <MyCalendar/>
+    path: "/calendar",
+    element: <MyCalendar />
   },
   {
-    path:"/login",
-    element: <Login/>
+    path: "/login",
+    element: <Login />
   },
   {
-    path:"/clients",
-    element:<Clients/>,
+    path: "/clients",
+    element: <Clients />,
   },
   {
-    path:"/clients/:id",
-    element:<ClientShow/>,
+    path: "/clients/:id",
+    element: <ClientShow />,
     children: [
-      { path: "appointments", element: <ClientAppointments/>},
       {
-        path:"settings",element: <ClientSettings/>
+        path: "appointments", element: <ClientAppointments />
+      },
+      {
+        path: "settings", element: <ClientSettings />
+      },
+      {
+        path: "details", element: <ClientDetails />
       }
     ]
   }
@@ -40,9 +46,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-      <Theme>
+    <Theme>
       <RouterProvider router={router}></RouterProvider>
-      </Theme>
+    </Theme>
 
   </React.StrictMode>,
 )
