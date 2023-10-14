@@ -1,16 +1,18 @@
-import { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import axios_instance from "../config/api_defaults";
+import { useNavigate } from "react-router-dom";
 
 
-export interface DatatableProps<T = any> {
+export interface DatatableProps<T = unknown> {
     table_name: string,
     actions: Action[],
     fields: Field<T>[],
     has_actions: boolean,
     url: string,
+    show_link: string,
 }
 
-interface Action {
+export interface Action {
     type: ActionTypes,
     url: string,
     icon: ReactElement,
@@ -24,7 +26,7 @@ export enum ActionTypes {
 
 export interface Field<T = unknown> {
     name: string,
-    editable_from_table:boolean,
+    editable_from_table: boolean,
     original_name: string,
     has_sort: boolean,
     show: boolean,
@@ -36,6 +38,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     const [perPage] = useState(10);
     const [lastPage, setLastPage] = useState(1);
     const [records, setRecords] = useState({ data: [] });
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios_instance.get(`${props.url}?per_page=${perPage}&page=${Page}`).then((response) => {
@@ -56,77 +59,34 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         }
     }
 
-   
+    const runAction = (action: string, id: string) => {
+        if (action == 'delete') {
 
-    const runAction = (a, b) => {
-        console.log(a + b);
+            // setSwalProps({
+            //     show: true,
+            //     icon: 'error',
+            //     title: 'Please confirm',
+            //     text: 'This action is unreversible and it will delete client with  all records associated with him',
+            //     cancelButtonColor: "green",
+            //     reverseButtons: true,
+            //     showCancelButton: true,
+            //     showConfirmButton: true,
+            //     cancelButtonText: 'Cancel',
+            //     confirmButtonText: "Go for it",
+            //     confirmButtonColor: "red",
+            //     onConfirm: () => { deleteClient(id) },
+            //     onResolve: setSwalOff
+            // });
+            //proceed to delete record from the database
+        }
+        if (action == 'edit') {
+            //do edit thing
+        }
+        if (action == 'show') {
+            navigate(`show${id}`);
+        }
     }
 
-
-    
-
-
-    // const preparedActions = props.fields.map((element: Field) => {
-    //     return (<>
-
-    //         <tr key={element.id}>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="flex items-center">
-    //                     <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-    //                         <img className="rounded-full" src="https://doodleipsum.com/700?i=74943b7fc5a9da2affe8c2d8b8558812" width="30" height="30" alt="Alex Shatov"></img></div>
-    //                     <div className="font-medium text-gray-800">
-    //                         <input type="text"
-    //                             defaultValue={element.name}
-    //                             //   onKeyDown={(e) => { handleEnter(e, 'name', element.id) }}
-    //                             onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('name', element.id, e.target.value)} />
-    //                     </div>
-    //                 </div>
-    //             </td>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="text-left">
-    //                     <input type="text"
-    //                         defaultValue={element.email}
-    //                         //   onKeyDown={(e) => { handleEnter(e, 'email', element.id) }}
-    //                         onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('email', element.id, e.target.value)} />
-
-    //                 </div>
-    //             </td>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="text-left font-medium">
-    //                     <input type="text"
-    //                         defaultValue={element.address}
-    //                         // onKeyDown={(e) => { handleEnter(e, 'address_1', element.id) }}
-    //                         onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('address_1', element.id, e.target.value)} />
-    //                 </div>
-    //             </td>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="text-left text-center">
-    //                     <input type="text"
-    //                         defaultValue={element.phone}
-    //                         //  onKeyDown={(e) => { handleEnter(e, 'phone', element.id) }}
-    //                         onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('phone', element.id, e.target.value)} />
-    //                 </div>
-    //             </td>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="text-lg text-center">
-
-    //                     <input type="text"
-    //                         defaultValue={element.note}
-    //                         //  onKeyDown={(e) => { handleEnter(e, 'note', element.id) }}
-    //                         onInput={(e: ChangeEvent<HTMLInputElement>) => logChange('note', element.id, e.target.value)} />
-    //                 </div>
-    //             </td>
-    //             <td className="p-2 whitespace-nowrap">
-    //                 <div className="text-lg text-center">
-    //                     {props.actions.map((element) => {
-    //                         return (<button onClick={() => { runAction(element.type, 1) }}> {element.icon}</button>);
-    //                     })}
-    //                 </div>
-    //             </td>
-    //         </tr>
-
-    //     </>);
-    // })
 
     const preparedFields = props.fields.map((element: Field) => {
         return (
@@ -149,28 +109,50 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
                         <table className="table-auto w-full">
                             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                                    {preparedFields && preparedFields}
+                                {preparedFields && preparedFields}
 
 
-                                    {props.has_actions &&
-                                        <th className="p-2 whitespace-nowrap">
-                                            <div className="font-semibold text-center">Actions</div>
-                                        </th>}
+                                {props.has_actions &&
+                                    <th className="p-2 whitespace-nowrap">
+                                        <div className="font-semibold text-center">Actions</div>
+                                    </th>}
                             </thead>
 
 
                             <tbody className="text-sm divide-y divide-gray-100">
 
-                                {records.data.map((record)=>{
-                                    return(<tr key={record.id}>
+                                {records.data.map((record) => {
+                                    return (
+                                    <tr key={record.id}>
                                         {props.fields.map((f) => {
                                             if (f.original_name in record) {
-                                                return <td>{f.formatFn ? f.formatFn(record[f.original_name],record) : record[f.original_name]}</td>
+
+                                                return  <td className="p-2 whitespace-nowrap">
+                                                              <div className="text-left">
+                                                                    <input type="text"
+                                                                     defaultValue={record[f.original_name]}
+                                                                     />
+                                                                </div>
+                                                            </td>
+
+
+
+                                              //  return <td>{f.formatFn ? f.formatFn(record[f.original_name], record) : record[f.original_name]}</td>
                                             }
 
                                             throw new Error(`Column [${f.original_name}] is not part of response.`)
+
+                                          
                                         })}
-                                     </tr>)
+                                    {props.has_actions && 
+                                       <td className="p-2 whitespace-nowrap">
+                                       <div className="text-lg text-center">
+                                       {props.actions.map((element) => {
+                                              return (<button onClick={() => { runAction(element.type, record.id) }}> {element.icon}</button>);
+                                          })}
+                                      </div>
+                                  </td>}
+                                    </tr>)
                                 })}
                             </tbody>
 
