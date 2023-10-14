@@ -21,9 +21,9 @@ const ClientDetails = () => {
 
     useEffect(() => {
         if (form) {
-            const stringifiedJson1 = JSON.stringify(client);
-            const stringifiedJson2 = JSON.stringify(form);
-            if (stringifiedJson1 === stringifiedJson2) {
+            const stringifiedClient = JSON.stringify(client);
+            const stringifiedForm = JSON.stringify(form);
+            if (stringifiedClient === stringifiedForm) {
                 return setSomethingChanged(false);
             }
             return setSomethingChanged(true);
@@ -54,6 +54,7 @@ const ClientDetails = () => {
         setSomethingChanged(false);
     }
 
+    
     return (
         <>
             <Toaster />

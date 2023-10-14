@@ -1,4 +1,4 @@
-import { PenTool, Trash } from "react-feather";
+import { Eye, PenTool, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field } from "../../components/datatable";
 
 const Clients = () => {
@@ -8,12 +8,17 @@ const Clients = () => {
         {
             type: ActionTypes.Edit,
             icon: <PenTool color="lightblue"></PenTool>,
-            url: "/edit/"
+            url: "/client/edit/"
         },
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red"></Trash>,
-            url: "/delete/"
+            url: "/client/edit/"
+        },
+        {
+            type: ActionTypes.Show,
+            icon: <Eye color="red"></Eye>,
+            url: "/client/edit/"
         },
     ];
     const fields: Field[] = [
@@ -30,7 +35,8 @@ const Clients = () => {
             original_name: "email",
             has_sort: false,
             show: true,
-        }
+        },
+        
     ]
 
     return (

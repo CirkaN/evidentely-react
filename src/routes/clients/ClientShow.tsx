@@ -12,10 +12,10 @@ interface Client {
     email: string,
     phone: string,
     address: string,
-    settings:ClientSettings,
+    settings: ClientSettings,
 }
 
-export type ContextType = Client | null ;
+export type ContextType = Client | null;
 
 
 const ClientShow = () => {
@@ -23,9 +23,14 @@ const ClientShow = () => {
     const [userDetails, setUserDetails] = useState<Client | null>(null);
     const { id } = useParams();
     useEffect(() => {
-        axios_instance.get(`/clients/${id}`).then(response => {
+        axios_instance.get(`/clients/${id}`)
+        .then(response=>{
             setUserDetails(response.data);
-        })
+        }).catch(e=>{
+            if(e.request.status === 404){
+               navigate("/clients")
+            }
+        });
 
     }, [])
 
@@ -62,8 +67,8 @@ const ClientShow = () => {
                     </div>
 
                     <div className="h-full px-5 py-5">
-                        <div className="h-full bg-white p-5 rounded shadow-md">            
-                            <Outlet context={ userDetails satisfies ContextType} />
+                        <div className="h-full bg-white p-5 rounded shadow-md">
+                            <Outlet context={userDetails satisfies ContextType} />
                         </div>
                     </div>
                 </div>

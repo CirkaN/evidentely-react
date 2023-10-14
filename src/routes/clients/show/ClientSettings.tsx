@@ -28,14 +28,14 @@ const ClientSettings = () => {
     const available_actions = [
         {
             type: ActionTypes.Edit,
-            url: 'somethinf',
+            url: "/client/edit/",
             icon: <Eye />
         }
     ]
 
     return (
         <div>
-            <DataTable url="/clients" has_actions={true} actions={available_actions} fields={available_fields} table_name="SMS History"></DataTable>
+            <DataTable show_link="/clients" url="/clients" has_actions={true} actions={available_actions} fields={available_fields} table_name="SMS History"></DataTable>
         </div>
     )
 }

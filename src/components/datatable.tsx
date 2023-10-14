@@ -59,36 +59,29 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         }
     }
 
-    const runAction = (action: string, id: string) => {
-        if (action == 'delete') {
+    const runAction = (action: Action, id: string, url: string) => {
 
-            // setSwalProps({
-            //     show: true,
-            //     icon: 'error',
-            //     title: 'Please confirm',
-            //     text: 'This action is unreversible and it will delete client with  all records associated with him',
-            //     cancelButtonColor: "green",
-            //     reverseButtons: true,
-            //     showCancelButton: true,
-            //     showConfirmButton: true,
-            //     cancelButtonText: 'Cancel',
-            //     confirmButtonText: "Go for it",
-            //     confirmButtonColor: "red",
-            //     onConfirm: () => { deleteClient(id) },
-            //     onResolve: setSwalOff
-            // });
-            //proceed to delete record from the database
+
+        console.log('we in herer');
+        console.log(action);
+        console.log(url);
+        if (action.type == 'delete') {
+            axios_instance.delete(`/${url}/${id}`).then(response=>{
+                console.log(response);
+            })
+        //delete so methinf
         }
-        if (action == 'edit') {
-            //do edit thing
+        if (action.type == 'edit') {
+            console.log('we in edit');
+            navigate(`${action.url}/${id}`)
         }
-        if (action == 'show') {
-            navigate(`show${id}`);
+        if (action.type == 'show') {
+           //do show redirect
         }
     }
 
 
-    const preparedFields = props.fields.map((element: Field) => {
+    const preparedFields = props.fields.map((element: Field<T>) => {
         return (
             <th className="p-2 whitespace-nowrap">
                 <div className="font-semibold text-left">{element.name}</div>
@@ -121,38 +114,40 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
                             <tbody className="text-sm divide-y divide-gray-100">
 
+
                                 {records.data.map((record) => {
+                                    
                                     return (
-                                    <tr key={record.id}>
-                                        {props.fields.map((f) => {
-                                            if (f.original_name in record) {
+                                        <tr key={record.id}>
+                                            {props.fields.map((f) => {
+                                                if (f.original_name in record) {
 
-                                                return  <td className="p-2 whitespace-nowrap">
-                                                              <div className="text-left">
-                                                                    <input type="text"
-                                                                     defaultValue={record[f.original_name]}
-                                                                     />
-                                                                </div>
-                                                            </td>
+                                                    return <td className="p-2 whitespace-nowrap">
+                                                        <div className="text-left">
+                                                            <input type="text"
+                                                                defaultValue={record[f.original_name]}
+                                                            />
+                                                        </div>
+                                                    </td>
 
 
 
-                                              //  return <td>{f.formatFn ? f.formatFn(record[f.original_name], record) : record[f.original_name]}</td>
-                                            }
+                                                    //  return <td>{f.formatFn ? f.formatFn(record[f.original_name], record) : record[f.original_name]}</td>
+                                                }
 
-                                            throw new Error(`Column [${f.original_name}] is not part of response.`)
+                                                throw new Error(`Column [${f.original_name}] is not part of response.`)
 
-                                          
-                                        })}
-                                    {props.has_actions && 
-                                       <td className="p-2 whitespace-nowrap">
-                                       <div className="text-lg text-center">
-                                       {props.actions.map((element) => {
-                                              return (<button onClick={() => { runAction(element.type, record.id) }}> {element.icon}</button>);
-                                          })}
-                                      </div>
-                                  </td>}
-                                    </tr>)
+
+                                            })}
+                                            {props.has_actions &&
+                                                <td className="p-2 whitespace-nowrap">
+                                                    <div className="text-lg text-center">
+                                                        {props.actions.map((action) => {
+                                                            return (<button onClick={() => { runAction(action, record.id, props.url) }}> {action.icon}</button>);
+                                                        })}
+                                                    </div>
+                                                </td>}
+                                        </tr>)
                                 })}
                             </tbody>
 
