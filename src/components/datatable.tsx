@@ -3,19 +3,25 @@ import axios_instance from "../config/api_defaults";
 import { useNavigate } from "react-router-dom";
 
 
-export interface DatatableProps<T = unknown> {
+interface GenericEntry {
+    id: string,
+    [key: string]: unknown
+}
+
+export interface DatatableProps<T = GenericEntry[]> {
     table_name: string,
-    actions: Action[],
+    actions: Action<T>[],
     fields: Field<T>[],
     has_actions: boolean,
     url: string,
     show_link: string,
 }
 
-export interface Action {
+export interface Action<T> {
     type: ActionTypes,
     url: string,
     icon: ReactElement,
+    fn?: (resource: T) => any,
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export enum ActionTypes {
@@ -37,7 +43,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     const [Page, setPage] = useState(1);
     const [perPage] = useState(10);
     const [lastPage, setLastPage] = useState(1);
-    const [records, setRecords] = useState({ data: [] });
+    const [records, setRecords] = useState <{data:GenericEntry[]}>({ data: [] });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -66,32 +72,30 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         console.log(action);
         console.log(url);
         if (action.type == 'delete') {
-            axios_instance.delete(`/${url}/${id}`).then(response=>{
+            axios_instance.delete(`/${url}/${id}`).then(response => {
                 console.log(response);
             })
-        //delete so methinf
+            //delete so methinf
         }
         if (action.type == 'edit') {
             console.log('we in edit');
             navigate(`${action.url}/${id}`)
         }
         if (action.type == 'show') {
-           //do show redirect
+            //do show redirect
         }
     }
 
 
-    const preparedFields = props.fields.map((element: Field<T>) => {
+    const preparedFields = props.fields.map((element: Field<T>, index) => {
         return (
-            <th className="p-2 whitespace-nowrap">
+            <th key={index} className="p-2 whitespace-nowrap">
                 <div className="font-semibold text-left">{element.name}</div>
             </th>
 
         )
     })
     return (
-
-
         <div className="flex flex-col justify-center h-full">
             <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 <header className="px-5 py-4 border-b border-gray-100">
@@ -102,13 +106,15 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
                         <table className="table-auto w-full">
                             <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                                {preparedFields && preparedFields}
+                                <tr>
+                                    {preparedFields && preparedFields}
 
 
-                                {props.has_actions &&
-                                    <th className="p-2 whitespace-nowrap">
-                                        <div className="font-semibold text-center">Actions</div>
-                                    </th>}
+                                    {props.has_actions &&
+                                        <th className="p-2 whitespace-nowrap">
+                                            <div className="font-semibold text-center">Actions</div>
+                                        </th>}
+                                </tr>
                             </thead>
 
 
@@ -116,16 +122,16 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
 
                                 {records.data.map((record) => {
-                                    
+
                                     return (
                                         <tr key={record.id}>
-                                            {props.fields.map((f) => {
+                                            {props.fields.map((f,index) => {
                                                 if (f.original_name in record) {
 
-                                                    return <td className="p-2 whitespace-nowrap">
+                                                    return <td key={index} className="p-2 whitespace-nowrap">
                                                         <div className="text-left">
                                                             <input type="text"
-                                                                defaultValue={record[f.original_name]}
+                                                                defaultValue={record[f.original_name] as unknown as string}
                                                             />
                                                         </div>
                                                     </td>
@@ -139,11 +145,12 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
 
                                             })}
+                                            
                                             {props.has_actions &&
                                                 <td className="p-2 whitespace-nowrap">
                                                     <div className="text-lg text-center">
-                                                        {props.actions.map((action) => {
-                                                            return (<button onClick={() => { runAction(action, record.id, props.url) }}> {action.icon}</button>);
+                                                        {props.actions.map((action,index) => {
+                                                            return (<button key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
                                                         })}
                                                     </div>
                                                 </td>}

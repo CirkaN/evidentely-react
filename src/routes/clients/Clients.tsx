@@ -1,19 +1,23 @@
 import { Eye, PenTool, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field } from "../../components/datatable";
+import { ClientDTO } from "../../services/clients/ClientService";
+import { useNavigate } from "react-router-dom";
 
 const Clients = () => {
+    const navigate = useNavigate()
 
-
-    const actions: Action[] = [
+    const actions: Action<ClientDTO>[] = [
         {
             type: ActionTypes.Edit,
             icon: <PenTool color="lightblue"></PenTool>,
-            url: "/client/edit/"
+            url: "/client/edit/",
+            fn: (client) => navigate(`/client/edit/${client.id}`),
         },
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red"></Trash>,
-            url: "/client/edit/"
+            url: "/client/edit/3",
+            fn: () => alert("foo")
         },
         {
             type: ActionTypes.Show,
