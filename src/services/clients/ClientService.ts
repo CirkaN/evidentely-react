@@ -1,8 +1,8 @@
 import axios_instance from "../../config/api_defaults";
 
-interface ClientDTO {
+export interface ClientDTO {
     id: number,
-    full_name: string
+    name: string
 }
 
 interface BackendResponse {

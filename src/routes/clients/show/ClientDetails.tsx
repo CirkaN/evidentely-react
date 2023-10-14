@@ -21,29 +21,31 @@ const ClientDetails = () => {
 
     useEffect(() => {
         if (form) {
-            const stringifiedJson1 = JSON.stringify(client);
-            const stringifiedJson2 = JSON.stringify(form);
-            if (stringifiedJson1 === stringifiedJson2) {
+            const stringifiedClient = JSON.stringify(client);
+            const stringifiedForm = JSON.stringify(form);
+            if (stringifiedClient === stringifiedForm) {
                 return setSomethingChanged(false);
             }
             return setSomethingChanged(true);
         }
         return setSomethingChanged(false);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form]);
 
     const saveChanges = () => {
-     
+            
+        //use axios.all for toast.
+        
         axios_instance.put(`/clients/${id}`, form)
-        .catch((e)=>{
-            toast.error(e.response.data.message);
-        })
-        if (form?.settings) {
-            axios_instance.put(`/clients/${id}/settings`, form.settings)
-           .catch((e)=>{
+            .catch((e) => {
                 toast.error(e.response.data.message);
             })
+        if (form?.settings) {
+            axios_instance.put(`/clients/${id}/settings`, form.settings)
+                .catch((e) => {
+                    toast.error(e.response.data.message);
+                })
         }
         setSomethingChanged(false);
     }
@@ -53,6 +55,7 @@ const ClientDetails = () => {
         toast.success('Settings reverted succesfully')
         setSomethingChanged(false);
     }
+
 
     return (
         <>
@@ -71,13 +74,13 @@ const ClientDetails = () => {
                             <label htmlFor="name" className="block text-sm font-medium text-gray-600">Full Name</label>
                             <input type="text" id="name" onChange={(e) => setForm((c) => c && ({ ...c, name: e.target.value }))}
 
-                                defaultValue={form?.name} name="name" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="John Doe" required />
+                                value={form?.name ?? ""} name="name" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="John Doe" required />
                         </div>
 
                         <div className="mb-4">
                             <label htmlFor="address" className="block text-sm font-medium text-gray-600">Address</label>
                             <input id="address"
-                                defaultValue={form?.settings.address}
+                                value={form?.settings.address ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, address: e.target.value } })}
                                 name="address" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123 Main St" />
                         </div>
@@ -85,7 +88,7 @@ const ClientDetails = () => {
                         <div className="mb-4">
                             <label htmlFor="country" className="block text-sm font-medium text-gray-600">Country</label>
                             <select id="country"
-                                defaultValue={form?.settings.country}
+                                value={form?.settings.country ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, country: e.target.value } })}
                                 name="country" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
                                 <option value="" disabled >Select a country</option>
@@ -98,7 +101,7 @@ const ClientDetails = () => {
                         <div className="mb-6">
                             <label htmlFor="phone" className="block text-sm font-medium text-gray-600">Phone Number</label>
                             <input
-                                defaultValue={form?.settings.phone_number}
+                                value={form?.settings.phone_number ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: e.target.value } })}
                                 type="tel" id="phone" name="phone" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123-456-7890" />
                         </div>
@@ -110,7 +113,7 @@ const ClientDetails = () => {
                         <div className="mb-4">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
                             <input
-                                defaultValue={form?.email}
+                                value={form?.email ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, email: e.target.value })}
                                 type="email" id="email" name="email" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="someone@mail.com" required />
                         </div>
@@ -118,7 +121,7 @@ const ClientDetails = () => {
                         <div className="mb-6">
                             <label htmlFor="occupation" className="block text-sm font-medium text-gray-600">Occupation</label>
                             <input
-                                defaultValue={form?.settings.occupation}
+                                value={form?.settings.occupation ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, occupation: e.target.value } })}
 
                                 type="text" id="occupation" name="occupation" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="Mechanic" required />
@@ -137,7 +140,10 @@ const ClientDetails = () => {
 
                             />
                         </div>
-                        {form?.settings.receive_sms &&
+                        {/* &&  => if (nesto = true && nestodrugo = true) */}
+                        {/* false && true => false & true => 0 */}
+
+                        {form?.settings.receive_sms ?
                             <div>
                                 <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
                                     <h1 className="text-md mb-4">Defaults</h1>
@@ -166,7 +172,7 @@ const ClientDetails = () => {
                                     />
                                 </div>
                             </div>
-                        }
+                        : null }
                         <hr />
 
 
@@ -178,7 +184,7 @@ const ClientDetails = () => {
                             />
                         </div>
 
-                        {form?.settings.receive_emails &&
+                        {form?.settings.receive_emails ?
                             <div>
                                 <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
                                     <h1 className="text-md mb-4">Defaults</h1>
@@ -209,7 +215,7 @@ const ClientDetails = () => {
                                     />
                                 </div>
                             </div>
-                        }
+                       :null }
                     </div>
                 </div>
             </form>
