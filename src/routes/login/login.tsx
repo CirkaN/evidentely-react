@@ -24,7 +24,7 @@ const Login = () => {
                 navigate('/calendar');
             }
         }
-    },[isUserLogged]);
+    }, [isUserLogged]);
 
     const form = useFormStore({ defaultValues: { password: "", email: "" } });
     const [formErrors, setFormErrors] = useState([]);
@@ -33,7 +33,6 @@ const Login = () => {
         axios_instance.post('/auth/login', state.values)
             .catch(reason => {
                 setFormErrors(reason.response.data.errors.email);
-                console.log(reason.response.data);
             })
             .then((response: AxiosResponse<BEData> | void) => {
                 if (response && response.status === 200) {
@@ -49,24 +48,23 @@ const Login = () => {
     });
 
     const listItems = formErrors.map((element) => {
-        return (<p className="text-xl">{element}</p>)
+        return (<p className="text-md text-red-500">{element}</p>)
     })
 
     return (
 
         <>
-            <div className="flex flex-col">
-                <div>
-                    <p className="text-2xl">Welcome Back!</p>
-                    {listItems}
+            <div className="min-h-screen flex  flex-col items-center justify-center">
 
-                </div>
-                <div className="w-full max-w-xs">
+                <div className="w-full max-w-xs ">
+
                     <Form
                         store={form}
                         aria-labelledby="add-new-participant"
                         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
                     >
+                        <p className="text-2xl py-2  text-center font-semibold">Welcome back</p>
+                        {listItems}
                         <div className="mb-4">
                             <FormLabel className="block text-gray-700 text-sm font-bold mb-2" name={form.names.email}>Email</FormLabel>
                         </div>

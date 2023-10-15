@@ -11,44 +11,56 @@ import ClientShow from './routes/clients/ClientShow.tsx';
 import ClientAppointments from './routes/clients/show/ClientAppointments.tsx';
 import ClientSettings from './routes/clients/show/ClientSettings.tsx';
 import ClientDetails from './routes/clients/show/ClientDetails.tsx';
+import DefaultPage from './routes/default.tsx';
+import { QueryClient, QueryClientProvider} from 'react-query'
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
-    path: "/calendar",
-    element: <MyCalendar />
+    path: "/",
+    element: <DefaultPage />,
+    children: [
+      {
+        path: "/calendar",
+        element: <MyCalendar />
+      },
+      {
+        path: "/clients",
+        element: <Clients />,
+      },
+      {
+        path: "/clients/:id",
+        element: <ClientShow />,
+        children: [
+          {
+            path: "appointments", element: <ClientAppointments />
+          },
+          {
+            path: "settings", element: <ClientSettings />
+          },
+          {
+            path: "details", element: <ClientDetails />
+          }
+        ]
+      }
+    ]
   },
   {
     path: "/login",
     element: <Login />
   },
-  {
-    path: "/clients",
-    element: <Clients />,
-  },
-  {
-    path: "/clients/:id",
-    element: <ClientShow />,
-    children: [
-      {
-        path: "appointments", element: <ClientAppointments />
-      },
-      {
-        path: "settings", element: <ClientSettings />
-      },
-      {
-        path: "details", element: <ClientDetails />
-      }
-    ]
-  }
+
 ]);
 
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Theme>
-      <RouterProvider router={router}></RouterProvider>
-    </Theme>
-
+    <QueryClientProvider client={queryClient}>
+      <Theme>
+        <RouterProvider router={router}></RouterProvider>
+      </Theme>
+    </QueryClientProvider>
   </React.StrictMode>,
 )
