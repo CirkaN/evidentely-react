@@ -31,7 +31,6 @@ const ClientShow = () => {
                navigate("/clients")
             }
         });
-
     }, [])
 
 
@@ -39,9 +38,6 @@ const ClientShow = () => {
     const navigate = useNavigate();
     return (
         <>
-            <div>
-                <a href=""><img src="https://i.pravatar.cc/300" alt="" className="w-14 rounded-full px-2 py-2 text-end" /></a>
-            </div>
             <div className="flex ">
                 <div className="basis-1/3">
                     <div className="min-h-screen rounded-sm border bg-slate-50">
