@@ -31,6 +31,7 @@ const ClientShow = () => {
                navigate("/clients")
             }
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

@@ -13,7 +13,10 @@ export interface Clients {
     id: number,
     full_name: string
 }
-
+export interface ClientDocumentDTO{
+    id:number,
+    media_url?:string
+}
 export interface ClientSettings{
     email:string,
     phone_number:string,

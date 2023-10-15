@@ -24,6 +24,7 @@ const Login = () => {
                 navigate('/calendar');
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isUserLogged]);
 
     const form = useFormStore({ defaultValues: { password: "", email: "" } });

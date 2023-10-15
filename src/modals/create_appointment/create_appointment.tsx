@@ -28,7 +28,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
 
     const myFetchFunc = async () => {
-        let clientsResponse = await getClientsRecords();
+        const clientsResponse = await getClientsRecords();
         if (clientsResponse.data) {
             setClientList(clientsResponse.data)
             console.log(clientsResponse.data);

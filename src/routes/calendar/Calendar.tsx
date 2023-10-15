@@ -73,7 +73,7 @@ const MyCalendar = () => {
   }
   const updateAppointmentData = (title: string) => {
 
-    let dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
+    const dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
     dataCopied.title = title;
 
     setCreateAppointmentData(dataCopied)
@@ -85,7 +85,7 @@ const MyCalendar = () => {
 
   const sendFormData = (dataCopied: AppointmentInterface) => {
 
-    let myHardcodedData = dataCopied
+    const myHardcodedData = dataCopied
     myHardcodedData.price = 100
     myHardcodedData.remind_client = false;
 
@@ -141,7 +141,7 @@ const MyCalendar = () => {
   }
 
   function setSwalOff() {
-    let dataCopied = JSON.parse(JSON.stringify(swalProps));
+    const dataCopied = JSON.parse(JSON.stringify(swalProps));
     dataCopied.show = false;
     setSwalProps(dataCopied);
   }
@@ -161,7 +161,7 @@ const MyCalendar = () => {
 
     openAppointmentCreateModal();
 
-    let preparedJson: AppointmentInterface = {
+    const preparedJson: AppointmentInterface = {
       start: start,
       end: end,
       title: "",
@@ -173,7 +173,7 @@ const MyCalendar = () => {
   }
 
   function handleDrop(start: string, end: string, id: string) {
-    let jsonPrepared = {
+    const jsonPrepared = {
       start: start,
       end: end,
       update_via: 'drop',
@@ -187,11 +187,11 @@ const MyCalendar = () => {
 
   }
 
-  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: { (): void; revert?: any; }) {
+  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: { (): void; revert?: unknown; }) {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
     } else {
-      let json = {
+      const json = {
         start: startStr,
         update_via: 'drop',
         end: endStr,
