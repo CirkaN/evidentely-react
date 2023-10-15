@@ -1,6 +1,6 @@
 import { ReactElement, useEffect, useState } from "react";
 import axios_instance from "../config/api_defaults";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 
 
 interface GenericEntry {
@@ -13,15 +13,18 @@ export interface DatatableProps<T = GenericEntry[]> {
     actions: Action<T>[],
     fields: Field<T>[],
     has_actions: boolean,
+    table_actions?: TableAction[]
     url: string,
-    show_link: string,
+}
+export interface TableAction {
+    icon: ReactElement,
+    fn?: () => unknown
 }
 
 export interface Action<T> {
     type: ActionTypes,
-    url: string,
     icon: ReactElement,
-    fn?: (resource: T) => any,
+    fn?: (resource: T) => unknown,
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export enum ActionTypes {
@@ -40,52 +43,28 @@ export interface Field<T = unknown> {
 }
 
 const DataTable = <T,>(props: DatatableProps<T>) => {
-    const [Page, setPage] = useState(1);
-    const [perPage] = useState(10);
-    const [lastPage, setLastPage] = useState(1);
-    const [records, setRecords] = useState <{data:GenericEntry[]}>({ data: [] });
-    const navigate = useNavigate();
+    const [builtUrl, setBuiltUrl] = useState<URL>(new URL(`/api/${props.url}`, import.meta.env.VITE_API_URL));
 
-    useEffect(() => {
-        axios_instance.get(`${props.url}?per_page=${perPage}&page=${Page}`).then((response) => {
-            setRecords(response.data);
-            setLastPage(response.data.meta.last_page);
-        })
-    }, [Page, perPage, props.url])
 
-    const increasePage = () => {
-        if (Page < lastPage) {
-            setPage(Page + 1);
+    const { data } = useQuery({
+        queryKey: [props.url, builtUrl.href],
+        queryFn: () => axios_instance.get(builtUrl.href).then(r => r.data),
+    })
+
+    const changePage = (action: 'next' | 'previous') => {
+        const url = new URL(builtUrl);
+        const page = parseInt(url.searchParams.get('page') || "1");
+
+        if (action === 'previous' && page > 1) {
+            url.searchParams.set('page', (page - 1).toString())
         }
 
+        if (action === 'next' && page < data?.meta.last_page) {
+            url.searchParams.set('page', (page + 1).toString())
+        }
+
+        setBuiltUrl(url)
     }
-    const decreasePage = () => {
-        if (Page > 1) {
-            setPage(Page - 1);
-        }
-    }
-
-    const runAction = (action: Action, id: string, url: string) => {
-
-
-        console.log('we in herer');
-        console.log(action);
-        console.log(url);
-        if (action.type == 'delete') {
-            axios_instance.delete(`/${url}/${id}`).then(response => {
-                console.log(response);
-            })
-            //delete so methinf
-        }
-        if (action.type == 'edit') {
-            console.log('we in edit');
-            navigate(`${action.url}/${id}`)
-        }
-        if (action.type == 'show') {
-            //do show redirect
-        }
-    }
-
 
     const preparedFields = props.fields.map((element: Field<T>, index) => {
         return (
@@ -95,11 +74,41 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
         )
     })
+
+    useEffect(() => {
+        const page = builtUrl.searchParams.get('page') || "1";
+
+        if (parseInt(data?.meta.total) < parseInt(page)) {
+            const url = new URL(builtUrl);
+            //todo improvement
+            url.searchParams.set('page', '1');
+
+            setBuiltUrl(url);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data?.meta.total])
+
     return (
-        <div className="flex flex-col justify-center h-full">
+        <div className="flex flex-col justify-center">
             <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+
+
                 <header className="px-5 py-4 border-b border-gray-100">
-                    <h2 className="font-semibold text-gray-800">{props.table_name}</h2>
+
+                    <div className="flex justify-between  bg-slate-50">
+
+                        <div>
+                            <h2 className="font-semibold text-gray-800">{props.table_name}</h2>
+                        </div>
+
+                        {props?.table_actions?.map((el, index) => {
+                            return (
+                                <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
+                            )
+                        })}
+                
+                    </div>
+
                 </header>
                 <div className="p-3">
                     <div className="overflow-x-auto">
@@ -121,11 +130,11 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                             <tbody className="text-sm divide-y divide-gray-100">
 
 
-                                {records.data.map((record) => {
+                                {data?.data.map((record: GenericEntry) => {
 
                                     return (
                                         <tr key={record.id}>
-                                            {props.fields.map((f,index) => {
+                                            {props.fields.map((f, index) => {
                                                 if (f.original_name in record) {
 
                                                     return <td key={index} className="p-2 whitespace-nowrap">
@@ -135,45 +144,35 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                                             />
                                                         </div>
                                                     </td>
-
-
-
                                                     //  return <td>{f.formatFn ? f.formatFn(record[f.original_name], record) : record[f.original_name]}</td>
                                                 }
-
                                                 throw new Error(`Column [${f.original_name}] is not part of response.`)
-
-
                                             })}
-                                            
+
                                             {props.has_actions &&
                                                 <td className="p-2 whitespace-nowrap">
                                                     <div className="text-lg text-center">
-                                                        {props.actions.map((action,index) => {
-                                                            return (<button key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
+                                                        {props.actions.map((action, index) => {
+                                                            return (<button className="p-1" key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
                                                         })}
                                                     </div>
                                                 </td>}
                                         </tr>)
                                 })}
                             </tbody>
-
                         </table>
-
 
                         <div className='flex items-center justify-center'>
                             <div className="flex justify-center items-center space-x-4">
-                                <button onClick={decreasePage} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&lt;</button>
-                                <div className="text-slate-500">{Page} / {lastPage}</div>
-                                <button onClick={increasePage} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&gt;</button>
+                                <button onClick={() => changePage('previous')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&lt;</button>
+                                <div className="text-slate-500">{data?.meta.current_page} / {data?.meta.last_page}</div>
+                                <button onClick={() => changePage('next')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&gt;</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     );
 }
 
