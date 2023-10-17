@@ -16,6 +16,7 @@ const ClientDocuments = () => {
             editable_from_table: false
         },
     ];
+
     const actions: Action<ClientDocumentDTO>[] = [
         {
             type: ActionTypes.Edit,
@@ -31,6 +32,7 @@ const ClientDocuments = () => {
         }
     ];
 
+    
 
     return (
         <div>
