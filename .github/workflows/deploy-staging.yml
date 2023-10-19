@@ -9,21 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
   
-  steps:
-    - name: Checkout the code
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
 
-    - name: SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts 
+      - name: SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts 
 
-    - name: Clone the repo
-      run: |
-        git clone git@github.com:CirkaN/evidentely-react.git
+      - name: Clone the repo
+        run: |
+          git clone git@github.com:CirkaN/evidentely-react.git
 
-    - name: Build
-      run: docker-compose -f .docker/docker-compose.staging.yml up --build
+      - name: Build
+        run: docker-compose -f .docker/docker-compose.staging.yml up --build
