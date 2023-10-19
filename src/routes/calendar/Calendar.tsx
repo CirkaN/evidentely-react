@@ -187,6 +187,8 @@ const MyCalendar = () => {
 
   }
 
+  
+
   function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
