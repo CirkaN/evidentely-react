@@ -7,6 +7,7 @@ import CreateAppointmentModal from '../../modals/create_appointment/create_appoi
 import axios_instance from '../../config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
 import SweetAlert2 from 'react-sweetalert2';
+import { EventChangeArg } from '@fullcalendar/core/index.js';
 const abortController = new AbortController;
 
 interface AppointmentInterface {
@@ -73,7 +74,7 @@ const MyCalendar = () => {
   }
   const updateAppointmentData = (title: string) => {
 
-    let dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
+    const dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
     dataCopied.title = title;
 
     setCreateAppointmentData(dataCopied)
@@ -85,7 +86,7 @@ const MyCalendar = () => {
 
   const sendFormData = (dataCopied: AppointmentInterface) => {
 
-    let myHardcodedData = dataCopied
+    const myHardcodedData = dataCopied
     myHardcodedData.price = 100
     myHardcodedData.remind_client = false;
 
@@ -111,7 +112,7 @@ const MyCalendar = () => {
     <>
       <div><Toaster /></div>
       <SweetAlert2 {...swalProps} />
-      <CreateAppointmentModal cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
+      <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
       <div>
         <h1>My Calendar</h1>
         <FullCalendar
@@ -126,7 +127,7 @@ const MyCalendar = () => {
           eventDrop={(e) => { handleDrop(e.event.startStr, e.event.endStr, e.event.id) }}
           select={(e) => handleSelect(e.startStr, e.endStr)}
           eventClick={(e) => handleClick(e.event.id)}
-          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert)}
+          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert as unknown as EventChangeArg)}
         />
       </div>
     </>
@@ -141,7 +142,7 @@ const MyCalendar = () => {
   }
 
   function setSwalOff() {
-    let dataCopied = JSON.parse(JSON.stringify(swalProps));
+    const dataCopied = JSON.parse(JSON.stringify(swalProps));
     dataCopied.show = false;
     setSwalProps(dataCopied);
   }
@@ -159,9 +160,7 @@ const MyCalendar = () => {
 
   function handleSelect(start: string, end: string) {
 
-    openAppointmentCreateModal();
-
-    let preparedJson: AppointmentInterface = {
+    const preparedJson: AppointmentInterface = {
       start: start,
       end: end,
       title: "",
@@ -170,10 +169,11 @@ const MyCalendar = () => {
     };
 
     setAppointmentData(preparedJson);
+    openAppointmentCreateModal();
   }
 
   function handleDrop(start: string, end: string, id: string) {
-    let jsonPrepared = {
+    const jsonPrepared = {
       start: start,
       end: end,
       update_via: 'drop',
@@ -187,11 +187,11 @@ const MyCalendar = () => {
 
   }
 
-  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: { (): void; revert?: any; }) {
+  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
     } else {
-      let json = {
+      const json = {
         start: startStr,
         update_via: 'drop',
         end: endStr,

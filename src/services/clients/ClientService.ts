@@ -11,9 +11,12 @@ interface BackendResponse {
 
 export interface Clients {
     id: number,
-    full_name: string
+    name: string
 }
-
+export interface ClientDocumentDTO{
+    id:number,
+    media_url?:string
+}
 export interface ClientSettings{
     email:string,
     phone_number:string,
@@ -53,14 +56,12 @@ export const getClientsRecords = async (): Promise<getClientResponse> => {
     try {
         
         const response = await axios_instance.get<BackendResponse>('clients');
-
-
         const transformedData: Clients[] = []
         response.data.data.forEach((element: Clients) => {
             transformedData.push(
                 {
                     id: element.id,
-                    full_name: element.full_name
+                    name: element.name
                 }
 
             )

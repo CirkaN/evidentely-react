@@ -13,6 +13,7 @@ import ClientSettings from './routes/clients/show/ClientSettings.tsx';
 import ClientDetails from './routes/clients/show/ClientDetails.tsx';
 import DefaultPage from './routes/default.tsx';
 import { QueryClient, QueryClientProvider} from 'react-query'
+import ClientDocuments from './routes/clients/show/ClientDocuments.tsx';
 
 const queryClient = new QueryClient()
 
@@ -41,6 +42,9 @@ const router = createBrowserRouter([
           },
           {
             path: "details", element: <ClientDetails />
+          },
+          {
+            path: "documents", element: <ClientDocuments />
           }
         ]
       }

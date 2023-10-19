@@ -90,7 +90,8 @@ const ClientDetails = () => {
                             <select id="country"
                                 value={form?.settings.country ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, country: e.target.value } })}
-                                name="country" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
+                                name="country"
+                                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
                                 <option value="" disabled >Select a country</option>
                                 <option value="rs">Serbia</option>
                                 <option value="ba">Bosnia</option>
@@ -140,8 +141,6 @@ const ClientDetails = () => {
 
                             />
                         </div>
-                        {/* &&  => if (nesto = true && nestodrugo = true) */}
-                        {/* false && true => false & true => 0 */}
 
                         {form?.settings.receive_sms ?
                             <div>

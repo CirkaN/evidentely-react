@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    ports: 
+      - 8080:8080
+    volumes: 
+      - ../:/var/www/html
+      - ./nginx/:/etc/nginx/conf.d
+    depends_on:
+      - npm
+
+  npm:
+    image: node:18-alpine
+    working_dir: /var/www/html
+    volumes:
+      - ../:/var/www/html
+    user: node
+    command: sh -c "npm i && ./node_modules/.bin/vite build"
+
+    # docker-compose -f .docker/docker-compose.staging.yml up --build
+    # ./node_modules/.bin/vite build

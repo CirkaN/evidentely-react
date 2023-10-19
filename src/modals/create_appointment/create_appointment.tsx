@@ -1,38 +1,66 @@
-import { Button, Dialog, Flex, Switch, TextField } from "@radix-ui/themes";
-import { Text } from "@radix-ui/themes";
-import { useMemo, useState, startTransition, useEffect } from "react";
-import "./style.css";
-import { matchSorter } from "match-sorter";
-import * as Ariakit from "@ariakit/react";
-import { Clients, getClientsRecords } from "../../services/clients/ClientService";
-
+import { Button, Dialog, Flex, Switch } from "@radix-ui/themes";
+import { useState, useEffect } from "react";
+import { Clients } from "../../services/clients/ClientService";
+import axios_instance from "../../config/api_defaults";
+import { AppointmentType } from "../../shared/interfaces/appointments.interface";
+import Select, { SingleValue } from 'react-select'
+import { ServiceType } from "../../shared/interfaces/service.interface";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
     saveFunction: (title: string) => void,
-    isOpen: boolean
+    isOpen: boolean,
+    appointment_data: {
+        start: string,
+        end: string
+    }
 }
 
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
-    const [title, setTitle] = useState('')
-    const [remindClient, setRemindClient] = useState(false)
-    const [price, setPrice] = useState('0');
-    const [searchValue, setSearchValue] = useState("");
+    const [form, setForm] = useState<AppointmentType>({
+
+        //client_od
+        user_id: "",
+        service_id: "",
+        title: "",
+        start: props?.appointment_data?.start,
+        end: props?.appointment_data?.end,
+        price: "100",
+        color: '#FFFFF',
+        remind_client: true,
+        remind_settings: {
+            remind_day_before: false,
+            remind_same_day: false,
+            remind_now: false,
+            remind_for_upcoming: false,
+            settings_for_upcoming: {
+                date: "",
+                custom_text_message: "",
+            }
+        },
+        note: "",
+    });
     const [clientList, setClientList] = useState<Clients[]>([]);
-    const [remindDayBefore, setRemindDayBefore] = useState(true);
-    const [remindSameDay, setRemindSameDay] = useState(true);
-    const [remindForUpcoming, setRemindForUpcoming] = useState(false);
-
-    //settigns for upcoming
+    const [serviceList, setServiceList] = useState([]);
 
 
-    const myFetchFunc = async () => {
-        let clientsResponse = await getClientsRecords();
-        if (clientsResponse.data) {
-            setClientList(clientsResponse.data)
-            console.log(clientsResponse.data);
-        }
+    const servicesTransformed = serviceList.map((element: ServiceType) => ({
+        value: element.id,
+        label: element.name
+    }));
+    const clientsTransformed = clientList.map((element) => ({
+        value: element.id,
+        label: element.name
+    }));
+
+    const myFetchFunc = () => {
+        axios_instance.get('/clients').then(response => {
+            setClientList(response.data);
+        })
+        axios_instance.get('/services').then(response => {
+            setServiceList(response.data);
+        })
     }
 
     useEffect(() => {
@@ -40,9 +68,16 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }, [])
 
 
-    const matches = useMemo(() => {
-        return matchSorter(clientList, searchValue, { keys: ['full_name'] })
-    }, [searchValue, clientList]);
+    const setServiceForm = (e: SingleValue<{ value: string; label: string; }>) => {
+        if (e) {
+            setForm((c) => c && { ...c, service_id: e.value })
+            if (!form.title) {
+                setForm((c) => c && { ...c, title: e.label });
+            }
+        }
+    }
+
+
 
     return (<>
         <Dialog.Root open={props.isOpen} >
@@ -56,118 +91,77 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     Create appointment
                 </Dialog.Description>
 
-                <Flex direction="column" gap="3">
-                    <label>
-                        <Text as="div" size="2" mb="1" weight="bold">
-                            Title
-                        </Text>
-                        <TextField.Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Enter event title"
-                        />
-                    </label>
-                </Flex>
-                <div className="wrapper">
+                <div>
+                    <label>Title</label>
+                    <input
+                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                        placeholder="Title"
+                        type="text"
+                        value={form.title}
+                        onChange={(e) => setForm((c) => c && { ...c, title: e.target.value })} />
 
-                    <Ariakit.ComboboxProvider
-                        resetValueOnHide
-                        setValue={(value) => {
-                            startTransition(() => {
-                                setSearchValue(value);
-                            });
-                        }}
-                    >
-                        <Ariakit.SelectProvider defaultValue="">
-                            <Ariakit.SelectLabel>Favorite fruit</Ariakit.SelectLabel>
-                            <Ariakit.Select className="button" />
-                            <Ariakit.SelectPopover gutter={4} sameWidth className="popover">
-                                <div className="combobox-wrapper">
-                                    <Ariakit.Combobox
-                                        autoSelect
-                                        placeholder="Search..."
-                                        className="combobox"
-                                    />
-                                </div>
-                                <Ariakit.ComboboxList>
+                </div>
 
-                                    {matches.map((value) => (
-                                        <Ariakit.SelectItem
-                                            key={value.id}
-                                            value={value.full_name}
-                                            className="select-item"
-                                            render={<Ariakit.ComboboxItem />}
-                                        />
-                                    ))}
-                                </Ariakit.ComboboxList>
-                            </Ariakit.SelectPopover>
-                        </Ariakit.SelectProvider>
-                    </Ariakit.ComboboxProvider>
+                <div>
+                    <label>Service</label>
+                    <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
+                </div>
+
+                <div>
+                    <label>Client</label>
+                    <Select options={clientsTransformed} />
+                </div>
+
+                <div>
+                    <label> Remind Client</label>
+                    <Switch
+                        checked={form.remind_client}
+                        onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
+                    />
                 </div>
 
 
-                <Flex direction="column" gap="3">
-                    <label>
-                        <Text as="div" size="2" mb="1" weight="bold">
-                            Remind Client
-                        </Text>
-                        <Switch
-                            checked={remindClient}
-                            onCheckedChange={setRemindClient}
-                        />
-
-                    </label>
-                </Flex>
-
-
-                {remindClient && (
-                    <><Flex direction="column" gap="3">
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Remind day before
-                            </Text>
+                {form.remind_client && (
+                    <>
+                        <div>
+                            <label> Remind day before</label>
                             <Switch
-                                checked={remindDayBefore}
-                                onCheckedChange={setRemindDayBefore} />
-
-                        </label>
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Remind same day
-                            </Text>
+                                checked={form?.remind_settings?.remind_day_before}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_day_before: checked } })}
+                            />
+                        </div>
+                        <div>
+                            <label>Remind same day</label>
                             <Switch
-                                checked={remindSameDay}
-                                onCheckedChange={setRemindSameDay} />
-
-                        </label>
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Remind for upcoming
-                            </Text>
+                                checked={form?.remind_settings?.remind_same_day}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_same_day: checked } })}
+                            />
+                        </div>
+                        <div>
+                            <label> Remind for upcoming</label>
                             <Switch
-                                checked={remindForUpcoming}
-                                onCheckedChange={setRemindForUpcoming} />
-
-                        </label>
-                    </Flex>
-
+                                checked={form?.remind_settings?.remind_for_upcoming}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_for_upcoming: checked } })}
+                            />
+                        </div>
                     </>
                 )}
+                <div>
+                    <label>Price:</label>
+                    <input
+                        type="number"
+                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                        value={form.price}
+                        onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })} />
 
-                <Flex direction="column" gap="3">
-                    <label>
-                        <Text as="div" size="2" mb="1" weight="bold">
-                            Price
-                        </Text>
-                        <TextField.Input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            placeholder="Enter price"
-                        />
+                </div>
+                <div>
+                    <label>Event Color:</label>
+                    <input type="color"
+                        onChange={(e) => setForm((c) => c && { ...c, color: e.target.value })}
+                        value={form.color} />
+                </div>
 
-                    </label>
-                </Flex>
 
                 <Flex gap="3" mt="4" justify="end">
                     <Dialog.Close>
@@ -176,7 +170,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button onClick={() => { props.saveFunction(title) }}>Save</Button>
+                        <Button onClick={() => { props.saveFunction(form?.title) }}>Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>
