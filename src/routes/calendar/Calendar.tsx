@@ -7,6 +7,7 @@ import CreateAppointmentModal from '../../modals/create_appointment/create_appoi
 import axios_instance from '../../config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
 import SweetAlert2 from 'react-sweetalert2';
+import { EventChangeArg } from '@fullcalendar/core/index.js';
 const abortController = new AbortController;
 
 interface AppointmentInterface {
@@ -111,7 +112,7 @@ const MyCalendar = () => {
     <>
       <div><Toaster /></div>
       <SweetAlert2 {...swalProps} />
-      <CreateAppointmentModal cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
+      <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
       <div>
         <h1>My Calendar</h1>
         <FullCalendar
@@ -126,7 +127,7 @@ const MyCalendar = () => {
           eventDrop={(e) => { handleDrop(e.event.startStr, e.event.endStr, e.event.id) }}
           select={(e) => handleSelect(e.startStr, e.endStr)}
           eventClick={(e) => handleClick(e.event.id)}
-          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert)}
+          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert as unknown as EventChangeArg)}
         />
       </div>
     </>
@@ -159,8 +160,6 @@ const MyCalendar = () => {
 
   function handleSelect(start: string, end: string) {
 
-    openAppointmentCreateModal();
-
     const preparedJson: AppointmentInterface = {
       start: start,
       end: end,
@@ -170,6 +169,7 @@ const MyCalendar = () => {
     };
 
     setAppointmentData(preparedJson);
+    openAppointmentCreateModal();
   }
 
   function handleDrop(start: string, end: string, id: string) {
@@ -187,7 +187,7 @@ const MyCalendar = () => {
 
   }
 
-  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: { (): void; revert?: unknown; }) {
+  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
     } else {
