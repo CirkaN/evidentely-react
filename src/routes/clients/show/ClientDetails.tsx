@@ -82,7 +82,8 @@ const ClientDetails = () => {
                             <input id="address"
                                 value={form?.settings.address ?? ""}
                                 onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, address: e.target.value } })}
-                                name="address" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123 Main St" />
+                                name="address"
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123 Main St" />
                         </div>
 
                         <div className="mb-4">
@@ -138,7 +139,6 @@ const ClientDetails = () => {
                             <Switch
                                 checked={form?.settings.receive_sms}
                                 onCheckedChange={(checked) => setForm((c) => c && ({ ...c, settings: { ...c.settings, receive_sms: checked } }))}
-
                             />
                         </div>
 
