@@ -73,11 +73,13 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             setForm((c) => c && { ...c, service_id: e.value })
             if (!form.title) {
                 setForm((c) => c && { ...c, title: e.label });
+            } else {
+                if (servicesTransformed.some(service => service.label === form.title)) {
+                    setForm((c) => c && { ...c, title: e.label });
+                }
             }
         }
     }
-
-
 
     return (<>
         <Dialog.Root open={props.isOpen} >
