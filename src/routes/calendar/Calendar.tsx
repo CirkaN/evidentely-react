@@ -35,7 +35,7 @@ interface dataFromBackend {
 const MyCalendar = () => {
   const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
-  const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 100, remind_client: false });
+  const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
   const [swalProps, setSwalProps] = useState({});
 
   const setAppointmentData = (data: AppointmentInterface) => {
@@ -64,41 +64,15 @@ const MyCalendar = () => {
   }
 
   const fetchDates = () => {
-
     axios_instance.get('appointments', { signal: abortController.signal })
-
       .then(response => {
         mutateDates(response.data);
       })
-
   }
-  const updateAppointmentData = (title: string) => {
 
-    const dataCopied = JSON.parse(JSON.stringify(createAppointmentData));
-    dataCopied.title = title;
-
-    setCreateAppointmentData(dataCopied)
-    sendFormData(dataCopied);
-
-    closeAppointmentCreateModal();
-
-  };
-
-  const sendFormData = (dataCopied: AppointmentInterface) => {
-
-    const myHardcodedData = dataCopied
-    myHardcodedData.price = 100
-    myHardcodedData.remind_client = false;
-
-    //client_id
-    //todo remind_settings
-
-    console.log(createAppointmentData);
-
-    axios_instance.post('appointments', myHardcodedData)
-      .then(() => {
-        fetchDates();
-      })
+  const reRenderTable = () =>{
+    setIsCreateAppointmentModalOpen(false);
+    fetchDates();
   }
 
   useEffect(() => {
@@ -106,13 +80,14 @@ const MyCalendar = () => {
     return () => {
       abortController.abort;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <div><Toaster /></div>
       <SweetAlert2 {...swalProps} />
-      <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={saveAppointment} isOpen={isCreateAppointmentModalOpen} />
+      <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
       <div>
         <h1>My Calendar</h1>
         <FullCalendar
@@ -132,10 +107,6 @@ const MyCalendar = () => {
       </div>
     </>
   )
-
-  function saveAppointment(title: string) {
-    updateAppointmentData(title);
-  }
 
   function cancelAction() {
     closeAppointmentCreateModal();
@@ -165,9 +136,9 @@ const MyCalendar = () => {
       end: end,
       title: "",
       price: null,
-      remind_client: false
+      remind_client: true
     };
-
+    
     setAppointmentData(preparedJson);
     openAppointmentCreateModal();
   }
@@ -187,7 +158,6 @@ const MyCalendar = () => {
 
   }
 
-  
 
   function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
     if (!confirm("Are you sure you want to update the event?")) {

@@ -8,7 +8,7 @@ import { ServiceType } from "../../shared/interfaces/service.interface";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
-    saveFunction: (title: string) => void,
+    saveFunction: () => void,
     isOpen: boolean,
     appointment_data: {
         start: string,
@@ -24,10 +24,10 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         title: "",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
-        price: "100",
+        price: "",
         color: '#FFFFF',
         remind_client: true,
-        remind_settings: {
+        remind_setting: {
             remind_day_before: false,
             remind_same_day: false,
             remind_now: false,
@@ -39,14 +39,20 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         },
         note: "",
     });
-    const [clientList, setClientList] = useState<Clients[]>([]);
-    const [serviceList, setServiceList] = useState([]);
 
+    useEffect(() => {
+        setForm((c) => c && { ...c, start: props?.appointment_data?.start });
+        setForm((c) => c && { ...c, end: props?.appointment_data?.end });
+    }, [props?.appointment_data?.start, props?.appointment_data?.end]);
+
+    const [clientList, setClientList] = useState<Clients[]>([]);
+    const [serviceList, setServiceList] = useState<ServiceType[]>([]);
 
     const servicesTransformed = serviceList.map((element: ServiceType) => ({
         value: element.id,
         label: element.name
     }));
+
     const clientsTransformed = clientList.map((element) => ({
         value: element.id,
         label: element.name
@@ -65,10 +71,17 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         myFetchFunc();
     }, [])
 
-
     const setServiceForm = (e: SingleValue<{ value: string; label: string; }>) => {
         if (e) {
+            const service = serviceList.filter(service => service.id === e.value)[0];
             setForm((c) => c && { ...c, service_id: e.value })
+            if (!form.price) {
+                setForm((c) => c && { ...c, price: service.price })
+            } else {
+                if (serviceList.some(service => service.price === form.price)) {
+                    setForm((c) => c && { ...c, price: service.price });
+                }
+            }
             if (!form.title) {
                 setForm((c) => c && { ...c, title: e.label });
             } else {
@@ -78,14 +91,22 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             }
         }
     }
+
     const setClientForm = (e: SingleValue<{ value: number; label: string; }>) => {
         if (e) {
             const client = clientList.filter(client => client.id === e.value)[0];
-            setForm((c) => c && { ...c, user_id: e.value.toString() });
-            setForm((c) => c && { ...c, remind_client:client.settings.receive_sms})
-            setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_day_before: client.settings.sms_remind_day_before } })
-            setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_same_day: client.settings.sms_remind_same_day } })
+            setForm((c) => c && { ...c, user_id: client.id.toString() });
+            setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
+            setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
+            setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })
         }
+    }
+
+    const saveAppointment = () => {
+        axios_instance.post('/appointments', form).then((response) => {
+            console.log(response);
+            props?.saveFunction();
+        })
     }
 
     return (<>
@@ -135,15 +156,15 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         <div>
                             <label> Remind day before</label>
                             <Switch
-                                checked={form?.remind_settings?.remind_day_before}
-                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_day_before: checked } })}
+                                checked={form?.remind_setting?.remind_day_before}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: checked } })}
                             />
                         </div>
                         <div>
                             <label>Remind same day</label>
                             <Switch
-                                checked={form?.remind_settings?.remind_same_day}
-                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_same_day: checked } })}
+                                checked={form?.remind_setting?.remind_same_day}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: checked } })}
                             />
                         </div>
                         {/* <div>
@@ -179,7 +200,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button onClick={() => { props.saveFunction(form?.title) }}>Save</Button>
+                        <Button onClick={() => { saveAppointment() }}>Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>

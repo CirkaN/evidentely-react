@@ -8,7 +8,7 @@ interface Appointment {
     remind_client: boolean,
     service_id?: string,
     note?:string
-    remind_settings: AppointmentRemindSettings
+    remind_setting: AppointmentRemindSettings
 }
 
 interface AppointmentRemindSettingsType {
