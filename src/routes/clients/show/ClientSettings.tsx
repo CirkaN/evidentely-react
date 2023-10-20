@@ -35,7 +35,7 @@ const ClientSettings = () => {
 
     return (
         <div>
-            <DataTable show_link="/clients" url="/clients" has_actions={true} actions={available_actions} fields={available_fields} table_name="SMS History"></DataTable>
+            <DataTable url="/clients" has_actions={true} actions={available_actions} fields={available_fields} table_name="SMS History"></DataTable>
         </div>
     )
 }
