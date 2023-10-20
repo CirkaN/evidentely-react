@@ -21,7 +21,7 @@ export interface ClientCreateDTO{
 const CreateClientModal = (props: CreateClientProps) => {
 
     const [form, setForm] = useState<ClientCreateDTO>({
-        name: "nikola",
+        name: "",
         gender: "male",
         email: "",
         settings: {
@@ -33,9 +33,7 @@ const CreateClientModal = (props: CreateClientProps) => {
 
     return (<>
         <Dialog.Root open={props.isOpen} >
-            <Dialog.Trigger>
-                <Button>Create Client</Button>
-            </Dialog.Trigger>
+       
 
             <Dialog.Content style={{ maxWidth: 450 }}>
                 <Dialog.Title>Create Client</Dialog.Title>

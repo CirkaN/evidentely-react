@@ -100,7 +100,6 @@ const Clients = () => {
     }
 
     const saveRecord = (form: ClientCreateDTO) => {
-        console.log(form);
         axios_instance.post('/clients', form).then((response) => {
             console.log(response);
             queryClient.invalidateQueries();
