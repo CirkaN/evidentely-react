@@ -19,8 +19,6 @@ interface CreateAppointmentModalProps {
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const [form, setForm] = useState<AppointmentType>({
-
-        //client_od
         user_id: "",
         service_id: "",
         title: "",
@@ -80,6 +78,15 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             }
         }
     }
+    const setClientForm = (e: SingleValue<{ value: number; label: string; }>) => {
+        if (e) {
+            const client = clientList.filter(client => client.id === e.value)[0];
+            setForm((c) => c && { ...c, user_id: e.value.toString() });
+            setForm((c) => c && { ...c, remind_client:client.settings.receive_sms})
+            setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_day_before: client.settings.sms_remind_day_before } })
+            setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_same_day: client.settings.sms_remind_same_day } })
+        }
+    }
 
     return (<>
         <Dialog.Root open={props.isOpen} >
@@ -111,7 +118,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
                 <div>
                     <label>Client</label>
-                    <Select options={clientsTransformed} />
+                    <Select options={clientsTransformed} onChange={(e) => { setClientForm(e) }} />
                 </div>
 
                 <div>
@@ -139,13 +146,13 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_same_day: checked } })}
                             />
                         </div>
-                        <div>
+                        {/* <div>
                             <label> Remind for upcoming</label>
                             <Switch
                                 checked={form?.remind_settings?.remind_for_upcoming}
                                 onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_for_upcoming: checked } })}
                             />
-                        </div>
+                        </div> */}
                     </>
                 )}
                 <div>
