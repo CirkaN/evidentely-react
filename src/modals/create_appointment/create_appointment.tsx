@@ -5,6 +5,7 @@ import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import Select, { SingleValue } from 'react-select'
 import { ServiceType } from "../../shared/interfaces/service.interface";
+import toast, { Toaster } from "react-hot-toast";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -17,7 +18,27 @@ interface CreateAppointmentModalProps {
 }
 
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
-
+    const blankForm = {
+        user_id: "",
+        service_id: "",
+        title: "",
+        start: props?.appointment_data?.start,
+        end: props?.appointment_data?.end,
+        price: "",
+        color: "#FFFFF",
+        remind_client: true,
+        remind_setting: {
+            remind_day_before: false,
+            remind_same_day: false,
+            remind_now: false,
+            remind_for_upcoming: false,
+            settings_for_upcoming: {
+                date: "",
+                custom_text_message: "",
+            }
+        },
+        note: "",
+    }
     const [form, setForm] = useState<AppointmentType>({
         user_id: "",
         service_id: "",
@@ -104,12 +125,17 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const saveAppointment = () => {
         axios_instance.post('/appointments', form).then((response) => {
-            console.log(response);
-            props?.saveFunction();
+            if(response.status === 200){
+                toast.success('Event succesfully created');
+                setForm(blankForm);
+                props?.saveFunction();
+            }
         })
     }
 
     return (<>
+          <div><Toaster /></div>
+
         <Dialog.Root open={props.isOpen} >
             <Dialog.Trigger>
                 <Button>Create appointment</Button>
