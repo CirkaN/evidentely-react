@@ -125,7 +125,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const saveAppointment = () => {
         axios_instance.post('/appointments', form).then((response) => {
-            if(response.status === 200){
+            if (response.status === 200) {
                 toast.success('Event succesfully created');
                 setForm(blankForm);
                 props?.saveFunction();
@@ -134,13 +134,8 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }
 
     return (<>
-          <div><Toaster /></div>
-
+        <div><Toaster /></div>
         <Dialog.Root open={props.isOpen} >
-            <Dialog.Trigger>
-                <Button>Create appointment</Button>
-            </Dialog.Trigger>
-
             <Dialog.Content style={{ maxWidth: 450 }}>
                 <Dialog.Title>Create Appointment</Dialog.Title>
                 <Dialog.Description size="2" mb="4">

@@ -1,13 +1,13 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridWeek from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'; // for selectable
+import interactionPlugin from '@fullcalendar/interaction';
 import { useEffect, useState } from 'react';
-import CreateAppointmentModal from '../../modals/create_appointment/create_appointment';
+import CreateAppointmentModal from '../../modals/appointments/create_appointment';
 import axios_instance from '../../config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
-import SweetAlert2 from 'react-sweetalert2';
 import { EventChangeArg } from '@fullcalendar/core/index.js';
+import ShowAppointmentModal from '../../modals/appointments/show_appointment';
 const abortController = new AbortController;
 
 interface AppointmentInterface {
@@ -35,8 +35,9 @@ interface dataFromBackend {
 const MyCalendar = () => {
   const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
+  const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
+  const [showAppointmentId, setShowAppointmentId] = useState<string>("");
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
-  const [swalProps, setSwalProps] = useState({});
 
   const setAppointmentData = (data: AppointmentInterface) => {
     setCreateAppointmentData(data);
@@ -51,7 +52,7 @@ const MyCalendar = () => {
   };
 
   const mutateDates = (dataFromBackend: BackendResponse) => {
-
+      console.log(dataFromBackend);
     dataFromBackend.data.map(item => ({
       start: new Date(item.start),
       end: new Date(item.end),
@@ -64,32 +65,37 @@ const MyCalendar = () => {
   }
 
   const fetchDates = () => {
+    console.log('i am being triggered');
     axios_instance.get('appointments', { signal: abortController.signal })
       .then(response => {
         mutateDates(response.data);
       })
   }
 
-  const reRenderTable = () =>{
+  const reRenderTable = () => {
     setIsCreateAppointmentModalOpen(false);
+    setIsShowAppointmentModalOpen(false);
     fetchDates();
   }
 
+  const closeShowModal = ()=>{
+    setIsShowAppointmentModalOpen(false);
+  }
   useEffect(() => {
     fetchDates();
     return () => {
       abortController.abort;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <div><Toaster /></div>
-      <SweetAlert2 {...swalProps} />
+      <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
       <div>
-        <h1>My Calendar</h1>
+        <h1>Calendar</h1>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
           initialView='timeGridWeek'
@@ -108,25 +114,14 @@ const MyCalendar = () => {
     </>
   )
 
+
   function cancelAction() {
     closeAppointmentCreateModal();
   }
 
-  function setSwalOff() {
-    const dataCopied = JSON.parse(JSON.stringify(swalProps));
-    dataCopied.show = false;
-    setSwalProps(dataCopied);
-  }
-
   function handleClick(id: string) {
-    //todo open edit modal
-    setSwalProps({
-      show: true,
-      title: 'Basic Usage',
-      text: 'Hello World',
-      onConfirm: setSwalOff,
-    });
-    console.log('ovo klikcem' + id);
+    setShowAppointmentId(id);
+    setIsShowAppointmentModalOpen(true);
   }
 
   function handleSelect(start: string, end: string) {
@@ -138,7 +133,7 @@ const MyCalendar = () => {
       price: null,
       remind_client: true
     };
-    
+
     setAppointmentData(preparedJson);
     openAppointmentCreateModal();
   }
@@ -158,7 +153,6 @@ const MyCalendar = () => {
 
   }
 
-
   function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
@@ -176,7 +170,6 @@ const MyCalendar = () => {
         }
       })
     }
-
   }
 
   function renderEventContent(timeText: string, title: string) {
