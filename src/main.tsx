@@ -14,6 +14,8 @@ import ClientDetails from './routes/clients/show/ClientDetails.tsx';
 import DefaultPage from './routes/default.tsx';
 import { QueryClient, QueryClientProvider} from 'react-query'
 import ClientDocuments from './routes/clients/show/ClientDocuments.tsx';
+import CompanySettings from './routes/company/settings.tsx';
+import Employees from './routes/company/employees/employees.tsx';
 
 const queryClient = new QueryClient()
 
@@ -29,6 +31,15 @@ const router = createBrowserRouter([
       {
         path: "/clients",
         element: <Clients />,
+      },
+      {
+        path:"/company_settings",
+        element: <CompanySettings/>,
+        children:[
+          {
+            path:"employees", element:<Employees/>
+          }
+        ]
       },
       {
         path: "/clients/:id",
@@ -56,8 +67,6 @@ const router = createBrowserRouter([
   },
 
 ]);
-
-
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

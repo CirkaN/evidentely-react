@@ -13,10 +13,10 @@ const NavBar = () => {
         navigate('/login');
     }
     const navigation = [
-        { name: 'Clients', href: '/clients', current: location.pathname.startsWith("/clients") },
-        { name: 'Appointments', href: '/appointments', current: location.pathname.startsWith("/appointments") },
-        { name: 'Settings', href: '/settings', current: location.pathname === "/settings" },
-        { name: 'Calendar', href: '/calendar', current: location.pathname === "/calendar" },
+        { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
+        { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
+        { name: 'Podesavanja', href: '/company_settings', current: location.pathname === "/company_settings" },
+     
     ]
 
     console.log(location);
