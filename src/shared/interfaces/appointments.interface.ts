@@ -7,6 +7,8 @@ interface Appointment {
     color?:string,
     remind_client: boolean,
     service_id?: string,
+    end_formatted?:string,
+    start_formatted?:string
     note?:string
     remind_setting: AppointmentRemindSettings
 }
