@@ -2,13 +2,13 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridWeek from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CreateAppointmentModal from '../../modals/appointments/create_appointment';
 import axios_instance from '../../config/api_defaults';
 import { Toaster, toast } from 'react-hot-toast';
 import { EventChangeArg } from '@fullcalendar/core/index.js';
 import ShowAppointmentModal from '../../modals/appointments/show_appointment';
-const abortController = new AbortController;
+import { useQuery, useQueryClient } from 'react-query';
 
 interface AppointmentInterface {
   title: string | undefined,
@@ -33,6 +33,16 @@ interface dataFromBackend {
 
 
 const MyCalendar = () => {
+  const queryClient = useQueryClient();
+
+  useQuery({
+    queryKey: [],
+    queryFn: () => {
+      return axios_instance.get('appointments')
+        .then(response => { mutateDates(response.data) })
+    }
+  })
+
   const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
@@ -52,42 +62,26 @@ const MyCalendar = () => {
   };
 
   const mutateDates = (dataFromBackend: BackendResponse) => {
-      console.log(dataFromBackend);
     dataFromBackend.data.map(item => ({
       start: new Date(item.start),
       end: new Date(item.end),
       title: item.title,
       id: item.id
     }));
-
     setDates(dataFromBackend.data);
-
   }
 
-  const fetchDates = () => {
-    console.log('i am being triggered');
-    axios_instance.get('appointments', { signal: abortController.signal })
-      .then(response => {
-        mutateDates(response.data);
-      })
-  }
 
   const reRenderTable = () => {
     setIsCreateAppointmentModalOpen(false);
     setIsShowAppointmentModalOpen(false);
-    fetchDates();
+    queryClient.invalidateQueries();
   }
 
-  const closeShowModal = ()=>{
+  const closeShowModal = () => {
     setIsShowAppointmentModalOpen(false);
   }
-  useEffect(() => {
-    fetchDates();
-    return () => {
-      abortController.abort;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
 
   return (
     <>
@@ -150,7 +144,6 @@ const MyCalendar = () => {
         toast.success('Event Successfully Updated!')
       }
     })
-
   }
 
   function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
@@ -164,7 +157,6 @@ const MyCalendar = () => {
       }
 
       axios_instance.put('appointments/' + id, json).then(response => {
-        console.log(response);
         if (response.status === 200) {
           toast.success('Event Successfully Updated!')
         }

@@ -78,7 +78,11 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     useEffect(() => {
         const page = builtUrl.searchParams.get('page') || "1";
 
-        if (parseInt(data?.meta.total) < parseInt(page)) {
+
+
+
+
+        if (parseInt(data?.meta.total ) < parseInt(page)) {
             const url = new URL(builtUrl);
             //todo improvement
             url.searchParams.set('page', '1');
@@ -86,7 +90,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
             setBuiltUrl(url);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data?.meta.total])
+    }, [data?.meta?.total])
 
     return (
         <div className="flex flex-col justify-center">
@@ -165,7 +169,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                         <div className='flex items-center justify-center'>
                             <div className="flex justify-center items-center space-x-4">
                                 <button onClick={() => changePage('previous')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&lt;</button>
-                                <div className="text-slate-500">{data?.meta.current_page} / {data?.meta.last_page}</div>
+                                <div className="text-slate-500">{data?.meta?.current_page} / {data?.meta?.last_page}</div>
                                 <button onClick={() => changePage('next')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&gt;</button>
                             </div>
                         </div>
