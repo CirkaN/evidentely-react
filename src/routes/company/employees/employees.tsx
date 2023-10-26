@@ -1,4 +1,4 @@
-import { Eye, Plus, Trash } from "react-feather";
+import { Check, Eye, Plus, Trash, X } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -25,24 +25,27 @@ const Employees = () => {
 
     const navigate = useNavigate();
     const url = "employees?per_page=5"
+
     const tableActions: TableAction[] = [
         {
             icon: <Plus></Plus>,
             fn: () => { openEmployeeCreateModal() }
         }
     ]
+
     const actions: Action<EmployeeDTO>[] = [
-        {
-            type: ActionTypes.Show,
-            icon: <Eye color="lightblue"></Eye>,
-            fn: (employee: EmployeeDTO) => navigate(`/employees/${employee.id}/details/`),
-        },
+        // {
+        //     type: ActionTypes.Show,
+        //     icon: <Eye color="lightblue"></Eye>,
+        //     fn: (employee: EmployeeDTO) => navigate(`/employees/${employee.id}/details/`),
+        // },
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red"></Trash>,
             fn: (employee: EmployeeDTO) => { employee.id && raiseDeleteAlert(employee.id) }
         },
     ];
+
     function setSwalOff() {
         const dataCopied = JSON.parse(JSON.stringify(swalProps));
         dataCopied.show = false;
@@ -67,7 +70,7 @@ const Employees = () => {
         });
 
     }
-    const fields: Field[] = [
+    const fields: Field<EmployeeDTO>[] = [
         {
             name: "name",
             editable_from_table: false,
@@ -96,16 +99,23 @@ const Employees = () => {
             has_sort: false,
             show: true,
         },
-        // {
-        //     name: "Ukljucen login",
-        //     editable_from_table: false,
-        //     original_name: "login_enabled",
-        //     has_sort: false,
-        //     show: true,
-        // },
+        {
+            name: "Ukljucen login",
+            editable_from_table: false,
+            original_name: "login_enabled",
+            has_sort: false,
+            show: true,
+            formatFn: (t) => formatLogin(t),
+        },
 
     ]
-
+    const formatLogin = (t: string) => {
+        if (parseInt(t)) {
+            return <Check color="green" />
+        } else {
+            return <X color="red"></X>;
+        }
+    }
     const deleteEmployee = (id: string) => {
         axios_instance.delete(`/employees/${id}`).then(() => {
             toast.success('Employee deleted succesfully');
@@ -121,7 +131,6 @@ const Employees = () => {
     }
 
     const saveRecord = (form: EmployeeDTO) => {
-        //todo see what tf is going on in here
         axios_instance.post('/employees', form).then(() => {
             queryClient.invalidateQueries();
             closeEmployeeCreateModal();
