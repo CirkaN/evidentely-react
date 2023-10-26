@@ -20,9 +20,6 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
         job_description:"",
         login_enabled:false
     });
-    const st = ()=>{
-        alert(1);
-    }
 
     return (<>
         <Dialog.Root open={props.isOpen} >
@@ -117,7 +114,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button type="button" onClick={() => {st() }}>Save</Button>
+                        <Button type="button" onClick={() => {props.saveFunction(form) }}>Save</Button>
                     </Dialog.Close>
                 </Flex>
                 </form>

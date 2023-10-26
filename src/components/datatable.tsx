@@ -77,16 +77,9 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
     useEffect(() => {
         const page = builtUrl.searchParams.get('page') || "1";
-
-
-
-
-
-        if (parseInt(data?.meta.total ) < parseInt(page)) {
+        if (parseInt(data?.meta?.total) < parseInt(page)) {
             const url = new URL(builtUrl);
-            //todo improvement
             url.searchParams.set('page', '1');
-
             setBuiltUrl(url);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +103,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                 <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
                             )
                         })}
-                
+
                     </div>
 
                 </header>
@@ -141,14 +134,21 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                             {props.fields.map((f, index) => {
                                                 if (f.original_name in record) {
 
-                                                    return <td key={index} className="p-2 whitespace-nowrap">
+                                                    if (f.formatFn) {
+                                                        
+                                                        return <td key={index} className="p-2 whitespace-nowrap">
                                                         <div className="text-left">
-                                                            <input type="text"
-                                                                defaultValue={record[f.original_name] as unknown as string}
-                                                            />
+                                                            <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
                                                         </div>
                                                     </td>
-                                                    //  return <td>{f.formatFn ? f.formatFn(record[f.original_name], record) : record[f.original_name]}</td>
+                                                    } else {
+                                                        return <td key={index} className="p-2 whitespace-nowrap">
+                                                            <div className="text-left">
+                                                                <p>{record[f.original_name] as unknown as string}</p>
+                                                            </div>
+                                                        </td>
+                                                    }
+
                                                 }
                                                 throw new Error(`Column [${f.original_name}] is not part of response.`)
                                             })}
