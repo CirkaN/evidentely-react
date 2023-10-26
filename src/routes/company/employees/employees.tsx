@@ -1,6 +1,5 @@
-import { Check, Eye, Plus, Trash, X } from "react-feather";
+import { Check, Plus, Trash, X } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import CreateEmployeeModal from "../../../modals/employees/create_employee_modal";
 import SweetAlert2 from "react-sweetalert2";
@@ -22,8 +21,6 @@ const Employees = () => {
         setisCreateEmployeeModalOpen(false);
     };
 
-
-    const navigate = useNavigate();
     const url = "employees?per_page=5"
 
     const tableActions: TableAction[] = [
