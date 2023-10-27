@@ -6,6 +6,7 @@ import { AppointmentType } from "../../shared/interfaces/appointments.interface"
 import Select, { SingleValue } from 'react-select'
 import { ServiceType } from "../../shared/interfaces/service.interface";
 import toast, { Toaster } from "react-hot-toast";
+import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -21,6 +22,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const blankForm = {
         user_id: "",
         service_id: "",
+        employee_id: "",
         title: "",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
@@ -42,6 +44,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const [form, setForm] = useState<AppointmentType>({
         user_id: "",
         service_id: "",
+        employee_id: "",
         title: "",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
@@ -68,6 +71,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const [clientList, setClientList] = useState<Clients[]>([]);
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
+    const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
 
     const servicesTransformed = serviceList.map((element: ServiceType) => ({
         value: element.id,
@@ -79,12 +83,21 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         label: element.name
     }));
 
+    const employeesTransformed = employeeList.map((element) => ({
+        value: element.id,
+        label: element.name
+    }));
+
+
     const myFetchFunc = () => {
         axios_instance.get('/clients').then(response => {
             setClientList(response.data);
         })
         axios_instance.get('/services').then(response => {
             setServiceList(response.data);
+        })
+        axios_instance.get('/employees').then(response => {
+            setEmployeeList(response.data);
         })
     }
 
@@ -123,6 +136,14 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         }
     }
 
+    const setEmployeeForm = (e: SingleValue<{ value: string; label: string; }>) => {
+        if (e) {
+            setForm((c) => c && { ...c, employee_id: e.value.toString() });
+        }
+    }
+
+
+    
     const saveAppointment = () => {
         axios_instance.post('/appointments', form).then((response) => {
             if (response.status === 200) {
@@ -157,7 +178,12 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     <label>Service</label>
                     <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
                 </div>
+                <div>
+                    <label>Employee</label>
+                    <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
+                </div>
 
+                
                 <div>
                     <label>Client</label>
                     <Select options={clientsTransformed} onChange={(e) => { setClientForm(e) }} />
