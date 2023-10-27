@@ -12,10 +12,15 @@ import ClientAppointments from './routes/clients/show/ClientAppointments.tsx';
 import ClientSettings from './routes/clients/show/ClientSettings.tsx';
 import ClientDetails from './routes/clients/show/ClientDetails.tsx';
 import DefaultPage from './routes/default.tsx';
-import { QueryClient, QueryClientProvider} from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import ClientDocuments from './routes/clients/show/ClientDocuments.tsx';
 import CompanySettings from './routes/company/settings.tsx';
 import Employees from './routes/company/employees/employees.tsx';
+import SmsSettings from './routes/company/sms_settings/sms_settings.tsx';
+import Services from './routes/company/services/services.tsx';
+import ServiceMain from './routes/company/services/service_main.tsx';
+import Products from './routes/company/services/products.tsx';
+import Packages from './routes/company/services/packages.tsx';
 
 const queryClient = new QueryClient()
 
@@ -33,12 +38,29 @@ const router = createBrowserRouter([
         element: <Clients />,
       },
       {
-        path:"/company_settings",
-        element: <CompanySettings/>,
-        children:[
+        path: "/company_settings",
+        element: <CompanySettings />,
+        children: [
           {
-            path:"employees", element:<Employees/>
-          }
+            path: "employees", element: <Employees />
+          },
+          {
+            path: "sms_settings", element: <SmsSettings />
+          },
+          {
+            path: "price_plans", element: <ServiceMain />,
+            children: [
+              {
+                path: "services", element: <Services />,
+              },
+              {
+                path: "products", element: <Products />,
+              },
+              {
+                path: "packages", element: <Packages />,
+              }
+            ]
+          },
         ]
       },
       {

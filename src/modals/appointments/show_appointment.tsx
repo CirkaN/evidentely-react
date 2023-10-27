@@ -26,8 +26,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
     }
     const updateEvent = () => {
-        axios_instance.put(`/appointments/${props.appointmentId}`, appointment).then(response => {
-            console.log(response);
+        axios_instance.put(`/appointments/${props.appointmentId}`, appointment).then(() => {
             props.eventUpdated();
         })
      
