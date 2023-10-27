@@ -1,5 +1,5 @@
 export interface EmployeeDTO {
-    id?:string,
+    id:string,
     name: string,
     email:string,
     gender:string,

@@ -1,6 +1,7 @@
 interface Appointment {
     user_id:string,
     price: string,
+    employee_id?:string,
     title:string,
     start: string,
     end: string,

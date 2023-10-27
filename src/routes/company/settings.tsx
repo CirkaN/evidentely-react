@@ -12,10 +12,10 @@ const CompanySettings = ()=>{
                         <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('employees') }}>[F] Zaposleni</button>
                     </p>
                     <p className="text-center text-gray-700">
-                        <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('details') }}> [F] Sms podesavanja</button>
+                        <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('sms_settings') }}> [F] Sms podesavanja</button>
                     </p>
                     <p className="text-center text-gray-700">
-                        <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('documents') }}>[F] Ponuda</button>
+                        <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('price_plans') }}>[F] Price Plans</button>
                     </p>
                     <p className="text-center text-gray-700">
                         <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('settings') }}>[F] Lista troskova</button>

@@ -16,10 +16,8 @@ const NavBar = () => {
         { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
         { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
         { name: 'Podesavanja', href: '/company_settings', current: location.pathname === "/company_settings" },
-     
     ]
 
-    console.log(location);
     const classNames = (...classes: string[]) => {
         return classes.filter(Boolean).join(' ')
     }
