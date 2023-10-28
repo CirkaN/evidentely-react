@@ -2,9 +2,9 @@ import { Outlet } from "react-router-dom"
 
 const ServiceMain = () => {
     const navigation = [
-        { name: 'Products', href: 'products', current: location.pathname === "/company_settings/price_plans/products" },
-        { name: 'Services', href: 'services', current: location.pathname === "/company_settings/price_plans/services" },
-        { name: 'Packages', href: 'packages', current: location.pathname === "/company_settings/price_plans/packages" },
+        { name: 'Products', href: '/company_settings/price_plans/products', current: location.pathname === "/company_settings/price_plans/products" },
+        { name: 'Services', href: '/company_settings/price_plans/services', current: location.pathname === "/company_settings/price_plans/services" },
+        { name: 'Packages', href: '/company_settings/price_plans/packages', current: location.pathname === "/company_settings/price_plans/packages" },
     ]
 
     const transformedHtml = navigation.map((element) => {

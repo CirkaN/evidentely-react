@@ -13,6 +13,7 @@ interface CreateClientProps {
 const CreateEmployeeModal = (props: CreateClientProps) => {
 
     const [form, setForm] = useState<EmployeeDTO>({
+        id:"",
         name:"",
         email:"",
         gender:"male",
