@@ -57,8 +57,8 @@ const Services = () => {
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: 'Opozovi',
+            confirmButtonText: "Izbrisi",
             confirmButtonColor: "red",
             onConfirm: () => { deleteItem(id) },
             onResolve: setSwalOff
@@ -73,7 +73,7 @@ const Services = () => {
 
     const deleteItem = (id: number) => {
         axios_instance.delete(`/items/${id}`).then(() => {
-            toast.success('uspesno izbrisan produkt');
+            toast.success('Uspesno izbrisan produkt');
             queryClient.invalidateQueries();
         })
     }
