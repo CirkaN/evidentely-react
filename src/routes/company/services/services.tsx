@@ -52,7 +52,7 @@ const Services = () => {
             show: true,
             icon: 'error',
             title: 'Molimo potvrdite',
-            text: 'This action is unreversible and it will delete client with  all records associated with him',
+            text: 'This action is unreversible and it will delete service with  all records associated with this service',
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
