@@ -52,13 +52,13 @@ const Services = () => {
             show: true,
             icon: 'error',
             title: 'Molimo potvrdite',
-            text: 'This action is unreversible and it will delete client with  all records associated with him',
+            text: 'This action is unreversible and it will delete service with  all records associated with this service',
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: 'Opozovi',
+            confirmButtonText: "Izbrisi",
             confirmButtonColor: "red",
             onConfirm: () => { deleteItem(id) },
             onResolve: setSwalOff
@@ -73,7 +73,7 @@ const Services = () => {
 
     const deleteItem = (id: number) => {
         axios_instance.delete(`/items/${id}`).then(() => {
-            toast.success('uspesno izbrisan produkt');
+            toast.success('Uspesno izbrisan produkt');
             queryClient.invalidateQueries();
         })
     }

@@ -26,7 +26,7 @@ export const useLoggedUser = () => {
             axios_instance.post("/auth/me").then((response) => {
                 setLoggedUser(response.data);
             });
-        }else{
+        } else {
             setLoggedUser(undefined);
         }
 
