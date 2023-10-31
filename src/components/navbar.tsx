@@ -8,10 +8,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 const NavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
+
     const logout = ()=>{
         localStorage.removeItem('auth_token')
         navigate('/login');
     }
+
     const navigation = [
         { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
         { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
@@ -71,7 +73,7 @@ const NavBar = () => {
                                 className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                             >
                                 <span className="absolute -inset-1.5" />
-                                <span className="sr-only">View notifications</span>
+                                <span className="sr-only">Notifikacije</span>
                                 <BellIcon className="h-6 w-6" aria-hidden="true" />
                             </button>
 
@@ -104,7 +106,7 @@ const NavBar = () => {
                                                     href="#"
                                                     className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                 >
-                                                    Your Profile
+                                                    Profil
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -121,7 +123,7 @@ const NavBar = () => {
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <button onClick={()=> {logout()}} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm w-full text-start text-gray-700')}>
-                                                       Sign out
+                                                       Odjavi se
                                                 </button>
 
                                             )}
