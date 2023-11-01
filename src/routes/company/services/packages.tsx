@@ -1,7 +1,7 @@
-const Packages = ()=>{
+const Packages = () => {
     return (
         <>
-<p>this is my packages</p>
+            <p>this is my packages</p>
         </>
     )
 }
