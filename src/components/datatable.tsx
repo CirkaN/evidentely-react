@@ -78,7 +78,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     useEffect(() => {
         const page = builtUrl.searchParams.get('page') || "1";
         if (parseInt(data?.meta?.total) < parseInt(page)) {
-            alert(1);
             const url = new URL(builtUrl);
             url.searchParams.set('page', '1');
             setBuiltUrl(url);
