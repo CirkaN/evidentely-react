@@ -1,169 +1,104 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SmsSettingsBox from "../../../components/sms_settings_box";
+import axios_instance from "../../../config/api_defaults";
+import { CompanyDetails } from "../../../shared/interfaces/company.interface";
+import InfoBox, { InfoBoxType } from "../../../components/info-box";
+
+interface SmsTemplate {
+    type: string,
+    text: string,
+    id: string,
+    company_id?: string,
+}
 
 const SmsSettings = () => {
 
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
+
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
 
     const [smsSettings, setSmsSettings] = useState({
-        sms_language: "sr",
-
+        sms_templates: {
+            reservation_confirmed: "",
+            same_day: "",
+            day_before: "",
+            birthday_wish: "",
+            thanks_note: "",
+            employee_reservation_reminder: "",
+            employee_reservation_created: "",
+            employee_reservation_changed: "",
+        }
     })
+    const mutateSmsTemplateData = (data: SmsTemplate[]) => {
+        data.forEach((element) => {
+            setSmsSettings((c) => c && { ...c, sms_templates: { ...c.sms_templates, [element.type]: [element.text] } });
+        })
+    }
+    const fetchData = () => {
+        axios_instance.get('/company/sms_templates').then(response => {
+            mutateSmsTemplateData(response.data);
+        })
+        axios_instance.get('/company/details').then((response) => {
+            const data: CompanyDetails = response.data;
+            if (data.phone_verified_at) {
+                setUserHasMobileVerified(true);
+            }
+        })
+    }
 
+    useEffect(() => {
+        fetchData();
+    }, [])
 
     return (
         <>
-
-            {userHasMobileVerified &&
-
+            {!userHasMobileVerified &&
                 <>
- <div className="px-4">
-                        <p className="text-2xl text-center mb-5">Obavestite klijente o terminima</p>
-                        <div className="flex flex-col md:flex-row">
-                            <div className="mb-5 md:mr-2 w-full md:w-1/2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Potvrda termina
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    Pri kreiranju termina
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 mb-5 md:ml-2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Dan Ranije
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    u 19:00h
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 mb-5 md:ml-2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Istog dana
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    2h pre termina
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
+                    <InfoBox type={InfoBoxType.Warning} headerText="Sms podesavanja" text="Molimo verifikujte vas telefon da bi nastavili sa podesavanjima"></InfoBox>
+                    <div className="flex justify-center">
+                        <div className="w-1/3 text-center">
+                            <label htmlFor="phone_number">Broj telefona</label>
+                            <input type="text" name="phone_number" id="phone_number"
+
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                            />
+                            <div className="pt-2">
+                                <button className="text-md rounded-md bg-slate-300 p-2">Potvrdi</button>
                             </div>
                         </div>
                     </div>
+                </>
+            }
+            {userHasMobileVerified &&
+                <>
+                    <div className="px-4">
+                        <p className="text-2xl text-center mb-5">Obavestite klijente o terminima</p>
+                        <div className="flex flex-col md:flex-row">
+                            <SmsSettingsBox headerText="Potvrda Termina" type="reservation_confirmed" subHeaderText="Pri kreiranju termina" mainText={smsSettings.sms_templates.reservation_confirmed}></SmsSettingsBox>
+                            <SmsSettingsBox headerText="Dan ranije" type="day_before" subHeaderText="u 19:00h" mainText={smsSettings.sms_templates.day_before}></SmsSettingsBox>
+                            <SmsSettingsBox headerText="Istog dana" type="same_day" subHeaderText="2h pre termina" mainText={smsSettings.sms_templates.same_day}></SmsSettingsBox>
+                        </div>
+                    </div>
+
                     <div className="px-4">
                         <p className="text-2xl text-center mb-5">Pokazite klijentima da vam je stalo</p>
                         <div className="flex flex-col md:flex-row">
-                            <div className="mb-5 md:mr-2 w-full md:w-1/2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Zahvalnica
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    2 sata posle termina
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 mb-5 md:ml-2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Rodjendanska cestitka
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    u 10:00 am
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
+                            <SmsSettingsBox headerText="Zahvalnica" type="thanks_note" subHeaderText="2 sata posle termina" mainText={smsSettings.sms_templates.thanks_note}></SmsSettingsBox>
+                            <SmsSettingsBox headerText="Rodjendanska cestitka" type="birthday_wish" subHeaderText="U 10:00am" mainText={smsSettings.sms_templates.birthday_wish}></SmsSettingsBox>
                         </div>
                     </div>
-
 
                     <div className="px-4">
                         <p className="text-2xl text-center mb-5">Podešavanja SMS poruke za zaposlene</p>
                         <div className="flex flex-col md:flex-row">
-                            <div className="mb-5 md:mr-2 w-full md:w-1/2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Potvrda zaposlenom
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    2 sata ranije
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 mb-5 md:ml-2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Potvrda zaposlenom
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    pri zakazivanju
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="w-full md:w-1/2 mb-5 md:ml-2 bg-white p-6 border-2 rounded-lg">
-                                <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
-                                    Potvrda zaposlenom
-                                </h5>
-                                <h5 className="mb-2 text-md text-center font-medium leading-tight text-neutral-800">
-                                    pri promeni termina
-                                </h5>
-                                <p className="mb-4 text-base text-neutral-600">
-                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus blanditiis quisquam animi quibusdam pariatur hic est temporibus, impedit laudantium.
-                                </p>
-                                <div className="flex justify-center">
-                                    <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                                        Izmeni
-                                    </button>
-                                </div>
-                            </div>
+                            <SmsSettingsBox headerText="Potvrda zaposlenom" type="employee_reservation_reminder" subHeaderText="2 sata pre termina" mainText={smsSettings.sms_templates.employee_reservation_reminder}></SmsSettingsBox>
+                            <SmsSettingsBox headerText="Potvrda zaposlenom" type="employee_reservation_created" subHeaderText="pri kreiranju termina" mainText={smsSettings.sms_templates.employee_reservation_created}></SmsSettingsBox>
+                            <SmsSettingsBox headerText="Potvrda zaposlenom" type="employee_reservation_changed" subHeaderText="pri promeni termina" mainText={smsSettings.sms_templates.employee_reservation_changed}></SmsSettingsBox>
                         </div>
                     </div>
                 </>
 
             }
+
         </>
     )
 }
