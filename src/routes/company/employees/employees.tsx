@@ -7,6 +7,7 @@ import axios_instance from "../../../config/api_defaults";
 import { useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../../shared/interfaces/employees.interface";
+import InfoBox, { InfoBoxType } from "../../../components/info-box";
 
 const Employees = () => {
 
@@ -136,8 +137,9 @@ const Employees = () => {
     return (
         <>
             <SweetAlert2 {...swalProps} />
+            <InfoBox type={InfoBoxType.Info} headerText="Zaposleni" text="Upravljaj zaposlenima"></InfoBox>
             <CreateEmployeeModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateEmployeeModalOpen} ></CreateEmployeeModal>
-            <div className="py-12">
+            <div className="py-5">
                 <DataTable table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>
             </div>
         </>
