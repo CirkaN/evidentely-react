@@ -47,9 +47,6 @@ const SmsSettings = () => {
     })
 
     const fetchData = () => {
-        // axios_instance.get('/company/sms_templates').then(response => {
-        //     mutateSmsTemplateData(response.data);
-        // })
         axios_instance.get('/company/details').then((response) => {
             const data: CompanyDetails = response.data;
             if (data.phone_verified_at) {
