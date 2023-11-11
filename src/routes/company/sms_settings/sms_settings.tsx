@@ -5,6 +5,7 @@ import { CompanyDetails } from "../../../shared/interfaces/company.interface";
 import InfoBox, { InfoBoxType } from "../../../components/info-box";
 import { SmsTemplate } from "../../../shared/interfaces/sms_templates.interface";
 import EditSmsSettingsModal from "../../../modals/settings/sms_settings/EditSmsSettings";
+import { useQuery, useQueryClient } from "react-query";
 
 const SmsSettings = () => {
 
@@ -12,7 +13,7 @@ const SmsSettings = () => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editModalType, setEditModalType] = useState("");
     const [editModalText, setEditModalText] = useState("");
-
+    const queryClient = useQueryClient();
     const [smsSettings, setSmsSettings] = useState({
         sms_templates: {
             reservation_confirmed: "",
@@ -30,10 +31,17 @@ const SmsSettings = () => {
             setSmsSettings((c) => c && { ...c, sms_templates: { ...c.sms_templates, [element.type]: [element.text] } });
         })
     }
-    const fetchData = () => {
-        axios_instance.get('/company/sms_templates').then(response => {
+    useQuery({
+        queryKey: [],
+        queryFn: () => axios_instance.get('/company/sms_templates').then(response => {
             mutateSmsTemplateData(response.data);
-        })
+        }),
+    })
+
+    const fetchData = () => {
+        // axios_instance.get('/company/sms_templates').then(response => {
+        //     mutateSmsTemplateData(response.data);
+        // })
         axios_instance.get('/company/details').then((response) => {
             const data: CompanyDetails = response.data;
             if (data.phone_verified_at) {
@@ -44,10 +52,10 @@ const SmsSettings = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const openModal = (text: string, type: string) => {
-        console.log(text[0]);
         setEditModalType(type);
         setEditModalText(text.toString());
         setIsEditModalOpen(true);
@@ -59,8 +67,9 @@ const SmsSettings = () => {
     }
     const updateSmsSettings = (smsTemplate: SmsTemplate) => {
         closeModal();
-        axios_instance.put('/company_details/sms_settings', smsTemplate).then((response) => {
-            console.log(response);
+
+        axios_instance.put('/company/update_sms_templates', smsTemplate).then(() => {
+            queryClient.invalidateQueries();
         })
     }
     return (
