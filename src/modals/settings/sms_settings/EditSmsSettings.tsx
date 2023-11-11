@@ -18,7 +18,7 @@ interface Replacements {
     '#mesec': string,
     '#godina': string,
     '#usluga': string,
-    '#napomena':string,
+    '#napomena': string,
 }
 
 const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
@@ -55,7 +55,7 @@ const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
             '#godina': new Date().getFullYear().toString(),
             "#datum": new Date().toLocaleDateString('en-us', { year: "numeric", month: "numeric", day: "numeric" }),
             '#usluga': "Moja usluga",
-            '#napomena':"Primer napomene",
+            '#napomena': "Primer napomene",
 
         };
         const modifiedString = form.text.replace(/#ime|#napomena|#usluga|#dan|#mesec|#godina|#datum/g, match => replacements[match as keyof Replacements]);
@@ -82,6 +82,7 @@ const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
                                 Poruka:
                             </Text>
                             <TextArea
+                                required={true}
                                 onChange={(e) => { handleOnChange(e.target.value) }}
                                 value={form.text}>
                             </TextArea>

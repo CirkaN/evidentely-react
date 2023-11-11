@@ -6,6 +6,7 @@ import InfoBox, { InfoBoxType } from "../../../components/info-box";
 import { SmsTemplate } from "../../../shared/interfaces/sms_templates.interface";
 import EditSmsSettingsModal from "../../../modals/settings/sms_settings/EditSmsSettings";
 import { useQuery, useQueryClient } from "react-query";
+import toast, { Toaster } from "react-hot-toast";
 
 const SmsSettings = () => {
 
@@ -67,13 +68,18 @@ const SmsSettings = () => {
     }
     const updateSmsSettings = (smsTemplate: SmsTemplate) => {
         closeModal();
-
         axios_instance.put('/company/update_sms_templates', smsTemplate).then(() => {
+            toast.success('Uspesno ste izmenili poruku');
             queryClient.invalidateQueries();
+        }).catch(e => {
+            e.response.data.errors.text.forEach((element: string) => {
+                toast.error(element);
+            });
         })
     }
     return (
         <>
+            <Toaster />
             <EditSmsSettingsModal text={editModalText} saveFunction={(smsTemplate) => { updateSmsSettings(smsTemplate) }} cancelFunction={() => { closeModal() }} isOpen={isEditModalOpen} type={editModalType} ></EditSmsSettingsModal>
             {!userHasMobileVerified &&
                 <>
