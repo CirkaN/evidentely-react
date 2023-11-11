@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import SmsSettingsBox from "../../../components/sms_settings_box";
 import axios_instance from "../../../config/api_defaults";
 import { CompanyDetails } from "../../../shared/interfaces/company.interface";
@@ -8,9 +8,16 @@ import EditSmsSettingsModal from "../../../modals/settings/sms_settings/EditSmsS
 import { useQuery, useQueryClient } from "react-query";
 import toast, { Toaster } from "react-hot-toast";
 
+
 const SmsSettings = () => {
 
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
+    const [phoneVerificationForm, setPhoneVerificationForm] = useState({
+        phone_number: ""
+    });
+    const [wrongCode, setIsWrongCode] = useState(false);
+    const [phoneVerificationInProgress, setPhoneVerificationInProgress] = useState(false);
+    const [codeReceived, setCodeReceived] = useState("");
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editModalType, setEditModalType] = useState("");
     const [editModalText, setEditModalText] = useState("");
@@ -77,25 +84,81 @@ const SmsSettings = () => {
             });
         })
     }
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        attemptVerification()
+    }
+    const handleVerifySubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        verifyCode()
+    }
+
+    const verifyCode = () => {
+        axios_instance.post('/company/attempt_verification', {code:codeReceived}).then(response => {
+            if (response.status === 200) {
+                setUserHasMobileVerified(true);
+            }
+        }).catch(() => {
+            setIsWrongCode(true);
+        })
+    }
+    const attemptVerification = () => {
+        axios_instance.post('/company/verify_phone', phoneVerificationForm).then(response => {
+            if (response.status === 201) {
+                setPhoneVerificationInProgress(true);
+            }
+        })
+    }
     return (
         <>
             <Toaster />
             <EditSmsSettingsModal text={editModalText} saveFunction={(smsTemplate) => { updateSmsSettings(smsTemplate) }} cancelFunction={() => { closeModal() }} isOpen={isEditModalOpen} type={editModalType} ></EditSmsSettingsModal>
             {!userHasMobileVerified &&
                 <>
-                    <InfoBox type={InfoBoxType.Warning} headerText="Sms podesavanja" text="Molimo verifikujte vas telefon da bi nastavili sa podesavanjima"></InfoBox>
-                    <div className="flex justify-center">
-                        <div className="w-1/3 text-center">
-                            <label htmlFor="phone_number">Broj telefona</label>
-                            <input type="text" name="phone_number" id="phone_number"
-
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                            />
-                            <div className="pt-2">
-                                <button className="text-md rounded-md bg-slate-300 p-2">Potvrdi</button>
-                            </div>
-                        </div>
-                    </div>
+                    {!phoneVerificationInProgress &&
+                        <>
+                            <InfoBox type={InfoBoxType.Warning} headerText="Sms podesavanja" text="Molimo verifikujte vas telefon da bi nastavili sa podesavanjima"></InfoBox>
+                            <form onSubmit={handleSubmit}>
+                                <div className="flex justify-center">
+                                    <div className="w-1/3 text-center">
+                                        <label htmlFor="phone_number">Broj telefona:</label>
+                                        <p className="text-sm text-red-600">Molimo unestite telefon u sledecem formatu (+381 63 866 5820) bez razmaka</p>
+                                        <input type="text"
+                                            onChange={(e) => { setPhoneVerificationForm((c) => c && { ...c, phone_number: e.target.value }) }}
+                                            name="phone_number"
+                                            id="phone_number"
+                                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                                        <div className="pt-2">
+                                            <button className="text-md rounded-md bg-slate-300 p-2">Potvrdi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </>
+                    }
+                    {phoneVerificationInProgress &&
+                        <>
+                            <InfoBox type={InfoBoxType.Warning} headerText="Sms podesavanja" text="Molimo unesite kod koji ste dobili na vasem telefonskom uredjaju"></InfoBox>
+                            <form onSubmit={handleVerifySubmit}>
+                                {wrongCode &&
+                                    <p className=" pt-5 text-center text-sm text-red-600">Your code is wrong, please try again!</p>
+                                }
+                                <div className="flex justify-center">
+                                    <div className="w-1/3 text-center">
+                                        <label htmlFor="code">Kod:</label>
+                                        <input type="text"
+                                            onChange={(e) => { setCodeReceived(e.target.value) }}
+                                            name="code"
+                                            id="code"
+                                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                                        <div className="pt-2">
+                                            <button className="text-md rounded-md hover:bg-slate-400 bg-slate-300 p-2">Potvrdi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </>
+                    }
                 </>
             }
             {userHasMobileVerified &&
