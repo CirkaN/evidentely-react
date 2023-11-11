@@ -8,6 +8,7 @@ import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import CreateClientModal, { ClientCreateDTO } from "../../modals/clients/create_client_modal";
+import InfoBox, { InfoBoxType } from "../../components/info-box";
 
 const Clients = () => {
     const navigate = useNavigate()
@@ -99,19 +100,18 @@ const Clients = () => {
     }
 
     const saveRecord = (form: ClientCreateDTO) => {
-        //todo see what tf is going on in here
-        axios_instance.post('/clients', form).then((response) => {
-            console.log(response);
+        axios_instance.post('/clients', form).then(() => {
             queryClient.invalidateQueries();
             closeClientCreateModal();
         })
     }
     return (
         <>
+            <InfoBox type={InfoBoxType.Info} text="U ovom modulu mozete dodavati nove klijente kao i pratiti sve vezano za vase klijente" headerText="Klijenti"></InfoBox>
             <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
             <SweetAlert2 {...swalProps} />
-            <div className="py-12">
-                <DataTable table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Client List" has_actions={true} ></DataTable>
+            <div className="py-5">
+                <DataTable table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
             </div>
         </>
     );

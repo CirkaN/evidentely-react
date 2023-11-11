@@ -1,19 +1,21 @@
 import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import { useState } from "react";
+import InfoBox, { InfoBoxType } from "../../components/info-box";
 
 interface CreateClientProps {
     cancelFunction: () => void,
-    saveFunction: (form:ClientCreateDTO) => void,
+    saveFunction: (form: ClientCreateDTO) => void,
     isOpen: boolean
 }
-export interface ClientCreateDTO{
-    name:string,
-    gender:string,
-    email:string,
-    settings:{
-        note:string,
-        address:string
+export interface ClientCreateDTO {
+    name: string,
+    gender: string,
+    email: string,
+    settings: {
+        note: string,
+        address: string,
+        phone_number?: string
     }
 
 }
@@ -27,24 +29,21 @@ const CreateClientModal = (props: CreateClientProps) => {
         settings: {
             note: "",
             address: "",
+            phone_number: ""
         }
     });
 
 
     return (<>
         <Dialog.Root open={props.isOpen} >
-       
-
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>Create Client</Dialog.Title>
-                <Dialog.Description size="2" mb="4">
-                    Create client
-                </Dialog.Description>
+                <Dialog.Title>Kreiraj klijenta</Dialog.Title>
+                <InfoBox fontSize={'text-sm'} text="Ukoliko ne unesete telefon, sms obavestenja nece biti omogucena" headerText="Vazna napomena" type={InfoBoxType.Warning}></InfoBox>
 
                 <Flex direction="column" gap="3">
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">
-                            Full name
+                            Full name <span className="text-red-600">*</span>
                         </Text>
                         <TextField.Input
                             onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
@@ -55,7 +54,6 @@ const CreateClientModal = (props: CreateClientProps) => {
                 </Flex>
 
                 <Flex direction="column" gap="3">
-
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">
                             Gender
@@ -95,6 +93,17 @@ const CreateClientModal = (props: CreateClientProps) => {
                 <Flex direction="column" gap="3">
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">
+                            Telefon : <span className="text-sm text-red-400">unesti sa pozivnim (+381 61 5960 755)</span>
+                        </Text>
+                        <input
+                                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+
+                        type="number" name="phone_number" onChange={(e) => { setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: e.target.value } }) }} value={form.settings.phone_number} id="" />
+                    </label>
+                </Flex>
+                <Flex direction="column" gap="3">
+                    <label>
+                        <Text as="div" size="2" mb="1" weight="bold">
                             Note
                         </Text>
                         <TextField.Input
@@ -112,7 +121,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button onClick={() => {props.saveFunction(form) }}>Save</Button>
+                        <Button onClick={() => { props.saveFunction(form) }}>Save</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>
