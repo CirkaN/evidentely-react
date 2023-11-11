@@ -32,7 +32,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
-        color: "#FFFFF",
+        color: "#00D14D",
         remind_client: true,
         remind_setting: {
             remind_day_before: false,
@@ -54,7 +54,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
-        color: "#FFFFF",
+        color: "#00D14D",
         remind_client: true,
         remind_setting: {
             remind_day_before: false,
@@ -77,7 +77,6 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const [hasValidationErrors, setHasValidationErrors] = useState(false);
 
     const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(
-
         {
             label: "Select Client",
             value: 0,
@@ -171,6 +170,13 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             if (response.status === 200) {
                 toast.success('Event succesfully created');
                 setForm(blankForm);
+                setHasValidationErrors(false);
+                setSelectedClient(
+                    {
+                        label: "Select Client",
+                        value: 0,
+                    }
+                )
                 props?.saveFunction();
             }
         }).catch(() => {
@@ -188,7 +194,6 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const saveRecord = (form: ClientCreateDTO) => {
         axios_instance.post('/clients', form).then((r) => {
-            //queryClient.invalidateQueries();
             setIsCreateClientModalOpen(false);
             myFetchFunc();
             setActiveClient(r.data)
@@ -291,8 +296,8 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                             onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })} />
 
                     </div>
-                    <div>
-                        <label>Event Color:</label>
+                    <div className="pt-2">
+                        <label>Boja:</label>
                         <input type="color"
                             onChange={(e) => setForm((c) => c && { ...c, color: e.target.value })}
                             value={form.color} />
