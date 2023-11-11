@@ -109,7 +109,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
             transformClientList(response.data)
         })
-        axios_instance.get('/services').then(response => {
+        axios_instance.get('/items').then(response => {
             setServiceList(response.data);
         })
         axios_instance.get('/employees').then(response => {
@@ -234,11 +234,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     </div>
 
                     <div>
-                        <label>Service</label>
+                        <label>Usluga</label>
                         <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
                     </div>
                     <div>
-                        <label>Employee</label>
+                        <label>Zaposleni</label>
                         <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
                     </div>
 
