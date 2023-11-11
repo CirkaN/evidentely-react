@@ -14,9 +14,10 @@ export enum InfoBoxType {
 const InfoBox = (props: infoProps) => {
 
     if(props.type == 'info'){
-        return (<div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
-        <p className="font-bold">{props.headerText}</p>
-        <p>{props.text}.</p>
+        return (
+        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
+        <span className="font-bold">{props.headerText}</span> <br />
+        <span>{props.text}.</span>
     </div>);
     }else if(props.type == 'danger'){
         return (<div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">

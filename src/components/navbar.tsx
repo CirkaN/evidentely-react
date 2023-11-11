@@ -9,7 +9,7 @@ const NavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const logout = ()=>{
+    const logout = () => {
         localStorage.removeItem('auth_token')
         navigate('/login');
     }
@@ -17,7 +17,8 @@ const NavBar = () => {
     const navigation = [
         { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
         { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
-        { name: 'Podesavanja', href: '/company_settings', current: location.pathname === "/company_settings" },
+        { name: 'Analitika', href: '/analytics', current: location.pathname === "/analytics" },
+        { name: 'Podesavanja', href: '/company_settings/employees', current: location.pathname.startsWith("/company_settings") },
     ]
 
     const classNames = (...classes: string[]) => {
@@ -122,8 +123,8 @@ const NavBar = () => {
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <button onClick={()=> {logout()}} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm w-full text-start text-gray-700')}>
-                                                       Odjavi se
+                                                <button onClick={() => { logout() }} className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm w-full text-start text-gray-700')}>
+                                                    Odjavi se
                                                 </button>
 
                                             )}

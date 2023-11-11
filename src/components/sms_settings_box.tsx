@@ -3,7 +3,8 @@ interface SmsSettingsProps {
     headerText: string,
     subHeaderText: string,
     mainText: string,
-    type:string
+    type: string,
+    onClickFunction: () => unknown
 }
 
 const SmsSettingsBox = (props: SmsSettingsProps) => {
@@ -19,7 +20,7 @@ const SmsSettingsBox = (props: SmsSettingsProps) => {
                 {props.mainText}
             </p>
             <div className="flex justify-center">
-                <button type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
+                <button onClick={() => { props.onClickFunction() }} type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
                     Izmeni
                 </button>
             </div>
