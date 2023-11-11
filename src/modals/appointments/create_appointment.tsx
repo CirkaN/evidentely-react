@@ -1,12 +1,14 @@
 import { Button, Dialog, Flex, Switch } from "@radix-ui/themes";
-import { useState, useEffect } from "react";
-import { Clients } from "../../services/clients/ClientService";
+import { useState, useEffect, FormEvent } from "react";
+import { ClientDTO, Clients } from "../../services/clients/ClientService";
 import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import Select, { SingleValue } from 'react-select'
 import { ServiceType } from "../../shared/interfaces/service.interface";
 import toast, { Toaster } from "react-hot-toast";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
+import { Plus } from "react-feather";
+import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -17,7 +19,10 @@ interface CreateAppointmentModalProps {
         end: string
     }
 }
-
+interface TransformedDataForSelect {
+    value: number,
+    label: string
+}
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const blankForm = {
         user_id: "",
@@ -64,21 +69,22 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         note: "",
     });
 
-    useEffect(() => {
-        setForm((c) => c && { ...c, start: props?.appointment_data?.start });
-        setForm((c) => c && { ...c, end: props?.appointment_data?.end });
-    }, [props?.appointment_data?.start, props?.appointment_data?.end]);
-
     const [clientList, setClientList] = useState<Clients[]>([]);
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
+    const [clientTransformedList, setclientTransformedList] = useState<TransformedDataForSelect[]>();
+    const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
+    const [hasValidationErrors, setHasValidationErrors] = useState(false);
+
+    const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(
+
+        {
+            label: "Select Client",
+            value: 0,
+        }
+    );
 
     const servicesTransformed = serviceList.map((element: ServiceType) => ({
-        value: element.id,
-        label: element.name
-    }));
-
-    const clientsTransformed = clientList.map((element) => ({
         value: element.id,
         label: element.name
     }));
@@ -88,10 +94,21 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         label: element.name
     }));
 
+    const transformClientList = (clients: ClientDTO[]) => {
+        const transformed = clients.map((element) => ({
+            value: element.id,
+            label: element.name
+        }));
+        setclientTransformedList(transformed)
+
+    }
+
 
     const myFetchFunc = () => {
         axios_instance.get('/clients').then(response => {
             setClientList(response.data);
+
+            transformClientList(response.data)
         })
         axios_instance.get('/services').then(response => {
             setServiceList(response.data);
@@ -104,6 +121,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     useEffect(() => {
         myFetchFunc();
     }, [])
+
+    useEffect(() => {
+        setForm((c) => c && { ...c, start: props?.appointment_data?.start });
+        setForm((c) => c && { ...c, end: props?.appointment_data?.end });
+    }, [props?.appointment_data?.start, props?.appointment_data?.end]);
 
     const setServiceForm = (e: SingleValue<{ value: string; label: string; }>) => {
         if (e) {
@@ -129,6 +151,8 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const setClientForm = (e: SingleValue<{ value: number; label: string; }>) => {
         if (e) {
             const client = clientList.filter(client => client.id === e.value)[0];
+            setSelectedClient((c) => c && { ...c, value: e.value });
+            setSelectedClient((c) => c && { ...c, label: e.label });
             setForm((c) => c && { ...c, user_id: client.id.toString() });
             setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
             setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
@@ -142,8 +166,6 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         }
     }
 
-
-    
     const saveAppointment = () => {
         axios_instance.post('/appointments', form).then((response) => {
             if (response.status === 200) {
@@ -151,105 +173,143 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                 setForm(blankForm);
                 props?.saveFunction();
             }
+        }).catch(() => {
+            setHasValidationErrors(true);
         })
+    }
+    const setActiveClient = (r: ClientDTO) => {
+        setSelectedClient((c) => c && { ...c, label: r.name })
+        setSelectedClient((c) => c && { ...c, value: r.id })
+        setForm((c) => c && { ...c, user_id: r.id.toString() });
+    }
+    const cancelAction = () => {
+        setIsCreateClientModalOpen(false);
+    }
+
+    const saveRecord = (form: ClientCreateDTO) => {
+        axios_instance.post('/clients', form).then((r) => {
+            //queryClient.invalidateQueries();
+            setIsCreateClientModalOpen(false);
+            myFetchFunc();
+            setActiveClient(r.data)
+        })
+    }
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        saveAppointment()
     }
 
     return (<>
-        <div><Toaster /></div>
+
+        <div className="absolute top-0 right-0 p-4 ">
+            <Toaster />
+        </div>
+        <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
         <Dialog.Root open={props.isOpen} >
+
             <Dialog.Content style={{ maxWidth: 450 }}>
                 <Dialog.Title>Create Appointment</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
-                    Create appointment
+                    {hasValidationErrors &&
+                        <p className="text-red-500 text-sm">Molimo unesite klijenta</p>
+                    }
+
                 </Dialog.Description>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Title <span className="text-red-600">*</span></label>
+                        <input
+                            required={true}
+                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                            placeholder="Title"
+                            type="text"
+                            value={form.title}
+                            onChange={(e) => setForm((c) => c && { ...c, title: e.target.value })} />
 
-                <div>
-                    <label>Title</label>
-                    <input
-                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                        placeholder="Title"
-                        type="text"
-                        value={form.title}
-                        onChange={(e) => setForm((c) => c && { ...c, title: e.target.value })} />
+                    </div>
 
-                </div>
-
-                <div>
-                    <label>Service</label>
-                    <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
-                </div>
-                <div>
-                    <label>Employee</label>
-                    <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
-                </div>
-
-                
-                <div>
-                    <label>Client</label>
-                    <Select options={clientsTransformed} onChange={(e) => { setClientForm(e) }} />
-                </div>
-
-                <div>
-                    <label> Remind Client</label>
-                    <Switch
-                        checked={form.remind_client}
-                        onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
-                    />
-                </div>
+                    <div>
+                        <label>Service</label>
+                        <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
+                    </div>
+                    <div>
+                        <label>Employee</label>
+                        <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
+                    </div>
 
 
-                {form.remind_client && (
-                    <>
-                        <div>
-                            <label> Remind day before</label>
-                            <Switch
-                                checked={form?.remind_setting?.remind_day_before}
-                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: checked } })}
-                            />
+                    <div>
+
+                        <div className="flex justify-between">
+                            <label>Client <span className="text-red-600">*</span></label>
+                            <p className="hover:cursor-pointer" onClick={() => { setIsCreateClientModalOpen(true) }}><Plus color="green"></Plus></p>
                         </div>
-                        <div>
-                            <label>Remind same day</label>
-                            <Switch
-                                checked={form?.remind_setting?.remind_same_day}
-                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: checked } })}
-                            />
-                        </div>
-                        {/* <div>
+                        <Select required={true} value={selectedClient} options={clientTransformedList} onChange={(e) => { setClientForm(e) }} />
+                    </div>
+
+                    <div>
+                        <label> Remind Client</label>
+                        <Switch
+                            checked={form.remind_client}
+                            onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
+                        />
+                    </div>
+
+
+                    {form.remind_client && (
+                        <>
+                            <div>
+                                <label> Remind day before</label>
+                                <Switch
+                                    checked={form?.remind_setting?.remind_day_before}
+                                    onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: checked } })}
+                                />
+                            </div>
+                            <div>
+                                <label>Remind same day</label>
+                                <Switch
+                                    checked={form?.remind_setting?.remind_same_day}
+                                    onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: checked } })}
+                                />
+                            </div>
+                            {/* <div>
                             <label> Remind for upcoming</label>
                             <Switch
                                 checked={form?.remind_settings?.remind_for_upcoming}
                                 onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_settings, remind_for_upcoming: checked } })}
                             />
                         </div> */}
-                    </>
-                )}
-                <div>
-                    <label>Price:</label>
-                    <input
-                        type="number"
-                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                        value={form.price}
-                        onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })} />
+                        </>
+                    )}
+                    <div>
+                        <label>Price <span className="text-red-600">*</span></label>
+                        <input
+                            type="number"
+                            required={true}
+                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                            value={form.price}
+                            onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })} />
 
-                </div>
-                <div>
-                    <label>Event Color:</label>
-                    <input type="color"
-                        onChange={(e) => setForm((c) => c && { ...c, color: e.target.value })}
-                        value={form.color} />
-                </div>
+                    </div>
+                    <div>
+                        <label>Event Color:</label>
+                        <input type="color"
+                            onChange={(e) => setForm((c) => c && { ...c, color: e.target.value })}
+                            value={form.color} />
+                    </div>
 
 
-                <Flex gap="3" mt="4" justify="end">
-                    <Dialog.Close>
-                        <Button onClick={props.cancelFunction} variant="soft" color="gray">
-                            Cancel
-                        </Button>
-                    </Dialog.Close>
-                    <Dialog.Close>
-                        <Button onClick={() => { saveAppointment() }}>Save</Button>
-                    </Dialog.Close>
-                </Flex>
+                    <Flex gap="3" mt="4" justify="end">
+                        <Dialog.Close>
+                            <Button onClick={props.cancelFunction} variant="soft" color="gray">
+                                Cancel
+                            </Button>
+                        </Dialog.Close>
+                        <Dialog.Close>
+                            <Button type="submit" >Sacuvaj</Button>
+                        </Dialog.Close>
+                    </Flex>
+                </form>
             </Dialog.Content>
         </Dialog.Root>
     </>)
