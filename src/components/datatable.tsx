@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import axios_instance from "../config/api_defaults";
 import { useQuery } from "react-query";
+import { ChevronDown, ChevronUp } from "react-feather";
 
 
 interface GenericEntry {
@@ -44,7 +45,10 @@ export interface Field<T = unknown> {
 
 const DataTable = <T,>(props: DatatableProps<T>) => {
     const [builtUrl, setBuiltUrl] = useState<URL>(new URL(`/api/${props.url}`, import.meta.env.VITE_API_URL));
-
+    const [sorting, setSorting] = useState({
+        sort_by: "",
+        sort_direction: "asc"
+    })
 
     const { data } = useQuery({
         queryKey: [props.url, builtUrl.href],
@@ -66,10 +70,46 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         setBuiltUrl(url)
     }
 
+    const sortBy = (field: string) => {
+        console.log(field);
+        console.log(builtUrl);
+
+        const sortBy = {
+            "sort_by": field,
+            "sort_direction": sorting.sort_direction
+        }
+
+        const s = new URL(builtUrl);
+        s.searchParams.set('sort_direction', sortBy.sort_direction);
+        s.searchParams.set('sort_by', sortBy.sort_by);
+        setBuiltUrl(s);
+
+        const newSortBy = {
+            "sort_by": field,
+            "sort_direction": oppositeSort(sorting.sort_direction),
+        }
+
+        setSorting(newSortBy);
+        console.log(s);
+    }
+
+    const oppositeSort = (type: string)=>{
+        if (type == 'asc') {
+            return 'desc'
+        } else {
+            return 'asc'
+        }
+    }
+
     const preparedFields = props.fields.map((element: Field<T>, index) => {
         return (
             <th key={index} className="p-2 whitespace-nowrap">
-                <div className="font-semibold text-left">{element.name}</div>
+                <div className="font-semibold text-left">{element.name}
+                {element.has_sort &&
+                <button onClick={() => sortBy(element.original_name)}>{sorting?.sort_direction == "asc" && <ChevronUp  size="15px"/>}{sorting?.sort_direction == 'desc' && <ChevronDown size="15px"/>}
+                </button>
+                }
+                 </div>
             </th>
 
         )
@@ -135,12 +175,12 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                                 if (f.original_name in record) {
 
                                                     if (f.formatFn) {
-                                                        
+
                                                         return <td key={index} className="p-2 whitespace-nowrap">
-                                                        <div className="text-left">
-                                                            <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
-                                                        </div>
-                                                    </td>
+                                                            <div className="text-left">
+                                                                <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
+                                                            </div>
+                                                        </td>
                                                     } else {
                                                         return <td key={index} className="p-2 whitespace-nowrap">
                                                             <div className="text-left">

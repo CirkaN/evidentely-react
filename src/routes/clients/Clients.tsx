@@ -83,7 +83,7 @@ const Clients = () => {
             name: "name",
             editable_from_table: false,
             original_name: "name",
-            has_sort: false,
+            has_sort: true,
             show: true
         },
         {
