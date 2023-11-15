@@ -12,6 +12,16 @@ interface CreateClientProps {
 
 
 const CreateItemModal = (props: CreateClientProps) => {
+    const blankForm = {
+        id: "",
+        name: "",
+        price: "",
+        selling_price: "",
+        color: "",
+        type: props.modalType,
+        duration: "60",
+        note: "",
+    }
     const [form, setForm] = useState<ItemDTO>({
         id: "",
         name: "",
@@ -25,6 +35,7 @@ const CreateItemModal = (props: CreateClientProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.saveFunction(form)
+        setForm(blankForm);
     }
 
     return (<>

@@ -73,14 +73,14 @@ const Employees = () => {
             name: "name",
             editable_from_table: false,
             original_name: "name",
-            has_sort: false,
+            has_sort: true,
             show: true
         },
         {
             name: "email",
             editable_from_table: false,
             original_name: "email",
-            has_sort: false,
+            has_sort: true,
             show: true,
         },
         {
@@ -101,7 +101,7 @@ const Employees = () => {
             name: "Ukljucen login",
             editable_from_table: false,
             original_name: "login_enabled",
-            has_sort: false,
+            has_sort: true,
             show: true,
             formatFn: (t) => formatLogin(t),
         },
