@@ -104,7 +104,7 @@ const Services = () => {
             <DataTable
                 table_actions={table_actions}
                 has_actions={true}
-                table_name="Produkti"
+                table_name="Usluge"
                 url="items?type=service&per_page=10"
                 actions={actions}
                 fields={fields}

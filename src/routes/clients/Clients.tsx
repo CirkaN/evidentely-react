@@ -83,14 +83,21 @@ const Clients = () => {
             name: "name",
             editable_from_table: false,
             original_name: "name",
-            has_sort: false,
+            has_sort: true,
             show: true
         },
         {
             name: "email",
             editable_from_table: false,
             original_name: "email",
-            has_sort: false,
+            has_sort: true,
+            show: true,
+        },
+        {
+            name: "note",
+            editable_from_table: false,
+            original_name: "note",
+            has_sort: true,
             show: true,
         },
 

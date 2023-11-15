@@ -58,9 +58,9 @@ const ClientShow = () => {
                     </div>
                 </div>
                 <div className="basis-full bg-slate-100 px-10 py-10">
-                    <div className="px-5">
+                  <div className="px-5">
                         <div className="pb-1 font-sans text-2xl font-semibold">Client Details</div>
-                        primer/tidajem
+                   
                     </div>
 
                     <div className="h-full px-5 py-5">

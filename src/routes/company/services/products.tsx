@@ -105,7 +105,7 @@ const Products = () => {
       <DataTable
         table_actions={table_actions}
         has_actions={true}
-        table_name="Produkti"
+        table_name="Proizvodi"
         url="items?type=product&per_page=10"
         actions={actions}
         fields={fields}
