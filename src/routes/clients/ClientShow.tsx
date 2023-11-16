@@ -23,7 +23,7 @@ const ClientShow = () => {
     const [userDetails, setUserDetails] = useState<Client | null>(null);
     const { id } = useParams();
     useEffect(() => {
-        axios_instance.get(`/clients/${id}`)
+        axios_instance().get(`/clients/${id}`)
         .then(response=>{
             setUserDetails(response.data);
         }).catch(e=>{

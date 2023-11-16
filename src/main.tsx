@@ -21,8 +21,12 @@ import Services from './routes/company/services/services.tsx';
 import ServiceMain from './routes/company/services/service_main.tsx';
 import Products from './routes/company/services/products.tsx';
 import Packages from './routes/company/services/packages.tsx';
+import Register from './routes/login/register.tsx';
+import './i18n.ts';
+
 
 const queryClient = new QueryClient()
+
 
 const router = createBrowserRouter([
   {
@@ -86,6 +90,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/register",
+    element: <Register />
   },
 
 ]);

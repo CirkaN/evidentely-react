@@ -38,7 +38,7 @@ const MyCalendar = () => {
   useQuery({
     queryKey: [],
     queryFn: () => {
-      return axios_instance.get('appointments')
+      return axios_instance().get('appointments')
         .then(response => { mutateDates(response.data) })
     }
   })
@@ -139,7 +139,7 @@ const MyCalendar = () => {
       update_via: 'drop',
     }
 
-    axios_instance.put('appointments/' + id, jsonPrepared).then(response => {
+    axios_instance().put('appointments/' + id, jsonPrepared).then(response => {
       if (response.status === 200) {
         toast.success('Event Successfully Updated!')
       }
@@ -156,7 +156,7 @@ const MyCalendar = () => {
         end: endStr,
       }
 
-      axios_instance.put('appointments/' + id, json).then(response => {
+      axios_instance().put('appointments/' + id, json).then(response => {
         if (response.status === 200) {
           toast.success('Event Successfully Updated!')
         }

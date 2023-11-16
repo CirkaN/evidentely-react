@@ -45,7 +45,7 @@ const Clients = () => {
     }
 
     const deleteClient = (id: number) => {
-        axios_instance.delete(`/clients/${id}`).then(() => {
+        axios_instance().delete(`/clients/${id}`).then(() => {
             toast.success('Client deleted succesfully');
             queryClient.invalidateQueries();
 
@@ -107,7 +107,7 @@ const Clients = () => {
     }
 
     const saveRecord = (form: ClientCreateDTO) => {
-        axios_instance.post('/clients', form).then(() => {
+        axios_instance().post('/clients', form).then(() => {
             queryClient.invalidateQueries();
             closeClientCreateModal();
         })

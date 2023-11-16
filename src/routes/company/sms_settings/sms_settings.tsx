@@ -41,13 +41,13 @@ const SmsSettings = () => {
     }
     useQuery({
         queryKey: [],
-        queryFn: () => axios_instance.get('/company/sms_templates').then(response => {
+        queryFn: () => axios_instance().get('/company/sms_templates').then(response => {
             mutateSmsTemplateData(response.data);
         }),
     })
 
     const fetchData = () => {
-        axios_instance.get('/company/details').then((response) => {
+        axios_instance().get('/company/details').then((response) => {
             const data: CompanyDetails = response.data;
             if (data.phone_verified_at) {
                 setUserHasMobileVerified(true);
@@ -72,7 +72,7 @@ const SmsSettings = () => {
     }
     const updateSmsSettings = (smsTemplate: SmsTemplate) => {
         closeModal();
-        axios_instance.put('/company/update_sms_templates', smsTemplate).then(() => {
+        axios_instance().put('/company/update_sms_templates', smsTemplate).then(() => {
             toast.success('Uspesno ste izmenili poruku');
             queryClient.invalidateQueries();
         }).catch(e => {
@@ -91,7 +91,7 @@ const SmsSettings = () => {
     }
 
     const verifyCode = () => {
-        axios_instance.post('/company/attempt_verification', {code:codeReceived}).then(response => {
+        axios_instance().post('/company/attempt_verification', {code:codeReceived}).then(response => {
             if (response.status === 200) {
                 setUserHasMobileVerified(true);
             }
@@ -100,7 +100,7 @@ const SmsSettings = () => {
         })
     }
     const attemptVerification = () => {
-        axios_instance.post('/company/verify_phone', phoneVerificationForm).then(response => {
+        axios_instance().post('/company/verify_phone', phoneVerificationForm).then(response => {
             if (response.status === 201) {
                 setPhoneVerificationInProgress(true);
             }

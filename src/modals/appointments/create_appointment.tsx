@@ -104,15 +104,15 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
 
     const myFetchFunc = () => {
-        axios_instance.get('/clients').then(response => {
+        axios_instance().get('/clients').then(response => {
             setClientList(response.data);
 
             transformClientList(response.data)
         })
-        axios_instance.get('/items').then(response => {
+        axios_instance().get('/items').then(response => {
             setServiceList(response.data);
         })
-        axios_instance.get('/employees').then(response => {
+        axios_instance().get('/employees').then(response => {
             setEmployeeList(response.data);
         })
     }
@@ -166,7 +166,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }
 
     const saveAppointment = () => {
-        axios_instance.post('/appointments', form).then((response) => {
+        axios_instance().post('/appointments', form).then((response) => {
             if (response.status === 200) {
                 toast.success('Event succesfully created');
                 setForm(blankForm);
@@ -193,7 +193,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }
 
     const saveRecord = (form: ClientCreateDTO) => {
-        axios_instance.post('/clients', form).then((r) => {
+        axios_instance().post('/clients', form).then((r) => {
             setIsCreateClientModalOpen(false);
             myFetchFunc();
             setActiveClient(r.data)

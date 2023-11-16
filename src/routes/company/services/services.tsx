@@ -72,7 +72,7 @@ const Services = () => {
     }
 
     const deleteItem = (id: number) => {
-        axios_instance.delete(`/items/${id}`).then(() => {
+        axios_instance().delete(`/items/${id}`).then(() => {
             toast.success('Uspesno izbrisan produkt');
             queryClient.invalidateQueries();
         })
@@ -86,7 +86,7 @@ const Services = () => {
         setIsCreateItemModalOpen(false);
     }
     const saveFunction = (form: ItemDTO) => {
-        axios_instance.post('/items', form).then(() => {
+        axios_instance().post('/items', form).then(() => {
             queryClient.invalidateQueries();
             setIsCreateItemModalOpen(false);
         });
