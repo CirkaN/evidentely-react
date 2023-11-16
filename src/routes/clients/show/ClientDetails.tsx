@@ -37,12 +37,12 @@ const ClientDetails = () => {
             
         //use axios.all for toast.
         
-        axios_instance.put(`/clients/${id}`, form)
+        axios_instance().put(`/clients/${id}`, form)
             .catch((e) => {
                 toast.error(e.response.data.message);
             })
         if (form?.settings) {
-            axios_instance.put(`/clients/${id}/settings`, form.settings)
+            axios_instance().put(`/clients/${id}/settings`, form.settings)
                 .catch((e) => {
                     toast.error(e.response.data.message);
                 })

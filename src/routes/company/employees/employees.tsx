@@ -115,7 +115,7 @@ const Employees = () => {
         }
     }
     const deleteEmployee = (id: string) => {
-        axios_instance.delete(`/employees/${id}`).then(() => {
+        axios_instance().delete(`/employees/${id}`).then(() => {
             toast.success('Employee deleted succesfully');
             queryClient.invalidateQueries();
 
@@ -129,7 +129,7 @@ const Employees = () => {
     }
 
     const saveRecord = (form: EmployeeDTO) => {
-        axios_instance.post('/employees', form).then(() => {
+        axios_instance().post('/employees', form).then(() => {
             queryClient.invalidateQueries();
             closeEmployeeCreateModal();
         })

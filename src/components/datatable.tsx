@@ -52,7 +52,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
     const { data } = useQuery({
         queryKey: [props.url, builtUrl.href],
-        queryFn: () => axios_instance.get(builtUrl.href).then(r => r.data),
+        queryFn: () => axios_instance().get(builtUrl.href).then(r => r.data),
     })
 
     const changePage = (action: 'next' | 'previous') => {

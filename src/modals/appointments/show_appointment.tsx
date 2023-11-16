@@ -18,7 +18,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     
 
     const fetchAppointment = () => {
-        axios_instance.get(`/appointments/${props.appointmentId}`).then(response => {
+        axios_instance().get(`/appointments/${props.appointmentId}`).then(response => {
             const data = response.data
             data.start = data.start.replace(' ','T');
             data.end =  data.end.replace(' ','T');
@@ -26,7 +26,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
     }
     const updateEvent = () => {
-        axios_instance.put(`/appointments/${props.appointmentId}`, appointment).then(() => {
+        axios_instance().put(`/appointments/${props.appointmentId}`, appointment).then(() => {
             props.eventUpdated();
         })
      

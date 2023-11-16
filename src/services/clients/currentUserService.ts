@@ -23,7 +23,7 @@ export const useLoggedUser = () => {
 
     useEffect(() => {
         if (localStorage.getItem('auth_token')) {
-            axios_instance.post("/auth/me").then((response) => {
+            axios_instance().post("/auth/me").then((response) => {
                 setLoggedUser(response.data);
             });
         } else {

@@ -1,0 +1,23 @@
+{
+  "common":{
+    "email":"E-mail adresa",
+    "password":"Sifra",
+    "enter_email":"Unesite e-mail adresu",
+    "enter_password":"Unesite vasu lozinku"
+  },
+  "register":{
+      "register":"Registracija",
+      "register_text":"Ovde se mozete registrovati",
+      "already_has_account":"Imate nalog? Molimo ulogujte se",
+      "register_button":"Registruj se",
+      "login_button":"Loguj se"
+  },
+  "login":{
+    "login":"Uloguj se",
+    "login_text":"Ovde se mozete ulogovati",
+    "lost_password":"Zaboravljena lozinka?",
+    "dont_have_account":"Nemate nalog? Registrujte se",
+    "login_button":"Uloguj se",
+    "register_button":"Registruj se"
+  }
+}

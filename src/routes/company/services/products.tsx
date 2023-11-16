@@ -48,7 +48,7 @@ const Products = () => {
   }
 
   const deleteItem = (id: number) => {
-    axios_instance.delete(`/items/${id}`).then(() => {
+    axios_instance().delete(`/items/${id}`).then(() => {
       queryClient.invalidateQueries();
       toast.success('uspesno izbrisan produkt');
     })
@@ -86,7 +86,7 @@ const Products = () => {
     setIsCreateItemModalOpen(false)
   }
   const saveFunction = (form: ItemDTO) => {
-    axios_instance.post('/items', form).then(() => {
+    axios_instance().post('/items', form).then(() => {
       setIsCreateItemModalOpen(false)
       queryClient.invalidateQueries();
     })
