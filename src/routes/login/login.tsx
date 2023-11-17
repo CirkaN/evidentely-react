@@ -15,15 +15,15 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-
-
   const [loginForm, setLoginForm] = useState<Login>({
     email: "",
     password: "",
   });
+
   const openRegistration = () => {
     navigate('/register');
   }
+  
   const [hasErrors, setHasErrors] = useState(false);
 
   const loginRequest = () => {

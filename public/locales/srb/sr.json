@@ -5,7 +5,8 @@
       "enter_email":"Unesite e-mail adresu",
       "enter_password":"Unesite vasu lozinku",
       "company_name":"Ime kompanije",
-      "your_name":"Vase Ime"
+      "your_name":"Vase Ime",
+      "search":"Pretrazi"
     },
     "register":{
         "register":"Registracija",
