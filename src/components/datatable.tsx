@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import axios_instance from "../config/api_defaults";
 import { useQuery } from "react-query";
 import { ChevronDown, ChevronUp } from "react-feather";
-
+import { useTranslation } from "react-i18next"
 
 interface GenericEntry {
     id: string,
@@ -42,14 +42,20 @@ export interface Field<T = unknown> {
     show: boolean,
     formatFn?: (value: string, resource: T) => JSX.Element | string,
 }
+interface SearchParams {
+    search_param: string,
 
+}
 const DataTable = <T,>(props: DatatableProps<T>) => {
     const [builtUrl, setBuiltUrl] = useState<URL>(new URL(`/api/${props.url}`, import.meta.env.VITE_API_URL));
+
     const [sorting, setSorting] = useState({
         sort_by: "",
-        sort_direction: "asc"
+        sort_direction: "desc"
     })
+    const [searchParams, setSearchParams] = useState<SearchParams>({ search_param: "" });
 
+    const { t } = useTranslation();
     const { data } = useQuery({
         queryKey: [props.url, builtUrl.href],
         queryFn: () => axios_instance().get(builtUrl.href).then(r => r.data),
@@ -71,9 +77,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     }
 
     const sortBy = (field: string) => {
-        console.log(field);
-        console.log(builtUrl);
-
         const sortBy = {
             "sort_by": field,
             "sort_direction": sorting.sort_direction
@@ -82,6 +85,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         const s = new URL(builtUrl);
         s.searchParams.set('sort_direction', sortBy.sort_direction);
         s.searchParams.set('sort_by', sortBy.sort_by);
+        s.searchParams.set('page', "1");
         setBuiltUrl(s);
 
         const newSortBy = {
@@ -90,10 +94,10 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         }
 
         setSorting(newSortBy);
-        console.log(s);
+
     }
 
-    const oppositeSort = (type: string)=>{
+    const oppositeSort = (type: string) => {
         if (type == 'asc') {
             return 'desc'
         } else {
@@ -105,11 +109,11 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         return (
             <th key={index} className="p-2 whitespace-nowrap">
                 <div className="font-semibold text-left">{element.name}
-                {element.has_sort &&
-                <button onClick={() => sortBy(element.original_name)}>{sorting?.sort_direction == "asc" && <ChevronUp  size="15px"/>}{sorting?.sort_direction == 'desc' && <ChevronDown size="15px"/>}
-                </button>
-                }
-                 </div>
+                    {element.has_sort &&
+                        <button onClick={() => sortBy(element.original_name)}>{sorting?.sort_direction == "asc" && <ChevronUp size="15px" />}{sorting?.sort_direction == 'desc' && <ChevronDown size="15px" />}
+                        </button>
+                    }
+                </div>
             </th>
 
         )
@@ -145,6 +149,8 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                         })}
 
                     </div>
+
+                    <input value={searchParams?.search_param} onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }} type="text" className="border mb-2 bg-gray-100" placeholder={t('common.search')} />
 
                 </header>
                 <div className="p-3">

@@ -24,14 +24,14 @@ const ClientShow = () => {
     const { id } = useParams();
     useEffect(() => {
         axios_instance().get(`/clients/${id}`)
-        .then(response=>{
-            setUserDetails(response.data);
-        }).catch(e=>{
-            if(e.request.status === 404){
-               navigate("/clients")
-            }
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+            .then(response => {
+                setUserDetails(response.data);
+            }).catch(e => {
+                if (e.request.status === 404) {
+                    navigate("/clients")
+                }
+            });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -39,28 +39,29 @@ const ClientShow = () => {
     const navigate = useNavigate();
     return (
         <>
-            <div className="flex ">
+            <div className="flex">
                 <div className="basis-1/3">
                     <div className="min-h-screen rounded-sm border bg-slate-50">
                         <p className="py-10 text-center text-xl">{userDetails && userDetails.name}</p>
                         <p className="text-center text-gray-700">
-                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('sms_history') }}>[F] Sms History</button>
+                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('summary') }}>[F] Summary</button>
                         </p>
                         <p className="text-center text-gray-700">
                             <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('details') }}> [F] Details</button>
                         </p>
                         <p className="text-center text-gray-700">
-                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('documents') }}>[F] Documents</button>
+                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('sms_history') }}>[F] Sms History</button>
                         </p>
+                     
                         <p className="text-center text-gray-700">
-                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('settings') }}>[F] Settings</button>
+                            <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('documents') }}>[F] Documents</button>
                         </p>
                     </div>
                 </div>
                 <div className="basis-full bg-slate-100 px-10 py-10">
-                  <div className="px-5">
+                    <div className="px-5">
                         <div className="pb-1 font-sans text-2xl font-semibold">Client Details</div>
-                   
+
                     </div>
 
                     <div className="h-full px-5 py-5">

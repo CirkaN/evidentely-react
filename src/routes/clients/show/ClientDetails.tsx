@@ -34,9 +34,9 @@ const ClientDetails = () => {
     }, [form]);
 
     const saveChanges = () => {
-            
+
         //use axios.all for toast.
-        
+
         axios_instance().put(`/clients/${id}`, form)
             .catch((e) => {
                 toast.error(e.response.data.message);
@@ -64,75 +64,95 @@ const ClientDetails = () => {
                 <button onClick={() => { saveChanges() }} className="rounded-full hover:bg-green-700 bg-green-500 "><Check size={50} color="white"></Check></button>
                 <button onClick={() => { resetChanges() }} className="rounded-full hover:bg-red-700 bg-red-500 "><X size={50} color="white"></X></button>
             </div>}
-            <form>
-                <div className=" flex bg-red-200 ">
 
-                    <div className="bg-white p-8 basis-1/3  w-96">
-                        <h1 className="text-2xl font-semibold mb-4">Basic Details</h1>
+            <div className="flex justify-between">
 
-                        <div className="mb-4">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-600">Full Name</label>
-                            <input type="text" id="name" onChange={(e) => setForm((c) => c && ({ ...c, name: e.target.value }))}
 
-                                value={form?.name ?? ""} name="name" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="John Doe" required />
+                <div>
+                    <form className="w-full max-w-lg">
+                        <div className="p-5 text-center text-lg block text-gray-800">Izmeni Klijenta</div>
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                                    Full name:
+                                </label>
+                                <input
+                                    onChange={(e) => setForm((c) => c && ({ ...c, name: e.target.value }))}
+                                    value={form?.name ?? ""}
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="John Doe" />
+                            </div>
                         </div>
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+                                    Address:
+                                </label>
+                                <input
+                                    value={form?.settings.address ?? ""}
+                                    onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, address: e.target.value } })}
 
-                        <div className="mb-4">
-                            <label htmlFor="address" className="block text-sm font-medium text-gray-600">Address</label>
-                            <input id="address"
-                                value={form?.settings.address ?? ""}
-                                onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, address: e.target.value } })}
-                                name="address"
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123 Main St" />
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="John Doe" />
+                            </div>
                         </div>
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Email
+                                </label>
+                                <input
+                                    value={form?.email ?? ""}
+                                    onChange={(e) => setForm((c) => c && { ...c, email: e.target.value })}
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="email" placeholder="my@mail.com" />
+                            </div>
+                            <div className="w-full md:w-1/2 px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Phone
+                                </label>
+                                <input
+                                    value={form?.settings.phone_number ?? ""}
+                                    onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: e.target.value } })}
 
-                        <div className="mb-4">
-                            <label htmlFor="country" className="block text-sm font-medium text-gray-600">Country</label>
-                            <select id="country"
-                                value={form?.settings.country ?? ""}
-                                onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, country: e.target.value } })}
-                                name="country"
-                                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400">
-                                <option value="" disabled >Select a country</option>
-                                <option value="rs">Serbia</option>
-                                <option value="ba">Bosnia</option>
-                                <option value="me">Montenegro</option>
-                            </select>
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="+381634556420" />
+                            </div>
                         </div>
+                        <div className="flex flex-wrap -mx-3 mb-2">
+                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Drzava
+                                </label>
+                                <select id="country"
+                                    value={form?.settings.country ?? ""}
+                                    onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, country: e.target.value } })}
+                                    name="country"
+                                    className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
 
-                        <div className="mb-6">
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-600">Phone Number</label>
-                            <input
-                                value={form?.settings.phone_number ?? ""}
-                                onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: e.target.value } })}
-                                type="tel" id="phone" name="phone" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="123-456-7890" />
+                                    <option value="" disabled >Select</option>
+                                    <option value="rs">Serbia</option>
+                                    <option value="ba">Bosnia</option>
+                                    <option value="me">Montenegro</option>
+                                </select>
+                            </div>
+
+                            <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                    Occupation
+                                </label>
+                                <input
+                                    value={form?.settings.occupation ?? ""}
+                                    onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, occupation: e.target.value } })}
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="Teacher" />
+                            </div>
                         </div>
-
-                    </div>
-                    <div className="bg-white p-8 basis-1/3  w-96">
-                        <h1 className="text-2xl font-semibold mb-4">Advanced Settings</h1>
-
-                        <div className="mb-4">
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
-                            <input
-                                value={form?.email ?? ""}
-                                onChange={(e) => setForm((c) => c && { ...c, email: e.target.value })}
-                                type="email" id="email" name="email" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="someone@mail.com" required />
-                        </div>
-
-                        <div className="mb-6">
-                            <label htmlFor="occupation" className="block text-sm font-medium text-gray-600">Occupation</label>
-                            <input
-                                value={form?.settings.occupation ?? ""}
-                                onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, occupation: e.target.value } })}
-
-                                type="text" id="occupation" name="occupation" className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" placeholder="Mechanic" required />
-                        </div>
+                    </form>
+                </div>
 
 
-                    </div>
-                    <div className="bg-white p-8 basis-1/3  w-96">
-                        <h1 className="text-2xl font-semibold mb-4">Notification Settings</h1>
+
+
+                <div>
+
+                    <div className="bg-white p-5 basis-1/3  w-96">
+                        <h1 className="text-xl mb-2">Podesavanja</h1>
 
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-600">Use SMS for notifications</label>
@@ -171,7 +191,7 @@ const ClientDetails = () => {
                                     />
                                 </div>
                             </div>
-                        : null }
+                            : null}
                         <hr />
 
 
@@ -214,10 +234,13 @@ const ClientDetails = () => {
                                     />
                                 </div>
                             </div>
-                       :null }
+                            : null}
                     </div>
+
                 </div>
-            </form>
+
+
+            </div>
         </>)
 }
 
