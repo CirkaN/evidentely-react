@@ -9,7 +9,6 @@ import Login from './routes/login/login.tsx';
 import Clients from './routes/clients/Clients.tsx';
 import ClientShow from './routes/clients/ClientShow.tsx';
 import ClientAppointments from './routes/clients/show/ClientAppointments.tsx';
-import ClientSettings from './routes/clients/show/ClientSettings.tsx';
 import ClientDetails from './routes/clients/show/ClientDetails.tsx';
 import DefaultPage from './routes/default.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -23,6 +22,7 @@ import Products from './routes/company/services/products.tsx';
 import Packages from './routes/company/services/packages.tsx';
 import Register from './routes/login/register.tsx';
 import './i18n.ts';
+import ClientSummary from './routes/clients/show/ClientSummary.tsx';
 
 
 const queryClient = new QueryClient()
@@ -74,11 +74,12 @@ const router = createBrowserRouter([
           {
             path: "appointments", element: <ClientAppointments />
           },
-          {
-            path: "settings", element: <ClientSettings />
-          },
+      
           {
             path: "details", element: <ClientDetails />
+          },
+          {
+            path: "summary", element: <ClientSummary />
           },
           {
             path: "documents", element: <ClientDocuments />
