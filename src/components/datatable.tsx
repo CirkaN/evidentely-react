@@ -82,6 +82,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         const s = new URL(builtUrl);
         s.searchParams.set('sort_direction', sortBy.sort_direction);
         s.searchParams.set('sort_by', sortBy.sort_by);
+        s.searchParams.set('page',"1");
         setBuiltUrl(s);
 
         const newSortBy = {
@@ -90,7 +91,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         }
 
         setSorting(newSortBy);
-        console.log(s);
+        
     }
 
     const oppositeSort = (type: string)=>{
