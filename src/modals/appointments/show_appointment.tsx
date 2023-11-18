@@ -9,19 +9,19 @@ interface ShowAppointmentModalProps {
     isOpen: boolean,
     appointmentId: string,
     cancelFunction: () => void,
-    eventUpdated:()=>void,
+    eventUpdated: () => void,
 }
 
 const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
     const [appointment, setAppointment] = useState<AppointmentType>();
-    
+
 
     const fetchAppointment = () => {
         axios_instance().get(`/appointments/${props.appointmentId}`).then(response => {
             const data = response.data
-            data.start = data.start.replace(' ','T');
-            data.end =  data.end.replace(' ','T');
+            data.start = data.start.replace(' ', 'T');
+            data.end = data.end.replace(' ', 'T');
             setAppointment(data);
         })
     }
@@ -29,7 +29,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         axios_instance().put(`/appointments/${props.appointmentId}`, appointment).then(() => {
             props.eventUpdated();
         })
-     
+
     }
     useEffect(() => {
         if (props.appointmentId) {

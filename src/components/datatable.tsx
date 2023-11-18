@@ -53,8 +53,8 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         sort_by: "",
         sort_direction: "desc"
     })
-    const [searchParams, setSearchParams] = useState<SearchParams>({ search_param: "" });
 
+    const [searchParams, setSearchParams] = useState<SearchParams>({ search_param: "" });
     const { t } = useTranslation();
     const { data } = useQuery({
         queryKey: [props.url, builtUrl.href],
@@ -92,7 +92,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
             "sort_by": field,
             "sort_direction": oppositeSort(sorting.sort_direction),
         }
-
         setSorting(newSortBy);
 
     }
