@@ -28,10 +28,10 @@ const Register = () => {
         navigate('/login');
     }
     const doRegister = () => {
-        axios_instance().post('/auth/register',registrationForm).then(()=>{
-           
+        axios_instance().post('/auth/register', registrationForm).then(() => {
+
             navigate('/login?registration_success')
-        }).catch((e)=>{
+        }).catch((e) => {
             Object.keys(e.response.data.errors).forEach(field => {
                 toast.error(`Field: ${field}, Error: ${e.response.data.errors[field].join(', ')}`);
             });
@@ -43,7 +43,7 @@ const Register = () => {
     }
 
     return (<>
-       <Toaster />
+        <Toaster />
         <div className="max-h-screen">
             <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
                 <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">
