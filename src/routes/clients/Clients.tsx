@@ -1,5 +1,5 @@
 import { Eye, Plus, Trash } from "react-feather";
-import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
+import DataTable, { Action, ActionTypes, Field, TableAction, TableFilter } from "../../components/datatable";
 import { ClientDTO } from "../../services/clients/ClientService";
 import { useNavigate } from "react-router-dom";
 import SweetAlert2 from "react-sweetalert2";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import CreateClientModal, { ClientCreateDTO } from "../../modals/clients/create_client_modal";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
+import CountryFilter from "../../components/filters/country_filter";
 
 const Clients = () => {
     const navigate = useNavigate()
@@ -112,13 +113,24 @@ const Clients = () => {
             closeClientCreateModal();
         })
     }
+    const tableFilters: TableFilter[] = [
+
+        {
+            backend_key: "Country Filters",
+            component: <CountryFilter backend_key='country_id'/>,
+        },
+    
+    ]
+
+
+
     return (
         <>
             <InfoBox type={InfoBoxType.Info} text="U ovom modulu mozete dodavati nove klijente kao i pratiti sve vezano za vase klijente" headerText="Klijenti"></InfoBox>
             <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
             <SweetAlert2 {...swalProps} />
             <div className="py-5">
-                <DataTable table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
+                <DataTable has_table_filters={true} table_filters={tableFilters} table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
             </div>
         </>
     );

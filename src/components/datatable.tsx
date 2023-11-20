@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import axios_instance from "../config/api_defaults";
 import { useQuery } from "react-query";
-import { ChevronDown, ChevronUp } from "react-feather";
+import { ChevronDown, ChevronUp, Filter } from "react-feather";
 import { useTranslation } from "react-i18next"
 
 interface GenericEntry {
@@ -14,12 +14,19 @@ export interface DatatableProps<T = GenericEntry[]> {
     actions: Action<T>[],
     fields: Field<T>[],
     has_actions: boolean,
-    table_actions?: TableAction[]
+    table_actions?: TableAction[],
+    table_filters?: TableFilter[],
+    has_table_filters?: boolean,
     url: string,
 }
 export interface TableAction {
     icon: ReactElement,
     fn?: () => unknown
+}
+
+export interface TableFilter {
+    backend_key: unknown,
+    component: ReactElement,
 }
 
 export interface Action<T> {
@@ -55,11 +62,15 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     })
 
     const [searchParams, setSearchParams] = useState<SearchParams>({ search_param: "" });
+    const [showFilters, setShowFilters] = useState<boolean>(false);
     const { t } = useTranslation();
-    const { data } = useQuery({
+
+    const { isLoading, data } = useQuery({
         queryKey: [props.url, builtUrl.href],
         queryFn: () => axios_instance().get(builtUrl.href).then(r => r.data),
+        keepPreviousData: true
     })
+
 
     const changePage = (action: 'next' | 'previous') => {
         const url = new URL(builtUrl);
@@ -119,6 +130,19 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     })
 
     useEffect(() => {
+        if (searchParams.search_param.length >= 1) {
+            console.log('salljem request');
+            const url = new URL(builtUrl);
+            url.searchParams.set('search', searchParams.search_param);
+            setBuiltUrl(url);
+        } else {
+            const url = new URL(builtUrl);
+            url.searchParams.delete('search')
+            setBuiltUrl(url);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams])
+    useEffect(() => {
         const page = builtUrl.searchParams.get('page') || "1";
         if (parseInt(data?.meta?.total) < parseInt(page)) {
             const url = new URL(builtUrl);
@@ -129,99 +153,126 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     }, [data?.meta?.total])
 
     return (
-        <div className="flex flex-col justify-center">
-            <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+        <>
+            {
+
+                <div className="flex flex-col justify-center">
+                    <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
 
 
-                <header className="px-5 py-4 border-b border-gray-100">
+                        <header className="px-5 py-4 border-b border-gray-100">
 
-                    <div className="flex justify-between  bg-slate-50">
+                            <div className="flex justify-between  bg-slate-50">
 
-                        <div>
-                            <h2 className="font-semibold text-gray-800">{props.table_name}</h2>
-                        </div>
+                                <div>
+                                    <h2 className="font-semibold text-gray-800">{props.table_name}</h2>
+                                </div>
 
-                        {props?.table_actions?.map((el, index) => {
-                            return (
-                                <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
-                            )
-                        })}
-
-                    </div>
-
-                    <input value={searchParams?.search_param} onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }} type="text" className="border mb-2 bg-gray-100" placeholder={t('common.search')} />
-
-                </header>
-                <div className="p-3">
-                    <div className="overflow-x-auto">
-
-                        <table className="table-auto w-full">
-                            <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
-                                <tr>
-                                    {preparedFields && preparedFields}
-
-
-                                    {props.has_actions &&
-                                        <th className="p-2 whitespace-nowrap">
-                                            <div className="font-semibold text-center">Actions</div>
-                                        </th>}
-                                </tr>
-                            </thead>
-
-
-                            <tbody className="text-sm divide-y divide-gray-100">
-
-
-                                {data?.data.map((record: GenericEntry) => {
-
+                                {props?.table_actions?.map((el, index) => {
                                     return (
-                                        <tr key={record.id}>
-                                            {props.fields.map((f, index) => {
-                                                if (f.original_name in record) {
-
-                                                    if (f.formatFn) {
-
-                                                        return <td key={index} className="p-2 whitespace-nowrap">
-                                                            <div className="text-left">
-                                                                <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
-                                                            </div>
-                                                        </td>
-                                                    } else {
-                                                        return <td key={index} className="p-2 whitespace-nowrap">
-                                                            <div className="text-left">
-                                                                <p>{record[f.original_name] as unknown as string}</p>
-                                                            </div>
-                                                        </td>
-                                                    }
-
-                                                }
-                                                throw new Error(`Column [${f.original_name}] is not part of response.`)
-                                            })}
-
-                                            {props.has_actions &&
-                                                <td className="p-2 whitespace-nowrap">
-                                                    <div className="text-lg text-center">
-                                                        {props.actions.map((action, index) => {
-                                                            return (<button className="p-1" key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
-                                                        })}
-                                                    </div>
-                                                </td>}
-                                        </tr>)
+                                        <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
+                                    )
                                 })}
-                            </tbody>
-                        </table>
-
-                        <div className='flex items-center justify-center'>
-                            <div className="flex justify-center items-center space-x-4">
-                                <button onClick={() => changePage('previous')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&lt;</button>
-                                <div className="text-slate-500">{data?.meta?.current_page} / {data?.meta?.last_page}</div>
-                                <button onClick={() => changePage('next')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&gt;</button>
                             </div>
-                        </div>
+
+                            <input value={searchParams?.search_param}
+                                onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
+                                type="text"
+                                className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
+                            <div>
+                                {props.has_table_filters &&
+                                    <Filter onClick={() => { setShowFilters(!showFilters) }} className="cursor-pointer" />
+                                }
+                                {props.table_filters?.map((filter, index) => (
+                                    <div key={index}>
+                                        {filter.component}
+                                    </div>
+                                ))}
+
+                            </div>
+                        </header>
+
+                        {
+                            isLoading &&
+                            <p>{t('common.please_wait')}</p>
+
+                        }
+
+                        {!isLoading &&
+                            <div className="p-3">
+                                <div className="overflow-x-auto">
+
+                                    <table className="table-auto w-full">
+                                        <thead className="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
+                                            <tr>
+                                                {preparedFields && preparedFields}
+
+
+                                                {props.has_actions &&
+                                                    <th className="p-2 whitespace-nowrap">
+                                                        <div className="font-semibold text-center">Actions</div>
+                                                    </th>}
+                                            </tr>
+                                        </thead>
+
+
+                                        <tbody className="text-sm divide-y divide-gray-100">
+
+
+                                            {data?.data.map((record: GenericEntry) => {
+
+                                                return (
+                                                    <tr key={record.id}>
+                                                        {props.fields.map((f, index) => {
+                                                            if (f.original_name in record) {
+
+                                                                if (f.formatFn) {
+
+                                                                    return <td key={index} className="p-2 whitespace-nowrap">
+                                                                        <div className="text-left">
+                                                                            <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
+                                                                        </div>
+                                                                    </td>
+                                                                } else {
+                                                                    return <td key={index} className="p-2 whitespace-nowrap">
+                                                                        <div className="text-left">
+                                                                            <p>{record[f.original_name] as unknown as string}</p>
+                                                                        </div>
+                                                                    </td>
+                                                                }
+
+                                                            }
+                                                            throw new Error(`Column [${f.original_name}] is not part of response.`)
+                                                        })}
+
+                                                        {props.has_actions &&
+                                                            <td className="p-2 whitespace-nowrap">
+                                                                <div className="text-lg text-center">
+                                                                    {props.actions.map((action, index) => {
+                                                                        return (<button className="p-1" key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
+                                                                    })}
+                                                                </div>
+                                                            </td>}
+                                                    </tr>)
+                                            })}
+                                        </tbody>
+                                    </table>
+
+                                    <div className='flex items-center justify-center'>
+                                        <div className="flex justify-center items-center space-x-4">
+                                            <button onClick={() => changePage('previous')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&lt;</button>
+                                            <div className="text-slate-500">{data?.meta?.current_page} / {data?.meta?.last_page}</div>
+                                            <button onClick={() => changePage('next')} className="border rounded-md bg-gray-100 px-2 py-1 text-3xl leading-6 text-slate-400 transition hover:bg-gray-200 hover:text-slate-500 cursor-pointer shadow-sm">&gt;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>}
                     </div>
                 </div>
-            </div>
-        </div>
+            }
+
+        </>
+
     );
 }
 

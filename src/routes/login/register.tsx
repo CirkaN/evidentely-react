@@ -15,6 +15,7 @@ interface RegistrationForm {
     email: string
 }
 
+
 const Register = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();

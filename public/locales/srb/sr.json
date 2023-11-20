@@ -6,7 +6,8 @@
       "enter_password":"Unesite vasu lozinku",
       "company_name":"Ime kompanije",
       "your_name":"Vase Ime",
-      "search":"Pretrazi"
+      "search":"Pretrazi...",
+      "please_wait":"Molimo sacekajte"
     },
     "register":{
         "register":"Registracija",
