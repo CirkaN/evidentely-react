@@ -23,7 +23,7 @@ const Login = () => {
   const openRegistration = () => {
     navigate('/register');
   }
-  
+
   const [hasErrors, setHasErrors] = useState(false);
 
   const loginRequest = () => {

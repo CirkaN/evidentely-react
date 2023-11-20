@@ -24,7 +24,6 @@ const InfoBox = (props: infoProps) => {
         return (<div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
             <span className="font-bold">{props.headerText}</span> <br />
             <span className={props.fontSize ?? 'text-md'}>{props.text}.</span>
-
         </div>);
     } else {
         return (<div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">

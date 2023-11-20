@@ -1,23 +1,29 @@
 {
   "common":{
-    "email":"E-mail adresa",
-    "password":"Sifra",
-    "enter_email":"Unesite e-mail adresu",
-    "enter_password":"Unesite vasu lozinku"
+    "email":"E-mail",
+    "password":"Password",
+    "enter_email":"Enter e-mail address",
+    "enter_password":"Enter password",
+    "company_name":"Company name",
+    "your_name":"Your Name",
+    "search":"Search"
   },
   "register":{
-      "register":"Registracija",
-      "register_text":"Ovde se mozete registrovati",
-      "already_has_account":"Imate nalog? Molimo ulogujte se",
-      "register_button":"Registruj se",
-      "login_button":"Loguj se"
+      "register":"Register",
+      "register_text":"You can register here",
+      "already_has_account":"Have account? Please log in",
+      "register_button":"Register",
+      "login_button":"Login",
+      "success":"Registration success, please login!",
+      "failed":"Please check your inputs!"
   },
   "login":{
-    "login":"Uloguj se",
-    "login_text":"Ovde se mozete ulogovati",
-    "lost_password":"Zaboravljena lozinka?",
-    "dont_have_account":"Nemate nalog? Registrujte se",
-    "login_button":"Uloguj se",
-    "register_button":"Registruj se"
+    "login":"Login",
+    "login_text":"You can login here",
+    "lost_password":"Forgot password?",
+    "dont_have_account":"You don't have an account? Register",
+    "login_button":"Login",
+    "register_button":"Register",
+    "check_credentials":"Please check your inputs"
   }
 }
