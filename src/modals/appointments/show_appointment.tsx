@@ -3,6 +3,8 @@ import { Button, Dialog, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
+import ChargeClientModal from "./charge_client";
+import { Save, Trash } from "react-feather";
 
 
 interface ShowAppointmentModalProps {
@@ -15,6 +17,7 @@ interface ShowAppointmentModalProps {
 const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
     const [appointment, setAppointment] = useState<AppointmentType>();
+    const [isChargeClientModalOpen, setIsChargeClientModalOpen] = useState(false);
 
 
     const fetchAppointment = () => {
@@ -31,6 +34,10 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
 
     }
+    const chargeClient = () => {
+        setIsChargeClientModalOpen(true);
+    }
+
     useEffect(() => {
         if (props.appointmentId) {
             fetchAppointment();
@@ -40,7 +47,8 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
     return (<>
         <div><Toaster /></div>
-
+    
+        <ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false) }} isOpen={isChargeClientModalOpen}></ChargeClientModal>
         <Dialog.Root open={props.isOpen} >
 
 
@@ -103,9 +111,19 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                             Ponisti
                         </Button>
                     </Dialog.Close>
+
                     <Dialog.Close>
-                        <Button onClick={() => { updateEvent() }}>Save</Button>
+                        <Button color="orange" onClick={() => { updateEvent() }}>Otkazan termin</Button>
                     </Dialog.Close>
+
+                    <Button onClick={() => { chargeClient() }}>Naplata</Button>
+                    <Dialog.Close>
+                        <Button color="red" onClick={() => { updateEvent() }}><Trash size={20} /></Button>
+                    </Dialog.Close>
+                    <Dialog.Close>
+                        <Button color="green" onClick={() => { updateEvent() }}><Save size={20} /></Button>
+                    </Dialog.Close>
+
                 </Flex>
             </Dialog.Content>
         </Dialog.Root>
