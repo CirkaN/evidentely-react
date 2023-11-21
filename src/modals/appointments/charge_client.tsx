@@ -8,8 +8,8 @@ interface ChargeClientProps {
     isOpen: boolean,
     cancelFunction: () => void,
     appointment_id: string,
-
 }
+
 interface ChargeParams {
     "payment_method": "card" | "cash" | "loan" | undefined,
     "paid_amount": string | number,
