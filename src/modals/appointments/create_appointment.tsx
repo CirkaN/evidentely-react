@@ -28,7 +28,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         user_id: "",
         service_id: "",
         employee_id: "",
-        due_amount:"",
+        due_amount: "",
         title: "",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
@@ -52,16 +52,16 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         service_id: "",
         employee_id: "",
         title: "",
-        due_amount:"",
+        due_amount: "",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
         color: "#00D14D",
         remind_client: true,
         remind_setting: {
-            remind_day_before: false,
+            remind_day_before: true,
             remind_same_day: false,
-            remind_now: false,
+            remind_now: true,
             remind_for_upcoming: false,
             settings_for_upcoming: {
                 date: "",
@@ -156,8 +156,8 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             setSelectedClient((c) => c && { ...c, label: e.label });
             setForm((c) => c && { ...c, user_id: client.id.toString() });
             setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
-            setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
-            setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })
+            setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
+            setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })
         }
     }
 
@@ -269,14 +269,21 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 <label> Remind day before</label>
                                 <Switch
                                     checked={form?.remind_setting?.remind_day_before}
-                                    onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_day_before: checked } })}
+                                    onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: check } })}
                                 />
                             </div>
                             <div>
                                 <label>Remind same day</label>
                                 <Switch
-                                    checked={form?.remind_setting?.remind_same_day}
-                                    onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_settings: { ...c.remind_setting, remind_same_day: checked } })}
+                                    checked={form.remind_setting.remind_same_day}
+                                    onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: check } })}
+                                />
+                            </div>
+                            <div>
+                                <label>Send appointment confirmation</label>
+                                <Switch
+                                    checked={form.remind_setting.remind_now}
+                                    onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_now: check } })}
                                 />
                             </div>
                             {/* <div>
