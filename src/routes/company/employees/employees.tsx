@@ -117,7 +117,10 @@ const Employees = () => {
     const deleteEmployee = (id: string) => {
         axios_instance().delete(`/employees/${id}`).then(() => {
             toast.success('Employee deleted succesfully');
-            queryClient.invalidateQueries();
+
+            queryClient.invalidateQueries({
+                queryKey: ['employees'],
+              })
 
         }).catch((e) => {
             toast.error(e.response.message)
@@ -130,7 +133,9 @@ const Employees = () => {
 
     const saveRecord = (form: EmployeeDTO) => {
         axios_instance().post('/employees', form).then(() => {
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['employees'],
+              })
             closeEmployeeCreateModal();
         })
     }
@@ -140,7 +145,7 @@ const Employees = () => {
             <InfoBox type={InfoBoxType.Info} headerText="Zaposleni" text="Upravljaj zaposlenima"></InfoBox>
             <CreateEmployeeModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateEmployeeModalOpen} ></CreateEmployeeModal>
             <div className="py-5">
-                <DataTable table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>
+                <DataTable queryKey="employees" table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>
             </div>
         </>
     )

@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import Select, { MultiValue } from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { useQuery, useQueryClient } from "react-query";
-
 import axios_instance from "../../config/api_defaults";
 
 
@@ -21,7 +20,7 @@ interface ServiceListMutated {
 }
 
 const CreatePackageModal = (props: ModalProps) => {
-    const queryClient = useQueryClient(); 
+    const queryClient = useQueryClient();
     const { t } = useTranslation();
     const [selectedServices] = useState();
     const [mutatedServiceList, setMutatedServiceList] = useState<Array<ServiceListMutated>>();
@@ -54,11 +53,10 @@ const CreatePackageModal = (props: ModalProps) => {
             expiration_date: "",
             description: "",
             service_ids: [],
-            expired:false,
+            expired: false,
         }
     );
     const selecteBoxChange = (e: MultiValue<ServiceListMutated>) => {
-
         const parsedServiceIds = e.map((e) => {
             return parseInt(e.value);
         })
@@ -70,15 +68,13 @@ const CreatePackageModal = (props: ModalProps) => {
         saveForm()
     }
     const saveForm = () => {
-        axios_instance().post('/packages/',form).then(r=>{
+        axios_instance().post('/packages/', form).then(() => {
             props.cancelFunction();
-            queryClient.invalidateQueries();
-            //invalidate query
-            //close the modal
-
-            console.log(r);
+            queryClient.invalidateQueries({
+                queryKey: ['packages'],
+              })
         })
-        console.log('something', form);
+
     }
     return (<>
         <Dialog.Root open={props.isOpen} >
@@ -123,14 +119,13 @@ const CreatePackageModal = (props: ModalProps) => {
                                 {t('create_package.price')}
                             </Text>
                             <TextField.Input
-                            required={true}
+                                required={true}
                                 onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })}
                                 value={form.price}
-
                             />
                         </label>
                         <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
+                            <Text color="green" as="div" size="2" mb="1" weight="bold">
                                 {t('create_package.sale_price')}
                             </Text>
                             <TextField.Input

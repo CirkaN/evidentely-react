@@ -49,7 +49,9 @@ const Products = () => {
 
   const deleteItem = (id: number) => {
     axios_instance().delete(`/items/${id}`).then(() => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({
+        queryKey: ['products'],
+      })
       toast.success('uspesno izbrisan produkt');
     })
   }
@@ -88,7 +90,9 @@ const Products = () => {
   const saveFunction = (form: ItemDTO) => {
     axios_instance().post('/items', form).then(() => {
       setIsCreateItemModalOpen(false)
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({
+        queryKey: ['products'],
+      })
     })
 
   }
@@ -103,6 +107,7 @@ const Products = () => {
         modalType="product"
       />
       <DataTable
+        queryKey="products"
         table_actions={table_actions}
         has_actions={true}
         table_name="Proizvodi"

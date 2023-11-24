@@ -74,7 +74,10 @@ const Services = () => {
     const deleteItem = (id: number) => {
         axios_instance().delete(`/items/${id}`).then(() => {
             toast.success('Uspesno izbrisan produkt');
-            queryClient.invalidateQueries();
+
+            queryClient.invalidateQueries({
+                queryKey: ['services'],
+              })
         })
     }
 
@@ -87,7 +90,9 @@ const Services = () => {
     }
     const saveFunction = (form: ItemDTO) => {
         axios_instance().post('/items', form).then(() => {
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['services'],
+              })
             setIsCreateItemModalOpen(false);
         });
     }
@@ -102,6 +107,7 @@ const Services = () => {
                 modalType="service"
             />
             <DataTable
+            queryKey="services"
                 table_actions={table_actions}
                 has_actions={true}
                 table_name="Usluge"

@@ -48,7 +48,9 @@ const Clients = () => {
     const deleteClient = (id: number) => {
         axios_instance().delete(`/clients/${id}`).then(() => {
             toast.success('Client deleted succesfully');
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['clients'],
+              })
 
         }).catch((e) => {
             toast.error(e.response.message)
@@ -109,7 +111,9 @@ const Clients = () => {
 
     const saveRecord = (form: ClientCreateDTO) => {
         axios_instance().post('/clients', form).then(() => {
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['clients'],
+              })
             closeClientCreateModal();
         })
     }
@@ -130,7 +134,7 @@ const Clients = () => {
             <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
             <SweetAlert2 {...swalProps} />
             <div className="py-5">
-                <DataTable has_table_filters={true} table_filters={tableFilters} table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
+                <DataTable queryKey="clients" has_table_filters={true} table_filters={tableFilters} table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
             </div>
         </>
     );

@@ -10,7 +10,11 @@
       "please_wait":"Molimo sacekajte",
       "cancel":"Ponisti",
       "save":"Sacuvaj",
-      "create":"Kreiraj"
+      "create":"Kreiraj",
+      "please_confirm":"Molimo potvrdite",
+      "this_action_is_final":"Ova akcija se ne moze opozvati",
+      "confirm":"Potvrdjujem",
+      "delete_success":"Uspesno brisanje!"
     },
     "register":{
         "register":"Registracija",

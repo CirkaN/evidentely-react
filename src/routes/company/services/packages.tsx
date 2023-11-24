@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Toaster } from "react-hot-toast"
+import toast, { Toaster } from "react-hot-toast"
 import SweetAlert2 from "react-sweetalert2"
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
 import { Check, Eye, Plus, Trash, X } from "react-feather";
 import { PackageDTO } from "../../../shared/interfaces/package.interface";
 import CreatePackageModal from "../../../modals/packages/create_package_modal";
 import { useTranslation } from "react-i18next";
+import axios_instance from "../../../config/api_defaults";
+import { useQueryClient } from "react-query";
 
 const Packages = () => {
     const [swalProps, setSwalProps] = useState({});
+    const queryClient = useQueryClient();
     const [isCreatePackageModalOpen, setIsCreatePackageModalOpen] = useState(false);
     const { t } = useTranslation();
     const table_actions: TableAction[] = [{
@@ -50,7 +53,13 @@ const Packages = () => {
         setSwalProps(dataCopied);
     }
     const deletePackage = (id: string) => {
-        console.log(id);
+        axios_instance().delete(`/packages/${id}`).then(()=>{
+            toast.success(t('common.delete_success'));
+            queryClient.invalidateQueries({
+                queryKey: ['packages'],
+              })
+        })
+ 
     }
     const fields: Field[] = [
         {
@@ -107,6 +116,7 @@ const Packages = () => {
             <SweetAlert2 {...swalProps} />
             <CreatePackageModal isOpen={isCreatePackageModalOpen} cancelFunction={() => { cancelModalFunction() }} />
             <DataTable
+                queryKey="packages"
                 table_actions={table_actions}
                 has_actions={true}
                 table_name="Packages"

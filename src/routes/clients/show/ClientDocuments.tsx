@@ -19,7 +19,7 @@ const ClientDocuments = () => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [isAddAttachmentModalOpen, setIsAddAttachmentModalOpen] = useState(false);
-    const [isShowAttachmentModalOpen, setIsShowAttachmentModalOpen] = useState(false);
+   // const [isShowAttachmentModalOpen, setIsShowAttachmentModalOpen] = useState(false);
     const [swalProps, setSwalProps] = useState({});
     const fields: Field[] = [
         {
@@ -79,12 +79,11 @@ const ClientDocuments = () => {
     }
 
     const deleteAttachment = (id: number) => {
-        axios_instance().delete(`/user/documents/${id}`).then(r => {
-            //todo toast
-            queryClient.invalidateQueries();
+        axios_instance().delete(`/user/documents/${id}`).then(() => {
+            queryClient.invalidateQueries({
+                queryKey: ['client_documents'],
+              })
             toast.success(t('docs.success_delete'));
-
-
         })
     }
 
@@ -118,7 +117,9 @@ const ClientDocuments = () => {
             }
         }).then(r => {
             console.log(r);
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['client_documents'],
+              })
             setIsAddAttachmentModalOpen(false);
         })
 
@@ -128,7 +129,7 @@ const ClientDocuments = () => {
             <Toaster />
             <SweetAlert2 {...swalProps} />
             <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
-            <Datatable table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name="Documents" ></Datatable>
+            <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name="Documents" ></Datatable>
         </div>)
 }
 
