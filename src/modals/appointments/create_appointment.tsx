@@ -155,6 +155,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             setSelectedClient((c) => c && { ...c, value: e.value });
             setSelectedClient((c) => c && { ...c, label: e.label });
             setForm((c) => c && { ...c, user_id: client.id.toString() });
+
             setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })
