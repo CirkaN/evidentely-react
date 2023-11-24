@@ -37,6 +37,7 @@ const AuthCheck = () => {
                 .catch(() => {
                     localStorage.removeItem('auth_token');
                     localStorage.removeItem('token_expires_at');
+                    navigate('/login');
                 })
         }
 
