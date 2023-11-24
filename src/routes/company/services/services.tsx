@@ -1,5 +1,5 @@
 
-import { Edit3, Plus, Trash } from "react-feather";
+import { Eye, Plus, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
 import { ItemDTO } from "../../../shared/interfaces/item.interface";
 import CreateItemModal from "../../../modals/items/create_item_modal";
@@ -8,15 +8,22 @@ import { useState } from "react";
 import { useQueryClient } from "react-query";
 import SweetAlert2 from "react-sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
+import EditItemModal from "../../../modals/items/edit_item_modal";
+import { useTranslation } from "react-i18next";
 
 const Services = () => {
     const queryClient = useQueryClient();
+    const { t } = useTranslation();
     const [isCreateItemModalOpen, setIsCreateItemModalOpen] = useState(false);
+    const [isShowItemModalOpen, setIsShowItemModalOpen] = useState(false);
+    const [activeShowItem, setActiveShowItem] = useState("");
+
     const [swalProps, setSwalProps] = useState({});
     const actions: Action<ItemDTO>[] = [
         {
-            type: ActionTypes.Edit,
-            icon: <Edit3 />
+            type: ActionTypes.Show,
+            icon: <Eye />,
+            fn: (item: ItemDTO) => { openShowModal(item.id) }
         },
         {
             type: ActionTypes.Delete,
@@ -24,6 +31,11 @@ const Services = () => {
             fn: (item: ItemDTO) => { raiseDeleteAlert(parseInt(item.id)) }
         },
     ]
+    const openShowModal = (id: string) => {
+        setActiveShowItem(id);
+        setIsShowItemModalOpen(true);
+    }
+
     const fields: Field[] = [
         {
             name: "Ime",
@@ -77,7 +89,7 @@ const Services = () => {
 
             queryClient.invalidateQueries({
                 queryKey: ['services'],
-              })
+            })
         })
     }
 
@@ -92,14 +104,32 @@ const Services = () => {
         axios_instance().post('/items', form).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['services'],
-              })
+            })
             setIsCreateItemModalOpen(false);
         });
     }
+    const cancelShowFunction = () => {
+        setIsShowItemModalOpen(false)
+    }
+    const saveShowFunction = (form: ItemDTO) => {
+        axios_instance().put(`/items/${form.id}`, form).then(() => {
+            toast.success(t('common.update_success'))
+            queryClient.invalidateQueries({ queryKey: ['services'] })
+            setIsShowItemModalOpen(false);
+        })
+    }
+
     return (
         <>
             <Toaster />
             <SweetAlert2 {...swalProps} />
+            <EditItemModal
+                modalType="service"
+                saveFunction={saveShowFunction}
+                isOpen={isShowItemModalOpen}
+                cancelFunction={cancelShowFunction}
+                item_id={activeShowItem}
+            />
             <CreateItemModal
                 cancelFunction={cancelFunction}
                 saveFunction={saveFunction}
@@ -107,7 +137,7 @@ const Services = () => {
                 modalType="service"
             />
             <DataTable
-            queryKey="services"
+                queryKey="services"
                 table_actions={table_actions}
                 has_actions={true}
                 table_name="Usluge"

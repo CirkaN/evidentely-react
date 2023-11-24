@@ -15,7 +15,8 @@
       "this_action_is_final":"Ova akcija se ne moze opozvati",
       "confirm":"Potvrdjujem",
       "delete_success":"Uspesno brisanje!",
-      "edit":"Uredi"
+      "edit":"Uredi",
+      "update_success":"Izmena je uspesno sacuvana"
     },
     "register":{
         "register":"Registracija",
