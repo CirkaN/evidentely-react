@@ -18,6 +18,7 @@ export interface DatatableProps<T = GenericEntry[]> {
     table_filters?: TableFilter[],
     has_table_filters?: boolean,
     url: string,
+    queryKey: string,
 }
 export interface TableAction {
     icon: ReactElement,
@@ -66,7 +67,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     const { t } = useTranslation();
 
     const { isLoading, data } = useQuery({
-        queryKey: [props.url, builtUrl.href],
+        queryKey: [props.queryKey, props.url, builtUrl.href],
         queryFn: () => axios_instance().get(builtUrl.href).then(r => r.data),
         keepPreviousData: true
     })

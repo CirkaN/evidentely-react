@@ -25,7 +25,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
     })
 
     const { isLoading } = useQuery({
-        queryKey: [props.appointment_id],
+        queryKey: ['charge_clients', props.appointment_id],
         queryFn: () => axios_instance().get(`/appointments/${props.appointment_id}`).then(r => {
             setChargeParams((c) => c && { ...c, paid_amount: r.data.paid_amount })
             setChargeParams((c) => c && { ...c, amount_to_be_paid: r.data.due_amount })
@@ -40,7 +40,9 @@ const ChargeClientModal = (props: ChargeClientProps) => {
     const saveCharge = () => {
         axios_instance().post(`/appointments/${props.appointment_id}/charge`, chargeParams).then(() => {
             setChargeParams((c) => c && { ...c, paid_amount: 0 })
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries({
+                queryKey: ['charge_clients'],
+            })
         })
     }
 

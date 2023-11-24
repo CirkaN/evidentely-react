@@ -7,7 +7,14 @@
       "company_name":"Ime kompanije",
       "your_name":"Vase Ime",
       "search":"Pretrazi...",
-      "please_wait":"Molimo sacekajte"
+      "please_wait":"Molimo sacekajte",
+      "cancel":"Ponisti",
+      "save":"Sacuvaj",
+      "create":"Kreiraj",
+      "please_confirm":"Molimo potvrdite",
+      "this_action_is_final":"Ova akcija se ne moze opozvati",
+      "confirm":"Potvrdjujem",
+      "delete_success":"Uspesno brisanje!"
     },
     "register":{
         "register":"Registracija",
@@ -26,5 +33,15 @@
       "login_button":"Uloguj se",
       "register_button":"Registruj se",
       "check_credentials":"Uneli ste pogresne podatke"
+    },
+    "create_package":{
+      "modal_title":"Kreiraj paket",
+      "modal_description":"Kreiraj paket usluga",
+      "name":"Ime",
+      "price":"Puna cena",
+      "sale_price":"Cena na popustu",
+      "expires_at":"Paket istice:",
+      "description":"Opis paketa",
+      "services":"Lista usluga"
     }
 }
