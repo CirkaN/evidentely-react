@@ -14,7 +14,8 @@
       "please_confirm":"Molimo potvrdite",
       "this_action_is_final":"Ova akcija se ne moze opozvati",
       "confirm":"Potvrdjujem",
-      "delete_success":"Uspesno brisanje!"
+      "delete_success":"Uspesno brisanje!",
+      "edit":"Uredi"
     },
     "register":{
         "register":"Registracija",
@@ -43,5 +44,14 @@
       "expires_at":"Paket istice:",
       "description":"Opis paketa",
       "services":"Lista usluga"
+    },
+    "item":{
+      "name":"Ime proizvoda",
+      "discount_price":"Cena sa popustom",
+      "price":"Cena",
+      "duration":"Trajanje",
+      "color":"Boja u kalendaru",
+      "note":"Napomena"
+
     }
 }

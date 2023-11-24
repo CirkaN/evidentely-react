@@ -255,16 +255,18 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         <Select required={true} value={selectedClient} options={clientTransformedList} onChange={(e) => { setClientForm(e) }} />
                     </div>
 
-                    <div>
-                        <label> Remind Client</label>
-                        <Switch
-                            checked={form.remind_client}
-                            onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
-                        />
-                    </div>
 
+                    {form.user_id &&
+                        <div>
+                            <label> Remind Client</label>
+                            <Switch
+                                checked={form.remind_client}
+                                onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
+                            />
+                        </div>
+                    }
 
-                    {form.remind_client && (
+                    {form.user_id && form.remind_client && (
                         <>
                             <div>
                                 <label> Remind day before</label>
