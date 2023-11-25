@@ -8,11 +8,14 @@ import CreatePackageModal from "../../../modals/packages/create_package_modal";
 import { useTranslation } from "react-i18next";
 import axios_instance from "../../../config/api_defaults";
 import { useQueryClient } from "react-query";
+import ShowPackageModal from "../../../modals/packages/show_package_modal";
 
 const Packages = () => {
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const [isCreatePackageModalOpen, setIsCreatePackageModalOpen] = useState(false);
+    const [isShowPackageModalOpen, setIsShowPackageModalOpen] = useState(false);
+    const [activeShowId, setActiveShowId] = useState("");
     const { t } = useTranslation();
     const table_actions: TableAction[] = [{
         icon: <Plus />,
@@ -21,7 +24,8 @@ const Packages = () => {
     const actions: Action<PackageDTO>[] = [
         {
             type: ActionTypes.Edit,
-            icon: <Eye />
+            icon: <Eye />,
+            fn: (item: PackageDTO) => { openShowModal(item.id) }
         },
         {
             type: ActionTypes.Delete,
@@ -29,6 +33,10 @@ const Packages = () => {
             fn: (item: PackageDTO) => { raiseDeleteAlert(item.id) }
         },
     ]
+    const openShowModal = (id: string) => {
+        setActiveShowId(id);
+        setIsShowPackageModalOpen(true);
+    }
 
     const raiseDeleteAlert = (id: string) => {
         setSwalProps({
@@ -53,13 +61,13 @@ const Packages = () => {
         setSwalProps(dataCopied);
     }
     const deletePackage = (id: string) => {
-        axios_instance().delete(`/packages/${id}`).then(()=>{
+        axios_instance().delete(`/packages/${id}`).then(() => {
             toast.success(t('common.delete_success'));
             queryClient.invalidateQueries({
                 queryKey: ['packages'],
-              })
+            })
         })
- 
+
     }
     const fields: Field[] = [
         {
@@ -110,10 +118,18 @@ const Packages = () => {
     const cancelModalFunction = () => {
         setIsCreatePackageModalOpen(false);
     }
+    const cancelShowFunction = () => {
+        setIsShowPackageModalOpen(false);
+    }
     return (
         <>
             <Toaster />
             <SweetAlert2 {...swalProps} />
+            <ShowPackageModal
+                isOpen={isShowPackageModalOpen}
+                cancelFunction={cancelShowFunction}
+                package_id={activeShowId}
+            />
             <CreatePackageModal isOpen={isCreatePackageModalOpen} cancelFunction={() => { cancelModalFunction() }} />
             <DataTable
                 queryKey="packages"

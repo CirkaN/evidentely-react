@@ -1,58 +1,61 @@
 {
-    "common":{
-      "email":"E-mail adresa",
-      "password":"Sifra",
-      "enter_email":"Unesite e-mail adresu",
-      "enter_password":"Unesite vasu lozinku",
-      "company_name":"Ime kompanije",
-      "your_name":"Vase Ime",
-      "search":"Pretrazi...",
-      "please_wait":"Molimo sacekajte",
-      "cancel":"Ponisti",
-      "save":"Sacuvaj",
-      "create":"Kreiraj",
-      "please_confirm":"Molimo potvrdite",
-      "this_action_is_final":"Ova akcija se ne moze opozvati",
-      "confirm":"Potvrdjujem",
-      "delete_success":"Uspesno brisanje!",
-      "edit":"Uredi",
-      "update_success":"Izmena je uspesno sacuvana"
-    },
-    "register":{
-        "register":"Registracija",
-        "register_text":"Ovde se mozete registrovati",
-        "already_has_account":"Imate nalog? Molimo ulogujte se",
-        "register_button":"Registruj se",
-        "login_button":"Loguj se",
-        "success":"Uspesno ste se registrovali, molimo ulogujte se",
-        "failed":"Registracija neuspesna, molimo proverite unose!"
-    },
-    "login":{
-      "login":"Uloguj se",
-      "login_text":"Ovde se mozete ulogovati",
-      "lost_password":"Zaboravljena lozinka?",
-      "dont_have_account":"Nemate nalog? Registrujte se",
-      "login_button":"Uloguj se",
-      "register_button":"Registruj se",
-      "check_credentials":"Uneli ste pogresne podatke"
-    },
-    "create_package":{
-      "modal_title":"Kreiraj paket",
-      "modal_description":"Kreiraj paket usluga",
-      "name":"Ime",
-      "price":"Puna cena",
-      "sale_price":"Cena na popustu",
-      "expires_at":"Paket istice:",
-      "description":"Opis paketa",
-      "services":"Lista usluga"
-    },
-    "item":{
-      "name":"Ime proizvoda",
-      "discount_price":"Cena sa popustom",
-      "price":"Cena",
-      "duration":"Trajanje",
-      "color":"Boja u kalendaru",
-      "note":"Napomena"
-
-    }
+  "common": {
+    "email": "E-mail adresa",
+    "password": "Sifra",
+    "enter_email": "Unesite e-mail adresu",
+    "enter_password": "Unesite vasu lozinku",
+    "company_name": "Ime kompanije",
+    "your_name": "Vase Ime",
+    "search": "Pretrazi...",
+    "please_wait": "Molimo sacekajte",
+    "cancel": "Ponisti",
+    "save": "Sacuvaj",
+    "create": "Kreiraj",
+    "please_confirm": "Molimo potvrdite",
+    "this_action_is_final": "Ova akcija se ne moze opozvati",
+    "confirm": "Potvrdjujem",
+    "delete_success": "Uspesno brisanje!",
+    "edit": "Uredi",
+    "update_success": "Izmena je uspesno sacuvana"
+  },
+  "register": {
+    "register": "Registracija",
+    "register_text": "Ovde se mozete registrovati",
+    "already_has_account": "Imate nalog? Molimo ulogujte se",
+    "register_button": "Registruj se",
+    "login_button": "Loguj se",
+    "success": "Uspesno ste se registrovali, molimo ulogujte se",
+    "failed": "Registracija neuspesna, molimo proverite unose!"
+  },
+  "login": {
+    "login": "Uloguj se",
+    "login_text": "Ovde se mozete ulogovati",
+    "lost_password": "Zaboravljena lozinka?",
+    "dont_have_account": "Nemate nalog? Registrujte se",
+    "login_button": "Uloguj se",
+    "register_button": "Registruj se",
+    "check_credentials": "Uneli ste pogresne podatke"
+  },
+  "create_package": {
+    "modal_title": "Kreiraj paket",
+    "modal_description": "Kreiraj paket usluga",
+    "name": "Ime",
+    "price": "Puna cena",
+    "sale_price": "Cena na popustu",
+    "expires_at": "Paket istice:",
+    "description": "Opis paketa",
+    "services": "Lista usluga"
+  },
+  "edit_package": {
+    "modal_title": "Izmeni paket",
+    "modal_description": "Izmeni paket usluga"
+  },
+  "item": {
+    "name": "Ime proizvoda",
+    "discount_price": "Cena sa popustom",
+    "price": "Cena",
+    "duration": "Trajanje",
+    "color": "Boja u kalendaru",
+    "note": "Napomena"
+  }
 }

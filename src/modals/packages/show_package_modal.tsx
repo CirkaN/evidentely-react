@@ -1,6 +1,6 @@
 import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { PackageDTO } from "../../shared/interfaces/package.interface";
 import { useTranslation } from "react-i18next";
 import Select, { MultiValue } from 'react-select'
@@ -11,6 +11,7 @@ import axios_instance from "../../config/api_defaults";
 
 interface ModalProps {
     isOpen: boolean,
+    package_id: string,
     cancelFunction: () => void,
 }
 
@@ -19,9 +20,10 @@ interface ServiceListMutated {
     value: string,
 }
 
-const CreatePackageModal = (props: ModalProps) => {
+const ShowPackageModal = (props: ModalProps) => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
+    const [defaultValues, setDefaultValues] = useState<Array<ServiceListMutated>>();
     const [selectedServices] = useState();
     const [mutatedServiceList, setMutatedServiceList] = useState<Array<ServiceListMutated>>();
 
@@ -30,6 +32,7 @@ const CreatePackageModal = (props: ModalProps) => {
         queryKey: ['packageData'], queryFn: () => {
             axios_instance().get('/items?type=service').then(r => {
                 mutateData(r.data);
+                console.log(r.data);
             })
         }
     })
@@ -56,6 +59,19 @@ const CreatePackageModal = (props: ModalProps) => {
             expired: false,
         }
     );
+    const fetchPackage = () => {
+        axios_instance().get(`/packages/${props.package_id}`).then(r => {
+            console.log(r);
+
+            setForm(r.data);
+        });
+    }
+    useEffect(() => {
+        if (props.package_id) {
+            fetchPackage();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.package_id]);
     const selecteBoxChange = (e: MultiValue<ServiceListMutated>) => {
         const parsedServiceIds = e.map((e) => {
             return parseInt(e.value);
@@ -72,16 +88,16 @@ const CreatePackageModal = (props: ModalProps) => {
             props.cancelFunction();
             queryClient.invalidateQueries({
                 queryKey: ['packages'],
-              })
+            })
         })
 
     }
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 500 }}>
-                <Dialog.Title>{t('create_package.modal_title')}</Dialog.Title>
+                <Dialog.Title>{t('edit_package.modal_title')}</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
-                    {t('create_package.modal_description')}
+                    {t('edit_package.modal_description')}
                 </Dialog.Description>
 
                 <form onSubmit={handleSubmit}>
@@ -93,7 +109,7 @@ const CreatePackageModal = (props: ModalProps) => {
 
                         <TextField.Input
                             onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
-                            value={form.name}
+                            value={form?.name ?? ""}
                         />
 
                     </Flex>
@@ -103,6 +119,7 @@ const CreatePackageModal = (props: ModalProps) => {
                             {t('create_package.services')}
                         </Text>
                         <Select required={true}
+                            defaultValue={defaultValues}
                             components={animatedComponents}
                             closeMenuOnSelect={false}
                             value={selectedServices}
@@ -121,7 +138,7 @@ const CreatePackageModal = (props: ModalProps) => {
                             <TextField.Input
                                 required={true}
                                 onChange={(e) => setForm((c) => c && { ...c, price: e.target.value })}
-                                value={form.price}
+                                value={form?.price ?? ""}
                             />
                         </label>
                         <label>
@@ -130,7 +147,7 @@ const CreatePackageModal = (props: ModalProps) => {
                             </Text>
                             <TextField.Input
                                 onChange={(e) => setForm((c) => c && { ...c, sale_price: e.target.value })}
-                                value={form.sale_price}
+                                value={form?.sale_price ?? ""}
 
                             />
                         </label>
@@ -141,7 +158,7 @@ const CreatePackageModal = (props: ModalProps) => {
                         <Text as="div" size="2" mb="1" weight="bold">
                             {t('create_package.expires_at')}
                         </Text>
-                        <input type="date" name="expiration_date" value={form.expiration_date} onChange={(e) => { setForm((c) => c && { ...c, expiration_date: e.target.value }) }} />
+                        <input type="date" name="expiration_date" value={form?.expiration_date ?? ""} onChange={(e) => { setForm((c) => c && { ...c, expiration_date: e.target.value }) }} />
 
                     </Flex>
 
@@ -151,7 +168,7 @@ const CreatePackageModal = (props: ModalProps) => {
                         </Text>
                         <TextField.Input
                             onChange={(e) => setForm((c) => c && { ...c, description: e.target.value })}
-                            value={form.description}
+                            value={form?.description ?? ""}
 
                         />
                     </Flex>
@@ -176,4 +193,4 @@ const CreatePackageModal = (props: ModalProps) => {
 
 
 
-export default CreatePackageModal;
+export default ShowPackageModal;
