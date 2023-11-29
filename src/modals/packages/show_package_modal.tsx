@@ -32,7 +32,6 @@ const ShowPackageModal = (props: ModalProps) => {
         queryKey: ['packageData'], queryFn: () => {
             axios_instance().get('/items?type=service').then(r => {
                 mutateData(r.data);
-                console.log(r.data);
             })
         }
     })
