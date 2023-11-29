@@ -23,7 +23,7 @@ interface ServiceListMutated {
 const ShowPackageModal = (props: ModalProps) => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
-    const [defaultValues, setDefaultValues] = useState<Array<ServiceListMutated>>();
+    const [defaultValues] = useState<Array<ServiceListMutated>>();
     const [selectedServices] = useState();
     const [mutatedServiceList, setMutatedServiceList] = useState<Array<ServiceListMutated>>();
 
