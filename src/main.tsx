@@ -23,6 +23,7 @@ import Packages from './routes/company/services/packages.tsx';
 import Register from './routes/login/register.tsx';
 import './i18n.ts';
 import ClientSummary from './routes/clients/show/ClientSummary.tsx';
+import Analytics from './routes/analytics/default.tsx';
 
 
 const queryClient = new QueryClient()
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/clients",
         element: <Clients />,
+      },
+      {
+        path: "/analytics",
+        element: <Analytics />
       },
       {
         path: "/company_settings",
