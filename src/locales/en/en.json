@@ -1,33 +1,4 @@
 {
-  "common":{
-    "email":"E-mail",
-    "password":"Password",
-    "enter_email":"Enter e-mail address",
-    "enter_password":"Enter password",
-    "company_name":"Company name",
-    "your_name":"Your Name",
-    "search":"Search"
-  },
-  "register":{
-      "register":"Register",
-      "register_text":"You can register here",
-      "already_has_account":"Have account? Please log in",
-      "register_button":"Register",
-      "login_button":"Login",
-      "success":"Registration success, please login!",
-      "failed":"Please check your inputs!"
-  },
-  "login":{
-    "login":"Login",
-    "login_text":"You can login here",
-    "lost_password":"Forgot password?",
-    "dont_have_account":"You don't have an account? Register",
-    "login_button":"Login",
-    "register_button":"Register",
-    "check_credentials":"Please check your inputs"
-  }
-}
-{
   "common": {
     "email": "E-mail adresa",
     "password": "Sifra",
