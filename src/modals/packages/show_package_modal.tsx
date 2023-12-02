@@ -23,7 +23,7 @@ interface ServiceListMutated {
 const ShowPackageModal = (props: ModalProps) => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
-    const [defaultValues, setDefaultValues] = useState<Array<ServiceListMutated>>();
+    const [defaultValues] = useState<Array<ServiceListMutated>>();
     const [selectedServices] = useState();
     const [mutatedServiceList, setMutatedServiceList] = useState<Array<ServiceListMutated>>();
 
@@ -32,7 +32,6 @@ const ShowPackageModal = (props: ModalProps) => {
         queryKey: ['packageData'], queryFn: () => {
             axios_instance().get('/items?type=service').then(r => {
                 mutateData(r.data);
-                console.log(r.data);
             })
         }
     })

@@ -9,7 +9,7 @@ const DefaultPage = () => {
             <div>
                 <Auth></Auth>
                 <NavBar></NavBar>
-                <div className="px-64 py-5 bg-slate-50 h-screen" >
+                <div className="p-4 md:p-8 lg:p-12 bg-slate-50 min-h-screen" >
                     <Outlet />
                 </div>
             </div>

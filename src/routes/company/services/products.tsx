@@ -37,14 +37,14 @@ const Products = () => {
     setSwalProps({
       show: true,
       icon: 'error',
-      title: 'Molimo potvrdite',
-      text: 'This action is unreversible and it will delete client with  all records associated with him',
+      title: t('common.please_confirm'),
+      text: t('common.this_action_is_final'),
       cancelButtonColor: "green",
       reverseButtons: true,
       showCancelButton: true,
       showConfirmButton: true,
-      cancelButtonText: 'Cancel',
-      confirmButtonText: "Go for it",
+      cancelButtonText: t('common.cancel'),
+      confirmButtonText: t('common.confirm'),
       confirmButtonColor: "red",
       onConfirm: () => { deleteItem(id) },
       onResolve: setSwalOff
