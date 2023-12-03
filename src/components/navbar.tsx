@@ -48,7 +48,7 @@ const NavBar = () => {
    <img
         className="h-10 w-auto"
        
-        src="../../public/logo-01.png"
+        src="../../public/logo.png"
         alt="NCODESOFT"
     />
    </a>
