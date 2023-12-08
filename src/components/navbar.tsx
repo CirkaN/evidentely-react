@@ -20,7 +20,7 @@ const NavBar = () => {
             name: 'Analitika',
             items: [
                 { name: 'Clients', href: '/analytics' },
-                { name: 'Finance', href: '/company_settings/dropdown-item-1' },
+                { name: 'Finance', href: '/analytics/finance' },
                 { name: 'Dropdown Item 2', href: '/company_settings/dropdown-item-2' },
             ],
             current: location.pathname.startsWith("/analytics"),

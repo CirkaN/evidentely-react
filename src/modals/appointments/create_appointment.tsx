@@ -26,7 +26,7 @@ interface TransformedDataForSelect {
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const blankForm = {
         user_id: "",
-        service_id: "",
+        item_id: "",
         employee_id: "",
         due_amount: "",
         title: "",
@@ -49,7 +49,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }
     const [form, setForm] = useState<AppointmentType>({
         user_id: "",
-        service_id: "",
+        item_id: "",
         employee_id: "",
         title: "",
         due_amount: "",
@@ -131,7 +131,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const setServiceForm = (e: SingleValue<{ value: string; label: string; }>) => {
         if (e) {
             const service = serviceList.filter(service => service.id === e.value)[0];
-            setForm((c) => c && { ...c, service_id: e.value })
+            setForm((c) => c && { ...c, item_id: e.value })
             if (!form.price) {
                 setForm((c) => c && { ...c, price: service.price })
             } else {

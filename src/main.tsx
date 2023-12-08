@@ -24,6 +24,7 @@ import Register from './routes/login/register.tsx';
 import './i18n.ts';
 import ClientSummary from './routes/clients/show/ClientSummary.tsx';
 import Analytics from './routes/analytics/default.tsx';
+import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
 
 
 const queryClient = new QueryClient()
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/analytics",
         element: <Analytics />
+      },
+      {
+        path: "/analytics/finance",
+        element: <FinancialAnalytics />
       },
       {
         path: "/company_settings",
