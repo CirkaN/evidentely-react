@@ -280,19 +280,40 @@ const FinancialAnalytics = () => {
 
             <div className="w-full sm:w-1/2 md:w-1/3 p-4">
                 <div className="bg-white p-4 shadow-md">
-                    Div 4
+                <ResponsiveContainer width="100%" height="100%" aspect={1}>
+                        <BarChart width={150} height={40} data={top5ServicesByProfit}>
+                            <Bar dataKey="amount" name="profit" fill="#005907" />
+                            <XAxis dataKey="name" />
+                            <Tooltip />
+                        </BarChart>
+                    </ResponsiveContainer>
+                    <p className="text-center">Top 5 products per profit </p>
                 </div>
             </div>
 
             <div className="w-full sm:w-1/2 md:w-1/3 p-4">
                 <div className="bg-white p-4 shadow-md">
-                    Div 5
+                <ResponsiveContainer width="100%" height="100%" aspect={1}>
+                        <BarChart width={150} height={40} data={top5ServicesByProfit}>
+                            <Bar dataKey="amount" name="profit" fill="#005907" />
+                            <XAxis dataKey="name" />
+                            <Tooltip />
+                        </BarChart>
+                    </ResponsiveContainer>
+                    <p className="text-center">Top 5 usluga per profit </p>
                 </div>
             </div>
 
             <div className="w-full sm:w-1/2 md:w-1/3 p-4">
                 <div className="bg-white p-4 shadow-md">
-                    Div 6
+                <ResponsiveContainer width="100%" height="100%" aspect={1}>
+                        <BarChart width={150} height={40} data={top5ServicesByProfit}>
+                            <Bar dataKey="amount" name="profit" fill="#005907" />
+                            <XAxis dataKey="name" />
+                            <Tooltip />
+                        </BarChart>
+                    </ResponsiveContainer>
+                    <p className="text-center">Top 5 usluga per profit </p>
                 </div>
             </div>
 

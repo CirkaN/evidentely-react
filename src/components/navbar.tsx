@@ -15,6 +15,7 @@ const NavBar = () => {
     const navigation = [
         { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
         { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
+        { name: 'Prodaja', href: '/sales', current: location.pathname === "/sales" },
         { name: 'Podesavanja', href: '/company_settings/employees', current: location.pathname.startsWith("/company_settings") },
         {
             name: 'Analitika',

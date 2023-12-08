@@ -25,6 +25,7 @@ import './i18n.ts';
 import ClientSummary from './routes/clients/show/ClientSummary.tsx';
 import Analytics from './routes/analytics/default.tsx';
 import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
+import SalesIndex from './routes/sales/sales_home.tsx';
 
 
 const queryClient = new QueryClient()
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/analytics",
         element: <Analytics />
+      },
+      {
+        path: "/sales",
+        element: <SalesIndex />
       },
       {
         path: "/analytics/finance",
