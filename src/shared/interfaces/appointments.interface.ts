@@ -10,7 +10,7 @@ interface Appointment {
     end: string,
     color?:string,
     remind_client: boolean,
-    service_id?: string,
+    item_id?: string,
     end_formatted?:string,
     start_formatted?:string
     note?:string

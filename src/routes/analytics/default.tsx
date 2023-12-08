@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 
-interface AnalyticFilter {
+export interface AnalyticFilter {
     predefined_type: 'day' | 'week' | 'month' | 'year' | 'custom',
     start_date: Date,
     end_date: Date,
