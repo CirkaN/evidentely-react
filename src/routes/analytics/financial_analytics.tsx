@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnalyticFilter } from "./default";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
-import {  DateRangePieces } from "../../shared/interfaces/daterange-picker.interface";
+import { DatePieces, DateRangePieces } from "../../shared/interfaces/daterange-picker.interface";
 import { Bar, BarChart, CartesianGrid, Legend, Rectangle, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import axios_instance from "../../config/api_defaults";
 
@@ -9,7 +9,7 @@ const FinancialAnalytics = () => {
 
 
     const [activeCalendarView, setActiveCalendarView] = useState(false);
-    const [calendarValues, setCalendarValues] = useState<DateRangePieces>([new Date(), new Date()]);
+    const [calendarValues, setCalendarValues] = useState<DatePieces>([new Date(), new Date()]);
     const [top5ServicesByAppointments, setTop5ServicesByAppointments] = useState();
     const [top5ServicesByProfit, setTop5ServicesByProfit] = useState();
     const [activeFilter, setActiveFilter] = useState<AnalyticFilter>({
@@ -17,7 +17,7 @@ const FinancialAnalytics = () => {
         start_date: new Date(new Date().getFullYear(), 0, 1),
         end_date: new Date(new Date().getFullYear() + 1, 0, 0),
     });
-
+    
     const classNames = (...classes: string[]) => {
         return classes.filter(Boolean).join(' ')
     }
@@ -44,6 +44,18 @@ const FinancialAnalytics = () => {
             const values = [new Date(new Date().getFullYear(), 0, 1), new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)];
             setCalendarValues(values as DateRangePieces)
             setActiveCalendarView(false);
+        }
+    }
+
+    const getValuesFromCalendar = () => {
+        if (calendarValues) {
+            if (Array.isArray(calendarValues)) {
+                return {
+                    from: calendarValues[0],
+                    to: calendarValues[1],
+                }
+
+            }
         }
     }
 
@@ -128,7 +140,8 @@ const FinancialAnalytics = () => {
         },
     ];
     const callEndpoints = () => {
-        axios_instance().post('/analytics/financial/services', { from: calendarValues[0], to: calendarValues[1] }).then(response => {
+        const data = getValuesFromCalendar();
+        axios_instance().post('/analytics/financial/services', data).then(response => {
             console.log(response);
             setTop5ServicesByAppointments(response.data.per_appointment)
             setTop5ServicesByProfit(response.data.per_profit)
@@ -136,10 +149,12 @@ const FinancialAnalytics = () => {
         })
 
     }
-   
+
     useEffect(() => {
         callEndpoints();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [calendarValues])
+
     useEffect(() => {
         handlePredefinedTypeChanged();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -193,7 +208,7 @@ const FinancialAnalytics = () => {
                 >
                     Custom
                 </button>
-                <DateRangePicker isOpen={activeCalendarView}  onChange={setCalendarValues} value={calendarValues} />
+                <DateRangePicker isOpen={activeCalendarView} onChange={setCalendarValues} value={calendarValues} />
                 <button onClick={() => { callEndpoints() }} className='rounded bg-slate-600 text-slate-100 p-2 hover:bg-slate-700 mt-2 sm:mt-0'>
                     Confirm
                 </button>
