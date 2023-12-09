@@ -2,8 +2,6 @@ import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { Text } from "@radix-ui/themes";
 import Select, { SingleValue } from 'react-select'
-
-
 import { PendingSaleDTO } from "../../shared/interfaces/sales.interface";
 import { FormEvent, useEffect, useState } from "react";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
