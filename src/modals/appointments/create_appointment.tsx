@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 import { Plus } from "react-feather";
 import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
+import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -19,10 +20,7 @@ interface CreateAppointmentModalProps {
         end: string
     }
 }
-interface TransformedDataForSelect {
-    value: number,
-    label: string
-}
+
 const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const blankForm = {
         user_id: "",
@@ -74,7 +72,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const [clientList, setClientList] = useState<Clients[]>([]);
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
-    const [clientTransformedList, setclientTransformedList] = useState<TransformedDataForSelect[]>();
+    const [clientTransformedList, setClientTransformedList] = useState<TransformedDataForSelect[]>();
     const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
     const [hasValidationErrors, setHasValidationErrors] = useState(false);
 
@@ -100,7 +98,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             value: element.id,
             label: element.name
         }));
-        setclientTransformedList(transformed)
+        setClientTransformedList(transformed)
 
     }
 

@@ -16,7 +16,10 @@
     "confirm": "Potvrdjujem",
     "delete_success": "Uspesno brisanje!",
     "edit": "Uredi",
-    "update_success": "Izmena je uspesno sacuvana"
+    "update_success": "Izmena je uspesno sacuvana",
+    "select_client":"Izaberi klijenta...",
+    "select_product":"Izaberi prozivod",
+    "select_employee":"Izaberi zaposlenog"
   },
   "register": {
     "register": "Registracija",
@@ -57,5 +60,16 @@
     "duration": "Trajanje",
     "color": "Boja u kalendaru",
     "note": "Napomena"
+  },
+  "sales":{
+    "delete_success":"Prodaja je uspesno izbrisana",
+    "table_name":"Prodaja",
+    "create_modal_title":"Zabelezi prodaju",
+    "note":"Napomena",
+    "price":"Cena",
+    "item":"Proizvod",
+    "client":"Klijent",
+    "employee":"Zaposleni"
+  
   }
 }

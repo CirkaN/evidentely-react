@@ -50,7 +50,7 @@ const Clients = () => {
             toast.success('Client deleted succesfully');
             queryClient.invalidateQueries({
                 queryKey: ['clients'],
-              })
+            })
 
         }).catch((e) => {
             toast.error(e.response.message)
@@ -113,7 +113,7 @@ const Clients = () => {
         axios_instance().post('/clients', form).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['clients'],
-              })
+            })
             closeClientCreateModal();
         })
     }
@@ -121,12 +121,10 @@ const Clients = () => {
 
         {
             backend_key: "Country Filters",
-            component: <CountryFilter backend_key='country_id'/>,
+            component: <CountryFilter backend_key='country_id' />,
         },
-    
+
     ]
-
-
 
     return (
         <>
@@ -134,7 +132,16 @@ const Clients = () => {
             <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
             <SweetAlert2 {...swalProps} />
             <div className="py-5">
-                <DataTable queryKey="clients" has_table_filters={true} table_filters={tableFilters} table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista klijenata" has_actions={true} ></DataTable>
+                <DataTable queryKey="clients"
+                    has_table_filters={true}
+                    table_filters={tableFilters}
+                    table_actions={tableActions}
+                    actions={actions}
+                    url={url}
+                    fields={fields}
+                    table_name="Lista klijenata"
+                    has_actions={true} />
+
             </div>
         </>
     );
