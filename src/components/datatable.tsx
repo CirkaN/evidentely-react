@@ -156,7 +156,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     return (
         <>
             {
-
                 <div className="flex flex-col justify-center">
                     <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
 
