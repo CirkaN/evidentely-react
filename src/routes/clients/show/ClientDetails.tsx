@@ -195,15 +195,15 @@ const ClientDetails = () => {
                         <hr />
 
 
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <label className="block text-sm font-medium text-gray-600">Use Email for notifications</label>
                             <Switch
                                 checked={form?.settings.receive_emails}
                                 onCheckedChange={(checked) => setForm((c) => c && ({ ...c, settings: { ...c.settings, receive_emails: checked } }))}
                             />
-                        </div>
+                        </div> */}
 
-                        {form?.settings.receive_emails ?
+                        {/* {form?.settings.receive_emails ?
                             <div>
                                 <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow">
                                     <h1 className="text-md mb-4">Defaults</h1>
@@ -234,7 +234,7 @@ const ClientDetails = () => {
                                     />
                                 </div>
                             </div>
-                            : null}
+                            : null} */}
                     </div>
 
                 </div>

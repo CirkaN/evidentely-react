@@ -1,9 +1,24 @@
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
+import axios_instance from "../../../config/api_defaults";
+import { useParams } from "react-router-dom";
 
+
+interface SummaryData{
+    total_profit:string,
+    last_appointment:string,
+    total_completed_appointments:string,
+}
 
 const ClientSummary = () => {
 
     const {t} = useTranslation();
+    const {id} = useParams();
+    const {data} = useQuery<SummaryData>({
+        queryKey: [id],
+        queryFn: () => axios_instance().post(`analytics/user_summary/${id}`).then(r => r.data),
+        keepPreviousData: true
+    })
 
     return (
         <>
@@ -13,7 +28,7 @@ const ClientSummary = () => {
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg ">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.total_profit')}</div>
-                            <p className="text-teal-500 text-3xl font-semibold">$500</p>
+                            <p className="text-teal-500 text-3xl font-semibold">{data?.total_profit}</p>
                         </div>
                     </div>
 
@@ -21,7 +36,7 @@ const ClientSummary = () => {
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.total_appointments')}</div>
-                            <p className="text-blue-500 text-3xl font-semibold">50</p>
+                            <p className="text-blue-500 text-3xl font-semibold">{data?.total_completed_appointments}</p>
                         </div>
                     </div>
 
@@ -29,7 +44,7 @@ const ClientSummary = () => {
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.last_appointment')}</div>
-                            <p className="text-purple-500 text-3xl font-semibold">2023/05/02</p>
+                            <p className="text-purple-500 text-3xl font-semibold">{data?.last_appointment}</p>
                         </div>
                     </div>
                 </div>
