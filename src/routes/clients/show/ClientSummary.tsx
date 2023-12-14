@@ -1,8 +1,9 @@
+import { useTranslation } from "react-i18next";
 
 
 const ClientSummary = () => {
 
-
+    const {t} = useTranslation();
 
     return (
         <>
@@ -11,7 +12,7 @@ const ClientSummary = () => {
 
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg ">
                         <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">Profit</div>
+                            <div className="font-bold text-xl mb-2">{t('summary.total_profit')}</div>
                             <p className="text-teal-500 text-3xl font-semibold">$500</p>
                         </div>
                     </div>
@@ -19,7 +20,7 @@ const ClientSummary = () => {
 
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
                         <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">Ukupno zakazivanja</div>
+                            <div className="font-bold text-xl mb-2">{t('summary.total_appointments')}</div>
                             <p className="text-blue-500 text-3xl font-semibold">50</p>
                         </div>
                     </div>
@@ -27,7 +28,7 @@ const ClientSummary = () => {
 
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
                         <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">Poslednje zakazivanje</div>
+                            <div className="font-bold text-xl mb-2">{t('summary.last_appointment')}</div>
                             <p className="text-purple-500 text-3xl font-semibold">2023/05/02</p>
                         </div>
                     </div>

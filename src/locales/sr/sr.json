@@ -25,7 +25,8 @@
     "name":"Ime",
     "uploaded_at":"Dodato:",
     "documents":"Media fajlovi",
-    "actions":"Akcije"
+    "actions":"Akcije",
+    "client_details":"Detalji o klijentu"
   },
   "register": {
     "register": "Registracija",
@@ -75,10 +76,17 @@
     "price":"Cena",
     "item":"Proizvod",
     "client":"Klijent",
-    "employee":"Zaposleni"
+    "employee":"Zaposleni",
+    "left_to_pay":"Za placanje:",
+    "total_amount":"Ukupan zbir"
   },
   "media":{
     "delete_success":"Uspesno brisanje medija fajla",
     "delete_attachment":"Molimo potvrdite brisanje fajla?"
+  },
+  "summary":{
+    "total_profit":"Ukupan profit:",
+    "total_appointments":"Ukupno zakazivanja:",
+    "last_appointment":"Poslednje zakazivanje:"
   }
 }
