@@ -210,7 +210,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
                                                 {props.has_actions &&
                                                     <th className="p-2 whitespace-nowrap">
-                                                        <div className="font-semibold text-center">Actions</div>
+                                                        <div className="font-semibold text-center">{t('common.actions')}</div>
                                                     </th>}
                                             </tr>
                                         </thead>

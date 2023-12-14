@@ -19,7 +19,13 @@
     "update_success": "Izmena je uspesno sacuvana",
     "select_client":"Izaberi klijenta...",
     "select_product":"Izaberi prozivod",
-    "select_employee":"Izaberi zaposlenog"
+    "select_employee":"Izaberi zaposlenog",
+    "note":"Napomena",
+    "edit_modal":"Izmeni",
+    "name":"Ime",
+    "uploaded_at":"Dodato:",
+    "documents":"Media fajlovi",
+    "actions":"Akcije"
   },
   "register": {
     "register": "Registracija",

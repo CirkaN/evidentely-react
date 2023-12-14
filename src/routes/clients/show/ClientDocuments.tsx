@@ -10,13 +10,17 @@ import SweetAlert2 from "react-sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
+import Gallery, { GalleryItem } from "../../../components/gallery";
 
-interface DocumentApiResponse{
-    id:string,
-    url:string,
+interface MediaResponse {
+    file_name: string
 }
-interface DocumentList{
-    uri:string
+interface DocumentApiResponse {
+    id: string,
+    name: string,
+    note?: string,
+    media: Array<MediaResponse>
+    url: string,
 }
 const ClientDocuments = () => {
 
@@ -26,10 +30,9 @@ const ClientDocuments = () => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [isAddAttachmentModalOpen, setIsAddAttachmentModalOpen] = useState(false);
-    // const [isShowAttachmentModalOpen, setIsShowAttachmentModalOpen] = useState(false);
     const [swalProps, setSwalProps] = useState({});
 
-    const [docs,setDocs]=useState<DocumentList[]>([{uri:"https://assets.justinmind.com/wp-content/uploads/2018/11/Lorem-Ipsum-alternatives-768x492.png"}]);
+    const [docs, setDocs] = useState<GalleryItem[]>([]);
     const fields: Field[] = [
         {
             name: t('common.note'),
@@ -46,17 +49,19 @@ const ClientDocuments = () => {
             editable_from_table: false
         },
     ];
-    const fetchMedia=()=>{
-        axios_instance().get(`user/${id}/documents`).then(response=>{
-            setDocs(mutateResponse(response));
+    const fetchMedia = () => {
+        axios_instance().get(`user/${id}/documents`).then(response => {
+            const data: DocumentApiResponse[] = response.data
+            setDocs(mutateResponse(data));
         });
     }
-    useEffect(()=>{
+    useEffect(() => {
         fetchMedia();
-    },[]);
-    const mutateResponse = (response:DocumentApiResponse[])=>{
-       return  response.map((e)=>{
-            return {uri:e.url}
+    }, []);
+    const mutateResponse = (response: DocumentApiResponse[]) => {
+        console.log(response)
+        return response.map((e) => {
+            return { url: e.url, note: e.note, name: e.media[0].file_name, id: e.id }
         })
     }
     const actions: Action<ClientDocumentDTO>[] = [
@@ -151,6 +156,7 @@ const ClientDocuments = () => {
             <SweetAlert2 {...swalProps} />
             <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
             <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name={t('common.documents')} ></Datatable>
+            <Gallery items={docs} />
         </div>)
 }
 
