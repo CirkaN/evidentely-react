@@ -7,7 +7,7 @@ import { useState } from "react";
 import axios_instance from "../../../config/api_defaults";
 import { ClientAttachmentDTO } from "../../../shared/interfaces/client_attachment.interface";
 import SweetAlert2 from "react-sweetalert2";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
 import Gallery, { GalleryItem } from "../../../components/gallery";
@@ -152,7 +152,6 @@ const ClientDocuments = () => {
     }
     return (
         <div>
-            <Toaster />
             <SweetAlert2 {...swalProps} />
             <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
             <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name={t('common.documents')} ></Datatable>

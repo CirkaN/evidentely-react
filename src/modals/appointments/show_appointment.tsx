@@ -1,4 +1,4 @@
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import { Button, Dialog, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
@@ -86,7 +86,6 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     }, [props.isOpen]);
 
     return (<>
-        <div><Toaster /></div>
        {showDelete &&  <SweetAlert2 {...swalProps} />}
         {!showDelete && 
           <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); } } isOpen={isChargeClientModalOpen}></ChargeClientModal><Dialog.Root open={props.isOpen}>

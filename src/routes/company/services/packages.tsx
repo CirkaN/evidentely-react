@@ -1,5 +1,5 @@
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import SweetAlert2 from "react-sweetalert2"
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
 import { Check, Eye, Plus, Trash, X } from "react-feather";
@@ -123,7 +123,6 @@ const Packages = () => {
     }
     return (
         <>
-            <Toaster />
             <SweetAlert2 {...swalProps} />
             <ShowPackageModal
                 isOpen={isShowPackageModalOpen}

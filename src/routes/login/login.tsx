@@ -1,7 +1,7 @@
 import axios_instance from "../../config/api_defaults";
 import { FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
@@ -68,7 +68,7 @@ const Login = () => {
     loginRequest()
   }
   return (<>
-    <Toaster />
+   
     <div className="max-h-screen">
       <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
         <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">
@@ -77,7 +77,7 @@ const Login = () => {
             {hasErrors &&
               <p className="mt-4 text-sm text-center text-red-600">{t('login.check_credentials')}</p>}
 
-            <Toaster />
+           
             <form className="mt-6" onSubmit={handleSubmit} >
               <div>
                 <label className="block text-gray-700">{t('common.email')}</label>

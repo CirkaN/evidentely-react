@@ -26,6 +26,7 @@ import ClientSummary from './routes/clients/show/ClientSummary.tsx';
 import Analytics from './routes/analytics/default.tsx';
 import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
 import SalesIndex from './routes/sales/sales_home.tsx';
+import { Toaster } from 'react-hot-toast';
 
 
 const queryClient = new QueryClient()
@@ -118,6 +119,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Theme>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          containerClassName="overflow-auto"
+        />
         <RouterProvider router={router}></RouterProvider>
       </Theme>
     </QueryClientProvider>

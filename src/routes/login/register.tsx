@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom";
 import axios_instance from "../../config/api_defaults";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 interface Register {
     email: string,
     password: string
@@ -44,7 +44,6 @@ const Register = () => {
     }
 
     return (<>
-        <Toaster />
         <div className="max-h-screen">
             <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
                 <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">

@@ -5,7 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from 'react';
 import CreateAppointmentModal from '../../modals/appointments/create_appointment';
 import axios_instance from '../../config/api_defaults';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { EventChangeArg } from '@fullcalendar/core/index.js';
 import ShowAppointmentModal from '../../modals/appointments/show_appointment';
 import { useQuery, useQueryClient } from 'react-query';
@@ -85,7 +85,7 @@ const MyCalendar = () => {
 
   return (
     <>
-      <div><Toaster /></div>
+
       <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
       <div>
