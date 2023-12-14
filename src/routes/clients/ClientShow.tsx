@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios_instance from "../../config/api_defaults";
 import { ClientSettings } from "../../services/clients/ClientService";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
 
 interface Client {
     id: string,
@@ -23,17 +24,16 @@ const ClientShow = () => {
     const { id } = useParams();
     const { t } = useTranslation();
 
-    useEffect(() => {
-        axios_instance().get(`/clients/${id}`)
-            .then(response => {
-                setUserDetails(response.data);
-            }).catch(e => {
-                if (e.request.status === 404) {
-                    navigate("/clients")
-                }
-            });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    useQuery({
+        queryKey: [id],
+        queryFn: () => axios_instance().get(`/clients/${id}`).then(r => setUserDetails(r.data)).catch(e => {
+            if (e.request.status === 404) {
+                navigate("/clients")
+            }
+        }),
+        keepPreviousData: true
+    })
+
 
     const navigate = useNavigate();
     return (
