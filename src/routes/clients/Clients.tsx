@@ -67,7 +67,7 @@ const Clients = () => {
         {
             type: ActionTypes.Show,
             icon: <Eye color="lightblue"></Eye>,
-            fn: (client: ClientDTO) => navigate(`/clients/${client.id}/details/`),
+            fn: (client: ClientDTO) => navigate(`/clients/${client.id}/summary/`),
         },
         {
             type: ActionTypes.Delete,

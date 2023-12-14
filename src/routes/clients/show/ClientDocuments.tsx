@@ -3,12 +3,12 @@ import Datatable, { Action, ActionTypes, Field, TableAction } from "../../../com
 import { ClientDocumentDTO } from "../../../services/clients/ClientService";
 import { useParams } from "react-router-dom";
 import AddDocumentModal from "../../../modals/clients/add_document_modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios_instance from "../../../config/api_defaults";
 import { ClientAttachmentDTO } from "../../../shared/interfaces/client_attachment.interface";
 import SweetAlert2 from "react-sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
 import Gallery, { GalleryItem } from "../../../components/gallery";
 
@@ -49,15 +49,18 @@ const ClientDocuments = () => {
             editable_from_table: false
         },
     ];
-    const fetchMedia = () => {
-        axios_instance().get(`user/${id}/documents`).then(response => {
-            const data: DocumentApiResponse[] = response.data
-            setDocs(mutateResponse(data));
-        });
-    }
-    useEffect(() => {
-        fetchMedia();
-    }, []);
+
+    useQuery({
+        queryKey: ['client_documents'],
+        queryFn: () => {
+            axios_instance().get(`user/${id}/documents`).then(response => {
+                const data: DocumentApiResponse[] = response.data
+                setDocs(mutateResponse(data));
+            });
+        },
+        keepPreviousData: true
+    })
+
     const mutateResponse = (response: DocumentApiResponse[]) => {
         console.log(response)
         return response.map((e) => {
@@ -126,8 +129,6 @@ const ClientDocuments = () => {
 
     }
     const saveAttachment = (form: ClientAttachmentDTO) => {
-
-
         const formData = new FormData();
         if (form.file) {
             formData.append('file', form.file);
@@ -141,8 +142,7 @@ const ClientDocuments = () => {
             headers: {
                 'Content-Type': 'multipart/form-data',
             }
-        }).then(r => {
-            console.log(r);
+        }).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['client_documents'],
             })

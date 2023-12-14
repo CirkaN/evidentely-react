@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { GalleryItem } from "../../components/gallery";
 import { FormEvent, useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
+import toast from "react-hot-toast";
 
 interface showImageInterface {
     isOpen: boolean,
@@ -32,8 +33,8 @@ const ShowImage = (props: showImageInterface) => {
         updateImageProperties()
     }
     const updateImageProperties = () => {
-        axios_instance().put(`document/${imageProperties.id}`, imageProperties).then(r => {
-            console.log(r);
+        axios_instance().put(`document/${imageProperties.id}`, imageProperties).then(() => {
+            toast.success(t('media.delete_success'))
         })
     }
     const cleanFunction = () => {

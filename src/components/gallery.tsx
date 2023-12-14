@@ -1,6 +1,12 @@
 import { Trash } from "react-feather"
 import ShowImage from "../modals/gallery/show_image";
 import { useState } from "react";
+import axios_instance from "../config/api_defaults";
+import { useQueryClient } from "react-query";
+import toast, { Toaster } from "react-hot-toast";
+import SweetAlert2 from "react-sweetalert2";
+import { useTranslation } from "react-i18next";
+
 
 interface GalleryProps {
     items: GalleryItem[],
@@ -14,12 +20,43 @@ export interface GalleryItem {
 }
 
 const Gallery = (galleryItems: GalleryProps) => {
+    const { t } = useTranslation();
+    const queryClient = useQueryClient();
     const [activeImage, setActiveImage] = useState<GalleryItem>();
     const [zoomActive, setZoomActive] = useState(false);
+    const [swalProps, setSwalProps] = useState({});
 
-    const deleteAttachment = (item: GalleryItem) => {
-        alert(item.url);
+    const raiseDeleteAlert = (id: string) => {
+        setSwalProps({
+            show: true,
+            icon: 'error',
+            title: t('common.please_confirm'),
+            text: t('media.delete_attachment'),
+            cancelButtonColor: "green",
+            reverseButtons: true,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.delete'),
+            confirmButtonColor: "red",
+            onConfirm: () => { deleteAttachment(id) },
+            onResolve: setSwalOff
+        });
     }
+    function setSwalOff() {
+        const dataCopied = JSON.parse(JSON.stringify(swalProps));
+        dataCopied.show = false;
+        setSwalProps(dataCopied);
+    }
+    const deleteAttachment = (id: string) => {
+        axios_instance().delete(`document/${id}`).then(() => {
+            toast.success(t('media.delete_success'))
+            queryClient.invalidateQueries({
+                queryKey: ['client_documents'],
+            })
+        })
+    }
+
     const openZoomed = (item: GalleryItem) => {
         setActiveImage(item);
         setZoomActive(true);
@@ -33,7 +70,7 @@ const Gallery = (galleryItems: GalleryProps) => {
                         {e.note}
                     </span>
                     <div className="cursor-pointer transition duration-300 ease-in-out hover:scale-110 flex">
-                        <span onClick={() => deleteAttachment(e)}><Trash /></span>
+                        <span onClick={() => raiseDeleteAlert(e.id)}><Trash /></span>
                         {/* <span onClick={() => editAttachment(e)}><Edit /></span> */}
                     </div>
                 </div>
@@ -46,6 +83,8 @@ const Gallery = (galleryItems: GalleryProps) => {
     })
     return (
         <>
+            <SweetAlert2 {...swalProps} />
+            <Toaster />
             {activeImage &&
                 <ShowImage
                     image={activeImage}
