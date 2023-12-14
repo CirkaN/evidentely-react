@@ -76,6 +76,9 @@
     "item":"Proizvod",
     "client":"Klijent",
     "employee":"Zaposleni"
-  
+  },
+  "media":{
+    "delete_success":"Uspesno brisanje medija fajla",
+    "delete_attachment":"Molimo potvrdite brisanje fajla?"
   }
 }

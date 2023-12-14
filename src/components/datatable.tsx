@@ -72,7 +72,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         keepPreviousData: true
     })
 
-
     const changePage = (action: 'next' | 'previous') => {
         const url = new URL(builtUrl);
         const page = parseInt(url.searchParams.get('page') || "1");
