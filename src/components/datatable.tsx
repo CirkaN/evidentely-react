@@ -156,7 +156,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     return (
         <>
             {
-
                 <div className="flex flex-col justify-center">
                     <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
 
@@ -211,7 +210,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
                                                 {props.has_actions &&
                                                     <th className="p-2 whitespace-nowrap">
-                                                        <div className="font-semibold text-center">Actions</div>
+                                                        <div className="font-semibold text-center">{t('common.actions')}</div>
                                                     </th>}
                                             </tr>
                                         </thead>

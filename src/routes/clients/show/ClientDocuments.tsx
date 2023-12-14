@@ -3,14 +3,25 @@ import Datatable, { Action, ActionTypes, Field, TableAction } from "../../../com
 import { ClientDocumentDTO } from "../../../services/clients/ClientService";
 import { useParams } from "react-router-dom";
 import AddDocumentModal from "../../../modals/clients/add_document_modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios_instance from "../../../config/api_defaults";
 import { ClientAttachmentDTO } from "../../../shared/interfaces/client_attachment.interface";
 import SweetAlert2 from "react-sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
+import Gallery, { GalleryItem } from "../../../components/gallery";
 
+interface MediaResponse {
+    file_name: string
+}
+interface DocumentApiResponse {
+    id: string,
+    name: string,
+    note?: string,
+    media: Array<MediaResponse>
+    url: string,
+}
 const ClientDocuments = () => {
 
     const { id } = useParams();
@@ -19,25 +30,40 @@ const ClientDocuments = () => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [isAddAttachmentModalOpen, setIsAddAttachmentModalOpen] = useState(false);
-   // const [isShowAttachmentModalOpen, setIsShowAttachmentModalOpen] = useState(false);
     const [swalProps, setSwalProps] = useState({});
+
+    const [docs, setDocs] = useState<GalleryItem[]>([]);
     const fields: Field[] = [
         {
-            name: "note",
+            name: t('common.note'),
             original_name: "note",
             has_sort: false,
             show: true,
             editable_from_table: false
         },
         {
-            name: "Uploaded at",
+            name: t('common.uploaded_at'),
             original_name: "carbon_created",
             has_sort: false,
             show: true,
             editable_from_table: false
         },
     ];
-
+    const fetchMedia = () => {
+        axios_instance().get(`user/${id}/documents`).then(response => {
+            const data: DocumentApiResponse[] = response.data
+            setDocs(mutateResponse(data));
+        });
+    }
+    useEffect(() => {
+        fetchMedia();
+    }, []);
+    const mutateResponse = (response: DocumentApiResponse[]) => {
+        console.log(response)
+        return response.map((e) => {
+            return { url: e.url, note: e.note, name: e.media[0].file_name, id: e.id }
+        })
+    }
     const actions: Action<ClientDocumentDTO>[] = [
         {
             type: ActionTypes.Edit,
@@ -58,14 +84,14 @@ const ClientDocuments = () => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Molimo potvrdite',
-            text: 'This action is unreversible and it will delete service with  all records associated with this service',
+            title: t('common.please_confirm'),
+            text: t('common.something'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Opozovi',
-            confirmButtonText: "Izbrisi",
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.delete'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteAttachment(id) },
             onResolve: setSwalOff
@@ -82,7 +108,7 @@ const ClientDocuments = () => {
         axios_instance().delete(`/user/documents/${id}`).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['client_documents'],
-              })
+            })
             toast.success(t('docs.success_delete'));
         })
     }
@@ -119,7 +145,7 @@ const ClientDocuments = () => {
             console.log(r);
             queryClient.invalidateQueries({
                 queryKey: ['client_documents'],
-              })
+            })
             setIsAddAttachmentModalOpen(false);
         })
 
@@ -129,7 +155,8 @@ const ClientDocuments = () => {
             <Toaster />
             <SweetAlert2 {...swalProps} />
             <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
-            <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name="Documents" ></Datatable>
+            <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name={t('common.documents')} ></Datatable>
+            <Gallery items={docs} />
         </div>)
 }
 
