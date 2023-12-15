@@ -26,7 +26,8 @@
     "uploaded_at":"Dodato:",
     "documents":"Media fajlovi",
     "actions":"Akcije",
-    "client_details":"Detalji o klijentu"
+    "client_details":"Detalji o klijentu",
+    "change":"Izmeni"
   },
   "register": {
     "register": "Registracija",
