@@ -3,7 +3,7 @@ import ShowImage from "../modals/gallery/show_image";
 import { useState } from "react";
 import axios_instance from "../config/api_defaults";
 import { useQueryClient } from "react-query";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import SweetAlert2 from "react-sweetalert2";
 import { useTranslation } from "react-i18next";
 
@@ -84,7 +84,7 @@ const Gallery = (galleryItems: GalleryProps) => {
     return (
         <>
             <SweetAlert2 {...swalProps} />
-            <Toaster />
+    
             {activeImage &&
                 <ShowImage
                     image={activeImage}

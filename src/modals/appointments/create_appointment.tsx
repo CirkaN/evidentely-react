@@ -5,7 +5,7 @@ import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import Select, { SingleValue } from 'react-select'
 import { ServiceType } from "../../shared/interfaces/service.interface";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 import { Plus } from "react-feather";
 import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
@@ -206,10 +206,6 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     }
 
     return (<>
-
-        <div className="absolute top-0 right-0 p-4 ">
-            <Toaster />
-        </div>
         <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
         <Dialog.Root open={props.isOpen} >
 

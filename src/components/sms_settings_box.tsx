@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 
 interface SmsSettingsProps {
     headerText: string,
@@ -8,6 +9,7 @@ interface SmsSettingsProps {
 }
 
 const SmsSettingsBox = (props: SmsSettingsProps) => {
+    const { t } = useTranslation();
     return (
         <div className="mb-5 md:mr-2 w-full md:w-1/2 bg-white p-6 border-2 rounded-lg">
             <h5 className="mb-2 text-xl text-center font-medium leading-tight text-neutral-800">
@@ -21,7 +23,7 @@ const SmsSettingsBox = (props: SmsSettingsProps) => {
             </p>
             <div className="flex justify-center">
                 <button onClick={() => { props.onClickFunction() }} type="button" className="hover:bg-slate-300 inline-block rounded bg-slate-200 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700">
-                    Izmeni
+                    {t('common.change')}
                 </button>
             </div>
         </div>

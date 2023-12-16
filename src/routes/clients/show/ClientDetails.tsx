@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Check, X } from "react-feather";
 import { useOutletContext, useParams } from "react-router-dom";
 import { ContextType } from "../ClientShow";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import axios_instance from "../../../config/api_defaults";
 
 
@@ -59,7 +59,6 @@ const ClientDetails = () => {
 
     return (
         <>
-            <Toaster />
             {somethingChanged && <div className="flex justify-end space-x-4 ">
                 <button onClick={() => { saveChanges() }} className="rounded-full hover:bg-green-700 bg-green-500 "><Check size={50} color="white"></Check></button>
                 <button onClick={() => { resetChanges() }} className="rounded-full hover:bg-red-700 bg-red-500 "><X size={50} color="white"></X></button>

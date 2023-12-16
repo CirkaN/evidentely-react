@@ -31,8 +31,8 @@ const SalesIndex = () => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Please confirm',
-            text: 'This action is unreversible and it will delete client with  all records associated with him',
+            title: t('common.please_confirm'),
+            text: t('common.confirm_action'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
@@ -75,7 +75,7 @@ const SalesIndex = () => {
     ];
     const fields: Field[] = [
         {
-            name: "name",
+            name: t('common.name'),
             editable_from_table: false,
             original_name: "item_name",
             has_sort: true,
@@ -96,7 +96,7 @@ const SalesIndex = () => {
             show: true
         },
         {
-            name: "note",
+            name: t('note'),
             editable_from_table: false,
             original_name: "note",
             has_sort: true,

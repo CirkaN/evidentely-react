@@ -26,7 +26,9 @@
     "uploaded_at":"Dodato:",
     "documents":"Media fajlovi",
     "actions":"Akcije",
-    "client_details":"Detalji o klijentu"
+    "client_details":"Detalji o klijentu",
+    "change":"Izmeni",
+    "settings":"Podesavanja"
   },
   "register": {
     "register": "Registracija",
@@ -78,7 +80,18 @@
     "client":"Klijent",
     "employee":"Zaposleni",
     "left_to_pay":"Za placanje:",
-    "total_amount":"Ukupan zbir"
+    "total_amount":"Ukupan zbir",
+    "summary_this_month":"Prodaja ovog meseca",
+    "summary_total_cost":"Ukupan trosak (nabavka)",
+    "summary_total_profit":"Ukupan prihod",
+    "summary_pending_sales_this_month":"Neizmireni dugovi ovog meseca",
+    "summary_total_unpaid_product_value":"Vrednost neizmernih proizvoda",
+    "summary_total_pending_cost":"Ukupan trosak (nabavka)",
+    "summary_total_pending_profit":"Ocekivani profit",
+    "summary_yearly_statistic":"Godisnja statistika",
+    "summary_total_products_sold_in_value":"Ukupan prihod od prozivoda",
+    "summary_total_products_sold_cost":"Ukupan trosak (nabavka)"
+
   },
   "media":{
     "delete_success":"Uspesno brisanje medija fajla",
@@ -88,5 +101,22 @@
     "total_profit":"Ukupan profit:",
     "total_appointments":"Ukupno zakazivanja:",
     "last_appointment":"Poslednje zakazivanje:"
+  },
+  "navbar":{
+    "clients":"Klijenti",
+    "calendar":"Kalendar",
+    "sales":"Prodaja",
+    "main_settings":"Podesavanja",
+    "analytics_main":"Analitika",
+    "analytics":{
+      "clients":"Klijenti",
+      "finance":"Finansijski izvestaji"
+    },
+    "settings":{
+      "employees":"Zaposleni",
+      "sms_settings":"SMS Podesavanja",
+      "items_and_products":"Usluge i proizvodi"
+    }
+   
   }
 }

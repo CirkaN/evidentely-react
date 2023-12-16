@@ -6,7 +6,7 @@ import axios_instance from "../../../config/api_defaults"
 import { useState } from "react"
 import { useQueryClient } from "react-query"
 import SweetAlert2 from "react-sweetalert2"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import EditItemModal from "../../../modals/items/edit_item_modal"
 import { useTranslation } from "react-i18next"
 
@@ -126,7 +126,7 @@ const Products = () => {
   }
   return (
     <>
-      <Toaster />
+
       <SweetAlert2 {...swalProps} />
       <EditItemModal
         modalType="product"
