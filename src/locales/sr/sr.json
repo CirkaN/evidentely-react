@@ -27,7 +27,8 @@
     "documents":"Media fajlovi",
     "actions":"Akcije",
     "client_details":"Detalji o klijentu",
-    "change":"Izmeni"
+    "change":"Izmeni",
+    "settings":"Podesavanja"
   },
   "register": {
     "register": "Registracija",
@@ -100,5 +101,22 @@
     "total_profit":"Ukupan profit:",
     "total_appointments":"Ukupno zakazivanja:",
     "last_appointment":"Poslednje zakazivanje:"
+  },
+  "navbar":{
+    "clients":"Klijenti",
+    "calendar":"Kalendar",
+    "sales":"Prodaja",
+    "main_settings":"Podesavanja",
+    "analytics_main":"Analitika",
+    "analytics":{
+      "clients":"Klijenti",
+      "finance":"Finansijski izvestaji"
+    },
+    "settings":{
+      "employees":"Zaposleni",
+      "sms_settings":"SMS Podesavanja",
+      "items_and_products":"Usluge i proizvodi"
+    }
+   
   }
 }

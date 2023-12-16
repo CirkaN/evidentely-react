@@ -10,7 +10,6 @@ import Clients from './routes/clients/Clients.tsx';
 import ClientShow from './routes/clients/ClientShow.tsx';
 import ClientAppointments from './routes/clients/show/ClientAppointments.tsx';
 import ClientDetails from './routes/clients/show/ClientDetails.tsx';
-import DefaultPage from './routes/default.tsx';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ClientDocuments from './routes/clients/show/ClientDocuments.tsx';
 import CompanySettings from './routes/company/settings.tsx';
@@ -27,6 +26,7 @@ import Analytics from './routes/analytics/default.tsx';
 import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
 import SalesIndex from './routes/sales/sales_home.tsx';
 import { Toaster } from 'react-hot-toast';
+import MyLayout from './layouts/MyLayout.tsx';
 
 
 const queryClient = new QueryClient()
@@ -35,7 +35,7 @@ const queryClient = new QueryClient()
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DefaultPage />,
+    element: <MyLayout />,
     children: [
       {
         path: "/calendar",
@@ -46,9 +46,10 @@ const router = createBrowserRouter([
         element: <Clients />,
       },
       {
-        path: "/analytics",
+        path: "/analytics/clients",
         element: <Analytics />
       },
+
       {
         path: "/sales",
         element: <SalesIndex />
@@ -111,8 +112,7 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
-  },
-
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
