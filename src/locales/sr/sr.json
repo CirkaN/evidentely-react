@@ -30,7 +30,8 @@
     "change": "Izmeni",
     "settings": "Podesavanja",
     "client": "Klijent",
-    "price": "Cena"
+    "price": "Cena",
+    "leave":"Napusti"
   },
   "register": {
     "register": "Registracija",

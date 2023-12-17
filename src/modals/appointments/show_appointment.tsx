@@ -137,23 +137,24 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
 
 
-                    <Flex gap="3" mt="4" justify="end">
+                    <Flex gap="3" mt="4" justify="end" className="flex-col items-start ">
+
                         <Dialog.Close>
-                            <Button onClick={() => { props.cancelFunction(); }} variant="soft" color="gray">
-                                {t('common.cancel')}
+                            <Button onClick={() => { props.cancelFunction(); }} className="w-full" variant="soft" color="gray">
+                                {t('common.leave')}
                             </Button>
                         </Dialog.Close>
 
                         <Dialog.Close>
-                            <Button color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
+                            <Button className="w-full" color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
                         </Dialog.Close>
 
-                        <Button onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
+                        <Button className="w-full" onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
                         <Dialog.Close>
-                            <Button color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}><Trash size={20} /></Button>
+                            <Button className="w-full" color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}><Trash size={20} /></Button>
                         </Dialog.Close>
                         <Dialog.Close>
-                            <Button color="green" onClick={() => { updateEvent(); }}><Save size={20} /></Button>
+                            <Button className="w-full" color="green" onClick={() => { updateEvent(); }}><Save size={20} /></Button>
                         </Dialog.Close>
 
                     </Flex>
