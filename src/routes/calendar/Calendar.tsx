@@ -85,15 +85,14 @@ const MyCalendar = () => {
 
   return (
     <>
-
       <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
-      <div>
-        <h1>Calendar</h1>
+      <div className="w-screen h-screen">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
           initialView='timeGridWeek'
           weekends={true}
+          longPressDelay={500}
           events={dates}
           editable={true}
           nowIndicator={true}
