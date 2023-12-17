@@ -109,14 +109,14 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                             <input type="datetime-local" name="start" id="start"
                                 onChange={(e) => { setAppointment((c) => c && { ...c, start: e.target.value }); }}
                                 value={appointment?.start}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
                         </div>
                         <div>
                             <label htmlFor="end">{t('appointment.end')}</label>
                             <input type="datetime-local" name="end" id="end"
                                 onChange={(e) => { setAppointment((c) => c && { ...c, end: e.target.value }); }}
                                 value={appointment?.end}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
                         </div>
                         <div>
                             <label htmlFor="price">{t('common.price')}:</label>
