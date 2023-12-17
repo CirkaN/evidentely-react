@@ -91,7 +91,7 @@ const SmsSettings = () => {
     }
 
     const verifyCode = () => {
-        axios_instance().post('/company/attempt_verification', {code:codeReceived}).then(response => {
+        axios_instance().post('/company/attempt_verification', { code: codeReceived }).then(response => {
             if (response.status === 200) {
                 setUserHasMobileVerified(true);
             }
@@ -116,19 +116,28 @@ const SmsSettings = () => {
                             <InfoBox type={InfoBoxType.Warning} headerText="Sms podesavanja" text="Molimo verifikujte vas telefon da bi nastavili sa podesavanjima"></InfoBox>
                             <form onSubmit={handleSubmit}>
                                 <div className="flex justify-center">
-                                    <div className="w-1/3 text-center">
+                                    <div className="w-full sm:w-2/3 md:w-1/2 lg:w-1/3 text-center px-4">
                                         <label htmlFor="phone_number">Broj telefona:</label>
-                                        <p className="text-sm text-red-600">Molimo unestite telefon u sledecem formatu (+381 63 866 5820) bez razmaka</p>
-                                        <input type="text"
-                                            onChange={(e) => { setPhoneVerificationForm((c) => c && { ...c, phone_number: e.target.value }) }}
+                                        <p className="text-xs sm:text-sm md:text-base text-red-600">
+                                            Molimo unesite telefon u sledećem formatu (+381 63 866 5820) bez razmaka
+                                        </p>
+                                        <input
+                                            type="text"
+                                            onChange={(e) => {
+                                                setPhoneVerificationForm((c) => c && { ...c, phone_number: e.target.value });
+                                            }}
                                             name="phone_number"
                                             id="phone_number"
-                                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
-                                        <div className="pt-2">
-                                            <button className="text-md rounded-md bg-slate-300 p-2">Potvrdi</button>
+                                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 mt-2"
+                                        />
+                                        <div className="mt-2">
+                                            <button className="text-md sm:text-lg rounded-md bg-blue-500 text-white p-2 w-full">
+                                                Potvrdi
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
+
                             </form>
                         </>
                     }
