@@ -31,7 +31,9 @@
     "settings": "Podesavanja",
     "client": "Klijent",
     "price": "Cena",
-    "leave":"Napusti"
+    "phone_number": "Broj telefona",
+    "accept":"Potvrdi",
+    "leave": "Napusti"
   },
   "register": {
     "register": "Registracija",
@@ -138,12 +140,26 @@
     "remind_same_day": "Podseti na dan termina",
     "color": "Boja termina",
     "send_confirmation_client": "Posalji potvrdu termina klijentu",
-    "create_appointment_modal_title":"Kreiraj termin",
-    "select_client":"Izaberi klijenta...",
-    "make_missed":"Propusten termin",
-    "charge":"Naplati",
-    "edit_appointment_description":"Uredi termin",
-    "start":"Pocetak",
-    "end":"Kraj"
+    "create_appointment_modal_title": "Kreiraj termin",
+    "select_client": "Izaberi klijenta...",
+    "make_missed": "Propusten termin",
+    "charge": "Naplati",
+    "edit_appointment_description": "Uredi termin",
+    "start": "Pocetak",
+    "end": "Kraj"
+  },
+  "sms": {
+    "show_clients_you_care": "Pokazite klijentima da vam je stalo",
+    "employee_sms_settings": "Podešavanja SMS poruke za zaposlene",
+    "notify_clients_about_appointments": "Obavestite klijente o terminima",
+    "phone_format": "Molimo unesite telefon u sledećem formatu (+381 63 866 5820) bez razmaka",
+    "confirmation_code": "Molimo unesite kod iz poruke koju smo vam poslali",
+    "verification_failed": "Kod nije ispravan! Molimo pokusajte ponovo!",
+    "confirmation_to_employee":"Potvrda zaposlenom",
+    "thank_you_note":"Zahvalnica",
+    "birthday_wish":"Rodjendanska cestitka",
+    "same_day":"Istog dana",
+    "day_before":"Dan ranije",
+    "client_reservation_confirmation":"Potvrda klijentu o kreiranom terminu"
   }
 }

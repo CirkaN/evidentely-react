@@ -63,7 +63,7 @@ const Services = () => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Molimo potvrdite',
+            title: t('common.please_confirm'),
             text: 'This action is unreversible and it will delete service with  all records associated with this service',
             cancelButtonColor: "green",
             reverseButtons: true,
