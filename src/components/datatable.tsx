@@ -157,14 +157,13 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
             {
                 <div className="flex flex-col justify-center">
                     <div className="w-full mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
-
-
                         <header className="px-5 py-4 border-b border-gray-100">
-
                             <div className="flex justify-between  bg-slate-50">
-
-                                <div>
-                                    <h2 className="font-semibold text-gray-800">{props.table_name}</h2>
+                                <div className="flex">
+                                    <h2 className="font-semibold text-gray-800">{props.table_name} </h2>
+                                    {props.has_table_filters &&
+                                        <Filter onClick={() => { setShowFilters(!showFilters) }} className="cursor-pointer" />
+                                    }
                                 </div>
 
                                 {props?.table_actions?.map((el, index) => {
@@ -172,23 +171,14 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                         <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
                                     )
                                 })}
-                            </div>
-
-                            <input value={searchParams?.search_param}
+                            </div>  
+                           <div className="pt-2">
+                           <input value={searchParams?.search_param}
                                 onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
                                 type="text"
                                 className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
-                            <div>
-                                {props.has_table_filters &&
-                                    <Filter onClick={() => { setShowFilters(!showFilters) }} className="cursor-pointer" />
-                                }
-                                {props.table_filters?.map((filter, index) => (
-                                    <div key={index}>
-                                        {filter.component}
-                                    </div>
-                                ))}
 
-                            </div>
+                           </div>
                         </header>
 
                         {

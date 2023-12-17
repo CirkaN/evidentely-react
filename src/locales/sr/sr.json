@@ -17,18 +17,20 @@
     "delete_success": "Uspesno brisanje!",
     "edit": "Uredi",
     "update_success": "Izmena je uspesno sacuvana",
-    "select_client":"Izaberi klijenta...",
-    "select_product":"Izaberi prozivod",
-    "select_employee":"Izaberi zaposlenog",
-    "note":"Napomena",
-    "edit_modal":"Izmeni",
-    "name":"Ime",
-    "uploaded_at":"Dodato:",
-    "documents":"Media fajlovi",
-    "actions":"Akcije",
-    "client_details":"Detalji o klijentu",
-    "change":"Izmeni",
-    "settings":"Podesavanja"
+    "select_client": "Izaberi klijenta...",
+    "select_product": "Izaberi prozivod",
+    "select_employee": "Izaberi zaposlenog",
+    "note": "Napomena",
+    "edit_modal": "Izmeni",
+    "name": "Ime",
+    "uploaded_at": "Dodato:",
+    "documents": "Media fajlovi",
+    "actions": "Akcije",
+    "client_details": "Detalji o klijentu",
+    "change": "Izmeni",
+    "settings": "Podesavanja",
+    "client": "Klijent",
+    "price": "Cena"
   },
   "register": {
     "register": "Registracija",
@@ -70,53 +72,77 @@
     "color": "Boja u kalendaru",
     "note": "Napomena"
   },
-  "sales":{
-    "delete_success":"Prodaja je uspesno izbrisana",
-    "table_name":"Prodaja",
-    "create_modal_title":"Zabelezi prodaju",
-    "note":"Napomena",
-    "price":"Cena",
-    "item":"Proizvod",
-    "client":"Klijent",
-    "employee":"Zaposleni",
-    "left_to_pay":"Za placanje:",
-    "total_amount":"Ukupan zbir",
-    "summary_this_month":"Prodaja ovog meseca",
-    "summary_total_cost":"Ukupan trosak (nabavka)",
-    "summary_total_profit":"Ukupan prihod",
-    "summary_pending_sales_this_month":"Neizmireni dugovi ovog meseca",
-    "summary_total_unpaid_product_value":"Vrednost neizmernih proizvoda",
-    "summary_total_pending_cost":"Ukupan trosak (nabavka)",
-    "summary_total_pending_profit":"Ocekivani profit",
-    "summary_yearly_statistic":"Godisnja statistika",
-    "summary_total_products_sold_in_value":"Ukupan prihod od prozivoda",
-    "summary_total_products_sold_cost":"Ukupan trosak (nabavka)"
-
+  "sales": {
+    "delete_success": "Prodaja je uspesno izbrisana",
+    "table_name": "Prodaja",
+    "create_modal_title": "Zabelezi prodaju",
+    "note": "Napomena",
+    "price": "Cena",
+    "item": "Proizvod",
+    "client": "Klijent",
+    "employee": "Zaposleni",
+    "left_to_pay": "Za placanje:",
+    "total_amount": "Ukupan zbir",
+    "summary_this_month": "Prodaja ovog meseca",
+    "summary_total_cost": "Ukupan trosak (nabavka)",
+    "summary_total_profit": "Ukupan prihod",
+    "summary_pending_sales_this_month": "Neizmireni dugovi ovog meseca",
+    "summary_total_unpaid_product_value": "Vrednost neizmernih proizvoda",
+    "summary_total_pending_cost": "Ukupan trosak (nabavka)",
+    "summary_total_pending_profit": "Ocekivani profit",
+    "summary_yearly_statistic": "Godisnja statistika",
+    "summary_total_products_sold_in_value": "Ukupan prihod od prozivoda",
+    "summary_total_products_sold_cost": "Ukupan trosak (nabavka)"
   },
-  "media":{
-    "delete_success":"Uspesno brisanje medija fajla",
-    "delete_attachment":"Molimo potvrdite brisanje fajla?"
+  "media": {
+    "delete_success": "Uspesno brisanje medija fajla",
+    "delete_attachment": "Molimo potvrdite brisanje fajla?"
   },
-  "summary":{
-    "total_profit":"Ukupan profit:",
-    "total_appointments":"Ukupno zakazivanja:",
-    "last_appointment":"Poslednje zakazivanje:"
+  "summary": {
+    "total_profit": "Ukupan profit:",
+    "total_appointments": "Ukupno zakazivanja:",
+    "last_appointment": "Poslednje zakazivanje:"
   },
-  "navbar":{
-    "clients":"Klijenti",
-    "calendar":"Kalendar",
-    "sales":"Prodaja",
-    "main_settings":"Podesavanja",
-    "analytics_main":"Analitika",
-    "analytics":{
-      "clients":"Klijenti",
-      "finance":"Finansijski izvestaji"
+  "navbar": {
+    "clients": "Klijenti",
+    "calendar": "Kalendar",
+    "sales": "Prodaja",
+    "main_settings": "Podesavanja",
+    "analytics_main": "Analitika",
+    "analytics": {
+      "clients": "Klijenti",
+      "finance": "Finansijski izvestaji"
     },
-    "settings":{
-      "employees":"Zaposleni",
-      "sms_settings":"SMS Podesavanja",
-      "items_and_products":"Usluge i proizvodi"
+    "settings": {
+      "employees": "Zaposleni",
+      "sms_settings": "SMS Podesavanja",
+      "items_and_products": "Usluge i proizvodi"
     }
-   
+  },
+  "charge": {
+    "charge_client": "Naplati",
+    "amount_to_be_paid": "Duguje",
+    "loan": "Dug",
+    "card": "Kartica",
+    "cash": "Kes"
+  },
+  "appointment": {
+    "create": "Kreiraj Termin",
+    "name": "Ime",
+    "enter_client": "Molimo unesite klijenta",
+    "employee": "Zaposleni",
+    "service": "Usluga",
+    "remind_day_before": "Podseti dan ranije",
+    "remind_client": "Podseti klijenta",
+    "remind_same_day": "Podseti na dan termina",
+    "color": "Boja termina",
+    "send_confirmation_client": "Posalji potvrdu termina klijentu",
+    "create_appointment_modal_title":"Kreiraj termin",
+    "select_client":"Izaberi klijenta...",
+    "make_missed":"Propusten termin",
+    "charge":"Naplati",
+    "edit_appointment_description":"Uredi termin",
+    "start":"Pocetak",
+    "end":"Kraj"
   }
 }

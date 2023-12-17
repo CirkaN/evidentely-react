@@ -10,6 +10,7 @@ import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 import { Plus } from "react-feather";
 import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
+import { useTranslation } from "react-i18next";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -68,7 +69,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         },
         note: "",
     });
-
+    const { t } = useTranslation();
     const [clientList, setClientList] = useState<Clients[]>([]);
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
@@ -78,7 +79,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(
         {
-            label: "Select Client",
+            label: t('appointment.select_client'),
             value: 0,
         }
     );
@@ -174,7 +175,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                 setHasValidationErrors(false);
                 setSelectedClient(
                     {
-                        label: "Select Client",
+                        label: t('appointment.select_client'),
                         value: 0,
                     }
                 )
@@ -210,16 +211,16 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         <Dialog.Root open={props.isOpen} >
 
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>Create Appointment</Dialog.Title>
+                <Dialog.Title>{t('appointment.create_appointment_modal_title')}</Dialog.Title>
                 <Dialog.Description size="2" mb="4">
                     {hasValidationErrors &&
-                        <p className="text-red-500 text-sm">Molimo unesite klijenta</p>
+                        <p className="text-red-500 text-sm">{t('appointment.enter_client')}</p>
                     }
 
                 </Dialog.Description>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Title <span className="text-red-600">*</span></label>
+                        <label>{t('appointment.name')}<span className="text-red-600">*</span></label>
                         <input
                             required={true}
                             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
@@ -231,11 +232,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     </div>
 
                     <div>
-                        <label>Usluga</label>
+                        <label>{t('appointment.service')}</label>
                         <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
                     </div>
                     <div>
-                        <label>Zaposleni</label>
+                        <label>{t('appointment.employee')}</label>
                         <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
                     </div>
 
@@ -243,7 +244,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     <div>
 
                         <div className="flex justify-between">
-                            <label>Client <span className="text-red-600">*</span></label>
+                            <label>{t('common.client')} <span className="text-red-600">*</span></label>
                             <p className="hover:cursor-pointer" onClick={() => { setIsCreateClientModalOpen(true) }}><Plus color="green"></Plus></p>
                         </div>
                         <Select required={true} value={selectedClient} options={clientTransformedList} onChange={(e) => { setClientForm(e) }} />
@@ -252,7 +253,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
                     {form.user_id &&
                         <div>
-                            <label> Remind Client</label>
+                            <label>{t('appointment.remind_client')}</label>
                             <Switch
                                 checked={form.remind_client}
                                 onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
@@ -263,21 +264,21 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     {form.user_id && form.remind_client && (
                         <>
                             <div>
-                                <label> Remind day before</label>
+                                <label>{t('appointment.remind_day_before')}</label>
                                 <Switch
                                     checked={form?.remind_setting?.remind_day_before}
                                     onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: check } })}
                                 />
                             </div>
                             <div>
-                                <label>Remind same day</label>
+                                <label>{t('appointment.remind_same_day')}</label>
                                 <Switch
                                     checked={form.remind_setting.remind_same_day}
                                     onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: check } })}
                                 />
                             </div>
                             <div>
-                                <label>Send appointment confirmation</label>
+                                <label>{t('appointment.send_confirmation_client')}</label>
                                 <Switch
                                     checked={form.remind_setting.remind_now}
                                     onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_now: check } })}
@@ -293,7 +294,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </>
                     )}
                     <div>
-                        <label>Price <span className="text-red-600">*</span></label>
+                        <label>{t('common.price')} <span className="text-red-600">*</span></label>
                         <input
                             type="number"
                             required={true}
@@ -303,7 +304,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
                     </div>
                     <div className="pt-2">
-                        <label>Boja:</label>
+                        <label>{t('appointment.color')}:</label>
                         <input type="color"
                             onChange={(e) => setForm((c) => c && { ...c, color: e.target.value })}
                             value={form.color} />
@@ -313,11 +314,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={props.cancelFunction} variant="soft" color="gray">
-                                Cancel
+                                {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
                         <Dialog.Close>
-                            <Button type="submit" >Sacuvaj</Button>
+                            <Button type="submit" >{t('common.save')}</Button>
                         </Dialog.Close>
                     </Flex>
                 </form>

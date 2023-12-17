@@ -3,6 +3,7 @@ import { CreditCard, DollarSign, Loader, Save } from "react-feather";
 import axios_instance from "../../config/api_defaults";
 import { FormEvent, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import { useTranslation } from "react-i18next";
 
 interface ChargeClientProps {
     isOpen: boolean,
@@ -17,6 +18,7 @@ interface ChargeParams {
 }
 
 const ChargeClientModal = (props: ChargeClientProps) => {
+    const {t}=useTranslation();
     const queryClient = useQueryClient();
     const [chargeParams, setChargeParams] = useState<ChargeParams>({
         payment_method: undefined,
@@ -50,8 +52,8 @@ const ChargeClientModal = (props: ChargeClientProps) => {
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title className="text-center">Naplati</Dialog.Title>
-                <p className="text-md text-center p-2">Duguje: {chargeParams.amount_to_be_paid} </p>
+                <Dialog.Title className="text-center">{t('charge.charge_client')}</Dialog.Title>
+                <p className="text-md text-center p-2">{t('charge.amount_to_be_paid')}: {chargeParams.amount_to_be_paid} </p>
                 <form onSubmit={handleSubmit} >
                     {
                         !isLoading &&
@@ -61,7 +63,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 onClick={() => { setChargeParams((c) => c && { ...c, payment_method: "cash" }) }}
                                 className=" border bg-green-500 text-white">
                                 <div className="flex justify-center m"><DollarSign size={22} />
-                                    <p className="ml-2">Cash</p>
+                                    <p className="ml-2">{t('charge.cash')}</p>
                                 </div>
                             </button>
                             {
@@ -83,7 +85,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 className=" border bg-slate-500 text-white">
                                 <div className="flex justify-center m">
                                     <CreditCard size={22} />
-                                    <p className="ml-2 text-sm">CARD</p>
+                                    <p className="ml-2 text-sm">{t('charge.card')}</p>
                                 </div>
                             </button>
                             {
@@ -104,7 +106,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 onClick={() => { setChargeParams((c) => c && { ...c, payment_method: "loan" }) }}
                                 className=" border bg-orange-600 text-white">
                                 <div className="flex justify-center m"><Loader size={24} />
-                                    <p className="ml-2">Loan</p>
+                                    <p className="ml-2">{t('charge.loan')}</p>
                                 </div>
                             </button>
                             {
@@ -125,7 +127,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={() => { props.cancelFunction() }} variant="soft" color="gray">
-                                Cancel
+                                {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
                         <Button type="submit" color="green">
