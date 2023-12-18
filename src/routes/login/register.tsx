@@ -92,7 +92,7 @@ const Register = () => {
                     </div>
 
                     <div className="hidden w-1/2 md:block">
-                        <img src="https://image.similarpng.com/very-thumbnail/2020/12/Lorem-ipsum-logo-isolated-clipart-PNG.png" className="rounded-2xl" alt="page img" />
+                        <img src="../../public/evi_logo.png" className="rounded-2xl" alt="page img" />
                     </div>
                 </div>
             </section>

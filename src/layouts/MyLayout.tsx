@@ -34,7 +34,6 @@ const MyLayout = () => {
         {
             name: t('navbar.main_settings'),
             key:"settings",
-            // href: '/company_settings/employees',
             icon: <Settings size={20} />,
             current: location.pathname.startsWith("/company_settings"),
             items:[
