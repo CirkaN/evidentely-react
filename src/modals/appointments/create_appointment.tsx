@@ -180,6 +180,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     }
                 )
                 props?.saveFunction();
+                
             }
         }).catch(() => {
             setHasValidationErrors(true);
