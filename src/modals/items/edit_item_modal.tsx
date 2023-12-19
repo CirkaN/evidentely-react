@@ -32,7 +32,7 @@ const EditItemModal = (props: EditItemProps) => {
     const [form, setForm] = useState<ItemDTO>();
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(form){
+        if (form) {
             props.saveFunction(form)
         }
     }
@@ -122,7 +122,7 @@ const EditItemModal = (props: EditItemProps) => {
                                 {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
-                        <Button type="submit" > {t('common.save')}</Button>
+                        <Button type="submit">{t('common.save')}</Button>
                     </Flex>
                 </form>
             </Dialog.Content>

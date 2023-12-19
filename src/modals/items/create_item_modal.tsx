@@ -2,6 +2,7 @@ import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
 import { ItemDTO } from "../../shared/interfaces/item.interface";
+import { t } from "i18next";
 
 interface CreateItemProps {
     cancelFunction: () => void,
@@ -9,7 +10,6 @@ interface CreateItemProps {
     isOpen: boolean,
     modalType: "service" | "product"
 }
-
 
 const CreateItemModal = (props: CreateItemProps) => {
     const blankForm = {
@@ -50,7 +50,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Name
+                                {t("item.name")}
                             </Text>
                             <TextField.Input
                                 required={true}
@@ -62,7 +62,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                     <Flex direction="row" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Price
+                                {t('item.price')}
                             </Text>
                             <TextField.Input
                                 type="number"
@@ -74,7 +74,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Selling Price
+                                {t('item.selling_price')}
                             </Text>
                             <TextField.Input
                                 onChange={(e) => setForm((c) => c && { ...c, selling_price: e.target.value })}
@@ -88,7 +88,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                     <Flex direction="row" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Duration
+                                {t('item.duration')}
                             </Text>
                             <TextField.Input
                                 onChange={(e) => setForm((c) => c && { ...c, duration: e.target.value })}
@@ -97,7 +97,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Color
+                                {t('common.color')}
                             </Text>
                             <input type="color" name="color" value={form.color} onChange={(e) => { setForm((c) => c && { ...c, color: e.target.value }) }} />
                         </label>
@@ -106,7 +106,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Note
+                                {t('common.note')}
                             </Text>
                             <TextField.Input
                                 value={form.note}
@@ -115,15 +115,13 @@ const CreateItemModal = (props: CreateItemProps) => {
                         </label>
                     </Flex>
 
-
-
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={props.cancelFunction} variant="soft" color="gray">
-                                Cancel
+                                {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
-                        <Button type="submit" >Save</Button>
+                        <Button type="submit" >{t('common.save')}</Button>
                     </Flex>
                 </form>
             </Dialog.Content>

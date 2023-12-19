@@ -91,7 +91,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         {!showDelete &&
             <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); }} isOpen={isChargeClientModalOpen}></ChargeClientModal><Dialog.Root open={props.isOpen}>
                 <Dialog.Content style={{ maxWidth: 450 }}>
-                    <Dialog.Title>Detalji dogadjaja</Dialog.Title>
+                    <Dialog.Title>{t('appointment.details')}</Dialog.Title>
                     <Dialog.Description size="2" mb="4">
                         {t('appointment.edit_appointment_description')}
                     </Dialog.Description>

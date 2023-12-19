@@ -33,7 +33,9 @@
     "price": "Cena",
     "phone_number": "Broj telefona",
     "accept":"Potvrdi",
-    "leave": "Napusti"
+    "leave": "Napusti",
+    "important_notice":"Vazna napomena",
+    "duration":"Trajanje"
   },
   "register": {
     "register": "Registracija",
@@ -73,6 +75,7 @@
     "price": "Cena",
     "duration": "Trajanje",
     "color": "Boja u kalendaru",
+    "selling_price":"Prodajna cena",
     "note": "Napomena"
   },
   "sales": {
@@ -146,7 +149,8 @@
     "charge": "Naplati",
     "edit_appointment_description": "Uredi termin",
     "start": "Pocetak",
-    "end": "Kraj"
+    "end": "Kraj",
+    "details":"Detalji termina"
   },
   "sms": {
     "show_clients_you_care": "Pokazite klijentima da vam je stalo",
@@ -161,5 +165,17 @@
     "same_day":"Istog dana",
     "day_before":"Dan ranije",
     "client_reservation_confirmation":"Potvrda klijentu o kreiranom terminu"
+  },
+  "client_documents":{
+    "create_modal_title":"Dodaj media fajl..",
+    "help_info_box":"Ovde mozete dodati fajl"
+  },
+  "client":{
+    "create_client":"Kreiraj klienta"
+  },
+  "employees":{
+    "full_name":"Puno ime",
+    "job_description":"Opis posla",
+    "enable_login":"Ukljuci login"
   }
 }

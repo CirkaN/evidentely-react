@@ -3,6 +3,7 @@ import { Text } from "@radix-ui/themes";
 import { FormEvent, useEffect, useState } from "react";
 import { SmsTemplate } from "../../../shared/interfaces/sms_templates.interface";
 import InfoBox, { InfoBoxType } from "../../../components/info-box";
+import { t } from "i18next";
 
 interface EditSmsSettingsProps {
     cancelFunction: () => void,
@@ -104,10 +105,10 @@ const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={props.cancelFunction} variant="soft" color="gray">
-                                Ponisti
+                                {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
-                        <Button type="submit" >Save</Button>
+                        <Button type="submit">{t('common.save')}</Button>
                     </Flex>
                 </form>
             </Dialog.Content>
