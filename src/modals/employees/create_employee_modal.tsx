@@ -2,6 +2,7 @@ import { Button, Dialog, Flex, Switch, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
+import { t } from "i18next";
 
 interface CreateClientProps {
     cancelFunction: () => void,
@@ -51,7 +52,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Full name <span className="text-red-500 ">*</span>
+                                {t('employees.full_name')} <span className="text-red-500 ">*</span>
                             </Text>
                             <TextField.Input
                                 required={true}
@@ -64,12 +65,11 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Job description
+                                {t('employees.job_description')}
                             </Text>
                             <TextField.Input
                                 onChange={(e) => setForm((c) => c && { ...c, job_description: e.target.value })}
                                 value={form.job_description}
-
                             />
                         </label>
                     </Flex>
@@ -78,19 +78,19 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
 
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Gender
+                                {t('common.gender')}
                             </Text>
                             <select name="gender"
                                 className="w-full rounded px-3 py-2 focus:outline-none "
                                 onChange={(e) => setForm((c) => c && { ...c, gender: e.target.value })}
                                 value={form.gender} id="gender">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
+                                <option value="male">{t('common.name')}</option>
+                                <option value="female">{t('common.female')}</option>
                             </select>
                         </label>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Enable login
+                                {t('employees.enable_login')}
                             </Text>
                             <Switch
 
@@ -102,7 +102,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Email
+                                {t('common.email')}
                             </Text>
                             <TextField.Input
                                 required={isEmailRequired()}
@@ -115,7 +115,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                Note
+                                {t('common.note')}
                             </Text>
                             <TextField.Input
                                 value={form.note}
@@ -129,11 +129,11 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={props.cancelFunction} variant="soft" color="gray">
-                                Cancel
+                                {t('common.cancel')}
                             </Button>
                         </Dialog.Close>
                         <Dialog.Close>
-                            <Button type="submit" >Save</Button>
+                            <Button type="submit">{t('common.save')}</Button>
                         </Dialog.Close>
                     </Flex>
                 </form>

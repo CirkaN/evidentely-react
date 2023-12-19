@@ -181,9 +181,7 @@ const Analytics = () => {
 
             <div className='flex justify-center space-x-3'>
                 {mutateButtons()}
-
             </div>
-
 
             <p>Appointments for range</p>
             <div className="flex flex-wrap justify-evenly">
@@ -235,7 +233,6 @@ const Analytics = () => {
                     <p className='text-center font-bold'>Your top clients: 2023-10-10 - 2023-11-12</p>
                     <p className='text-center'>Filter:</p>
                     <div className='flex  justify-center '>
-
                         <div>
                             <button onClick={() => setUseProfit(false)} className=' p-2  rounded bg-slate-700 text-slate-100 text-md font-semibold mr-2 '>Appointments</button>
                         </div>
