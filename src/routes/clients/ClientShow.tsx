@@ -52,7 +52,6 @@ const ClientShow = () => {
                         <p className="text-center text-gray-700">
                             <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('sms_history') }}>[F] Sms History</button>
                         </p>
-                     
                         <p className="text-center text-gray-700">
                             <button className="space-x-1 rounded-md p-1 px-20" onClick={() => { navigate('documents') }}>[F] Documents</button>
                         </p>
@@ -61,7 +60,6 @@ const ClientShow = () => {
                 <div className="basis-full bg-slate-100 px-10 py-10">
                     <div className="px-5">
                         <div className="pb-1 font-sans text-2xl font-semibold">{t('common.client_details')}</div>
-
                     </div>
 
                     <div className="h-full px-5 py-5">

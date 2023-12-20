@@ -98,7 +98,8 @@
     "summary_total_pending_profit": "Ocekivani profit",
     "summary_yearly_statistic": "Godisnja statistika",
     "summary_total_products_sold_in_value": "Ukupan prihod od prozivoda",
-    "summary_total_products_sold_cost": "Ukupan trosak (nabavka)"
+    "summary_total_products_sold_cost": "Ukupan trosak (nabavka)",
+    "summary_value_sold_this_month":"Vrednost prodate robe"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",

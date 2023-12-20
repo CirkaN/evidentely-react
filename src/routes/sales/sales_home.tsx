@@ -37,8 +37,8 @@ const SalesIndex = () => {
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.confirm'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteSale(id) },
             onResolve: setSwalOff
