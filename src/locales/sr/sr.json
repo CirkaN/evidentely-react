@@ -183,6 +183,7 @@
   },
   "toasts":{
     "event_succesfully_updated":"Termin uspesno izmenjen!",
-    "employee_deleted_success":"Zaposlen je uspesno obrisan"
+    "employee_deleted_success":"Zaposlen je uspesno obrisan",
+    "client_deleted_success":"Klijent uspesno obrisan"
   }
 }

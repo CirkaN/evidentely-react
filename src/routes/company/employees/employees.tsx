@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../../shared/interfaces/employees.interface";
 import InfoBox, { InfoBoxType } from "../../../components/info-box";
 import { t } from "i18next";
+import { Link } from "react-router-dom";
 
 const Employees = () => {
 
@@ -69,12 +70,17 @@ const Employees = () => {
         });
 
     }
+    const generateView = (t: string) => {
+        return(<span className="text-blue-500">{t}</span>)
+        return (<Link to="/" className="text-blue-500">{t}</Link>)
+    }
     const fields: Field<EmployeeDTO>[] = [
         {
             name: t('common.name'),
             editable_from_table: false,
             original_name: "name",
             has_sort: true,
+            formatFn: (t) => generateView(t),
             show: true
         },
         {
@@ -121,7 +127,7 @@ const Employees = () => {
 
             queryClient.invalidateQueries({
                 queryKey: ['employees'],
-              })
+            })
 
         }).catch((e) => {
             toast.error(e.response.message)
@@ -136,7 +142,7 @@ const Employees = () => {
         axios_instance().post('/employees', form).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['employees'],
-              })
+            })
             closeEmployeeCreateModal();
         })
     }

@@ -1,7 +1,7 @@
 import { Eye, Plus, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction, TableFilter } from "../../components/datatable";
 import { ClientDTO } from "../../services/clients/ClientService";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from "react-sweetalert2";
 import { useState } from "react";
 import axios_instance from "../../config/api_defaults";
@@ -10,6 +10,7 @@ import { useQueryClient } from "react-query";
 import CreateClientModal, { ClientCreateDTO } from "../../modals/clients/create_client_modal";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
 import CountryFilter from "../../components/filters/country_filter";
+import { t } from "i18next";
 
 const Clients = () => {
     const navigate = useNavigate()
@@ -30,14 +31,14 @@ const Clients = () => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Please confirm',
-            text: 'This action is unreversible and it will delete client with  all records associated with him',
+            title: t('common.please_confirm'),
+            text: t('common.this_action_is_final'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.confirm'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteClient(id) },
             onResolve: setSwalOff
@@ -47,7 +48,7 @@ const Clients = () => {
 
     const deleteClient = (id: number) => {
         axios_instance().delete(`/clients/${id}`).then(() => {
-            toast.success('Client deleted succesfully');
+            toast.success(t('toasts.client_deleted_success'));
             queryClient.invalidateQueries({
                 queryKey: ['clients'],
             })
@@ -81,23 +82,27 @@ const Clients = () => {
             fn: () => { openClientCreateModal() }
         }
     ]
+    const generateLink = (client_name: string, r: ClientDTO) => {
+        return (<Link to={`/clients/${r.id}/summary/`} className="text-blue-500">{client_name}</Link>)
+    }
     const fields: Field[] = [
         {
-            name: "name",
+            name: t('common.name'),
+            formatFn: (client_name, r) => generateLink(client_name, r as ClientDTO),
             editable_from_table: false,
             original_name: "name",
             has_sort: true,
             show: true
         },
         {
-            name: "email",
+            name: t('common.email'),
             editable_from_table: false,
             original_name: "email",
             has_sort: true,
             show: true,
         },
         {
-            name: "note",
+            name: t('common.note'),
             editable_from_table: false,
             original_name: "note",
             has_sort: true,
