@@ -8,6 +8,8 @@ import { useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../../shared/interfaces/employees.interface";
 import InfoBox, { InfoBoxType } from "../../../components/info-box";
+import { t } from "i18next";
+import { Link } from "react-router-dom";
 
 const Employees = () => {
 
@@ -54,51 +56,56 @@ const Employees = () => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Please confirm',
-            text: 'This action is unreversible and it will delete employee with  all records associated with him',
+            title: t('common.please_confirm'),
+            text: t('common.this_action_is_final'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.confirm'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteEmployee(id) },
             onResolve: setSwalOff
         });
 
     }
+    const generateView = (t: string) => {
+        return(<span className="text-blue-500">{t}</span>)
+        return (<Link to="/" className="text-blue-500">{t}</Link>)
+    }
     const fields: Field<EmployeeDTO>[] = [
         {
-            name: "name",
+            name: t('common.name'),
             editable_from_table: false,
             original_name: "name",
             has_sort: true,
+            formatFn: (t) => generateView(t),
             show: true
         },
         {
-            name: "email",
+            name: t('common.email'),
             editable_from_table: false,
             original_name: "email",
             has_sort: true,
             show: true,
         },
         {
-            name: "note",
+            name: t('common.note'),
             editable_from_table: false,
             original_name: "note",
             has_sort: false,
             show: true,
         },
         {
-            name: "Deskripcija posla",
+            name: t('employees.job_description'),
             editable_from_table: false,
             original_name: "job_description",
             has_sort: false,
             show: true,
         },
         {
-            name: "Ukljucen login",
+            name: t('employees.login_enabled'),
             editable_from_table: false,
             original_name: "login_enabled",
             has_sort: true,
@@ -116,11 +123,11 @@ const Employees = () => {
     }
     const deleteEmployee = (id: string) => {
         axios_instance().delete(`/employees/${id}`).then(() => {
-            toast.success('Employee deleted succesfully');
+            toast.success(t('toasts.employee_deleted_success'));
 
             queryClient.invalidateQueries({
                 queryKey: ['employees'],
-              })
+            })
 
         }).catch((e) => {
             toast.error(e.response.message)
@@ -135,14 +142,14 @@ const Employees = () => {
         axios_instance().post('/employees', form).then(() => {
             queryClient.invalidateQueries({
                 queryKey: ['employees'],
-              })
+            })
             closeEmployeeCreateModal();
         })
     }
     return (
         <>
             <SweetAlert2 {...swalProps} />
-            <InfoBox type={InfoBoxType.Info} headerText="Zaposleni" text="Upravljaj zaposlenima"></InfoBox>
+            <InfoBox type={InfoBoxType.Info} headerText={t('employees.employees')} text={t('employees.manage')}></InfoBox>
             <CreateEmployeeModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateEmployeeModalOpen} ></CreateEmployeeModal>
             <div className="py-5">
                 <DataTable queryKey="employees" table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>

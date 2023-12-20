@@ -9,6 +9,7 @@ import { toast } from 'react-hot-toast';
 import { EventChangeArg } from '@fullcalendar/core/index.js';
 import ShowAppointmentModal from '../../modals/appointments/show_appointment';
 import { useQuery, useQueryClient } from 'react-query';
+import { t } from 'i18next';
 
 interface AppointmentInterface {
   title: string | undefined,
@@ -140,7 +141,7 @@ const MyCalendar = () => {
 
     axios_instance().put('appointments/' + id, jsonPrepared).then(response => {
       if (response.status === 200) {
-        toast.success('Event Successfully Updated!')
+        toast.success(t('toasts.event_succesfully_updated'))
       }
     })
   }
@@ -157,7 +158,7 @@ const MyCalendar = () => {
 
       axios_instance().put('appointments/' + id, json).then(response => {
         if (response.status === 200) {
-          toast.success('Event Successfully Updated!')
+          toast.success(t('toasts.event_succesfully_updated'))
           reRenderTable()
         }
       })

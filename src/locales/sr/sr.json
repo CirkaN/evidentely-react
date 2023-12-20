@@ -35,7 +35,11 @@
     "accept":"Potvrdi",
     "leave": "Napusti",
     "important_notice":"Vazna napomena",
-    "duration":"Trajanje"
+    "duration":"Trajanje",
+    "address":"Adresa",
+    "birth_date":"Datum rodjenja",
+    "client_list":"Lista klijenata",
+    "add_note":"Dodaj napomenu"
   },
   "register": {
     "register": "Registracija",
@@ -98,7 +102,8 @@
     "summary_total_pending_profit": "Ocekivani profit",
     "summary_yearly_statistic": "Godisnja statistika",
     "summary_total_products_sold_in_value": "Ukupan prihod od prozivoda",
-    "summary_total_products_sold_cost": "Ukupan trosak (nabavka)"
+    "summary_total_products_sold_cost": "Ukupan trosak (nabavka)",
+    "summary_value_sold_this_month":"Vrednost prodate robe"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
@@ -175,7 +180,15 @@
   },
   "employees":{
     "full_name":"Puno ime",
+    "employees":"Zaposleni",
     "job_description":"Opis posla",
-    "enable_login":"Ukljuci login"
+    "enable_login":"Ukljuci login",
+    "manage":"Upravljaj zaposlenima",
+    "login_enabled":"Ukljucen login"
+  },
+  "toasts":{
+    "event_succesfully_updated":"Termin uspesno izmenjen!",
+    "employee_deleted_success":"Zaposlen je uspesno obrisan",
+    "client_deleted_success":"Klijent uspesno obrisan"
   }
 }

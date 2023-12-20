@@ -9,7 +9,7 @@ const SalesHomeHeader = () => {
                     <div className="bg-white p-4 rounded shadow space-y-2 ">
                         <p className="text-center">{t('sales.summary_this_month')}:</p>
                         <div className="flex justify-between ">
-                            <div>Total in sales:</div>
+                            <div>{t('sales.summary_value_sold_this_month')}:</div>
                             <div><span className="text-slate-600">$1500</span></div>
                         </div>
                         <div className="flex justify-between">

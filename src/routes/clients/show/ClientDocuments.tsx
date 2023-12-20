@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { useQuery, useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
 import Gallery, { GalleryItem } from "../../../components/gallery";
+import ClientDetailsHeader from "../../../layouts/clients/details_header";
 
 interface MediaResponse {
     file_name: string
@@ -151,12 +152,20 @@ const ClientDocuments = () => {
 
     }
     return (
-        <div>
-            <SweetAlert2 {...swalProps} />
-            <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
-            <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name={t('common.documents')} ></Datatable>
-            <Gallery items={docs} />
-        </div>)
+        <>
+            <div className="h-screen w-full p-10">
+                {id &&
+                    <ClientDetailsHeader id={id} active="documents" />}
+                <br />
+
+                <SweetAlert2 {...swalProps} />
+                <AddDocumentModal isOpen={isAddAttachmentModalOpen} cancelFunction={cancelModal} saveFunction={(form) => saveAttachment(form)} ></AddDocumentModal>
+                <Datatable queryKey="client_documents" table_actions={table_actions} actions={actions} fields={fields} url={url} has_actions={true} table_name={t('common.documents')} ></Datatable>
+                <Gallery items={docs} />
+
+
+            </div>
+        </>)
 }
 
 
