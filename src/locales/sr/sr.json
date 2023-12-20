@@ -175,7 +175,14 @@
   },
   "employees":{
     "full_name":"Puno ime",
+    "employees":"Zaposleni",
     "job_description":"Opis posla",
-    "enable_login":"Ukljuci login"
+    "enable_login":"Ukljuci login",
+    "manage":"Upravljaj zaposlenima",
+    "login_enabled":"Ukljucen login"
+  },
+  "toasts":{
+    "event_succesfully_updated":"Termin uspesno izmenjen!",
+    "employee_deleted_success":"Zaposlen je uspesno obrisan"
   }
 }

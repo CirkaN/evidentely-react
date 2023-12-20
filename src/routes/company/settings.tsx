@@ -5,7 +5,6 @@ const CompanySettings = () => {
         <>
             <Outlet />
         </>
-
     )
 }
 
