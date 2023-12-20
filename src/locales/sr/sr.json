@@ -35,7 +35,11 @@
     "accept":"Potvrdi",
     "leave": "Napusti",
     "important_notice":"Vazna napomena",
-    "duration":"Trajanje"
+    "duration":"Trajanje",
+    "address":"Adresa",
+    "birth_date":"Datum rodjenja",
+    "client_list":"Lista klijenata",
+    "add_note":"Dodaj napomenu"
   },
   "register": {
     "register": "Registracija",
