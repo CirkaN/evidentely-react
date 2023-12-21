@@ -5,6 +5,9 @@ import UpcomingAppointments from "./components/upcoming_appointments";
 const MainDashboard = () => {
     return (
         <>
+        <div className="">
+            <p className="text-2xl text-bold">Welcome back, Nikola Cirkovic</p>
+        </div>
             <div className="flex flex-col sm:flex-row justify-between">
                 <AdminHomeAnalyticPill />
                 <AdminHomeAnalyticPill />

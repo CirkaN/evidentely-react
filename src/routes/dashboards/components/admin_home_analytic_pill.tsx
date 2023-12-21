@@ -1,10 +1,10 @@
 const AdminHomeAnalyticPill = () => {
     return (
         <>
-            <div className="max-w-sm w-full border border-slate-300 rounded-lg shadow  p-4 md:p-6">
+            <div className="max-w-sm w-full border bg-slate-500 border-slate-300 rounded-lg shadow  p-4 md:p-6">
                 <div className="flex justify-between">
                     <div>
-                        <h5 className="leading-none text-3xl font-bold text-gray-900  pb-2">32.4k</h5>
+                        <h5 className="leading-none text-3xl font-bold text-white  pb-2">32.4k</h5>
                         <p className="text-base font-normal text-gray-700">Clients this week</p>
                     </div>
                 </div>
@@ -15,7 +15,6 @@ const AdminHomeAnalyticPill = () => {
                     </div>
                 </div>
             </div>
-
         </>
     )
 }
