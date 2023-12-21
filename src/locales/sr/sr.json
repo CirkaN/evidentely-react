@@ -39,7 +39,10 @@
     "address":"Adresa",
     "birth_date":"Datum rodjenja",
     "client_list":"Lista klijenata",
-    "add_note":"Dodaj napomenu"
+    "add_note":"Dodaj napomenu",
+    "profit":"Profit",
+    "client_name":"Ime klijenta",
+    "appointment_name":"Termin"
   },
   "register": {
     "register": "Registracija",
@@ -115,6 +118,7 @@
     "last_appointment": "Poslednje zakazivanje:"
   },
   "navbar": {
+    "main_dashboard":"Komandna tabla",
     "clients": "Klijenti",
     "calendar": "Kalendar",
     "sales": "Prodaja",
@@ -155,7 +159,8 @@
     "edit_appointment_description": "Uredi termin",
     "start": "Pocetak",
     "end": "Kraj",
-    "details":"Detalji termina"
+    "details":"Detalji termina",
+    "assigned_to":"Dodeljeno:"
   },
   "sms": {
     "show_clients_you_care": "Pokazite klijentima da vam je stalo",
@@ -190,5 +195,8 @@
     "event_succesfully_updated":"Termin uspesno izmenjen!",
     "employee_deleted_success":"Zaposlen je uspesno obrisan",
     "client_deleted_success":"Klijent uspesno obrisan"
+  },
+  "analytics":{
+    "top_clients":"Top 5 klijenata po profitu ove nedelje"
   }
 }

@@ -11,7 +11,7 @@ interface GenericEntry {
 
 export interface DatatableProps<T = GenericEntry[]> {
     table_name: string,
-    actions: Action<T>[],
+    actions?: Action<T>[],
     fields: Field<T>[],
     has_actions: boolean,
     table_actions?: TableAction[],
@@ -19,6 +19,7 @@ export interface DatatableProps<T = GenericEntry[]> {
     has_table_filters?: boolean,
     url: string,
     queryKey: string,
+    has_search?:boolean
 }
 export interface TableAction {
     icon: ReactElement,
@@ -171,14 +172,17 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                         <button key={index} onClick={() => el.fn && el.fn()} className="bg-green-500 rounded-full text-lg text-white px-3 py-1 ">{el.icon}</button>
                                     )
                                 })}
-                            </div>  
-                           <div className="pt-2">
-                           <input value={searchParams?.search_param}
-                                onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
-                                type="text"
-                                className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
+                            </div>
+                            {
+                                props?.has_search &&
+                                <div className="pt-2">
+                                <input value={searchParams?.search_param}
+                                    onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
+                                    type="text"
+                                    className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
 
-                           </div>
+                            </div>
+                            }
                         </header>
 
                         {
@@ -237,9 +241,10 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                                         {props.has_actions &&
                                                             <td className="p-2 whitespace-nowrap">
                                                                 <div className="text-lg text-center">
-                                                                    {props.actions.map((action, index) => {
-                                                                        return (<button className="p-1" key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
-                                                                    })}
+                                                                    {props?.actions &&
+                                                                        props.actions.map((action, index) => {
+                                                                            return (<button className="p-1" key={index} onClick={() => action.fn && action.fn(record as T)}> {action.icon}</button>);
+                                                                        })}
                                                                 </div>
                                                             </td>}
                                                     </tr>)

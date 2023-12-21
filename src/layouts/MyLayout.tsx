@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import Auth from "../auth";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Calendar, DollarSign, Settings, Users } from "react-feather";
+import { BarChart, Calendar, DollarSign, Grid, Settings, Users } from "react-feather";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -15,6 +15,11 @@ const MyLayout = () => {
     });
 
     const navRoutes = [
+        {
+            name: t('navbar.main_dashboard'),
+            icon: <Grid size={20} />,
+            href: '/main_dashboard', current: location.pathname =="/main_dashboard"
+        },
         {
             name: t('navbar.clients'),
             icon: <Users size={20} />,

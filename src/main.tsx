@@ -27,6 +27,7 @@ import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
 import SalesIndex from './routes/sales/sales_home.tsx';
 import { Toaster } from 'react-hot-toast';
 import MyLayout from './layouts/MyLayout.tsx';
+import MainDashboard from './routes/dashboards/main_dashboard.tsx';
 
 
 const queryClient = new QueryClient()
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
       {
         path: "/analytics/finance",
         element: <FinancialAnalytics />
+      },
+      {
+        path:"/main_dashboard",
+        element:<MainDashboard/>,
       },
       {
         path: "/company_settings",
@@ -118,7 +123,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Theme>
+      <Theme>         
         <Toaster
           position="top-right"
           reverseOrder={false}
