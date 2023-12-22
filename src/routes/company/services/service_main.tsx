@@ -1,20 +1,18 @@
 import { Link, Outlet, useLocation } from "react-router-dom"
 
 const ServiceMain = () => {
-    const location = useLocation(); // use useLocation hook to get the current location
+    const location = useLocation();
 
     const navigation = [
-        { name: 'Proizvodi', href: '/company_settings/price_plans/products', current: location.pathname === "/company_settings/price_plans/products" },
-        { name: 'Usluge', href: '/company_settings/price_plans/services', current: location.pathname === "/company_settings/price_plans/services" },
-        { name: 'Paketi', href: '/company_settings/price_plans/packages', current: location.pathname === "/company_settings/price_plans/packages" },
+        { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
+        { name: 'Usluge', href: 'services', current: location.pathname === "/price_plans/services" },
+        { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
     ]
 
     const transformedHtml = navigation.map((element) => {
-
         const classNames = (...classes: string[]) => {
             return classes.filter(Boolean).join(' ')
         }
-
         return <li key={element.name} role="presentation">
             <Link
                 to={element.href}
@@ -22,7 +20,6 @@ const ServiceMain = () => {
             >{element.name}</Link>
         </li>
     })
-
 
     return (
         <>

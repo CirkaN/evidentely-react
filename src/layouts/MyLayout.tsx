@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Auth from "../auth";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Calendar, DollarSign, Grid, Settings, Users } from "react-feather";
+import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Users } from "react-feather";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -19,7 +19,7 @@ const MyLayout = () => {
         {
             name: t('navbar.main_dashboard'),
             icon: <Grid size={20} />,
-            href: '/main_dashboard', current: location.pathname =="/main_dashboard"
+            href: '/main_dashboard', current: location.pathname == "/main_dashboard"
         },
         {
             name: t('navbar.clients'),
@@ -38,11 +38,17 @@ const MyLayout = () => {
             current: location.pathname === "/sales"
         },
         {
+            name: t('navbar.settings.items_and_products'),
+            icon: <Plus size={20} />,
+            href: 'price_plans/products',
+            current: location.pathname === ("price_plans/products")
+        },
+        {
             name: t('navbar.main_settings'),
-            key:"settings",
+            key: "settings",
             icon: <Settings size={20} />,
             current: location.pathname.startsWith("/company_settings"),
-            items:[
+            items: [
                 {
                     name: t('navbar.settings.employees'),
                     href: '/company_settings/employees',
@@ -52,12 +58,7 @@ const MyLayout = () => {
                     name: t('navbar.settings.sms_settings'),
                     href: '/company_settings/sms_settings',
                     current: location.pathname === ("/company_settings/sms_settings")
-                },
-                {
-                    name: t('navbar.settings.items_and_products'),
-                    href: 'company_settings/price_plans/products',
-                    current: location.pathname === ("company_settings/price_plans/products")
-                },
+                }
             ]
         },
         {
@@ -87,9 +88,9 @@ const MyLayout = () => {
     }
 
     useEffect(() => {
-        if(location.pathname === "/"){
-             navigate('/main_dashboard');
-            
+        if (location.pathname === "/") {
+            navigate('/main_dashboard');
+
         }
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
@@ -170,10 +171,12 @@ const MyLayout = () => {
                                     className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded 
                                  shadow dark:bg-gray-700 dark:divide-gray-600"
                                     id="dropdown-user"
-                                    style={{ position: "absolute", inset:
-                                     "0px auto auto 0px", margin:
-                                      "0px",
-                                       transform: "translate3d(1700.5px, 54px, 0px)" }}
+                                    style={{
+                                        position: "absolute", inset:
+                                            "0px auto auto 0px", margin:
+                                            "0px",
+                                        transform: "translate3d(1700.5px, 54px, 0px)"
+                                    }}
                                 >
 
                                     <div className="px-4 py-3" role="none">

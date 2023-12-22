@@ -50,7 +50,6 @@ const router = createBrowserRouter([
         path: "/analytics/clients",
         element: <Analytics />
       },
-
       {
         path: "/sales",
         element: <SalesIndex />
@@ -89,6 +88,25 @@ const router = createBrowserRouter([
           },
         ]
       },
+      
+      
+        {
+          path: "price_plans",
+           element: <ServiceMain />,
+          children: [
+            {
+              path: "services", element: <Services />,
+            },
+            {
+              path: "products", element: <Products />,
+            },
+            {
+              path: "packages", element: <Packages />,
+            }
+          ]
+        },
+      
+
       {
         path: "/clients/:id",
         element: <ClientShow />,
