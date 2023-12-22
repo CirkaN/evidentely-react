@@ -42,7 +42,8 @@
     "add_note":"Dodaj napomenu",
     "profit":"Profit",
     "client_name":"Ime klijenta",
-    "appointment_name":"Termin"
+    "appointment_name":"Termin",
+    "notes":"Napomene"
   },
   "register": {
     "register": "Registracija",
@@ -106,7 +107,29 @@
     "summary_yearly_statistic": "Godisnja statistika",
     "summary_total_products_sold_in_value": "Ukupan prihod od prozivoda",
     "summary_total_products_sold_cost": "Ukupan trosak (nabavka)",
-    "summary_value_sold_this_month":"Vrednost prodate robe"
+    "summary_value_sold_this_month":"Vrednost prodate robe",
+    "info_box_title":"Prodaja",
+    "info_box_description":"Ovde mozete dodavati evidenciju prodaje artikala.. to be written",
+    "show_modal_title":"Prodaja",
+    "about_sale":"O prodaji",
+    "quick_statistic":"Brza statistika",
+    "info":"Informacije",
+    "sold_to":"Prodato klijentu",
+    "date_of_sale":"Datum prodaje",
+    "sold_pieces":"Prodato komada",
+    "price_per_item":"Cena po komadu",
+    "sold_for_amount":"Prodato po ceni",
+    "paid_to_date":"Do sad uplaceno",
+    "left_for_pay":"Preostalo za placanje",
+    "estimated_profit":"Ocekivani profit",
+    "pieces_left":"Ostalo na stanju",
+    "expense":"Trosak",
+    "payments":"Placanja",
+    "sold_date":"Datum prodaje",
+    "paid_via_create":"Tip placanja",
+    "only_if_its_paid":"Popuniti ukoliko je placeno",
+    "for_pay":"Za uplatu"
+    
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
@@ -194,7 +217,8 @@
   "toasts":{
     "event_succesfully_updated":"Termin uspesno izmenjen!",
     "employee_deleted_success":"Zaposlen je uspesno obrisan",
-    "client_deleted_success":"Klijent uspesno obrisan"
+    "client_deleted_success":"Klijent uspesno obrisan",
+    "sale_note_delete_successfully":"Prodajna napomena je uspesno obrisana"
   },
   "analytics":{
     "top_clients":"Top 5 klijenata po profitu ove nedelje"
