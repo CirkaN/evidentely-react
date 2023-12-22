@@ -39,7 +39,7 @@ const UpcomingAppointments = (props: Props) => {
     return (
         <>
             <DataTable
-                table_name={t('analytics.top_clients')}
+                table_name={t('dashboard.upcoming_appointments')}
                 url={url}
                 has_actions={false}
                 has_search={false}

@@ -198,5 +198,8 @@
   },
   "analytics":{
     "top_clients":"Top 5 klijenata po profitu ove nedelje"
+  },
+  "dashboard":{
+    "upcoming_appointments":"Naredna 5 termina"
   }
 }

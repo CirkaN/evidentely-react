@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Auth from "../auth";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { BarChart, Calendar, DollarSign, Grid, Settings, Users } from "react-fea
 
 const MyLayout = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const [collapsedMenies, setCollapsedMenies] = useState({
@@ -86,6 +87,10 @@ const MyLayout = () => {
     }
 
     useEffect(() => {
+        if(location.pathname === "/"){
+             navigate('/main_dashboard');
+            
+        }
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
     }, [location])
