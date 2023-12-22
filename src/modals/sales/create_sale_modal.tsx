@@ -1,4 +1,4 @@
-import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, TextArea } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
 import { Text } from "@radix-ui/themes";
 import Select, { SingleValue } from 'react-select'
@@ -18,22 +18,21 @@ interface CreateSaleProps {
 }
 
 const CreateSaleModal = (props: CreateSaleProps) => {
+
     const { t } = useTranslation();
-
-
     const [form, setForm] = useState<PendingSaleDTO>({
         employee_id: "",
         user_id: "",
         price: "",
         item_id: "",
-        note: ""
+        paid_at: "",
+        note: "",
+        paid_via: "",
     });
-
+    
     const [clientTransformedList, setClientTransformedList] = useState<TransformedDataForSelect[]>();
     const [productTransformedList, setProductTransformedList] = useState<TransformedDataForSelect[]>();
     const [employeeTrasnformedList, setEmployeeTransformedList] = useState<TransformedDataForSelect[]>();
-
-
 
     const transformClientList = (clients: ClientDTO[]) => {
         const transformed = clients.map((element) => ({
@@ -93,7 +92,11 @@ const CreateSaleModal = (props: CreateSaleProps) => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.saveFunction(form)
+        setForm((c) => c && { ...c, paid_via: ""});
+        setForm((c) => c && { ...c, paid_at: ""});
+        setForm((c) => c && { ...c, price: ""});
     }
+
     useEffect(() => {
         if (props.isOpen) {
             fetchClients();
@@ -104,11 +107,8 @@ const CreateSaleModal = (props: CreateSaleProps) => {
     }, [props.isOpen])
     return (<>
         <Dialog.Root open={props.isOpen} >
-            <Dialog.Content style={{ maxWidth: 450 }}>
+            <Dialog.Content style={{ maxWidth: 600 }}>
                 <Dialog.Title>{t('sales.create_modal_title')}</Dialog.Title>
-
-
-
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
                         <label>
@@ -132,7 +132,6 @@ const CreateSaleModal = (props: CreateSaleProps) => {
                             </Text>
                             <Select
                                 required={true}
-
                                 options={clientTransformedList}
                                 styles={{ container: (provided) => ({ ...provided, zIndex: 8888 }) }}
                                 onChange={(e) => setClientForm(e)} />
@@ -140,12 +139,10 @@ const CreateSaleModal = (props: CreateSaleProps) => {
                         </label>
                     </Flex>
 
-
-
-                    <Flex direction="column" gap="3">
+                    <Flex direction="row" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                {t('sales.price')} <span className="text-red-600">*</span>
+                                {t('sales.for_pay')} <span className="text-red-600">*</span>
                             </Text>
                             <input
                                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
@@ -154,7 +151,35 @@ const CreateSaleModal = (props: CreateSaleProps) => {
                                 onChange={(e) => { setForm((c) => c && { ...c, price: e.target.value }) }}
                                 value={form.price} id="" />
                         </label>
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                {t('sales.sold_date')} ({t('sales.only_if_its_paid')})
+                            </Text>
+                            <input
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                type="date"
+                                onChange={(e) => { setForm((c) => c && { ...c, paid_at: e.target.value }) }}
+                                value={form.paid_at} />
+                        </label>
+
                     </Flex>
+
+                    {form.paid_at &&
+                        <Flex direction="column" gap="3">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('sales.paid_via_create')}
+                                </Text>
+                                <select id="paid_via"
+                                    value={form.paid_via}
+                                    onChange={(e) => setForm((c) => c && { ...c, paid_via: e.target.value })}
+                                    name="paid_via"
+                                    className="block appearance-none w-full bg-white  border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white ">
+                                    <option value="cash">{t('charge.cash')}</option>
+                                    <option value="card">{t('charge.card')}</option>
+                                </select>
+                            </label>
+                        </Flex>}
 
 
                     <Flex direction="column" gap="3">
@@ -162,10 +187,9 @@ const CreateSaleModal = (props: CreateSaleProps) => {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('sales.note')}
                             </Text>
-                            <TextField.Input
+                            <TextArea
                                 value={form.note}
-                                onChange={(e) => setForm((c) => c && { ...c, note: e.target.value })}
-                            />
+                                onChange={(e) => setForm((c) => c && { ...c, note: e.target.value })} />
                         </label>
                     </Flex>
 
@@ -181,8 +205,6 @@ const CreateSaleModal = (props: CreateSaleProps) => {
 
                         </label>
                     </Flex>
-
-
 
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
