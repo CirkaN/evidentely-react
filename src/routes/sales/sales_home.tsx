@@ -79,6 +79,18 @@ const SalesIndex = () => {
             fn: (sale: SaleDTO) => { raiseDeleteAlert(sale.id) }
         },
     ];
+    const generateStatus = (status:string)=>{
+        switch (status) {
+          case 'paid':
+            return (<span className=" font-medium me-2 px-2.5 py-0.5 rounded bg-green-600 text-green-100">{t('sales.paid')}</span>)
+            break;
+          case 'partially_paid':
+            return (<span className="bg-orange-500 text-white  font-medium me-2 px-2.5 py-0.5 rounded ">{t('sales.partially_paid')}</span>)
+            break;
+          default:
+           return(<span className="bg-red-600 text-white  font-medium me-2 px-2.5 py-0.5 rounded">{t('sales.unpaid')}</span>)
+        }
+    }
     const fields: Field[] = [
         {
             name: t('common.name'),
@@ -91,6 +103,14 @@ const SalesIndex = () => {
             name: t('sales.left_to_pay'),
             editable_from_table: false,
             original_name: "pending_amount",
+            has_sort: true,
+            show: true
+        },
+        {
+            name: t('sales.status'),
+            editable_from_table: false,
+            original_name: "status",
+            formatFn:(t:string)=>generateStatus(t),
             has_sort: true,
             show: true
         },
