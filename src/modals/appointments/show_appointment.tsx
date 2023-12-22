@@ -89,7 +89,8 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     return (<>
         {showDelete && <SweetAlert2 {...swalProps} />}
         {!showDelete &&
-            <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); }} isOpen={isChargeClientModalOpen}></ChargeClientModal><Dialog.Root open={props.isOpen}>
+            <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); }} isOpen={isChargeClientModalOpen}></ChargeClientModal>
+            <Dialog.Root open={props.isOpen}>
                 <Dialog.Content style={{ maxWidth: 450 }}>
                     <Dialog.Title>{t('appointment.details')}</Dialog.Title>
                     <Dialog.Description size="2" mb="4">

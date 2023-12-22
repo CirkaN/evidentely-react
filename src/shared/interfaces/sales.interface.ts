@@ -19,6 +19,7 @@ export type PendingSaleDTO={
     price:string,
     pending_amount?:string,
     paid_at?:string,
+    paid_via?:string,
     note?:string
 }
 
