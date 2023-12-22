@@ -10,6 +10,7 @@ import axios_instance from "../../config/api_defaults";
 import { useTranslation } from "react-i18next";
 import CreateSaleModal from "../../modals/sales/create_sale_modal";
 import ShowSaleModal from "../../modals/sales/show_sale_modal";
+import InfoBox, { InfoBoxType } from "../../components/info-box";
 
 const SalesIndex = () => {
 
@@ -17,6 +18,7 @@ const SalesIndex = () => {
     const queryClient = useQueryClient();
     const { t } = useTranslation();
     const [openSaleCreateModal, setOpenSaleCreateModal] = useState(false);
+    const [activeSaleId, setActiveSaleId] = useState<number | null>(null);
     const [showSaleModal, setShowSaleModal] = useState(false);
     const [swalProps, setSwalProps] = useState({});
 
@@ -61,11 +63,15 @@ const SalesIndex = () => {
         dataCopied.show = false;
         setSwalProps(dataCopied);
     }
+    const openShowModal = (saleId: number) => {
+        setActiveSaleId(saleId)
+        setShowSaleModal(true)
+    }
     const actions: Action<SaleDTO>[] = [
         {
             type: ActionTypes.Show,
             icon: <Eye color="lightblue" />,
-            fn: () => (setShowSaleModal(true)),
+            fn: (r: SaleDTO) => openShowModal(r.id),
         },
         {
             type: ActionTypes.Delete,
@@ -116,16 +122,24 @@ const SalesIndex = () => {
     return (
         <>
             <SalesHomeHeader />
+            <InfoBox
+                headerText={t('sales.info_box_title')}
+                type={InfoBoxType.Info}
+                text={t('sales.info_box_description')}
+            />
+
             <SweetAlert2 {...swalProps} />
             <CreateSaleModal
                 isOpen={openSaleCreateModal}
                 cancelFunction={() => { setOpenSaleCreateModal(false) }}
                 saveFunction={(form) => { saveSale(form) }}
             />
-            <ShowSaleModal
-                isOpen={showSaleModal}
-                cancelFunction={() => { setShowSaleModal(false) }}
-            />
+            {activeSaleId &&
+                <ShowSaleModal
+                    saleId={activeSaleId}
+                    isOpen={showSaleModal}
+                    cancelFunction={() => { setShowSaleModal(false) }}
+                />}
             <DataTable
                 queryKey="sales"
                 table_actions={tableActions}
