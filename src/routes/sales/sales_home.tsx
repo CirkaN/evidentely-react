@@ -79,17 +79,24 @@ const SalesIndex = () => {
             fn: (sale: SaleDTO) => { raiseDeleteAlert(sale.id) }
         },
     ];
-    const generateStatus = (status:string)=>{
+    const generateStatus = (status: string) => {
         switch (status) {
-          case 'paid':
-            return (<span className=" font-medium me-2 px-2.5 py-0.5 rounded bg-green-600 text-green-100">{t('sales.paid')}</span>)
-            break;
-          case 'partially_paid':
-            return (<span className="bg-orange-500 text-white  font-medium me-2 px-2.5 py-0.5 rounded ">{t('sales.partially_paid')}</span>)
-            break;
-          default:
-           return(<span className="bg-red-600 text-white  font-medium me-2 px-2.5 py-0.5 rounded">{t('sales.unpaid')}</span>)
+            case 'paid':
+                return (<span className=" font-medium me-2 px-2.5 py-0.5 rounded bg-green-600 text-green-100">{t('sales.paid')}</span>)
+                break;
+            case 'partially_paid':
+                return (<span className="bg-orange-500 text-white  font-medium me-2 px-2.5 py-0.5 rounded ">{t('sales.partially_paid')}</span>)
+                break;
+            default:
+                return (<span className="bg-red-600 text-white  font-medium me-2 px-2.5 py-0.5 rounded">{t('sales.unpaid')}</span>)
         }
+    }
+    const formatCurrency = (t: string) => {
+        const s = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        return s.format(parseInt(t));
     }
     const fields: Field[] = [
         {
@@ -103,6 +110,7 @@ const SalesIndex = () => {
             name: t('sales.left_to_pay'),
             editable_from_table: false,
             original_name: "pending_amount",
+            formatFn: (t: string) => formatCurrency(t),
             has_sort: true,
             show: true
         },
@@ -110,13 +118,14 @@ const SalesIndex = () => {
             name: t('sales.status'),
             editable_from_table: false,
             original_name: "status",
-            formatFn:(t:string)=>generateStatus(t),
+            formatFn: (t: string) => generateStatus(t),
             has_sort: true,
             show: true
         },
         {
             name: t('sales.total_amount'),
             editable_from_table: false,
+            formatFn: (t: string) => formatCurrency(t),
             original_name: "price",
             has_sort: true,
             show: true
