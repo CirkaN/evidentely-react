@@ -28,11 +28,13 @@ const CreateSaleModal = (props: CreateSaleProps) => {
         paid_at: "",
         note: "",
         paid_via: "",
+        sale_made_at: new Date().toISOString().split('T')[0],
     });
-    
+
     const [clientTransformedList, setClientTransformedList] = useState<TransformedDataForSelect[]>();
     const [productTransformedList, setProductTransformedList] = useState<TransformedDataForSelect[]>();
     const [employeeTrasnformedList, setEmployeeTransformedList] = useState<TransformedDataForSelect[]>();
+    const [itemList, setItemList] = useState<ItemDTO[]>();
 
     const transformClientList = (clients: ClientDTO[]) => {
         const transformed = clients.map((element) => ({
@@ -43,6 +45,7 @@ const CreateSaleModal = (props: CreateSaleProps) => {
     }
 
     const transformProductList = (items: ItemDTO[]) => {
+        setItemList(items);
         const transformed = items.map((element) => ({
             value: parseInt(element.id),
             label: element.name
@@ -86,15 +89,21 @@ const CreateSaleModal = (props: CreateSaleProps) => {
     }
     const setProductForm = (e: SingleValue<{ value: number; label: string; }>) => {
         if (e) {
+            if (itemList) {
+                const item = itemList.find((item) => item.id == e.value.toString())
+                setForm((c) => c && { ...c, price: item?.selling_price ?? "0" })
+            }
+
             setForm((c) => c && { ...c, item_id: e.value.toString() });
+
         }
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.saveFunction(form)
-        setForm((c) => c && { ...c, paid_via: ""});
-        setForm((c) => c && { ...c, paid_at: ""});
-        setForm((c) => c && { ...c, price: ""});
+        setForm((c) => c && { ...c, paid_via: "" });
+        setForm((c) => c && { ...c, paid_at: "" });
+        setForm((c) => c && { ...c, price: "" });
     }
 
     useEffect(() => {
@@ -125,42 +134,60 @@ const CreateSaleModal = (props: CreateSaleProps) => {
                     </Flex>
 
 
-                    <Flex direction="column" gap="3">
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                {t('sales.client')} <span className="text-red-600">*</span>
-                            </Text>
-                            <Select
-                                required={true}
-                                options={clientTransformedList}
-                                styles={{ container: (provided) => ({ ...provided, zIndex: 8888 }) }}
-                                onChange={(e) => setClientForm(e)} />
+                    <Flex direction="row" gap="3">
+                        <div className="w-1/2">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('sales.client')} <span className="text-red-600">*</span>
+                                </Text>
+                                <Select
+                                    required={true}
+                                    options={clientTransformedList}
+                                    styles={{ container: (provided) => ({ ...provided, zIndex: 8888 }) }}
+                                    onChange={(e) => setClientForm(e)} />
 
-                        </label>
+                            </label>
+                        </div>
+                        <div className="w-1/2">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('sales.date_of_sale')}
+                                </Text>
+                                <input
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    type="date"
+                                    onChange={(e) => { setForm((c) => c && { ...c, sale_made_at: e.target.value }) }}
+                                    value={form.sale_made_at} />
+                            </label>
+                        </div>
                     </Flex>
 
-                    <Flex direction="row" gap="3">
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                {t('sales.for_pay')} <span className="text-red-600">*</span>
-                            </Text>
-                            <input
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                required={true}
-                                type="number" name="price"
-                                onChange={(e) => { setForm((c) => c && { ...c, price: e.target.value }) }}
-                                value={form.price} id="" />
-                        </label>
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                {t('sales.sold_date')} ({t('sales.only_if_its_paid')})
-                            </Text>
-                            <input
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                type="date"
-                                onChange={(e) => { setForm((c) => c && { ...c, paid_at: e.target.value }) }}
-                                value={form.paid_at} />
-                        </label>
+                    <Flex direction="row" gap="3" >
+                        <div className="w-1/2">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('sales.for_pay')} <span className="text-red-600">*</span>
+                                </Text>
+                                <input
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    required={true}
+                                    type="number" name="price"
+                                    onChange={(e) => { setForm((c) => c && { ...c, price: e.target.value }) }}
+                                    value={form.price} id="" />
+                            </label>
+                        </div>
+                        <div className="w-1/2">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('sales.charge_date')} ({t('sales.only_if_its_paid')})
+                                </Text>
+                                <input
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    type="date"
+                                    onChange={(e) => { setForm((c) => c && { ...c, paid_at: e.target.value }) }}
+                                    value={form.paid_at} />
+                            </label>
+                        </div>
 
                     </Flex>
 

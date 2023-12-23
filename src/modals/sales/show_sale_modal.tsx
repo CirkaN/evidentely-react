@@ -9,24 +9,13 @@ import { Plus, Trash } from "react-feather";
 import toast from "react-hot-toast";
 import CreateSalePaymentModal from "./create_sale_payment_modal";
 import DataTable, { Field, TableAction } from "../../components/datatable";
+import { SaleInfo } from "../../shared/interfaces/sales.interface";
 
 
 interface showSaleModalProps {
     saleId: number,
     isOpen: boolean,
     cancelFunction: () => void,
-}
-interface SaleInfo {
-    id: string,
-    sold_to_name: string,
-    pending_amount: string,
-    paid_to_date: string,
-    price: string,
-    sold_time_human: string,
-    expected_profit: string,
-    item: {
-        price: string,
-    }
 }
 
 const ShowSaleModal = (props: showSaleModalProps) => {
@@ -153,7 +142,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
                         <div className="pr-5">
                             <p className="font-bold text-xl text-slate-800">{t('sales.info')}:</p>
                             <p>{t('sales.sold_for_amount')}: <span className="text-green-700">{formatCurrency(sale?.price ?? "")}</span> </p>
-                            <p>{t('sales.paid_to_date')}:{formatCurrency(sale?.paid_to_date ?? "")} </p>
+                            <p>{t('sales.paid_to_date')}:{formatCurrency(sale?.total_paid ?? "")} </p>
                             <p>{t('sales.left_for_pay')}: {formatCurrency(sale?.pending_amount ?? "")}</p>
                         </div>
                         <div>

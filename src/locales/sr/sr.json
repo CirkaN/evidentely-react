@@ -95,8 +95,8 @@
     "item": "Proizvod",
     "client": "Klijent",
     "employee": "Zaposleni",
-    "left_to_pay": "Za placanje:",
-    "total_amount": "Ukupan zbir",
+    "left_to_pay": "Preostalo za uplatu:",
+    "total_amount": "Cena",
     "summary_this_month": "Prodaja ovog meseca",
     "summary_total_cost": "Ukupan trosak (nabavka)",
     "summary_total_profit": "Ukupan prihod",
@@ -125,9 +125,9 @@
     "pieces_left":"Ostalo na stanju",
     "expense":"Trosak",
     "payments":"Placanja",
-    "sold_date":"Datum prodaje",
+    "charge_date":"Datum naplate",
     "paid_via_create":"Tip placanja",
-    "only_if_its_paid":"Popuniti ukoliko je placeno",
+    "only_if_its_paid":"Ukoliko je placeno",
     "for_pay":"Za uplatu",
     "status":"Status",
     "paid":"Placeno",
@@ -138,7 +138,9 @@
     "payment_method":"Metod placanja",
     "paid_amount":"Uplaceno",
     "what_is_ref_no":"Unesite broj placanja za sopstvenu evidenciju",
-    "payments_subject":"Uplate"
+    "payments_subject":"Uplate",
+    "confirm_delete":"Ova akcija je finalna, ne mozemo vratiti obrisane stvari, molimo potvrdite",
+    "total_paid":"Ukupno uplaceno"
     
   },
   "media": {

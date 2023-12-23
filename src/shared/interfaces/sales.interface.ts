@@ -21,5 +21,18 @@ export type PendingSaleDTO={
     paid_at?:string,
     paid_via?:string,
     note?:string
+    sale_made_at?:string
 }
 
+export interface SaleInfo {
+    id: string,
+    sold_to_name: string,
+    pending_amount: string,
+    total_paid: string,
+    price: string,
+    sold_time_human: string,
+    expected_profit: string,
+    item: {
+        price: string,
+    }
+}
