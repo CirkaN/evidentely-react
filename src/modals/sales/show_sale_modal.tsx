@@ -213,7 +213,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
                         </Button>
                     </Dialog.Close>
                     <Dialog.Close>
-                        <Button type="submit">{t('common.save')}</Button>
+                        <Button onClick={props.cancelFunction} type="button">{t('common.save')}</Button>
                     </Dialog.Close>
                 </Flex>
             </Dialog.Content>
