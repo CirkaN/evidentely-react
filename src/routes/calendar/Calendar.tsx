@@ -10,6 +10,7 @@ import { EventChangeArg } from '@fullcalendar/core/index.js';
 import ShowAppointmentModal from '../../modals/appointments/show_appointment';
 import { useQuery, useQueryClient } from 'react-query';
 import { t } from 'i18next';
+import useScreenSize from '../../hooks/useScreenSize';
 
 interface AppointmentInterface {
   title: string | undefined,
@@ -43,7 +44,7 @@ const MyCalendar = () => {
         .then(response => { mutateDates(response.data) })
     }
   })
-
+  const screenSize = useScreenSize();
   const [dates, setDates] = useState<dataFromBackend[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
@@ -83,15 +84,24 @@ const MyCalendar = () => {
     setIsShowAppointmentModalOpen(false);
   }
 
+  const gridView = () => {
+    if (screenSize.width < 700) {
+      return 'timeGridDay';
+    } else {
+      return 'timeGridWeek';
+    }
+  }
+
 
   return (
     <>
+      {screenSize.width}
       <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
-      <div className="w-screen h-screen">
+      <div className="h-screen">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
-          initialView='timeGridWeek'
+          initialView={gridView()}
           weekends={true}
           longPressDelay={500}
           events={dates}

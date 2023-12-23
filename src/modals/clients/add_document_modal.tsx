@@ -24,8 +24,9 @@ const AddDocumentModal = (props: createProps) => {
                 <Dialog.Title>{t('client_documents.create_modal_title')}</Dialog.Title>
                 <InfoBox fontSize={'text-sm'} text={t('client_documents.help_infobox')}
                     headerText={t('common.important_notice')}
-                    type={InfoBoxType.Warning}></InfoBox>
+                    type={InfoBoxType.Info}></InfoBox>
                 <input
+                className="pt-2"
                     type="file"
                     onChange={(e) => { setForm((c) => c && { ...c, file: e.target.files ? e.target.files[0] : undefined }) }}
                 />

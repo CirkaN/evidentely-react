@@ -5,9 +5,10 @@ import { useQuery } from "react-query";
 import axios_instance from "../../config/api_defaults";
 import { SaleNote } from "../../shared/interfaces/sale_note.interface";
 import CreateSaleNoteModal from "./create_sale_note_modal";
-import { Trash } from "react-feather";
+import { Plus, Trash } from "react-feather";
 import toast from "react-hot-toast";
 import CreateSalePaymentModal from "./create_sale_payment_modal";
+import DataTable, { Field, TableAction } from "../../components/datatable";
 
 
 interface showSaleModalProps {
@@ -28,6 +29,32 @@ const ShowSaleModal = (props: showSaleModalProps) => {
         queryFn: () => axios_instance().get(`/sale/${props.saleId}/notes`).then(r => setSaleNotes(r.data)),
         enabled: true
     })
+
+    const fields: Field[] = [
+        {
+            name: t('sales.payment_method'),
+            editable_from_table: false,
+            original_name: "payment_method",
+            has_sort: true,
+            show: true
+        },
+        {
+            name: t('sales.reference'),
+            editable_from_table: false,
+            original_name: "reference_id",
+            has_sort: true,
+            show: true,
+        },
+        {
+            name: t('sales.paid_amount'),
+            editable_from_table: false,
+            original_name: "amount",
+            has_sort: true,
+            show: true,
+        },
+
+    ]
+
     const deleteNote = (id: string) => {
         axios_instance().delete(`/sale_notes/${id}`).then(r => {
             console.log(r);
@@ -35,6 +62,12 @@ const ShowSaleModal = (props: showSaleModalProps) => {
             refetch();
         })
     }
+    const table_actions: TableAction[] = [
+        {
+            icon: <Plus/>,
+            fn: () => {setIsPaymentModalActive(true)}
+        }
+    ];
 
     const raiseDelete = (id: string) => {
         deleteNote(id)
@@ -73,7 +106,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
             saleId={props.saleId}
             cancelFunction={() => { setIsAddNoteActive(false) }}
         />
-          <CreateSalePaymentModal
+        <CreateSalePaymentModal
             isOpen={isPaymentModalActive}
             saleId={props.saleId}
             cancelFunction={() => { setIsPaymentModalActive(false) }}
@@ -145,11 +178,17 @@ const ShowSaleModal = (props: showSaleModalProps) => {
 
                 <div className="pt-5">
                     <div className="pb-2">
-                        <p className="text-xl font-semibold text-slate-800">{t('sales.payments')}:
-                            <button onClick={() => { setIsPaymentModalActive(true) }} className="text-green-700 text-2xl">+</button></p>
+                        <p className="text-xl font-semibold text-slate-800">{t('sales.payments_subject')}:</p>
                     </div>
-                    <div className="flex flex-wrap">
-                        <h1>Placanja</h1>
+                    <div className="">
+                        <DataTable
+                            table_name={t('sales.payments_subject')}
+                            queryKey="sale_payments"
+                            url={`sale/${props.saleId}/charges?paginate_by=5`}
+                            has_actions={false}
+                            table_actions={table_actions}
+                            fields={fields}
+                        />
                     </div>
                 </div>
 
