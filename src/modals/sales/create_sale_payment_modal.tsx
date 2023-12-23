@@ -1,6 +1,5 @@
-import { Dialog, Flex, Button, Text, TextArea } from "@radix-ui/themes";
+import { Dialog, Flex, Button, Text, TextField } from "@radix-ui/themes";
 import { t } from "i18next";
-import { SaleNote } from "../../shared/interfaces/sale_note.interface";
 import { FormEvent, useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import { useQueryClient } from "react-query";
@@ -11,13 +10,20 @@ interface createSaleNoteProps {
     cancelFunction: () => void,
 }
 
-type MyNoteDto = Omit<SaleNote, 'author_id' | 'id' | 'created_at_human' | 'author_name'>
+interface ChargeSale {
+    amount: number,
+    sale_id: number,
+    payment_method: string,
+    reference_id: string | null,
+}
 
 const CreateSalePaymentModal = (props: createSaleNoteProps) => {
     const queryClient = useQueryClient();
-    const [form, setForm] = useState<MyNoteDto>({
-        note: "",
-        sale_id: props.saleId
+    const [form, setForm] = useState<ChargeSale>({
+        payment_method: "cash",
+        amount: 1,
+        sale_id: props.saleId,
+        reference_id: null,
     });
 
     useEffect(() => {
@@ -29,11 +35,14 @@ const CreateSalePaymentModal = (props: createSaleNoteProps) => {
         saveCharge()
     }
     const saveCharge = () => {
-        axios_instance().post(`/sale/${props.saleId}/notes`, form).then(() => {
+        axios_instance().post(`/sale/${props.saleId}/charge`, form).then(() => {
             setForm((c) => c && { ...c, note: "" })
             props.cancelFunction()
+            setForm((c) => c && { ...c, amount: 0 })
+            setForm((c) => c && { ...c, reference_id: null })
+            setForm((c) => c && { ...c, payment_method: "cash" })
             queryClient.invalidateQueries({
-                queryKey: ['sale_notes'],
+                queryKey: ['sale_payments'],
             })
         })
     }
@@ -41,20 +50,47 @@ const CreateSalePaymentModal = (props: createSaleNoteProps) => {
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 400 }}>
-                <Dialog.Title>{t('common.add_note')}</Dialog.Title>
+                <Dialog.Title>{t('sales.log_sale')}</Dialog.Title>
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
-                                {t('common.note')}
+                                {t('sales.reference')} (<span className="text-sm">{t('sales.what_is_ref_no')}</span>)
                             </Text>
-                            <TextArea
-                                value={form.note}
-                                onChange={(e) => setForm((c) => c && { ...c, note: e.target.value })}
+                            <TextField.Input
+                                onChange={(e) => setForm((c) => c && { ...c, reference_id: e.target.value })}
+                                value={form.reference_id ?? ""}
+                            />
+
+                        </label>
+                    </Flex>
+                    <Flex direction="column" gap="3">
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                {t('sales.paid_amount')}
+                            </Text>
+                            <input type="number"
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                value={form.amount}
+                                onChange={(e) => { setForm((c) => c && { ...c, amount: parseInt(e.target.value) }) }}
                             />
                         </label>
                     </Flex>
+                    <Flex direction="column" gap="3">
+                        <label>
+                            <Text as="div" size="2" mb="1" weight="bold">
+                                {t('sales.payment_method')}
+                            </Text>
+                            <select
+                                className="w-full rounded px-3 py-2 focus:outline-none "
+                                value={form.payment_method}
+                                onChange={(e) => { setForm((c) => c && { ...c, payment_method: e.target.value }) }}>
+                                <option value="card">{t('charge.card')}</option>
+                                <option value="cash">{t('charge.cash')}</option>
+                            </select>
 
+                        </label>
+                    </Flex>
 
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>

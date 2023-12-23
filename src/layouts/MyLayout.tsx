@@ -112,7 +112,7 @@ const MyLayout = () => {
                                 {e.icon}
                                 <span className="ms-3">{e.name}</span>
                             </button>
-                            <ul className={`bg-slate-700 space-y-2 font-medium px-5 ${isMenuCollapsed(e.key as keyof typeof collapsedMenies) ? 'block' : 'hidden'}`}>
+                            <ul className={`space-y-2 font-medium ${isMenuCollapsed(e.key as keyof typeof collapsedMenies) ? 'block' : 'hidden'}`}>
                                 {e.items?.map((e) => {
                                     return (
                                         <li key={e.name}>
@@ -154,7 +154,7 @@ const MyLayout = () => {
 
                             <Link className="flex ms-2 md:me-24" to="/">
                                 <img src="../../public/evi_logo.png" className="h-8 me-3" alt="FlowBite Logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Evidencty</span>
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">MOJ-BIZNIS.RS</span>
                             </Link>
 
                         </div>

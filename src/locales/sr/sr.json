@@ -132,7 +132,13 @@
     "status":"Status",
     "paid":"Placeno",
     "partially_paid":"Parcijalno uplaceno",
-    "unpaid":"Neplaceno"
+    "unpaid":"Neplaceno",
+    "log_sale":"Zabelezi prodaju",
+    "reference":"Referentni broj",
+    "payment_method":"Metod placanja",
+    "paid_amount":"Uplaceno",
+    "what_is_ref_no":"Unesite broj placanja za sopstvenu evidenciju",
+    "payments_subject":"Uplate"
     
   },
   "media": {
@@ -205,7 +211,7 @@
   },
   "client_documents":{
     "create_modal_title":"Dodaj media fajl..",
-    "help_info_box":"Ovde mozete dodati fajl"
+    "help_infobox":"Izaberite fajl..."
   },
   "client":{
     "create_client":"Kreiraj klienta"
