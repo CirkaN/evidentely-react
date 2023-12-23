@@ -30,7 +30,18 @@ interface dataFromBackend {
   start: string,
   end: string,
   price: number | null,
+  color: string,
   remind_client: boolean,
+  paid_at: string,
+}
+
+interface calendarDate {
+  title: string,
+  start: string | Date,
+  end: string | Date,
+  price: number | string | null,
+  color: string
+
 }
 
 
@@ -45,7 +56,7 @@ const MyCalendar = () => {
     }
   })
   const screenSize = useScreenSize();
-  const [dates, setDates] = useState<dataFromBackend[]>([]);
+  const [dates, setDates] = useState<calendarDate[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
   const [showAppointmentId, setShowAppointmentId] = useState<string>("");
@@ -64,13 +75,17 @@ const MyCalendar = () => {
   };
 
   const mutateDates = (dataFromBackend: BackendResponse) => {
-    dataFromBackend.data.map(item => ({
+
+    const s = dataFromBackend.data.map(item => ({
       start: new Date(item.start),
       end: new Date(item.end),
-      title: item.title,
-      id: item.id
+      title: item.title ?? 'Nema imena',
+      id: item.id,
+      price: item.price,
+      color: item.color,
+      editable: item.paid_at ? false : true
     }));
-    setDates(dataFromBackend.data);
+    setDates(s);
   }
 
 
@@ -102,8 +117,14 @@ const MyCalendar = () => {
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
           initialView={gridView()}
+          headerToolbar={{
+            left: 'prev,next',
+            center: 'title',
+            right: 'timeGridWeek,timeGridDay' // user can switch between the two
+          }}
           weekends={true}
           longPressDelay={500}
+          locale='sr-latn'
           events={dates}
           editable={true}
           nowIndicator={true}
