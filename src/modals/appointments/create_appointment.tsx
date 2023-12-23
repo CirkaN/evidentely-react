@@ -103,14 +103,13 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     }
 
-
     const myFetchFunc = () => {
         axios_instance().get('/clients').then(response => {
             setClientList(response.data);
 
             transformClientList(response.data)
         })
-        axios_instance().get('/items').then(response => {
+        axios_instance().get('/items?type=service').then(response => {
             setServiceList(response.data);
         })
         axios_instance().get('/employees').then(response => {
@@ -170,7 +169,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const saveAppointment = () => {
         axios_instance().post('/appointments', form).then((response) => {
             if (response.status === 200) {
-                toast.success('Event succesfully created');
+                toast.success(t('toast.appointment_created'));
                 setForm(blankForm);
                 setHasValidationErrors(false);
                 setSelectedClient(

@@ -38,26 +38,27 @@ const Services = () => {
 
     const fields: Field[] = [
         {
-            name: "Ime",
+            name: t('common.name'),
             editable_from_table: true,
             show: true,
             original_name: "name",
             has_sort: true
         },
         {
-            name: "Cena",
+            name: t('common.price'),
             editable_from_table: true,
             show: true,
             original_name: "price",
             has_sort: true
         },
         {
-            name: "Trajanje",
+            name: t('common.selling_price'),
             editable_from_table: true,
             show: true,
-            original_name: "duration",
+            original_name: "selling_price",
             has_sort: true
-        }
+        },
+    
     ]
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
@@ -70,7 +71,7 @@ const Services = () => {
             showCancelButton: true,
             showConfirmButton: true,
             cancelButtonText: 'Opozovi',
-            confirmButtonText: "Izbrisi",
+            confirmButtonText: t('common.confirm'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteItem(id) },
             onResolve: setSwalOff
@@ -85,7 +86,7 @@ const Services = () => {
 
     const deleteItem = (id: number) => {
         axios_instance().delete(`/items/${id}`).then(() => {
-            toast.success('Uspesno izbrisan produkt');
+            toast.success(t('toasts.delete_success'));
 
             queryClient.invalidateQueries({
                 queryKey: ['services'],
@@ -139,7 +140,7 @@ const Services = () => {
                 queryKey="services"
                 table_actions={table_actions}
                 has_actions={true}
-                table_name="Usluge"
+                table_name={t('common.services')}
                 url="items?type=service&per_page=10"
                 actions={actions}
                 fields={fields}

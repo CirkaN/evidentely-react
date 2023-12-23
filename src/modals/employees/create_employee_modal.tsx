@@ -43,10 +43,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>Create Employee</Dialog.Title>
-                <Dialog.Description size="2" mb="4">
-                    Create employee
-                </Dialog.Description>
+                <Dialog.Title>{t('common.employee_create')}</Dialog.Title>
 
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
@@ -84,7 +81,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                                 className="w-full rounded px-3 py-2 focus:outline-none "
                                 onChange={(e) => setForm((c) => c && { ...c, gender: e.target.value })}
                                 value={form.gender} id="gender">
-                                <option value="male">{t('common.name')}</option>
+                                <option value="male">{t('common.male')}</option>
                                 <option value="female">{t('common.female')}</option>
                             </select>
                         </label>

@@ -43,7 +43,13 @@
     "profit":"Profit",
     "client_name":"Ime klijenta",
     "appointment_name":"Termin",
-    "notes":"Napomene"
+    "notes":"Napomene",
+    "selling_price":"Prodajna cena",
+    "services":"Usluge",
+    "gender":"Pol",
+    "female":"Zenski",
+    "male":"Muski",
+    "employee_create":"Kreiraj profil zaposlenom"
   },
   "register": {
     "register": "Registracija",
@@ -230,7 +236,8 @@
     "event_succesfully_updated":"Termin uspesno izmenjen!",
     "employee_deleted_success":"Zaposlen je uspesno obrisan",
     "client_deleted_success":"Klijent uspesno obrisan",
-    "sale_note_delete_successfully":"Prodajna napomena je uspesno obrisana"
+    "sale_note_delete_successfully":"Prodajna napomena je uspesno obrisana",
+    "appointment_created":"Termin uspesno kreiran"
   },
   "analytics":{
     "top_clients":"Top 5 klijenata po profitu ove nedelje"
