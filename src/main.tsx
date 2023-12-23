@@ -28,6 +28,7 @@ import SalesIndex from './routes/sales/sales_home.tsx';
 import { Toaster } from 'react-hot-toast';
 import MyLayout from './layouts/MyLayout.tsx';
 import MainDashboard from './routes/dashboards/main_dashboard.tsx';
+import ClientAnalytics from './routes/analytics/client_analytics.tsx';
 
 
 const queryClient = new QueryClient()
@@ -48,7 +49,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/analytics/clients",
-        element: <Analytics />
+        element: <ClientAnalytics />
       },
       {
         path: "/sales",

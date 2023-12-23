@@ -6,7 +6,7 @@ const ServiceMain = () => {
     const navigation = [
         { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
         { name: 'Usluge', href: 'services', current: location.pathname === "/price_plans/services" },
-        { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
+        // { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
     ]
 
     const transformedHtml = navigation.map((element) => {

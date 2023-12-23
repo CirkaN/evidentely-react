@@ -68,33 +68,27 @@ const Products = () => {
 
   const fields: Field[] = [
     {
-      name: "Ime",
+      name:t('common.name'),
       editable_from_table: true,
       show: true,
       original_name: "name",
       has_sort: true
     },
     {
-      name: "Cena",
+      name: t('common.price'),
       editable_from_table: true,
       show: true,
       original_name: "price",
       has_sort: true
     },
     {
-      name: "Cena sa popustom",
+      name: t('common.selling_price'),
       editable_from_table: true,
       show: true,
       original_name: "selling_price",
       has_sort: true
-    },
-    {
-      name: "Trajanje",
-      editable_from_table: true,
-      show: true,
-      original_name: "duration",
-      has_sort: true
     }
+  
   ]
   const table_actions: TableAction[] = [{
     icon: <Plus />,

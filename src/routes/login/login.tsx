@@ -33,7 +33,7 @@ const Login = () => {
       localStorage.setItem('token_expires_at', tokenExpireAt);
       const lastCheck = new Date(Date.now()).toISOString().replace('T', ' ').split('.')[0];
       localStorage.setItem('last_check', lastCheck)
-      navigate('/clients')
+      navigate('/main_dashboard')
     }).catch(() => {
       setHasErrors(true);
     })

@@ -44,6 +44,9 @@ const CreateSalePaymentModal = (props: createSaleNoteProps) => {
             queryClient.invalidateQueries({
                 queryKey: ['sale_payments'],
             })
+            queryClient.invalidateQueries({
+                queryKey: ['sales'],
+            })
         })
     }
 

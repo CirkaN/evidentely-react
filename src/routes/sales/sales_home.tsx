@@ -34,7 +34,7 @@ const SalesIndex = () => {
             show: true,
             icon: 'error',
             title: t('common.please_confirm'),
-            text: t('common.confirm_action'),
+            text: t('sales.confirm_delete'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
@@ -115,18 +115,27 @@ const SalesIndex = () => {
             show: true
         },
         {
-            name: t('sales.status'),
+            name: t('sales.total_paid'),
             editable_from_table: false,
-            original_name: "status",
-            formatFn: (t: string) => generateStatus(t),
+            original_name: "total_paid",
+            formatFn: (t: string) => formatCurrency(t),
             has_sort: true,
             show: true
         },
+
         {
             name: t('sales.total_amount'),
             editable_from_table: false,
             formatFn: (t: string) => formatCurrency(t),
             original_name: "price",
+            has_sort: true,
+            show: true
+        },
+        {
+            name: t('sales.status'),
+            editable_from_table: false,
+            original_name: "status",
+            formatFn: (t: string) => generateStatus(t),
             has_sort: true,
             show: true
         },
