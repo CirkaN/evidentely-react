@@ -16,9 +16,23 @@ interface showSaleModalProps {
     isOpen: boolean,
     cancelFunction: () => void,
 }
+interface SaleInfo {
+    id: string,
+    sold_to_name: string,
+    pending_amount: string,
+    paid_to_date: string,
+    price: string,
+    sold_time_human: string,
+    expected_profit: string,
+    item: {
+        price: string,
+    }
+}
 
 const ShowSaleModal = (props: showSaleModalProps) => {
     const [saleNotes, setSaleNotes] = useState<SaleNote[]>([])
+    const [sale, setSale] = useState<SaleInfo>();
+
     // const [swalProps, setSwalProps] = useState({});
     const [isAddNoteActive, setIsAddNoteActive] = useState(false);
     const [isPaymentModalActive, setIsPaymentModalActive] = useState(false);
@@ -28,6 +42,10 @@ const ShowSaleModal = (props: showSaleModalProps) => {
         queryKey: ['sale_notes'],
         queryFn: () => axios_instance().get(`/sale/${props.saleId}/notes`).then(r => setSaleNotes(r.data)),
         enabled: true
+    })
+    useQuery({
+        queryKey: ['sale_data'],
+        queryFn: () => axios_instance().get(`/sales/${props.saleId}`).then(r => setSale(r.data))
     })
 
     const fields: Field[] = [
@@ -64,8 +82,8 @@ const ShowSaleModal = (props: showSaleModalProps) => {
     }
     const table_actions: TableAction[] = [
         {
-            icon: <Plus/>,
-            fn: () => {setIsPaymentModalActive(true)}
+            icon: <Plus />,
+            fn: () => { setIsPaymentModalActive(true) }
         }
     ];
 
@@ -97,7 +115,13 @@ const ShowSaleModal = (props: showSaleModalProps) => {
             refetch();
         }
     }, [props.isOpen])
-
+    const formatCurrency = (t: string) => {
+        const s = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        return s.format(parseInt(t));
+    }
 
     return (<>
 
@@ -120,23 +144,23 @@ const ShowSaleModal = (props: showSaleModalProps) => {
                     <div className="flex flex-col justify-evenly sm:flex-row text-center  ">
                         <div className="pr-5">
                             <p className="font-bold text-xl text-slate-800">{t('sales.about_sale')}:</p>
-                            <p>{t('sales.sold_to')}: <b>Nikola Cirkovic</b></p>
-                            <p>{t('sales.date_of_sale')}: <b>24.12.2023</b></p>
-                            <p>{t('sales.sold_pieces')}: <b>10</b></p>
-                            <p>{t('sales.price_per_item')}: <b>29RSD</b></p>
+                            <p>{t('sales.sold_to')}: <b>{sale?.sold_to_name}</b></p>
+                            <p>{t('sales.date_of_sale')}: <b>{sale?.sold_time_human}</b></p>
+                            {/* <p>{t('sales.sold_pieces')}: <b>10</b></p>
+                            <p>{t('sales.price_per_item')}: <b>29RSD</b></p> */}
 
                         </div>
                         <div className="pr-5">
                             <p className="font-bold text-xl text-slate-800">{t('sales.info')}:</p>
-                            <p>{t('sales.sold_for_amount')}: <span className="text-green-700">5132 RSD</span> </p>
-                            <p>{t('sales.paid_to_date')}: 100RSD</p>
-                            <p>{t('sales.left_for_pay')}: 5032 RSD</p>
+                            <p>{t('sales.sold_for_amount')}: <span className="text-green-700">{formatCurrency(sale?.price ?? "")}</span> </p>
+                            <p>{t('sales.paid_to_date')}:{formatCurrency(sale?.paid_to_date ?? "")} </p>
+                            <p>{t('sales.left_for_pay')}: {formatCurrency(sale?.pending_amount ?? "")}</p>
                         </div>
                         <div>
                             <p className="font-bold text-xl text-green-700">{t('sales.quick_statistic')}:</p>
-                            <p>{t('sales.estimated_profit')}: <span className="text-green-700">51RSD</span> </p>
-                            <p>{t('sales.expense')}: <span className="text-red-600">51RSD</span> </p>
-                            <p>{t('sales.pieces_left')}: 15 kom</p>
+                            <p>{t('sales.estimated_profit')}: <span className="text-green-700">{formatCurrency(sale?.expected_profit ?? "")}</span> </p>
+                            <p>{t('sales.expense')}: <span className="text-red-600">{formatCurrency(sale?.item?.price ?? "")}</span> </p>
+                            {/* <p>{t('sales.pieces_left')}: 15 kom</p> */}
                         </div>
                     </div>
 
@@ -188,6 +212,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
                             has_actions={false}
                             table_actions={table_actions}
                             fields={fields}
+                            has_search={true}
                         />
                     </div>
                 </div>
