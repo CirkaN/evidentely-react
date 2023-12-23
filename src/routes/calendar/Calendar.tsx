@@ -117,10 +117,16 @@ const MyCalendar = () => {
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
           initialView={gridView()}
+          buttonText={{
+            today:"Danas",
+            week:"Nedeljni prikaz",
+            day:"Dnevni prikaz",
+            month:"Mesecni prikaz"
+          }}
           headerToolbar={{
             left: 'prev,next',
-            center: 'title',
-            right: 'timeGridWeek,timeGridDay' // user can switch between the two
+          
+            right: 'timeGridWeek,timeGridDay,dayGridMonth'
           }}
           weekends={true}
           longPressDelay={500}
