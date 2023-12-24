@@ -19,7 +19,6 @@ const MainDashboard = () => {
         
            <div className="flex h-64">
            <DashboardChart/>
-
            </div>
          
             <div className="pt-5">

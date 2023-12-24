@@ -60,16 +60,17 @@ const router = createBrowserRouter([
         element: <FinancialAnalytics />
       },
       {
-        path:"/main_dashboard",
-        element:<MainDashboard/>,
+        path: "/main_dashboard",
+        element: <MainDashboard />,
+      },
+      {
+        path: "/employees",
+        element: <Employees />,
       },
       {
         path: "/company_settings",
         element: <CompanySettings />,
         children: [
-          {
-            path: "employees", element: <Employees />
-          },
           {
             path: "sms_settings", element: <SmsSettings />
           },
@@ -89,24 +90,24 @@ const router = createBrowserRouter([
           },
         ]
       },
-      
-      
-        {
-          path: "price_plans",
-           element: <ServiceMain />,
-          children: [
-            {
-              path: "services", element: <Services />,
-            },
-            {
-              path: "products", element: <Products />,
-            },
-            {
-              path: "packages", element: <Packages />,
-            }
-          ]
-        },
-      
+
+
+      {
+        path: "price_plans",
+        element: <ServiceMain />,
+        children: [
+          {
+            path: "services", element: <Services />,
+          },
+          {
+            path: "products", element: <Products />,
+          },
+          {
+            path: "packages", element: <Packages />,
+          }
+        ]
+      },
+
 
       {
         path: "/clients/:id",
@@ -142,7 +143,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Theme>         
+      <Theme>
         <Toaster
           position="top-right"
           reverseOrder={false}
