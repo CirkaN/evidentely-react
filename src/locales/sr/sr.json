@@ -50,7 +50,7 @@
     "female":"Zenski",
     "male":"Muski",
     "employee_create":"Kreiraj profil zaposlenom"
-  },
+    },
   "register": {
     "register": "Registracija",
     "register_text": "Ovde se mozete registrovati",
@@ -215,7 +215,8 @@
     "birthday_wish":"Rodjendanska cestitka",
     "same_day":"Istog dana",
     "day_before":"Dan ranije",
-    "client_reservation_confirmation":"Potvrda klijentu o kreiranom terminu"
+    "client_reservation_confirmation":"Potvrda klijentu o kreiranom terminu",
+    "sms_char_warning":"Jedan SMS kredit je 1 SMS, 1 SMS moze sadrzati maksimalno 160 karaktera da bi bio vodjen kao jedan sms, ako vas sms prelazi limit od 160 karaktera, sa vaseg racuna bice skinuto dva kredita"
   },
   "client_documents":{
     "create_modal_title":"Dodaj media fajl..",

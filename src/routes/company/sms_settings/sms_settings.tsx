@@ -12,7 +12,7 @@ import { t } from "i18next";
 
 const SmsSettings = () => {
 
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
     const [phoneVerificationForm, setPhoneVerificationForm] = useState({
         phone_number: ""
     });
@@ -170,6 +170,11 @@ const SmsSettings = () => {
             }
             {userHasMobileVerified &&
                 <>
+                  <InfoBox type={InfoBoxType.Warning}
+                   headerText={t('common.important_notice')}
+                   text={t('sms.sms_char_warning')}></InfoBox>
+                   <br />
+
                     <div className="px-4">
                         <p className="text-2xl text-center mb-5">{t('sms.notify_clients_about_appointments')}</p>
                         <div className="flex flex-col md:flex-row">
