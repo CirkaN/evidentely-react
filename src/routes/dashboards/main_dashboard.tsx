@@ -34,4 +34,4 @@ const MainDashboard = () => {
         </>
     )
 }
-export default MainDashboard;
+export default MainDashboard

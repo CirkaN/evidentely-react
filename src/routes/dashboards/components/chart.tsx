@@ -72,6 +72,6 @@ const DashboardChart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [analyticsData])
     return (<>
-        <Line options={options} data={data} />;</>)
+        <Line options={options} data={data} /></>)
 }
 export default DashboardChart;
