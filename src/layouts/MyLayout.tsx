@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Auth from "../auth";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Users } from "react-feather";
+import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -44,16 +44,17 @@ const MyLayout = () => {
             current: location.pathname === ("price_plans/products")
         },
         {
+            name: t('navbar.settings.employees'),
+            icon: <Share2 size={20} />,
+            href: '/employees',
+            current: location.pathname === ("employees")
+        },
+        {
             name: t('navbar.main_settings'),
             key: "settings",
             icon: <Settings size={20} />,
             current: location.pathname.startsWith("/company_settings"),
             items: [
-                {
-                    name: t('navbar.settings.employees'),
-                    href: '/company_settings/employees',
-                    current: location.pathname === ("/company_settings/employees")
-                },
                 {
                     name: t('navbar.settings.sms_settings'),
                     href: '/company_settings/sms_settings',

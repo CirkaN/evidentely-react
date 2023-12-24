@@ -19,7 +19,6 @@ const MainDashboard = () => {
         
            <div className="flex h-64">
            <DashboardChart/>
-
            </div>
          
             <div className="pt-5">
@@ -35,4 +34,4 @@ const MainDashboard = () => {
         </>
     )
 }
-export default MainDashboard;
+export default MainDashboard

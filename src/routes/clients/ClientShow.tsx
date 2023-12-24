@@ -8,6 +8,7 @@ import { ArrowLeft } from "react-feather";
 import DetailNoteBox from "../../layouts/clients/details_note_box";
 import AddUserNoteModal from "../../modals/clients/add_user_note_modal";
 import { useQueryClient } from "react-query";
+import { NoteDTO } from "../../shared/interfaces/user_notes.interface";
 
 interface Client {
     id: string,

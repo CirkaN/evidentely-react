@@ -1,6 +1,7 @@
 import { Button, Dialog, Flex, Text, TextArea } from "@radix-ui/themes";
 import { FormEvent, useEffect, useState } from "react";
 import { t } from "i18next";
+import { NoteDTO } from "../../shared/interfaces/user_notes.interface";
 
 interface createProps {
     isOpen: boolean,

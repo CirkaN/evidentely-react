@@ -13,13 +13,16 @@ interface EditSmsSettingsProps {
     text: string
 }
 interface Replacements {
-    "#ime": string;
+    "#ime_klijenta": string;
     "#datum": string;
     '#dan': string,
     '#mesec': string,
     '#godina': string,
     '#usluga': string,
     '#napomena': string,
+    '#vreme':string,
+    '#ime_radnje':string,
+    '#puno_vreme':string
 }
 
 const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
@@ -50,16 +53,19 @@ const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
 
     const formatExample = () => {
         const replacements: Replacements = {
-            "#ime": "Ivan",
+            "#ime_klijenta": "Ivan",
+            '#ime_radnje':"Salon Zvoncica",
             '#dan': new Date().getDay().toString(),
             '#mesec': new Date().getMonth().toString(),
             '#godina': new Date().getFullYear().toString(),
-            "#datum": new Date().toLocaleDateString('en-us', { year: "numeric", month: "numeric", day: "numeric" }),
+            "#vreme": new Date().toLocaleTimeString('sr-RS', { hour: '2-digit', minute: '2-digit' }),
+            "#datum": new Date().toLocaleDateString('sr-RS', { year: "numeric", month: "numeric", day: "numeric" }),
             '#usluga': "Moja usluga",
+            '#puno_vreme':new Date().toLocaleString('sr-RS', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' }),
             '#napomena': "Primer napomene",
 
         };
-        const modifiedString = form.text.replace(/#ime|#napomena|#usluga|#dan|#mesec|#godina|#datum/g, match => replacements[match as keyof Replacements]);
+        const modifiedString = form.text.replace(/#ime_klijenta|#napomena|#usluga|#dan|#ime_radnje|#puno_vreme|#mesec|#vreme|#godina|#datum/g, match => replacements[match as keyof Replacements]);
         setModifiedMessage(modifiedString);
     }
     const handleOnChange = (value: string) => {
@@ -76,8 +82,8 @@ const EditSmsSettingsModal = (props: EditSmsSettingsProps) => {
 
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
-                        <p>#datum,#dan,#mesec,#godina, #vreme ,  #ime , #usluga</p>
-                        <p className="text-sm">Promenljive (primer: #ime) ce se automatski promeniti u ime klijenta kome saljete poruku</p>
+                        <p>#datum,#dan,#mesec,#godina, #vreme,#puno_vreme ,#ime_radnje,  #ime_klijenta , #usluga</p>
+                        <p className="text-sm">Promenljive (primer: #ime_klijenta) ce se automatski promeniti u ime klijenta kome saljete poruku</p>
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Poruka:
