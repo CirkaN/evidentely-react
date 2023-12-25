@@ -5,13 +5,16 @@ import { useTranslation } from "react-i18next";
 import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
 import { useUser } from "../context/UserContext";
 import ReactGA from "react-ga4";
+
 const MyLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { user } = useUser();
+    const { user,logout } = useUser();
+
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const [toggleBar, setToggleBar] = useState(false);
+    const [rightPixels, setRightPixels] = useState<number | null>(null);
     const [collapsedMenies, setCollapsedMenies] = useState({
         analytics: location.pathname.startsWith("/analytics"),
         settings: false,
@@ -89,15 +92,16 @@ const MyLayout = () => {
     const isMenuCollapsed = (key: keyof typeof collapsedMenies) => {
         return collapsedMenies[key]
     }
-    const logUserOut = () => {
-        localStorage.clear();
+    const doLogout = () => {
+        logout()
         navigate('/login')
     }
+    const toggleNavbar = () => {
+        setIsNavCollapsed(!isNavCollapsed);
+    };
 
     useEffect(() => {
         ReactGA.send({ hitType: "pageview", page: location.pathname });
-    
-    //   console.log(location);
         if (location.pathname === "/") {
             navigate('/main_dashboard');
 
@@ -105,6 +109,30 @@ const MyLayout = () => {
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
     }, [location])
+    
+    useEffect(() => {
+        if(!localStorage.getItem('auth_token')){
+            navigate('/login')
+        }
+    }, [])
+
+    useEffect(() => {
+        const calculateRightPixels = () => {
+            const windowWidth = window.innerWidth;
+            const offset = 180;
+            const calculatedRightPixels = windowWidth - offset;
+            setRightPixels(calculatedRightPixels);
+        };
+
+        calculateRightPixels();
+
+        window.addEventListener('resize', calculateRightPixels);
+        return () => {
+            window.removeEventListener('resize', calculateRightPixels);
+        };
+    }, []);
+
+
 
     const mapRoutes = () => {
         return navRoutes.map((e) => {
@@ -140,38 +168,8 @@ const MyLayout = () => {
             );
         });
     }
-    const [rightPixels, setRightPixels] = useState<number | null>(null);
+   
 
-    useEffect(() => {
-        const calculateRightPixels = () => {
-            // Get the window width
-            const windowWidth = window.innerWidth;
-
-            // Set a fixed offset (adjust as needed)
-            const offset = 180;
-
-            // Calculate the right pixels
-            const calculatedRightPixels = windowWidth - offset;
-
-            // Set the state with the calculated right pixels
-            setRightPixels(calculatedRightPixels);
-        };
-
-        // Call the function initially
-        calculateRightPixels();
-
-        // Add an event listener to recalculate on window resize
-        window.addEventListener('resize', calculateRightPixels);
-
-        // Cleanup the event listener on component unmount
-        return () => {
-            window.removeEventListener('resize', calculateRightPixels);
-        };
-    }, []);
-
-    const toggleNavbar = () => {
-        setIsNavCollapsed(!isNavCollapsed);
-    };
     return (
         <>
             <nav
@@ -238,7 +236,7 @@ const MyLayout = () => {
 
                                         </li>
                                         <li>
-                                            <button onClick={() => logUserOut()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <button onClick={() => doLogout()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
                                                 Odjavi se
                                             </button>
 
