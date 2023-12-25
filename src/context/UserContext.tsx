@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
+
 interface User {
     id: number,
     name:string,
@@ -13,6 +14,7 @@ interface UserContextProps {
     login: (user: User) => void;
     logout: () => void;
 }
+
 const UserContext = createContext<UserContextProps | null>(null);
 
 const useUser = () => {
@@ -34,6 +36,7 @@ const UserProvider = (props: UserProviderProps) => {
 
     const logout = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('auth_token')
         setUser(null);
     };
     const contextValues = {
