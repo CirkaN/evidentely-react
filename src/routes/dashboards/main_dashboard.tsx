@@ -5,23 +5,42 @@ import TopClientsTable from "./components/top_clients_table";
 import UpcomingAppointments from "./components/upcoming_appointments";
 
 const MainDashboard = () => {
-    const {user} =useUser();
+    const { user } = useUser();
     return (
         <>
             <div className="">
                 <p className="text-2xl text-bold">Dobro dosli, {user?.name}</p>
             </div>
+       
             <div className="flex flex-col sm:flex-row justify-between">
-                <AdminHomeAnalyticPill />
-                <AdminHomeAnalyticPill />
-                <AdminHomeAnalyticPill />
-                <AdminHomeAnalyticPill />
+                <AdminHomeAnalyticPill
+                    heading="Broj novih klijenata"
+                    bg_color="primary"
+                    filter_type="new_clients"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Broj termina"
+                    filter_type="appointments"
+                    bg_color="primary"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Broj otkazanih termina"
+                    filter_type="missed_appointments"
+                    bg_color="warning"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Ocekivani profit"
+                    filter_type="profit"
+                    bg_color="success"
+
+                />
             </div>
-        
-           <div className="flex h-64">
-           <DashboardChart/>
-           </div>
-         
+           
+
+            <div className="flex h-64">
+                <DashboardChart />
+            </div>
+
             <div className="pt-5">
                 <TopClientsTable
                     client_count={5}

@@ -50,7 +50,9 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
     }
     const cancelAppointment = () => {
-
+        axios_instance().post(`/appointments/${props.appointmentId}/missed`).then(()=>{
+            toast.success("Uspesno markirano kao otkazan")
+        })
     }
 
     const raiseDeleteAlert = (id: string) => {
