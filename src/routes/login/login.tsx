@@ -102,7 +102,7 @@ const Login = () => {
           </div>
 
           <div className="hidden w-1/2 md:block">
-            <img src="/evi_logo.png" className="rounded-2xl" alt="page img" />
+            <img src="/moj_biznis_logo.webp" className="rounded-2xl" alt="page img" />
           </div>
         </div>
       </section>

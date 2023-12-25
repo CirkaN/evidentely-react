@@ -55,7 +55,7 @@ const NavBar = () => {
                                     <a href="/">
                                         <img
                                             className="h-10 w-auto"
-                                            src="/evi_logo.png"
+                                            src="/moj_biznis_logo.webp"
                                             alt="NCODESOFT"
                                         />
                                     </a>
