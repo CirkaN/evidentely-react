@@ -71,14 +71,14 @@ const Register = () => {
                                 <input
                                     value={registrationForm.company_name}
                                     onChange={(e) => { setRegistrationForm((c) => c && { ...c, company_name: e.target.value }) }}
-                                    type="text" name="" id="" placeholder={t('common.company_name')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
+                                    type="text" name="company_name" id="company_name" placeholder={t('common.company_name')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
                             </div>
                             <div className="mt-4">
                                 <label className="block text-gray-700">{t('common.password')}</label>
                                 <input type="password"
                                     value={registrationForm.password}
                                     onChange={(e) => { setRegistrationForm((c) => c && { ...c, password: e.target.value }) }}
-                                    name="" id="" placeholder={t('common.enter_password')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
+                                    name="password" id="password" placeholder={t('common.enter_password')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
                             </div>
 
 
@@ -92,7 +92,7 @@ const Register = () => {
                     </div>
 
                     <div className="hidden w-1/2 md:block">
-                        <img src="/moj_biznis_logo.webp" className="rounded-2xl" alt="page img" />
+                        <img src="/moj_biznis_dark.webp" className="rounded-2xl" alt="page img" />
                     </div>
                 </div>
             </section>
