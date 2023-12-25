@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import Auth from "../auth";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
-
+import { useUser } from "../context/UserContext";
+import ReactGA from "react-ga4";
 const MyLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { user } = useUser();
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+    const [toggleBar, setToggleBar] = useState(false);
     const [collapsedMenies, setCollapsedMenies] = useState({
         analytics: location.pathname.startsWith("/analytics"),
         settings: false,
@@ -87,8 +89,15 @@ const MyLayout = () => {
     const isMenuCollapsed = (key: keyof typeof collapsedMenies) => {
         return collapsedMenies[key]
     }
+    const logUserOut = () => {
+        localStorage.clear();
+        navigate('/login')
+    }
 
     useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: location.pathname });
+    
+    //   console.log(location);
         if (location.pathname === "/") {
             navigate('/main_dashboard');
 
@@ -131,14 +140,40 @@ const MyLayout = () => {
             );
         });
     }
+    const [rightPixels, setRightPixels] = useState<number | null>(null);
 
+    useEffect(() => {
+        const calculateRightPixels = () => {
+            // Get the window width
+            const windowWidth = window.innerWidth;
+
+            // Set a fixed offset (adjust as needed)
+            const offset = 180;
+
+            // Calculate the right pixels
+            const calculatedRightPixels = windowWidth - offset;
+
+            // Set the state with the calculated right pixels
+            setRightPixels(calculatedRightPixels);
+        };
+
+        // Call the function initially
+        calculateRightPixels();
+
+        // Add an event listener to recalculate on window resize
+        window.addEventListener('resize', calculateRightPixels);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', calculateRightPixels);
+        };
+    }, []);
 
     const toggleNavbar = () => {
         setIsNavCollapsed(!isNavCollapsed);
     };
     return (
         <>
-            <Auth></Auth>
             <nav
                 className="fixed top-0 z-50 w-full bg-white border-b
  border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -154,7 +189,7 @@ const MyLayout = () => {
                             </button>
 
                             <Link className="flex ms-2 md:me-24" to="/">
-                                <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="FlowBite Logo" />
+                                <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="Moj biznis logo" />
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">MOJ-BIZNIS.RS</span>
                             </Link>
 
@@ -162,48 +197,51 @@ const MyLayout = () => {
                         <div className="flex items-center">
                             <div className="flex items-center ms-3">
                                 <div>
-                                    <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                                        <span className="sr-only">Open user menu</span>
+                                    <button type="button" onClick={() => setToggleBar(!toggleBar)} className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                                        <span className="sr-only">Otvori meni</span>
                                         <img className="w-8 h-8 rounded-full"
                                             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
                                     </button>
                                 </div>
                                 <div
-                                    className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded 
-                                 shadow dark:bg-gray-700 dark:divide-gray-600"
+                                    className={clsx("z-50 show my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 ", toggleBar && 'block', !toggleBar && 'hidden')}
                                     id="dropdown-user"
                                     style={{
                                         position: "absolute", inset:
                                             "0px auto auto 0px", margin:
                                             "0px",
-                                        transform: "translate3d(1700.5px, 54px, 0px)"
+                                        transform: `translate3d(${rightPixels}px, 54px, 0px)`
                                     }}
                                 >
 
                                     <div className="px-4 py-3" role="none">
                                         <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                            Neil Sims
+                                            {user?.name}
                                         </p>
                                         <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            neil.sims@flowbite.com
+                                            {user?.email}
                                         </p>
                                     </div>
 
                                     <ul className="py-1" role="none">
                                         <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                                            <Link className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'/'}>
+                                                Komandna tabla
+                                            </Link>
+
                                         </li>
                                         <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Podesavanja</a>
                                         </li>
-                                        <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                                        </li>
+
                                         <li>
 
                                         </li>
                                         <li>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                            <button onClick={() => logUserOut()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                                Odjavi se
+                                            </button>
+
                                         </li>
                                     </ul>
                                 </div>

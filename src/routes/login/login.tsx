@@ -3,6 +3,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 
 interface Login {
@@ -14,6 +15,7 @@ const Login = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useUser();
 
   const [loginForm, setLoginForm] = useState<Login>({
     email: "",
@@ -28,12 +30,9 @@ const Login = () => {
 
   const loginRequest = () => {
     axios_instance().post('/auth/login', loginForm).then(response => {
-      localStorage.setItem('auth_token', response.data.access_token);
-      const tokenExpireAt = new Date(Date.now() + response.data.expires_in * 1000).toISOString().replace('T', ' ').split('.')[0];
-      localStorage.setItem('token_expires_at', tokenExpireAt);
-      const lastCheck = new Date(Date.now()).toISOString().replace('T', ' ').split('.')[0];
-      localStorage.setItem('last_check', lastCheck)
+      localStorage.setItem('auth_token', response.data.auth.access_token);
       navigate('/main_dashboard')
+      login({ 'email': response.data.user.email, 'id': response.data.user.id,'name':response.data.user.name })
     }).catch(() => {
       setHasErrors(true);
     })
