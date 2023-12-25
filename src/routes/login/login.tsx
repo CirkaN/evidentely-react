@@ -68,7 +68,7 @@ const Login = () => {
     loginRequest()
   }
   return (<>
-   
+
     <div className="max-h-screen">
       <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
         <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">
@@ -77,7 +77,7 @@ const Login = () => {
             {hasErrors &&
               <p className="mt-4 text-sm text-center text-red-600">{t('login.check_credentials')}</p>}
 
-           
+
             <form className="mt-6" onSubmit={handleSubmit} >
               <div>
                 <label className="block text-gray-700">{t('common.email')}</label>
@@ -102,7 +102,7 @@ const Login = () => {
           </div>
 
           <div className="hidden w-1/2 md:block">
-            <img src="../../public/evi_logo.png" className="rounded-2xl" alt="page img" />
+            <img src="/evi_logo.png" className="rounded-2xl" alt="page img" />
           </div>
         </div>
       </section>
