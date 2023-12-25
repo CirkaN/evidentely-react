@@ -28,6 +28,7 @@ import { Toaster } from 'react-hot-toast';
 import MyLayout from './layouts/MyLayout.tsx';
 import MainDashboard from './routes/dashboards/main_dashboard.tsx';
 import ClientAnalytics from './routes/analytics/client_analytics.tsx';
+import { UserProvider } from './context/UserContext.tsx';
 
 
 const queryClient = new QueryClient()
@@ -141,6 +142,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <UserProvider>
     <QueryClientProvider client={queryClient}>
       <Theme>
         <Toaster
@@ -151,5 +153,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <RouterProvider router={router}></RouterProvider>
       </Theme>
     </QueryClientProvider>
+    </UserProvider>
   </React.StrictMode>,
 )
