@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
 import { useUser } from "../context/UserContext";
-
+import ReactGA from "react-ga4";
 const MyLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -95,6 +95,9 @@ const MyLayout = () => {
     }
 
     useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: location.pathname });
+    
+    //   console.log(location);
         if (location.pathname === "/") {
             navigate('/main_dashboard');
 

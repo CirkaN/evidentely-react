@@ -30,6 +30,11 @@ import MainDashboard from './routes/dashboards/main_dashboard.tsx';
 import ClientAnalytics from './routes/analytics/client_analytics.tsx';
 import { UserProvider } from './context/UserContext.tsx';
 
+import ReactGA from "react-ga4";
+
+
+ReactGA.initialize('G-5MTC2FVP3C', { testMode: true }); 
+
 
 const queryClient = new QueryClient()
 
@@ -143,16 +148,16 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserProvider>
-    <QueryClientProvider client={queryClient}>
-      <Theme>
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-          containerClassName="overflow-auto"
-        />
-        <RouterProvider router={router}></RouterProvider>
-      </Theme>
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Theme>
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+            containerClassName="overflow-auto"
+          />
+          <RouterProvider router={router}></RouterProvider>
+        </Theme>
+      </QueryClientProvider>
     </UserProvider>
   </React.StrictMode>,
 )
