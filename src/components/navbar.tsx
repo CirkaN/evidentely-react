@@ -55,7 +55,7 @@ const NavBar = () => {
                                     <a href="/">
                                         <img
                                             className="h-10 w-auto"
-                                            src="../../public/evi_logo.png"
+                                            src="/evi_logo.png"
                                             alt="NCODESOFT"
                                         />
                                     </a>
@@ -103,18 +103,18 @@ const NavBar = () => {
                                                         </Transition>
                                                     </Menu>
                                                 ) : (
-                                                  <div className='pt-1'>
-                                                      <a
-                                                        href={item.href}
-                                                        className={classNames( 
-                                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                            'rounded-md px-2 py-2 text-sm font-medium'
-                                                        )}
-                                                        aria-current={item.current ? 'page' : undefined}
-                                                    >
-                                                        {item.name}
-                                                    </a>
-                                                  </div>
+                                                    <div className='pt-1'>
+                                                        <a
+                                                            href={item.href}
+                                                            className={classNames(
+                                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                                'rounded-md px-2 py-2 text-sm font-medium'
+                                                            )}
+                                                            aria-current={item.current ? 'page' : undefined}
+                                                        >
+                                                            {item.name}
+                                                        </a>
+                                                    </div>
                                                 )}
                                             </div>
                                         ))}
