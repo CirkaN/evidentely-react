@@ -1,14 +1,15 @@
+import { useUser } from "../../context/UserContext";
 import AdminHomeAnalyticPill from "./components/admin_home_analytic_pill";
 import DashboardChart from "./components/chart";
 import TopClientsTable from "./components/top_clients_table";
 import UpcomingAppointments from "./components/upcoming_appointments";
 
 const MainDashboard = () => {
-  
+    const {user} =useUser();
     return (
         <>
             <div className="">
-                <p className="text-2xl text-bold">Welcome back, Nikola Cirkovic</p>
+                <p className="text-2xl text-bold">Dobro dosli, {user?.name}</p>
             </div>
             <div className="flex flex-col sm:flex-row justify-between">
                 <AdminHomeAnalyticPill />
