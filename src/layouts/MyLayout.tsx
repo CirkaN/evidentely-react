@@ -10,7 +10,7 @@ const MyLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
-    const { user,logout } = useUser();
+    const { user, logout } = useUser();
 
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const [toggleBar, setToggleBar] = useState(false);
@@ -109,9 +109,9 @@ const MyLayout = () => {
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
     }, [location])
-    
+
     useEffect(() => {
-        if(!localStorage.getItem('auth_token')){
+        if (!localStorage.getItem('auth_token')) {
             navigate('/login')
         }
     }, [])
@@ -168,14 +168,13 @@ const MyLayout = () => {
             );
         });
     }
-   
+
 
     return (
         <>
             <nav
                 className="fixed top-0 z-50 w-full bg-white border-b
  border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-
                 <div className="px-3 py-3 lg:px-5 lg:pl-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center justify-start rtl:justify-end">
@@ -202,7 +201,7 @@ const MyLayout = () => {
                                     </button>
                                 </div>
                                 <div
-                                    className={clsx("z-50 show my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 ", toggleBar && 'block', !toggleBar && 'hidden')}
+                                    className={clsx("w-full z-50 show my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 ", toggleBar && 'block', !toggleBar && 'hidden')}
                                     id="dropdown-user"
                                     style={{
                                         position: "absolute", inset:
@@ -236,10 +235,9 @@ const MyLayout = () => {
 
                                         </li>
                                         <li>
-                                            <button onClick={() => doLogout()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <Link onClick={() => doLogout()} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'#'}>
                                                 Odjavi se
-                                            </button>
-
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
