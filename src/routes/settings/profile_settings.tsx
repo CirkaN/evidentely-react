@@ -23,13 +23,14 @@ interface UserSettingsProps {
 }
 
 interface UserDTO {
-    avatar_url: string | undefined,
+    id: number,
+    avatar_url: string,
     name: string,
     email: string
 }
 
 const ProfileSettings = () => {
-    const { user } = useUser();
+    const { user, login } = useUser();
     const [currentUserData, setCurrentUserData] = useState<UserDTO>();
     const [userSettings, setUserSettings] = useState<ProfileSettingsInterface>({
         name: user?.name,
@@ -89,9 +90,22 @@ const ProfileSettings = () => {
             }
         }).then(() => {
             toast.success('Slika uspesno izmenjena')
+            refreshAvatar();
         }).catch(() => {
             toast.error(t('toasts.please_upload_valid_avatar'))
         })
+    }
+    const refreshAvatar = () => {
+        fetchCurrentData();
+        if (currentUserData) {
+            login({
+                id: currentUserData.id,
+                name: currentUserData?.name,
+                email: currentUserData?.email,
+                avatar_url: currentUserData.avatar_url
+            });
+        }
+
     }
     useEffect(() => {
         fetchCurrentData();
