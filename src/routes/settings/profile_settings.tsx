@@ -65,6 +65,7 @@ const ProfileSettings = () => {
 
     const saveForm = () => {
         axios_instance().put(`/user_settings/${user?.id}`, userSettings.user_settings).then(() => {
+            refreshData();
             toast.success(t('toasts.profile_changed_succesfully'))
         });
     }
@@ -73,6 +74,7 @@ const ProfileSettings = () => {
             name: userSettings.name,
             email: userSettings.email,
         }).then(() => {
+            refreshData();
             toast.success(t('toasts.profile_changed_succesfully'))
         });
     }
@@ -90,12 +92,12 @@ const ProfileSettings = () => {
             }
         }).then(() => {
             toast.success('Slika uspesno izmenjena')
-            refreshAvatar();
+            refreshData();
         }).catch(() => {
             toast.error(t('toasts.please_upload_valid_avatar'))
         })
     }
-    const refreshAvatar = () => {
+    const refreshData = () => {
         fetchCurrentData();
         if (currentUserData) {
             login({
