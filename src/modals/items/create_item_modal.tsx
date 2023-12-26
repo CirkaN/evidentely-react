@@ -12,6 +12,7 @@ interface CreateItemProps {
 }
 
 const CreateItemModal = (props: CreateItemProps) => {
+
     const blankForm = {
         id: "",
         name: "",
@@ -22,6 +23,7 @@ const CreateItemModal = (props: CreateItemProps) => {
         duration: "60",
         note: "",
     }
+    
     const [form, setForm] = useState<ItemDTO>({
         id: "",
         name: "",
@@ -32,6 +34,7 @@ const CreateItemModal = (props: CreateItemProps) => {
         duration: "60",
         note: "",
     });
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.saveFunction(form)
@@ -83,7 +86,6 @@ const CreateItemModal = (props: CreateItemProps) => {
                             />
                         </label>
                     </Flex>
-
 
                     <Flex direction="row" gap="3">
                         <label>

@@ -42,8 +42,8 @@ const SalesHomeHeader = () => {
     return (
         <>
             {!isLoading &&
-                <div className="flex flex-wrap -mx-2">
-                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4">
+                <div className="flex flex-wrap -mx-2 ">
+                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4  border-2">
                         <div className="bg-white p-4 rounded shadow space-y-2 ">
                             <p className="text-center">{t('sales.summary_this_month')}:</p>
                             <div className="flex justify-between ">
@@ -61,7 +61,7 @@ const SalesHomeHeader = () => {
                         </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4">
+                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4 border-2">
                         <div className="bg-white p-4 rounded shadow space-y-2 ">
                             <p className="text-center">{t('sales.summary_pending_sales_this_month')}:</p>
                             <div className="flex justify-between ">
@@ -79,7 +79,7 @@ const SalesHomeHeader = () => {
                         </div>
                     </div>
 
-                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4">
+                    <div className="w-full sm:w-1/2 md:w-1/3 px-2 mb-4 border-2">
                         <div className="bg-white p-4 rounded shadow space-y-2 ">
                             <p className="text-center">{t('sales.summary_yearly_statistic')}:</p>
                             <div className="flex justify-between ">

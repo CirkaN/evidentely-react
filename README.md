@@ -1,3 +1,2 @@
-# EVIDENTELY REACT FRONTEND APPLICATION
+# Moj biznis  front end application 
 
-Application built for tracking/managing client appointments

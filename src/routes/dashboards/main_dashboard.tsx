@@ -8,7 +8,7 @@ const MainDashboard = () => {
     const { user } = useUser();
     return (
         <>
-            <div className="">
+            <div>
                 <p className="text-2xl text-bold">Dobro dosli, {user?.name}</p>
             </div>
        
@@ -32,7 +32,6 @@ const MainDashboard = () => {
                     heading="Ocekivani profit"
                     filter_type="profit"
                     bg_color="success"
-
                 />
             </div>
            

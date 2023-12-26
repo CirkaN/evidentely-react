@@ -48,7 +48,7 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
 
     return (
         <>
-            <div className={`max-w-sm w-full border ${bgColor} border-slate-300 rounded-lg shadow  p-4 md:p-6`}>
+            <div className={`max-w-sm w-full border ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6`}>
                 <div className="flex justify-between">
                     <div>
                         <h5 className="leading-none text-3xl font-bold text-white pb-2">{responseData.result}</h5>
@@ -64,11 +64,12 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
                             <select
                                 value={filter.days}
                                 onChange={(e) => { setFilter((c) => c && { ...c, days: parseInt(e.target.value) }) }}
-                                id="countries"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                id="filterDays"
+                                className={`${bgColor} border border-white shadow-xl text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                `}>
                                 <option value="7">7</option>
                                 <option value="15">15</option>
-                                <option value={30}>30</option>
+                                <option value="30">30</option>
                             </select>
                         </div>
                     </div>
