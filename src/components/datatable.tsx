@@ -130,11 +130,14 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
         )
     })
     const sanitizeString = (string: string) => {
-        const charLen = string.trim().length
-        if (charLen > 30) {
-            return string.slice(0, 30) + "..."
+        if (string) {
+            const charLen = string.length
+            if (charLen > 30) {
+                return string.slice(0, 30) + "..."
+            }
+            return string;
         }
-        return string;
+
     }
     useEffect(() => {
         if (searchParams.search_param.length >= 1) {

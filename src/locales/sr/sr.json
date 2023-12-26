@@ -168,8 +168,8 @@
   },
   "summary": {
     "total_profit": "Ukupan profit:",
-    "total_appointments": "Ukupno zakazivanja:",
-    "last_appointment": "Poslednje zakazivanje:"
+    "last_appointment": "Poslednji termin:",
+    "total_completed_appointments":"Ukupno kompletiranih termina "
   },
   "navbar": {
     "main_dashboard": "Komandna tabla",

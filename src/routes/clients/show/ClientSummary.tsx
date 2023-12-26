@@ -74,7 +74,7 @@ const ClientSummary = () => {
 
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
                         <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">{t('summary.total_appointments')}</div>
+                            <div className="font-bold text-xl mb-2">{t('summary.total_completed_appointments')}</div>
                             <p className="text-blue-500 text-3xl font-semibold">{data?.total_completed_appointments}</p>
                         </div>
                     </div>
