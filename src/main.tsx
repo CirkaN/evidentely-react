@@ -31,6 +31,7 @@ import ClientAnalytics from './routes/analytics/client_analytics.tsx';
 import { UserProvider } from './context/UserContext.tsx';
 
 import ReactGA from "react-ga4";
+import ProfileSettings from './routes/settings/profile_settings.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C'); 
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/employees",
         element: <Employees />,
+      },
+      {
+        path:"/profile_settings",
+        element:<ProfileSettings/>
       },
       {
         path: "/company_settings",

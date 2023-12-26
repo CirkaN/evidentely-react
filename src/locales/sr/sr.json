@@ -148,7 +148,8 @@
     "what_is_ref_no":"Unesite broj placanja za sopstvenu evidenciju",
     "payments_subject":"Uplate",
     "confirm_delete":"Ova akcija je finalna, ne mozemo vratiti obrisane stvari, molimo potvrdite",
-    "total_paid":"Ukupno uplaceno"
+    "total_paid":"Ukupno uplaceno",
+    "sold_by_employee":"Prodaju izvrsio zaposleni?"
     
   },
   "media": {
@@ -235,12 +236,14 @@
     "manage":"Upravljaj zaposlenima",
     "login_enabled":"Ukljucen login"
   },
-  "toasts":{
+  "toasts":{   
     "event_succesfully_updated":"Termin uspesno izmenjen!",
     "employee_deleted_success":"Zaposlen je uspesno obrisan",
     "client_deleted_success":"Klijent uspesno obrisan",
     "sale_note_delete_successfully":"Prodajna napomena je uspesno obrisana",
-    "appointment_created":"Termin uspesno kreiran"
+    "appointment_created":"Termin uspesno kreiran",
+    "profile_changed_succesfully":"Profil uspesno izmenjen",
+    "please_upload_valid_avatar":"Molimo izaberite ispravnu datoteku"
   },
   "analytics":{
     "top_clients":"Top 5 klijenata po profitu ove nedelje"
