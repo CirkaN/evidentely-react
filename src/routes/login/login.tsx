@@ -32,7 +32,7 @@ const Login = () => {
     axios_instance().post('/auth/login', loginForm).then(response => {
       localStorage.setItem('auth_token', response.data.auth.access_token);
       navigate('/main_dashboard')
-      login({ 'email': response.data.user.email, 'id': response.data.user.id,'name':response.data.user.name,'avatar_url':response.data.avatar_url })
+      login({ 'email': response.data.user.email, 'id': response.data.user.id,'name':response.data.user.name,'avatar_url':response.data.user.avatar_url })
     }).catch(() => {
       setHasErrors(true);
     })
