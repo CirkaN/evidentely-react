@@ -49,7 +49,8 @@
     "gender":"Pol",
     "female":"Zenski",
     "male":"Muski",
-    "employee_create":"Kreiraj profil zaposlenom"
+    "employee_create":"Kreiraj profil zaposlenom",
+    "color":"Boja termina"
     },
   "register": {
     "register": "Registracija",
@@ -84,13 +85,14 @@
     "modal_description": "Izmeni paket usluga"
   },
   "item": {
-    "name": "Ime proizvoda",
+    "name": "Naziv",
     "discount_price": "Cena sa popustom",
     "price": "Cena",
     "duration": "Trajanje",
     "color": "Boja u kalendaru",
     "selling_price":"Prodajna cena",
-    "note": "Napomena"
+    "note": "Napomena",
+    "base_price":"Nabavna cena"
   },
   "sales": {
     "delete_success": "Prodaja je uspesno izbrisana",

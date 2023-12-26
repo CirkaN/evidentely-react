@@ -23,7 +23,7 @@ const CreateItemModal = (props: CreateItemProps) => {
         duration: "60",
         note: "",
     }
-    
+
     const [form, setForm] = useState<ItemDTO>({
         id: "",
         name: "",
@@ -44,11 +44,7 @@ const CreateItemModal = (props: CreateItemProps) => {
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title> {`Create ${props.modalType}`}</Dialog.Title>
-                <Dialog.Description size="2" mb="4">
-                    {`Create ${props.modalType}`}
-                </Dialog.Description>
-
+                <Dialog.Title> {`Kreiraj ${props.modalType}`}</Dialog.Title>
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
                         <label>
@@ -63,9 +59,14 @@ const CreateItemModal = (props: CreateItemProps) => {
                         </label>
                     </Flex>
                     <Flex direction="row" gap="3">
-                        <label>
+                        <label className="w-1/2">
                             <Text as="div" size="2" mb="1" weight="bold">
-                                {t('item.price')}
+                                {props.modalType === 'product' &&
+                                    t('item.base_price')
+                                }
+                                  {props.modalType !== 'product' &&
+                                    t('item.price')
+                                }
                             </Text>
                             <TextField.Input
                                 type="number"
@@ -75,7 +76,7 @@ const CreateItemModal = (props: CreateItemProps) => {
 
                             />
                         </label>
-                        <label>
+                        <label className="w-1/2">
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('item.selling_price')}
                             </Text>
@@ -86,24 +87,26 @@ const CreateItemModal = (props: CreateItemProps) => {
                             />
                         </label>
                     </Flex>
+                    {props.modalType === 'service' &&
+                        <Flex direction="row" gap="3">
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('item.duration')}
+                                </Text>
+                                <TextField.Input
+                                    onChange={(e) => setForm((c) => c && { ...c, duration: e.target.value })}
+                                    value={form.duration}
+                                />
+                            </label>
+                            <label>
+                                <Text as="div" size="2" mb="1" weight="bold">
+                                    {t('common.color')}
+                                </Text>
+                                <input type="color" name="color" value={form.color} onChange={(e) => { setForm((c) => c && { ...c, color: e.target.value }) }} />
+                            </label>
+                        </Flex>
+                    }
 
-                    <Flex direction="row" gap="3">
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                {t('item.duration')}
-                            </Text>
-                            <TextField.Input
-                                onChange={(e) => setForm((c) => c && { ...c, duration: e.target.value })}
-                                value={form.duration}
-                            />
-                        </label>
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                {t('common.color')}
-                            </Text>
-                            <input type="color" name="color" value={form.color} onChange={(e) => { setForm((c) => c && { ...c, color: e.target.value }) }} />
-                        </label>
-                    </Flex>
 
                     <Flex direction="column" gap="3">
                         <label>

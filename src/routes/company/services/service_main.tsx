@@ -4,8 +4,8 @@ const ServiceMain = () => {
     const location = useLocation();
 
     const navigation = [
-        { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
         { name: 'Usluge', href: 'services', current: location.pathname === "/price_plans/services" },
+        { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
         // { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
     ]
 
