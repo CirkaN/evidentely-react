@@ -9,6 +9,7 @@ import AddUserNoteModal from "../../modals/clients/add_user_note_modal";
 import { useQueryClient } from "react-query";
 import { NoteDTO } from "../../shared/interfaces/user_notes.interface";
 import { ClientSettings } from "../../shared/interfaces/client.interface";
+import toast from "react-hot-toast";
 
 interface Client {
     id: string,
@@ -46,13 +47,12 @@ const ClientShow = () => {
     const saveUserNote = (form:PreparedNoteDTO) => {
         axios_instance().post(`/user/${id}/notes`, form).then(() => {
                 setShowNoteAddModal(false);
+                toast.success(t("toasts.note_created_succesfully"))
                 queryClient.invalidateQueries({
                     queryKey: ['user_notes_summary'],
                 })
          });
     }
-
-
 
     const navigate = useNavigate();
     return (
@@ -78,7 +78,7 @@ const ClientShow = () => {
                     </div>
 
                     <div className="py-5">
-                        <p className="text-lg font-bold text-center pb-3">Client details</p>
+                        <p className="text-lg font-bold text-center pb-3">{t('common.client_details')}</p>
                         <div className="flex flex-col  space-y-2 space-x-2">
                             <div className="flex flex-row">
                                 <div className="w-1/2 px-2 text-gray-600">
@@ -116,7 +116,7 @@ const ClientShow = () => {
                         </div>
                     </div>
 
-                    <div>
+                    {/* <div>
                         <div className="flex justify-center space-x-3">
                             <p className=" py-2 text-center text-black text-lg font-bold">Tags</p>
                             <button className="text-blue-300 text-3xl">+</button>
@@ -124,11 +124,11 @@ const ClientShow = () => {
                         <div className="flex">
                             <p className="text-blue-600 rounded bg-blue-100 px-2">kozmetika</p>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div>
                         <div className="flex justify-center space-x-3">
-                            <p className=" py-2 text-center text-black text-lg font-bold">Notes</p>
+                            <p className=" py-2 text-center text-black text-lg font-bold">{t('common.notes')}</p>
                             <button onClick={() => setShowNoteAddModal(true)} className="text-blue-300 text-3xl">+</button>
                         </div>
 

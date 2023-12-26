@@ -5,6 +5,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import { ContextType } from "../ClientShow";
 import toast from "react-hot-toast";
 import axios_instance from "../../../config/api_defaults";
+import { t } from "i18next";
 
 
 const ClientDetails = () => {
@@ -65,15 +66,13 @@ const ClientDetails = () => {
             </div>}
 
             <div className="flex justify-between">
-
-
                 <div>
                     <form className="w-full max-w-lg">
                         <div className="p-5 text-center text-lg block text-gray-800">Izmeni Klijenta</div>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                                    Full name:
+                                    {t('common.name')}:
                                 </label>
                                 <input
                                     onChange={(e) => setForm((c) => c && ({ ...c, name: e.target.value }))}
@@ -84,7 +83,7 @@ const ClientDetails = () => {
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-                                    Address:
+                                    {t('common.address')}:
                                 </label>
                                 <input
                                     value={form?.settings.address ?? ""}
@@ -96,7 +95,7 @@ const ClientDetails = () => {
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Email
+                                    {t('common.email')}
                                 </label>
                                 <input
                                     value={form?.email ?? ""}
@@ -105,7 +104,7 @@ const ClientDetails = () => {
                             </div>
                             <div className="w-full md:w-1/2 px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Phone
+                                   {t('common.phone')}
                                 </label>
                                 <input
                                     value={form?.settings.phone_number ?? ""}
@@ -117,7 +116,7 @@ const ClientDetails = () => {
                         <div className="flex flex-wrap -mx-3 mb-2">
                             <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Drzava
+                                    {t('common.country')}
                                 </label>
                                 <select id="country"
                                     value={form?.settings.country ?? ""}
@@ -127,14 +126,14 @@ const ClientDetails = () => {
 
                                     <option value="" disabled >Select</option>
                                     <option value="rs">Serbia</option>
-                                    <option value="ba">Bosnia</option>
-                                    <option value="me">Montenegro</option>
+                                    {/* <option value="ba">Bosnia</option>
+                                    <option value="me">Montenegro</option> */}
                                 </select>
                             </div>
 
                             <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Occupation
+                                    {t('common.occupation')}
                                 </label>
                                 <input
                                     value={form?.settings.occupation ?? ""}

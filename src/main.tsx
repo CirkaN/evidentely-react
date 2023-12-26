@@ -32,6 +32,7 @@ import { UserProvider } from './context/UserContext.tsx';
 
 import ReactGA from "react-ga4";
 import ProfileSettings from './routes/settings/profile_settings.tsx';
+import ClientNotes from './routes/clients/show/ClientNotes.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C'); 
@@ -135,6 +136,9 @@ const router = createBrowserRouter([
           },
           {
             path: "documents", element: <ClientDocuments />
+          },
+          {
+            path:"notes", element:<ClientNotes/>
           }
         ]
       }

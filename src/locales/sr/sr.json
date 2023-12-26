@@ -32,26 +32,37 @@
     "client": "Klijent",
     "price": "Cena",
     "phone_number": "Broj telefona",
-    "accept":"Potvrdi",
+    "accept": "Potvrdi",
     "leave": "Napusti",
-    "important_notice":"Vazna napomena",
-    "duration":"Trajanje",
-    "address":"Adresa",
-    "birth_date":"Datum rodjenja",
-    "client_list":"Lista klijenata",
-    "add_note":"Dodaj napomenu",
-    "profit":"Profit",
-    "client_name":"Ime klijenta",
-    "appointment_name":"Termin",
-    "notes":"Napomene",
-    "selling_price":"Prodajna cena",
-    "services":"Usluge",
-    "gender":"Pol",
-    "female":"Zenski",
-    "male":"Muski",
-    "employee_create":"Kreiraj profil zaposlenom",
-    "color":"Boja termina"
-    },
+    "important_notice": "Vazna napomena",
+    "duration": "Trajanje",
+    "address": "Adresa",
+    "birth_date": "Datum rodjenja",
+    "client_list": "Lista klijenata",
+    "add_note": "Dodaj napomenu",
+    "profit": "Profit",
+    "client_name": "Ime klijenta",
+    "appointment_name": "Termin",
+    "notes": "Napomene",
+    "selling_price": "Prodajna cena",
+    "services": "Usluge",
+    "gender": "Pol",
+    "female": "Zenski",
+    "male": "Muski",
+    "employee_create": "Kreiraj profil zaposlenom",
+    "color": "Boja termina",
+    "latest_appointments": "Poslednja 5 zakazivanja",
+    "show_all": "Prikazi sve",
+    "summary": "Opste",
+    "appointments": "Zakazivanja",
+    "media": "Slike i fajlovi",
+    "sms_history": "Istorija SMS-ova",
+    "last_five_appointments": "Poslednja 5 zakazivanja",
+    "start": "Pocetak",
+    "end": "Kraj",
+    "author":"Autor",
+    "upload_date":"Sacuvano"
+  },
   "register": {
     "register": "Registracija",
     "register_text": "Ovde se mozete registrovati",
@@ -90,9 +101,9 @@
     "price": "Cena",
     "duration": "Trajanje",
     "color": "Boja u kalendaru",
-    "selling_price":"Prodajna cena",
+    "selling_price": "Prodajna cena",
     "note": "Napomena",
-    "base_price":"Nabavna cena"
+    "base_price": "Nabavna cena"
   },
   "sales": {
     "delete_success": "Prodaja je uspesno izbrisana",
@@ -115,42 +126,41 @@
     "summary_yearly_statistic": "Godisnja statistika",
     "summary_total_products_sold_in_value": "Ukupan prihod od prozivoda",
     "summary_total_products_sold_cost": "Ukupan trosak (nabavka)",
-    "summary_value_sold_this_month":"Vrednost prodate robe",
-    "info_box_title":"Prodaja",
-    "info_box_description":"Ovde mozete dodavati evidenciju prodaje artikala.. to be written",
-    "show_modal_title":"Prodaja",
-    "about_sale":"O prodaji",
-    "quick_statistic":"Brza statistika",
-    "info":"Informacije",
-    "sold_to":"Prodato klijentu",
-    "date_of_sale":"Datum prodaje",
-    "sold_pieces":"Prodato komada",
-    "price_per_item":"Cena po komadu",
-    "sold_for_amount":"Prodato po ceni",
-    "paid_to_date":"Do sad uplaceno",
-    "left_for_pay":"Preostalo za placanje",
-    "estimated_profit":"Ocekivani profit",
-    "pieces_left":"Ostalo na stanju",
-    "expense":"Trosak",
-    "payments":"Placanja",
-    "charge_date":"Datum naplate",
-    "paid_via_create":"Tip placanja",
-    "only_if_its_paid":"Ukoliko je placeno",
-    "for_pay":"Za uplatu",
-    "status":"Status",
-    "paid":"Placeno",
-    "partially_paid":"Parcijalno uplaceno",
-    "unpaid":"Neplaceno",
-    "log_sale":"Zabelezi prodaju",
-    "reference":"Referentni broj",
-    "payment_method":"Metod placanja",
-    "paid_amount":"Uplaceno",
-    "what_is_ref_no":"Unesite broj placanja za sopstvenu evidenciju",
-    "payments_subject":"Uplate",
-    "confirm_delete":"Ova akcija je finalna, ne mozemo vratiti obrisane stvari, molimo potvrdite",
-    "total_paid":"Ukupno uplaceno",
-    "sold_by_employee":"Prodaju izvrsio zaposleni?"
-    
+    "summary_value_sold_this_month": "Vrednost prodate robe",
+    "info_box_title": "Prodaja",
+    "info_box_description": "Ovde mozete dodavati evidenciju prodaje artikala.. to be written",
+    "show_modal_title": "Prodaja",
+    "about_sale": "O prodaji",
+    "quick_statistic": "Brza statistika",
+    "info": "Informacije",
+    "sold_to": "Prodato klijentu",
+    "date_of_sale": "Datum prodaje",
+    "sold_pieces": "Prodato komada",
+    "price_per_item": "Cena po komadu",
+    "sold_for_amount": "Prodato po ceni",
+    "paid_to_date": "Do sad uplaceno",
+    "left_for_pay": "Preostalo za placanje",
+    "estimated_profit": "Ocekivani profit",
+    "pieces_left": "Ostalo na stanju",
+    "expense": "Trosak",
+    "payments": "Placanja",
+    "charge_date": "Datum naplate",
+    "paid_via_create": "Tip placanja",
+    "only_if_its_paid": "Ukoliko je placeno",
+    "for_pay": "Za uplatu",
+    "status": "Status",
+    "paid": "Placeno",
+    "partially_paid": "Parcijalno uplaceno",
+    "unpaid": "Neplaceno",
+    "log_sale": "Zabelezi prodaju",
+    "reference": "Referentni broj",
+    "payment_method": "Metod placanja",
+    "paid_amount": "Uplaceno",
+    "what_is_ref_no": "Unesite broj placanja za sopstvenu evidenciju",
+    "payments_subject": "Uplate",
+    "confirm_delete": "Ova akcija je finalna, ne mozemo vratiti obrisane stvari, molimo potvrdite",
+    "total_paid": "Ukupno uplaceno",
+    "sold_by_employee": "Prodaju izvrsio zaposleni?"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
@@ -162,7 +172,7 @@
     "last_appointment": "Poslednje zakazivanje:"
   },
   "navbar": {
-    "main_dashboard":"Komandna tabla",
+    "main_dashboard": "Komandna tabla",
     "clients": "Klijenti",
     "calendar": "Kalendar",
     "sales": "Prodaja",
@@ -183,7 +193,7 @@
     "amount_to_be_paid": "Duguje",
     "loan": "Dug",
     "card": "Kartica",
-    "cash": "Kes"
+    "cash": "Gotovina"
   },
   "appointment": {
     "create": "Kreiraj Termin",
@@ -203,8 +213,8 @@
     "edit_appointment_description": "Uredi termin",
     "start": "Pocetak",
     "end": "Kraj",
-    "details":"Detalji termina",
-    "assigned_to":"Dodeljeno:"
+    "details": "Detalji termina",
+    "assigned_to": "Dodeljeno:"
   },
   "sms": {
     "show_clients_you_care": "Pokazite klijentima da vam je stalo",
@@ -213,42 +223,44 @@
     "phone_format": "Molimo unesite telefon u sledećem formatu (+381 63 866 5820) bez razmaka",
     "confirmation_code": "Molimo unesite kod iz poruke koju smo vam poslali",
     "verification_failed": "Kod nije ispravan! Molimo pokusajte ponovo!",
-    "confirmation_to_employee":"Potvrda zaposlenom",
-    "thank_you_note":"Zahvalnica",
-    "birthday_wish":"Rodjendanska cestitka",
-    "same_day":"Istog dana",
-    "day_before":"Dan ranije",
-    "client_reservation_confirmation":"Potvrda klijentu o kreiranom terminu",
-    "sms_char_warning":"Jedan SMS kredit je 1 SMS, 1 SMS moze sadrzati maksimalno 160 karaktera da bi bio vodjen kao jedan sms, ako vas sms prelazi limit od 160 karaktera, sa vaseg racuna bice skinuto dva kredita"
+    "confirmation_to_employee": "Potvrda zaposlenom",
+    "thank_you_note": "Zahvalnica",
+    "birthday_wish": "Rodjendanska cestitka",
+    "same_day": "Istog dana",
+    "day_before": "Dan ranije",
+    "client_reservation_confirmation": "Potvrda klijentu o kreiranom terminu",
+    "sms_char_warning": "Jedan SMS kredit je 1 SMS, 1 SMS moze sadrzati maksimalno 160 karaktera da bi bio vodjen kao jedan sms, ako vas sms prelazi limit od 160 karaktera, sa vaseg racuna bice skinuto dva kredita"
   },
-  "client_documents":{
-    "create_modal_title":"Dodaj media fajl..",
-    "help_infobox":"Izaberite fajl..."
+  "client_documents": {
+    "create_modal_title": "Dodaj media fajl..",
+    "help_infobox": "Izaberite fajl..."
   },
-  "client":{
-    "create_client":"Kreiraj klienta"
+  "client": {
+    "create_client": "Kreiraj klienta"
   },
-  "employees":{
-    "full_name":"Puno ime",
-    "employees":"Zaposleni",
-    "job_description":"Opis posla",
-    "enable_login":"Ukljuci login",
-    "manage":"Upravljaj zaposlenima",
-    "login_enabled":"Ukljucen login"
+  "employees": {
+    "full_name": "Puno ime",
+    "employees": "Zaposleni",
+    "job_description": "Opis posla",
+    "enable_login": "Ukljuci login",
+    "manage": "Upravljaj zaposlenima",
+    "login_enabled": "Ukljucen login"
   },
-  "toasts":{   
-    "event_succesfully_updated":"Termin uspesno izmenjen!",
-    "employee_deleted_success":"Zaposlen je uspesno obrisan",
-    "client_deleted_success":"Klijent uspesno obrisan",
-    "sale_note_delete_successfully":"Prodajna napomena je uspesno obrisana",
-    "appointment_created":"Termin uspesno kreiran",
-    "profile_changed_succesfully":"Profil uspesno izmenjen",
-    "please_upload_valid_avatar":"Molimo izaberite ispravnu datoteku"
+  "toasts": {
+    "event_succesfully_updated": "Termin uspesno izmenjen!",
+    "employee_deleted_success": "Zaposlen je uspesno obrisan",
+    "client_deleted_success": "Klijent uspesno obrisan",
+    "sale_note_delete_successfully": "Prodajna napomena je uspesno obrisana",
+    "appointment_created": "Termin uspesno kreiran",
+    "profile_changed_succesfully": "Profil uspesno izmenjen",
+    "please_upload_valid_avatar": "Molimo izaberite ispravnu datoteku",
+    "note_deleted_succesfully": "Napomena uspesno obrisana",
+    "note_created_succesfully": "Napomena uspesno kreirana"
   },
-  "analytics":{
-    "top_clients":"Top 5 klijenata po profitu ove nedelje"
+  "analytics": {
+    "top_clients": "Top 5 klijenata po profitu ove nedelje"
   },
-  "dashboard":{
-    "upcoming_appointments":"Naredna 5 termina"
+  "dashboard": {
+    "upcoming_appointments": "Naredna 5 termina"
   }
 }

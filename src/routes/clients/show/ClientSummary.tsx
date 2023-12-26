@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import axios_instance from "../../../config/api_defaults";
-import { useParams } from "react-router-dom";
-import { FileText } from "react-feather";
+import { useNavigate, useParams } from "react-router-dom";
 import ClientDetailsHeader from "../../../layouts/clients/details_header";
+import DataTable, { Field } from "../../../components/datatable";
 
 
 interface SummaryData {
@@ -13,8 +13,42 @@ interface SummaryData {
 }
 
 const ClientSummary = () => {
-    const { t } = useTranslation();
     const { id } = useParams();
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const url = `appointments/${id}/previous_appointments?per_page=5`
+    const fields: Field[] = [
+        {
+            name: t('common.appointment_name'),
+            editable_from_table: false,
+            original_name: "title",
+            has_sort: false,
+            show: true
+        },
+        {
+            name: t('appointment.assigned_to'),
+            editable_from_table: false,
+            original_name: "employee_name",
+            has_sort: false,
+            show: true,
+        },
+    ]
+
+    const formatCurrency = (t: string | number | undefined) => {
+        const currencyFormat = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        if (!t) {
+            return currencyFormat.format(0);
+        } else {
+            return currencyFormat.format(parseInt(t.toString()));
+        }
+
+    }
+    const showAllAppointments = () => {
+        navigate(`/clients/${id}/appointments`)
+    }
     const { data } = useQuery<SummaryData>({
         queryKey: [id],
         queryFn: () => axios_instance().post(`analytics/user_summary/${id}`).then(r => r.data),
@@ -25,7 +59,7 @@ const ClientSummary = () => {
         <>
             <div className="h-screen w-full p-10">
                 {id &&
-                    <ClientDetailsHeader id={id} active="summary" />
+                    <ClientDetailsHeader id={id}/>
                 }
                 <br />
                 <div className="flex flex-col 2xl:flex-row lg:flex-col md:flex-col sm:flex-col justify-between ">
@@ -33,7 +67,7 @@ const ClientSummary = () => {
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg ">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.total_profit')}</div>
-                            <p className="text-teal-500 text-3xl font-semibold">{data?.total_profit}</p>
+                            <p className="text-teal-500 text-3xl font-semibold">{formatCurrency(data?.total_profit)}</p>
                         </div>
                     </div>
 
@@ -55,15 +89,24 @@ const ClientSummary = () => {
                 </div>
 
                 <br />
-                <div className="bg-slate-200 w-full h-1/3 ">
+                <div className=" w-full h-1/3 ">
                     <div className="flex justify-between p-4">
-                        <p className="text-black font-bold text-lg">Latest appointments</p>
-                        <p className="text-blue-600 ">Show All</p>
+                        <p className="text-black font-bold text-lg">{t('common.latest_appointments')}</p>
+                        <button onClick={() => { showAllAppointments() }} className="text-blue-600 ">{t('common.show_all')}</button>
                     </div>
-                    <div className="p-4"> content goes here </div>
+                    <div className="h-full">
+                        <DataTable
+                            has_actions={false}
+                            fields={fields}
+                            url={url}
+                            has_search={false}
+                            table_name=""
+                            queryKey="last_5_client_appointments"
+                        />
+                    </div>
                 </div>
 
-                <div >
+                {/* <div >
                     <div>
                         <p className="font-bold text-xl pt-4">Media Files</p>
                     </div>
@@ -96,7 +139,7 @@ const ClientSummary = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </>

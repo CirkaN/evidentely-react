@@ -155,7 +155,7 @@ const ClientDocuments = () => {
         <>
             <div className="h-screen w-full p-10">
                 {id &&
-                    <ClientDetailsHeader id={id} active="documents" />}
+                    <ClientDetailsHeader id={id} />}
                 <br />
 
                 <SweetAlert2 {...swalProps} />

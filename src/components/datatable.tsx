@@ -19,7 +19,7 @@ export interface DatatableProps<T = GenericEntry[]> {
     has_table_filters?: boolean,
     url: string,
     queryKey: string,
-    has_search?:boolean
+    has_search?: boolean
 }
 export interface TableAction {
     icon: ReactElement,
@@ -129,7 +129,13 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
 
         )
     })
-
+    const sanitizeString = (string: string) => {
+        const charLen = string.trim().length
+        if (charLen > 30) {
+            return string.slice(0, 30) + "..."
+        }
+        return string;
+    }
     useEffect(() => {
         if (searchParams.search_param.length >= 1) {
             console.log('salljem request');
@@ -176,12 +182,12 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                             {
                                 props?.has_search &&
                                 <div className="pt-2">
-                                <input value={searchParams?.search_param}
-                                    onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
-                                    type="text"
-                                    className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
+                                    <input value={searchParams?.search_param}
+                                        onChange={(e) => { setSearchParams((c) => c && { ...c, search_param: e.target.value }) }}
+                                        type="text"
+                                        className=" curos autofocus border mb-2 bg-gray-100 border-gray-300 h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none" placeholder={t('common.search')} />
 
-                            </div>
+                                </div>
                             }
                         </header>
 
@@ -218,9 +224,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                                     <tr key={record.id}>
                                                         {props.fields.map((f, index) => {
                                                             if (f.original_name in record) {
-
                                                                 if (f.formatFn) {
-
                                                                     return <td key={index} className="p-2 whitespace-nowrap">
                                                                         <div className="text-left">
                                                                             <p>{f.formatFn(record[f.original_name] as unknown as string, record as T)}</p>
@@ -229,7 +233,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                                                 } else {
                                                                     return <td key={index} className="p-2 whitespace-nowrap">
                                                                         <div className="text-left">
-                                                                            <p>{record[f.original_name] as unknown as string}</p>
+                                                                            <p> {sanitizeString(record[f.original_name] as string)}</p>
                                                                         </div>
                                                                     </td>
                                                                 }

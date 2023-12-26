@@ -61,8 +61,6 @@ const ProfileSettings = () => {
         e.preventDefault()
         saveForm();
     }
-
-
     const saveForm = () => {
         axios_instance().put(`/user_settings/${user?.id}`, userSettings.user_settings).then(() => {
             refreshData();
