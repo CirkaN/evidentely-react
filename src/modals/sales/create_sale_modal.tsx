@@ -5,10 +5,11 @@ import Select, { SingleValue } from 'react-select'
 import { PendingSaleDTO } from "../../shared/interfaces/sales.interface";
 import { FormEvent, useEffect, useState } from "react";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
-import { ClientDTO } from "../../services/clients/ClientService";
+
 import axios_instance from "../../config/api_defaults";
 import { ItemDTO } from "../../shared/interfaces/item.interface";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
+import { ClientDTO } from "../../shared/interfaces/client.interface";
 
 
 interface CreateSaleProps {

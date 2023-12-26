@@ -1,6 +1,5 @@
 import { Eye, Plus, Trash } from "react-feather";
 import Datatable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable"
-import { ClientDocumentDTO } from "../../../services/clients/ClientService";
 import { useParams } from "react-router-dom";
 import AddDocumentModal from "../../../modals/clients/add_document_modal";
 import { useState } from "react";
@@ -12,6 +11,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { useTranslation } from "react-i18next";
 import Gallery, { GalleryItem } from "../../../components/gallery";
 import ClientDetailsHeader from "../../../layouts/clients/details_header";
+import { ClientDocumentDTO } from "../../../shared/interfaces/client.interface";
 
 interface MediaResponse {
     file_name: string

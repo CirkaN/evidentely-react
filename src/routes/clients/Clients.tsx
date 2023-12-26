@@ -1,6 +1,5 @@
 import { Eye, Plus, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction, TableFilter } from "../../components/datatable";
-import { ClientDTO } from "../../services/clients/ClientService";
 import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from "react-sweetalert2";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import CreateClientModal, { ClientCreateDTO } from "../../modals/clients/create_
 import InfoBox, { InfoBoxType } from "../../components/info-box";
 import CountryFilter from "../../components/filters/country_filter";
 import { t } from "i18next";
+import { ClientDTO } from "../../shared/interfaces/client.interface";
 
 const Clients = () => {
     const navigate = useNavigate()

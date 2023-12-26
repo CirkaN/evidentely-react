@@ -1,6 +1,5 @@
 import { Button, Dialog, Flex, Switch } from "@radix-ui/themes";
 import { useState, useEffect, FormEvent } from "react";
-import { ClientDTO, Clients } from "../../services/clients/ClientService";
 import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import Select, { SingleValue } from 'react-select'
@@ -11,6 +10,7 @@ import { Plus } from "react-feather";
 import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
 import { useTranslation } from "react-i18next";
+import { ClientDTO } from "../../shared/interfaces/client.interface";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -70,7 +70,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         note: "",
     });
     const { t } = useTranslation();
-    const [clientList, setClientList] = useState<Clients[]>([]);
+    const [clientList, setClientList] = useState<ClientDTO[]>([]);
     const [serviceList, setServiceList] = useState<ServiceType[]>([]);
     const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
     const [clientTransformedList, setClientTransformedList] = useState<TransformedDataForSelect[]>();
@@ -153,7 +153,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             setSelectedClient((c) => c && { ...c, value: e.value });
             setSelectedClient((c) => c && { ...c, label: e.label });
             setForm((c) => c && { ...c, user_id: client.id.toString() });
-
+                
             setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })

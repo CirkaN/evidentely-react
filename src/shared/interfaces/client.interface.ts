@@ -1,17 +1,7 @@
-
 export interface ClientDTO {
     id: number,
-    name: string
-}
-
-export interface Clients {
-    id: number,
     name: string,
-    settings: ClientSettings
-}
-export interface ClientDocumentDTO {
-    id: number,
-    media_url?: string
+    settings:ClientSettings
 }
 export interface ClientSettings {
     email: string,
@@ -31,4 +21,8 @@ export interface ClientSettings {
     email_remind_when_appointment_is_created: boolean,
     email_send_thank_you_note: boolean,
     email_send_happy_birthday_note: boolean,
+}
+export interface ClientDocumentDTO {
+    id: number,
+    media_url?: string
 }

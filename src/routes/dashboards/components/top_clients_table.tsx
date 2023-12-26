@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import DataTable, { Field } from "../../../components/datatable";
-import { ClientDTO } from "../../../services/clients/ClientService";
 import { t } from "i18next";
+import { ClientDTO } from "../../../shared/interfaces/client.interface";
 
 interface Props {
     client_count: number,
