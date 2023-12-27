@@ -2,9 +2,9 @@ import { ReactNode, createContext, useContext, useState } from "react";
 
 interface User {
     id: number,
-    name:string,
+    name: string,
     email: string,
-    avatar_url:string,
+    avatar_url: string,
 }
 interface UserProviderProps {
     children: ReactNode,
@@ -30,8 +30,12 @@ const UserProvider = (props: UserProviderProps) => {
     const [user, setUser] = useState<User | null>(storedUser);
 
     const login = (newUser: User) => {
-        localStorage.setItem('user', JSON.stringify(newUser));
-        setUser(newUser);
+
+        setUser(() => {
+            localStorage.setItem('user', JSON.stringify(newUser));
+            return newUser;
+        });
+
     };
 
     const logout = () => {

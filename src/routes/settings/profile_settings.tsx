@@ -51,7 +51,16 @@ const ProfileSettings = () => {
     }
     const fetchCurrentData = () => {
         axios_instance().get('/user_settings').then(r => applyData(r.data));
-        axios_instance().post('/auth/me').then(r => setCurrentUserData(r.data));
+        axios_instance().post('/auth/me').then(r => applyFreshData(r.data));
+    }
+    const applyFreshData = (data:UserDTO) => {
+        login({
+            id: data.id,
+            name: data.name,
+            email: data?.email,
+            avatar_url: data.avatar_url
+        });
+        setCurrentUserData(data);
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -79,7 +88,6 @@ const ProfileSettings = () => {
     const saveAvatar = () => {
         const formData = new FormData();
         if (userSettings.photo) {
-            console.log(userSettings)
             formData.append('file', userSettings.photo);
         }
         formData.append('type', 'image');
@@ -97,14 +105,6 @@ const ProfileSettings = () => {
     }
     const refreshData = () => {
         fetchCurrentData();
-        if (currentUserData) {
-            login({
-                id: currentUserData.id,
-                name: currentUserData?.name,
-                email: currentUserData?.email,
-                avatar_url: currentUserData.avatar_url
-            });
-        }
 
     }
     useEffect(() => {
