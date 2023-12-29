@@ -1,6 +1,6 @@
 import { Button, Dialog, Flex, Switch, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 import { t } from "i18next";
 
@@ -30,8 +30,9 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
         job_description: "",
         login_enabled: false
     });
-
-    const handleSubmit = () => {
+   
+    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         props.saveFunction(form)
         setForm(blankForm);
     }

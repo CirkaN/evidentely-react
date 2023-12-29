@@ -8,8 +8,9 @@ import CreateSaleNoteModal from "./create_sale_note_modal";
 import { Plus, Trash } from "react-feather";
 import toast from "react-hot-toast";
 import CreateSalePaymentModal from "./create_sale_payment_modal";
-import DataTable, { Field, TableAction } from "../../components/datatable";
+import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
 import { SaleInfo } from "../../shared/interfaces/sales.interface";
+import { SalePayment } from "../../shared/interfaces/charge_sale.interface";
 
 
 interface showSaleModalProps {
@@ -61,6 +62,13 @@ const ShowSaleModal = (props: showSaleModalProps) => {
         },
 
     ]
+    const fieldActions: Action<SalePayment>[] = [
+        {
+            type: ActionTypes.Delete,
+            icon: <Trash color="red"></Trash>,
+            fn: (salePayment: SalePayment) => { alert(salePayment.id) }
+        },
+    ];
 
     const deleteNote = (id: string) => {
         axios_instance().delete(`/sale_notes/${id}`).then(r => {
@@ -198,7 +206,8 @@ const ShowSaleModal = (props: showSaleModalProps) => {
                             table_name={t('sales.payments_subject')}
                             queryKey="sale_payments"
                             url={`sale/${props.saleId}/charges?paginate_by=5`}
-                            has_actions={false}
+                            has_actions={true}
+                            actions={fieldActions}
                             table_actions={table_actions}
                             fields={fields}
                             has_search={true}

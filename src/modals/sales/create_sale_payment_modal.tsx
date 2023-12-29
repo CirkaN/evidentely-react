@@ -3,18 +3,12 @@ import { t } from "i18next";
 import { FormEvent, useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import { useQueryClient } from "react-query";
+import { ChargeSale } from "../../shared/interfaces/charge_sale.interface";
 
 interface createSaleNoteProps {
     saleId: number,
     isOpen: boolean,
     cancelFunction: () => void,
-}
-
-interface ChargeSale {
-    amount: number,
-    sale_id: number,
-    payment_method: string,
-    reference_id: string | null,
 }
 
 const CreateSalePaymentModal = (props: createSaleNoteProps) => {
