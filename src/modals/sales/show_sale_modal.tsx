@@ -12,8 +12,6 @@ import DataTable, { Action, ActionTypes, Field, TableAction } from "../../compon
 import { SaleInfo } from "../../shared/interfaces/sales.interface";
 import { SalePayment } from "../../shared/interfaces/charge_sale.interface";
 
-
-
 interface showSaleModalProps {
     saleId: number,
     isOpen: boolean,
