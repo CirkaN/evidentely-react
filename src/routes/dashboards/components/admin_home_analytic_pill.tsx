@@ -4,7 +4,7 @@ import axios_instance from "../../../config/api_defaults";
 interface HomePillProps {
     heading: string,
     filter_type: "new_clients" | "profit" | "missed_appointments" | "appointments"
-    bg_color?: "warning" | "success" | "danger" | "primary",
+    bg_color?: "primary" | "custom_blue" | "custom_red" | "custom_green",
 }
 interface PillAnalyticProps {
     result: number
@@ -23,28 +23,33 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
         result: 0,
     });
 
-    const doFetch = ()=>{
+    const doFetch = () => {
         axios_instance().post(`/analytics/pill`, filter).then(r => setResponseData(r.data))
     }
     const applyColors = () => {
-        if (props.bg_color === 'warning') {
-            setBgColor('bg-yellow-400')
-        }
+
         if (props.bg_color === 'primary') {
-            setBgColor("bg-slate-500")
+            setBgColor("bg-dashboard-purple")
         }
-        if (props.bg_color === 'success') {
-            setBgColor("bg-green-600")
+        if (props.bg_color === 'custom_blue') {
+            setBgColor("bg-dashboard-blue")
         }
+        if (props.bg_color === 'custom_red') {
+            setBgColor("bg-dashboard-red")
+        }
+        if (props.bg_color === 'custom_green') {
+            setBgColor('bg-dashboard-green')
+        }
+
     }
 
     useEffect(() => {
         applyColors();
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         doFetch();
-    
-    },[filter.days])
+
+    }, [filter.days])
 
     return (
         <>

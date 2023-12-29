@@ -11,7 +11,7 @@ const MainDashboard = () => {
             <div>
                 <p className="text-2xl text-bold">Dobro dosli, {user?.name}</p>
             </div>
-       
+
             <div className="flex flex-col sm:flex-row justify-between">
                 <AdminHomeAnalyticPill
                     heading="Broj novih klijenata"
@@ -21,20 +21,20 @@ const MainDashboard = () => {
                 <AdminHomeAnalyticPill
                     heading="Broj termina"
                     filter_type="appointments"
-                    bg_color="primary"
+                    bg_color="custom_blue"
                 />
                 <AdminHomeAnalyticPill
                     heading="Broj otkazanih termina"
                     filter_type="missed_appointments"
-                    bg_color="warning"
+                    bg_color="custom_red"
                 />
                 <AdminHomeAnalyticPill
                     heading="Ocekivani profit"
                     filter_type="profit"
-                    bg_color="success"
+                    bg_color="custom_green"
                 />
             </div>
-           
+
 
             <div className="flex h-64">
                 <DashboardChart />
