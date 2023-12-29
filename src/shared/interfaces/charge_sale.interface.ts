@@ -6,7 +6,7 @@ export interface ChargeSale {
 }
 
 export interface SalePayment {
-    id: number | string
+    id: number,
     amount: number,
     sale_id: number,
     payment_method: string,

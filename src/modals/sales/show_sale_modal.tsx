@@ -1,16 +1,17 @@
 import { Dialog, Flex, Button } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import axios_instance from "../../config/api_defaults";
 import { SaleNote } from "../../shared/interfaces/sale_note.interface";
 import CreateSaleNoteModal from "./create_sale_note_modal";
-import { Plus, Trash } from "react-feather";
+import {  Plus, Trash } from "react-feather";
 import toast from "react-hot-toast";
 import CreateSalePaymentModal from "./create_sale_payment_modal";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
 import { SaleInfo } from "../../shared/interfaces/sales.interface";
 import { SalePayment } from "../../shared/interfaces/charge_sale.interface";
+
 
 
 interface showSaleModalProps {
@@ -23,10 +24,10 @@ const ShowSaleModal = (props: showSaleModalProps) => {
     const [saleNotes, setSaleNotes] = useState<SaleNote[]>([])
     const [sale, setSale] = useState<SaleInfo>();
 
-    // const [swalProps, setSwalProps] = useState({});
     const [isAddNoteActive, setIsAddNoteActive] = useState(false);
     const [isPaymentModalActive, setIsPaymentModalActive] = useState(false);
     const { t } = useTranslation();
+    const queryClient = useQueryClient();
 
     const { refetch } = useQuery({
         queryKey: ['sale_notes'],
@@ -65,14 +66,22 @@ const ShowSaleModal = (props: showSaleModalProps) => {
     const fieldActions: Action<SalePayment>[] = [
         {
             type: ActionTypes.Delete,
-            icon: <Trash color="red"></Trash>,
-            fn: (salePayment: SalePayment) => { alert(salePayment.id) }
+            icon: <Trash color="red"></Trash>,  
+            fn: (salePayment: SalePayment) => { raiseDeleteAlert(salePayment.id) }
         },
     ];
-
+    const raiseDeleteAlert=(id:number)=>{
+        if (confirm("Da li ste sigurni da zelite obrisati platni unos?")) {
+           axios_instance().delete(`/sale_charge/${id}`).then(()=>{
+            queryClient.invalidateQueries({
+                queryKey: ['sales'],
+            })
+           })
+          }
+    }
+    
     const deleteNote = (id: string) => {
-        axios_instance().delete(`/sale_notes/${id}`).then(r => {
-            console.log(r);
+        axios_instance().delete(`/sale_notes/${id}`).then(() => {
             toast.success(t('toasts.sale_note_delete_successfully'));
             refetch();
         })
@@ -86,27 +95,8 @@ const ShowSaleModal = (props: showSaleModalProps) => {
 
     const raiseDelete = (id: string) => {
         deleteNote(id)
-        // setSwalProps({
-        //     show: true,
-        //     icon: 'error',
-        //     title: t('common.please_confirm'),
-        //     text: t('media.delete_attachment'),
-        //     cancelButtonColor: "green",
-        //     reverseButtons: true,
-        //     showCancelButton: true,
-        //     showConfirmButton: true,
-        //     cancelButtonText: t('common.cancel'),
-        //     confirmButtonText: t('common.delete'),
-        //     confirmButtonColor: "red",
-        //     onConfirm: () => { deleteNote(id) },
-        //     onResolve: setSwalOff
-        // });
     }
-    // function setSwalOff() {
-    //     const dataCopied = JSON.parse(JSON.stringify(swalProps));
-    //     dataCopied.show = false;
-    //     setSwalProps(dataCopied);
-    // }
+
     useEffect(() => {
         if (props.isOpen) {
             refetch();
@@ -133,7 +123,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
             cancelFunction={() => { setIsPaymentModalActive(false) }}
         />
 
-
+      
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 800 }}>
                 <Dialog.Title>{t('sales.show_modal_title')}</Dialog.Title>
