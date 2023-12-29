@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import ChargeClientModal from "./charge_client";
-import { Save, Trash } from "react-feather";
+import { Save, Trash, X } from "react-feather";
 import SweetAlert2 from "react-sweetalert2";
 import { useQueryClient } from "react-query";
 import { t } from "i18next";
+
 
 
 interface ShowAppointmentModalProps {
@@ -51,7 +52,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
     }
     const cancelAppointment = () => {
-        axios_instance().post(`/appointments/${props.appointmentId}/missed`).then(()=>{
+        axios_instance().post(`/appointments/${props.appointmentId}/missed`).then(() => {
             toast.success("Uspesno markirano kao otkazan")
         })
     }
@@ -93,77 +94,80 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         {<SweetAlert2 {...swalProps} />}
         {!showDelete &&
             <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); }} isOpen={isChargeClientModalOpen}></ChargeClientModal>
-            <Dialog.Root open={props.isOpen}>
-                <Dialog.Content style={{ maxWidth: 450 }}>
-                    <Dialog.Title>{t('appointment.details')}</Dialog.Title>
-                    <Dialog.Description size="2" mb="4">
-                        {t('appointment.edit_appointment_description')}
-                    </Dialog.Description>
+                <Dialog.Root open={props.isOpen}>
+                    <Dialog.Content style={{ maxWidth: 450 }}>
+                        <Flex justify="between">
+                            <Dialog.Title>{t('appointment.details')}</Dialog.Title>
+                            <Dialog.Close>
+                                <Button variant="ghost" color="gray" onClick={() => props.cancelFunction()}>
+                                    <X></X>
+                                </Button>
+                            </Dialog.Close>
+                        </Flex>
+                        <Dialog.Description size="2" mb="4">
+                            {t('appointment.edit_appointment_description')}
+                        </Dialog.Description>
 
-                    <div>
                         <div>
-                            <label htmlFor="name">{t('appointment.name')}</label>
-                            <input type="text" name="name" id="name"
-                                onChange={(e) => { setAppointment((c) => c && { ...c, title: e.target.value }); }}
-                                value={appointment?.title}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                            <div>
+                                <label htmlFor="name">{t('appointment.name')}</label>
+                                <input type="text" name="name" id="name"
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, title: e.target.value }); }}
+                                    value={appointment?.title}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                            </div>
+                            <div>
+                                <label htmlFor="start">{t('appointment.start')}</label>
+                                <input type="datetime-local" name="start" id="start"
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, start: e.target.value }); }}
+                                    value={appointment?.start}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
+                            </div>
+                            <div>
+                                <label htmlFor="end">{t('appointment.end')}</label>
+                                <input type="datetime-local" name="end" id="end"
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, end: e.target.value }); }}
+                                    value={appointment?.end}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
+                            </div>
+                            <div>
+                                <label htmlFor="price">{t('common.price')}:</label>
+                                <input type="number" name="price" id="price"
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, price: e.target.value }); }}
+                                    value={appointment?.price}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                            </div>
+                            <div>
+                                <label htmlFor="note">{t('common.note')}:</label>
+                                <textarea
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, note: e.target.value }); }}
+                                    value={appointment?.note ?? ""}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    name="note" id="note"></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="start">{t('appointment.start')}</label>
-                            <input type="datetime-local" name="start" id="start"
-                                onChange={(e) => { setAppointment((c) => c && { ...c, start: e.target.value }); }}
-                                value={appointment?.start}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
-                        </div>
-                        <div>
-                            <label htmlFor="end">{t('appointment.end')}</label>
-                            <input type="datetime-local" name="end" id="end"
-                                onChange={(e) => { setAppointment((c) => c && { ...c, end: e.target.value }); }}
-                                value={appointment?.end}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none" />
-                        </div>
-                        <div>
-                            <label htmlFor="price">{t('common.price')}:</label>
-                            <input type="number" name="price" id="price"
-                                onChange={(e) => { setAppointment((c) => c && { ...c, price: e.target.value }); }}
-                                value={appointment?.price}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
-                        </div>
-                        <div>
-                            <label htmlFor="note">{t('common.note')}:</label>
-                            <textarea
-                                onChange={(e) => { setAppointment((c) => c && { ...c, note: e.target.value }); }}
-                                value={appointment?.note ?? ""}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                name="note" id="note"></textarea>
-                        </div>
-                    </div>
 
 
 
-                    <Flex gap="3" mt="4" justify="end" className="flex-col items-start ">
+                        <Flex gap="3" mt="4" justify="end" className="flex-col ">
+                            <Dialog.Close>
+                                <Button className="w-full" color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
+                            </Dialog.Close>
+                            <Button className="w-full" onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
+                        </Flex>
 
-                        <Dialog.Close>
-                            <Button onClick={() => { props.cancelFunction(); }} className="w-full" variant="soft" color="gray">
-                                {t('common.leave')}
-                            </Button>
-                        </Dialog.Close>
+                        <Flex className="pt-1">
+                            <Dialog.Close >
+                                <Button className="grow" color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}><Trash size={20} /></Button>
+                            </Dialog.Close>
+                            <Dialog.Close className="">
+                                <Button className="grow ml-1" color="green" onClick={() => { updateEvent(); }}><Save size={20} /></Button>
+                            </Dialog.Close>
+                        </Flex>
 
-                        <Dialog.Close>
-                            <Button className="w-full" color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
-                        </Dialog.Close>
 
-                        <Button className="w-full" onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
-                        <Dialog.Close>
-                            <Button className="w-full" color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}><Trash size={20} /></Button>
-                        </Dialog.Close>
-                        <Dialog.Close>
-                            <Button className="w-full" color="green" onClick={() => { updateEvent(); }}><Save size={20} /></Button>
-                        </Dialog.Close>
-
-                    </Flex>
-                </Dialog.Content>
-            </Dialog.Root></>}
+                    </Dialog.Content>
+                </Dialog.Root></>}
 
     </>)
 }
