@@ -44,9 +44,10 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     }
     const deleteAppointment = (id: string) => {
         axios_instance().delete(`/appointments/${id}`).then(() => {
-            toast.success('event is deleted');
-            setShowDelete(true);
+            toast.success(t('toasts.event_deleted'));
+            //setShowDelete(true);
             queryClient.invalidateQueries();
+            props.cancelFunction();
         })
     }
     const cancelAppointment = () => {
@@ -89,7 +90,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     }, [props.isOpen]);
 
     return (<>
-        {showDelete && <SweetAlert2 {...swalProps} />}
+        {<SweetAlert2 {...swalProps} />}
         {!showDelete &&
             <><ChargeClientModal appointment_id={props.appointmentId} cancelFunction={() => { setIsChargeClientModalOpen(false); }} isOpen={isChargeClientModalOpen}></ChargeClientModal>
             <Dialog.Root open={props.isOpen}>

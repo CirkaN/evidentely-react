@@ -169,7 +169,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const saveAppointment = () => {
         axios_instance().post('/appointments', form).then((response) => {
             if (response.status === 200) {
-                toast.success(t('toast.appointment_created'));
+                toast.success(t('toasts.appointment_created'));
                 setForm(blankForm);
                 setHasValidationErrors(false);
                 setSelectedClient(

@@ -255,7 +255,9 @@
     "profile_changed_succesfully": "Profil uspesno izmenjen",
     "please_upload_valid_avatar": "Molimo izaberite ispravnu datoteku",
     "note_deleted_succesfully": "Napomena uspesno obrisana",
-    "note_created_succesfully": "Napomena uspesno kreirana"
+    "note_created_succesfully": "Napomena uspesno kreirana",
+    "event_deleted":"Termin uspesno obrisan",
+    
   },
   "analytics": {
     "top_clients": "Top 5 klijenata po profitu ove nedelje"
