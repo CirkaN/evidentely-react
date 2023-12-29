@@ -59,10 +59,10 @@ const ClientSummary = () => {
         <>
             <div className="h-screen w-full p-10">
                 {id &&
-                    <ClientDetailsHeader id={id}/>
+                    <ClientDetailsHeader id={id} />
                 }
                 <br />
-                <div className="flex flex-col 2xl:flex-row lg:flex-col md:flex-col sm:flex-col justify-between ">
+                <div className="border-2 flex flex-col 2xl:flex-row lg:flex-col md:flex-col sm:flex-col justify-between ">
 
                     <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg ">
                         <div className="px-6 py-4">

@@ -26,7 +26,7 @@
     "uploaded_at": "Dodato:",
     "documents": "Media fajlovi",
     "actions": "Akcije",
-    "client_details": "Detalji o klijentu",
+    "client_details": "Detalji",
     "change": "Izmeni",
     "settings": "Podesavanja",
     "client": "Klijent",
@@ -61,7 +61,8 @@
     "start": "Pocetak",
     "end": "Kraj",
     "author":"Autor",
-    "upload_date":"Sacuvano"
+    "upload_date":"Sacuvano",
+    "change_settings":"Uredi podesavanja"
   },
   "register": {
     "register": "Registracija",

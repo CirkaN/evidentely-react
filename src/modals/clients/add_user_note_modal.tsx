@@ -2,6 +2,7 @@ import { Button, Dialog, Flex, Text, TextArea } from "@radix-ui/themes";
 import { FormEvent, useEffect, useState } from "react";
 import { t } from "i18next";
 import { NoteDTO } from "../../shared/interfaces/user_notes.interface";
+import { X } from "react-feather";
 
 interface createProps {
     isOpen: boolean,
@@ -29,7 +30,15 @@ const AddUserNoteModal = (props: createProps) => {
     return (
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>{t('common.add_note')}</Dialog.Title>
+                <Flex justify="between">
+                    <Dialog.Title>{t('common.add_note')}</Dialog.Title>
+                    <Dialog.Close>
+                        <Button variant="ghost" color="gray" onClick={() => props.cancelFunction()}>
+                            <X></X>
+                        </Button>
+                    </Dialog.Close>
+                </Flex>
+
                 <form onSubmit={handleSubmit}>
                     <Flex direction="column" gap="3">
                         <label>

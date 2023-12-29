@@ -48,24 +48,24 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
 
     return (
         <>
-            <div className={`max-w-sm w-full border ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6`}>
+            <div className={` max-w-sm w-full border ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6`}>
                 <div className="flex justify-between">
                     <div>
                         <h5 className="leading-none text-3xl font-bold text-white pb-2">{responseData.result}</h5>
-                        <p className="text-base font-normal text-gray-700">{props.heading}</p>
+                        <p className="text-base font-normal text-white">{props.heading}</p>
                     </div>
                 </div>
                 <div id="area-chart"></div>
-                <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+                <div className="grid grid-cols-1 items-center border-gray-200 border-t  justify-between">
                     <div className="flex justify-between items-center pt-5">
-                        <p className="text-sm font-medium text-center inline-flex items-center">Poslednjih {filter.days} dana</p>
+                        <p className="text-sm font-medium text-center text-white inline-flex items-center">Poslednjih {filter.days} dana</p>
                         <div className="w-48">
 
                             <select
                                 value={filter.days}
                                 onChange={(e) => { setFilter((c) => c && { ...c, days: parseInt(e.target.value) }) }}
                                 id="filterDays"
-                                className={`${bgColor} border border-white shadow-xl text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
+                                className={`${bgColor} border border-white shadow-xl text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
                                 `}>
                                 <option value="7">7</option>
                                 <option value="15">15</option>

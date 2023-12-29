@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios_instance from "../../config/api_defaults";
@@ -6,86 +6,105 @@ import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "react-feather";
 import DetailNoteBox from "../../layouts/clients/details_note_box";
 import AddUserNoteModal from "../../modals/clients/add_user_note_modal";
-import { useQueryClient } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { NoteDTO } from "../../shared/interfaces/user_notes.interface";
 import { ClientSettings } from "../../shared/interfaces/client.interface";
 import toast from "react-hot-toast";
+import AddUserSettings from "../../modals/clients/add_user_settings_modal";
 
 interface Client {
     id: string,
     user_id: string,
     name: string,
     email: string,
-    phone: string,
+    phone_number: string,
     address: string,
     settings: ClientSettings,
-    birth_date?: string,
+    gender: string,
+    birthday?: string,
 }
 
 export type ContextType = Client | null;
 type PreparedNoteDTO = Omit<NoteDTO, 'created_by'>
-
+export type AvailableSettingField = "email" | "phone_number" | "gender" | "address" | "birthday"
 const ClientShow = () => {
 
     const [userDetails, setUserDetails] = useState<Client | null>(null);
     const [showNoteAddModal, setShowNoteAddModal] = useState(false);
+    const [activeSettingsField, setActiveSettingsField] = useState<AvailableSettingField>("email");
+    const [activeSettingsModalOpen, setActiveSettingsModalOpen] = useState(false)
     const { id } = useParams();
     const { t } = useTranslation();
     const queryClient = useQueryClient();
 
-    useEffect(() => {
-        axios_instance().get(`/clients/${id}`)
+    useQuery({
+        queryKey: ['client_show_detail'],
+        queryFn: () => axios_instance().get(`/clients/${id}`)
             .then(response => {
                 setUserDetails(response.data);
             }).catch(e => {
                 if (e.request.status === 404) {
                     navigate("/clients")
                 }
-            });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-    const saveUserNote = (form:PreparedNoteDTO) => {
+            })
+    })
+    const saveUserNote = (form: PreparedNoteDTO) => {
         axios_instance().post(`/user/${id}/notes`, form).then(() => {
-                setShowNoteAddModal(false);
-                toast.success(t("toasts.note_created_succesfully"))
-                queryClient.invalidateQueries({
-                    queryKey: ['user_notes_summary'],
-                })
-         });
+            setShowNoteAddModal(false);
+            toast.success(t("toasts.note_created_succesfully"))
+            queryClient.invalidateQueries({
+                queryKey: ['user_notes_summary'],
+            })
+        });
     }
-
+    const applySettingsField = (type: AvailableSettingField) => {
+        setActiveSettingsModalOpen(true);
+        setActiveSettingsField(type)
+    }
     const navigate = useNavigate();
     return (
         <>
             {id &&
-                <AddUserNoteModal saveFunction={(form) => saveUserNote(form)} isOpen={showNoteAddModal} user_id={id} cancelFunction={() => setShowNoteAddModal(false)}
-                />}
+                <>
+                    <AddUserNoteModal saveFunction={(form) => saveUserNote(form)} isOpen={showNoteAddModal} user_id={id} cancelFunction={() => setShowNoteAddModal(false)}
+                    />
+                    <AddUserSettings
+                        isOpen={activeSettingsModalOpen}
+                        user_id={id}
+                        cancelFunction={() => setActiveSettingsModalOpen(false)}
+                        saveFunction={() => setActiveSettingsModalOpen(false)}
+                        type={activeSettingsField}
+                    />
+                </>
+            }
 
             <div className="flex flex-col sm:flex-row">
-                <div className="h-full sm:h-screen w-full sm:w-1/3 p-10">
+                <div className="h-full sm:h-screen w-full sm:w-1/3 p-10 shadow-lg  border-2">
                     <div className="flex items-center">
                         <div className="">
-                            <Link className="" to="/clients"><ArrowLeft /></Link>
+                            <Link to="/clients"><ArrowLeft /></Link>
                         </div>
                         <div className="pl-2">
-                            <p className="text-lg">{t('common.client_list')}</p>
+                            <p className="text-lg ">{t('common.client_list')}</p>
                         </div>
                     </div>
                     <div className="pt-10">
                         <div className="pt-3 text-center">
-                            <p className="font-semibold text-4xl">{userDetails?.name}</p>
+                            <p className="font-semibold text-4xl uppercase text-slate-700 underline">{userDetails?.name}</p>
                         </div>
                     </div>
 
                     <div className="py-5">
-                        <p className="text-lg font-bold text-center pb-3">{t('common.client_details')}</p>
+                        <p className="text-lg font-bold text-center pb-3 underline">{t('common.client_details')}</p>
                         <div className="flex flex-col  space-y-2 space-x-2">
                             <div className="flex flex-row">
                                 <div className="w-1/2 px-2 text-gray-600">
                                     <p>{t('common.email')}:</p>
                                 </div>
                                 <div>
-                                    <p className="text-blue-400">{userDetails?.email}</p>
+                                    <p onClick={() => { applySettingsField('email') }} className="text-blue-400 px-1 cursor-pointer">
+                                        {userDetails?.email ?? <button>+</button>}
+                                    </p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
@@ -93,8 +112,8 @@ const ClientShow = () => {
                                     <p>{t('common.phone_number')}:</p>
                                 </div>
                                 <div>
-                                    <p className="text-blue-400">
-                                        {userDetails?.phone ?? <button>+</button>}</p>
+                                    <p onClick={() => { applySettingsField('phone_number') }} className="text-blue-400 cursor-pointer">
+                                        {userDetails?.phone_number ?? <button>+</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
@@ -102,7 +121,7 @@ const ClientShow = () => {
                                     <p>{t('common.birth_date')} :</p>
                                 </div>
                                 <div>
-                                    <p>{userDetails?.birth_date ?? <button className="text-blue-400"> +</button>}</p>
+                                    <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('birthday') }} >{userDetails?.birthday ?? <button>+</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
@@ -110,7 +129,7 @@ const ClientShow = () => {
                                     <p>{t('common.address')}:</p>
                                 </div>
                                 <div>
-                                    <p>{userDetails?.address ?? <button className="text-blue-400">+</button>}</p>
+                                    <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('address') }}>{userDetails?.address ?? <button className="text-blue-400">+</button>}</p>
                                 </div>
                             </div>
                         </div>
@@ -128,17 +147,16 @@ const ClientShow = () => {
 
                     <div>
                         <div className="flex justify-center space-x-3">
-                            <p className=" py-2 text-center text-black text-lg font-bold">{t('common.notes')}</p>
+                            <p className=" py-2 text-center text-black text-lg font-bold underline">{t('common.notes')}</p>
                             <button onClick={() => setShowNoteAddModal(true)} className="text-blue-300 text-3xl">+</button>
                         </div>
-
                         {id && <DetailNoteBox id={id} />}
-
                     </div>
-
                 </div>
                 <hr />
+
                 <Outlet context={userDetails satisfies ContextType} />
+
             </div>
         </>
 

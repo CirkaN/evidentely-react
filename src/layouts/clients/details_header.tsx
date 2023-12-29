@@ -7,7 +7,7 @@ interface DetailsProps {
 const ClientDetailsHeader = (props: DetailsProps) => {
     const location = useLocation();
     return (
-        <div className="flex flex-col justify-between sm:flex-row">
+        <div className="flex flex-col justify-between sm:flex-row border p-4 shadow-lg">
             <Link className={clsx("rounded-md py-2 px-4", location.pathname.includes("summary") && "text-blue-600 bg-blue-100 hover:bg-blue-200")} to={`/clients/${props.id}/summary`}>{t('common.summary')}</Link>
             <Link className={clsx("rounded-md py-2 px-4", location.pathname.includes("appointments") && "text-blue-600 bg-blue-100 hover:bg-blue-200")} to={`/clients/${props.id}/appointments`}>{t('common.appointments')}</Link>
             <Link className={clsx("rounded-md py-2 px-4", location.pathname.includes("documents") && "text-blue-600 bg-blue-100 hover:bg-blue-200")} to={`/clients/${props.id}/documents`}>{t('common.media')}</Link>
