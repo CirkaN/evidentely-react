@@ -22,6 +22,7 @@ interface Client {
     settings: ClientSettings,
     gender: string,
     birthday?: string,
+    birthday_formatted?: string,
 }
 
 export type ContextType = Client | null;
@@ -118,10 +119,12 @@ const ClientShow = () => {
                             </div>
                             <div className="flex flex-row">
                                 <div className="text-gray-600 w-1/2">
-                                    <p>{t('common.birth_date')} :</p>
+                                    <p>{t('common.birth_date')}:</p>
                                 </div>
                                 <div>
-                                    <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('birthday') }} >{userDetails?.birthday ?? <button>+</button>}</p>
+                                    <p className="cursor-pointer text-blue-400"
+                                        onClick={() => { applySettingsField('birthday') }} >
+                                        {userDetails?.birthday_formatted ?? <button>+</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">

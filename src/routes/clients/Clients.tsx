@@ -26,7 +26,7 @@ const Clients = () => {
         setisCreateClientModalOpen(false);
     };
 
-    const url = "clients?per_page=5"
+    const url = "clients?per_page=10"
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
             show: true,
@@ -137,12 +137,10 @@ const Clients = () => {
         })
     }
     const tableFilters: TableFilter[] = [
-
         {
             backend_key: "Country Filters",
             component: <CountryFilter backend_key='country_id' />,
         },
-
     ]
 
     return (
@@ -160,7 +158,6 @@ const Clients = () => {
                     fields={fields}
                     table_name="Lista klijenata"
                     has_actions={true} />
-
             </div>
         </>
     );

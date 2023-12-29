@@ -62,7 +62,8 @@
     "end": "Kraj",
     "author":"Autor",
     "upload_date":"Sacuvano",
-    "change_settings":"Uredi podesavanja"
+    "change_settings":"Uredi podesavanja",
+    "birthday":"Datum rodjenja"
   },
   "register": {
     "register": "Registracija",
