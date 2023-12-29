@@ -9,7 +9,7 @@ const MainDashboard = () => {
     return (
         <>
             <div>
-                <p className="text-2xl text-bold">Dobro dosli, {user?.name}</p>
+                <p className="text-2xl uppercase text-slate-700 font-bold">Dobro dosli, {user?.name}</p>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between">

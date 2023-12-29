@@ -102,6 +102,20 @@ const Clients = () => {
             show: true,
         },
         {
+            name: t('common.birthday'),
+            editable_from_table: false,
+            original_name: "birthday_formatted",
+            has_sort: true,
+            show: true,
+        },
+        {
+            name: t('common.address'),
+            editable_from_table: false,
+            original_name: "address",
+            has_sort: true,
+            show: true,
+        },
+        {
             name: t('common.note'),
             editable_from_table: false,
             original_name: "note",
