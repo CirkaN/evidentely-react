@@ -1,5 +1,3 @@
-
-
 export type ItemDTO = {
     id:string,
     type: "product" | "service" | "package",
