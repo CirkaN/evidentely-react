@@ -58,6 +58,9 @@ const Analytics = () => {
         new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)).toISOString().split('T')[0]
     ]);
 
+    useEffect(() => {
+        fetchData();
+    }, [calendarValues])
     const handlePredefinedTypeChanged = () => {
         if (activeFilter.predefined_type === 'custom') {
             setActiveCalendarView(true);
@@ -78,6 +81,7 @@ const Analytics = () => {
             const values = [new Date(new Date().getFullYear(), 0, 1), new Date(new Date().getFullYear(), 11, 31, 23, 59, 59, 999)];
             setCalendarValues(values as Value)
         }
+
     }
     useEffect(() => {
         handlePredefinedTypeChanged();
