@@ -105,7 +105,7 @@ const ClientNotes = () => {
     }
     return (
 
-        <div className="h-screen w-full p-10">
+        <div className="h-screen w-full p-10  pt-10 sm:pt-0">
             
             {id &&
                 <><ClientDetailsHeader id={id} />

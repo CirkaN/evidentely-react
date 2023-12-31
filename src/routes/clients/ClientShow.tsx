@@ -79,8 +79,8 @@ const ClientShow = () => {
                 </>
             }
 
-            <div className="flex flex-col sm:flex-row">
-                <div className="h-full sm:h-screen w-full sm:w-1/3 p-10 shadow-lg  border-2">
+            <div className="flex flex-col sm:flex-row pt-10">
+                <div className="h-full sm:h-screen w-full sm:w-1/3 p-10  shadow-lg  border-2">
                     <div className="flex items-center">
                         <div className="">
                             <Link to="/clients"><ArrowLeft /></Link>

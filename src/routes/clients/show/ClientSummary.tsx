@@ -57,14 +57,14 @@ const ClientSummary = () => {
 
     return (
         <>
-            <div className="h-screen w-full p-10">
+            <div className="h-screen w-full p-10  pt-10 sm:pt-0">
                 {id &&
                     <ClientDetailsHeader id={id} />
                 }
                 <br />
-                <div className="border-2 flex flex-col 2xl:flex-row lg:flex-col md:flex-col sm:flex-col justify-between ">
+                <div className=" border-2 flex flex-col 2xl:flex-row lg:flex-col md:flex-col sm:flex-col justify-between ">
 
-                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg ">
+                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden  ">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.total_profit')}</div>
                             <p className="text-teal-500 text-3xl font-semibold">{formatCurrency(data?.total_profit)}</p>
@@ -72,7 +72,7 @@ const ClientSummary = () => {
                     </div>
 
 
-                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
+                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.total_completed_appointments')}</div>
                             <p className="text-blue-500 text-3xl font-semibold">{data?.total_completed_appointments}</p>
@@ -80,7 +80,7 @@ const ClientSummary = () => {
                     </div>
 
 
-                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden shadow-lg">
+                    <div className="max-w-sm mx-2 bg-white rounded overflow-hidden">
                         <div className="px-6 py-4">
                             <div className="font-bold text-xl mb-2">{t('summary.last_appointment')}</div>
                             <p className="text-purple-500 text-3xl font-semibold">{data?.last_appointment}</p>

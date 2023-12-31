@@ -146,11 +146,8 @@ const Analytics = () => {
         fetchData();
     }, [])
 
-
-
     return (
         <>
-
             <div className='flex flex-wrap justify-center space-x-3 items-center'>
                 {mutateButtons()}
             </div>
@@ -182,13 +179,10 @@ const Analytics = () => {
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart width={150} height={40} data={topProfitClients}>
                                     <Bar dataKey="total_amount_paid" name="Profit" fill="#5C8374" />
-
                                     <XAxis dataKey="name" />
                                     <YAxis />
-
                                     <Tooltip />
                                     <Legend />
-
                                 </BarChart>
                             </ResponsiveContainer>
                             <p className='text-center'>Klijenti sa najvecim profitom</p>
@@ -207,13 +201,10 @@ const Analytics = () => {
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart width={150} height={40} data={topMissedClients}>
                                     <Bar dataKey="missed_appointments_count" name='Broj propustenih termina' fill="#B31312" />
-
                                     <XAxis dataKey="name" />
                                     <YAxis />
-
                                     <Tooltip />
                                     <Legend />
-
                                 </BarChart>
                             </ResponsiveContainer>
                             <p className='text-center'>Klijenti sa najvecim brojem propustenih termina</p>
@@ -226,7 +217,6 @@ const Analytics = () => {
                 </div>
             </div>
         </>
-
     );
 }
 

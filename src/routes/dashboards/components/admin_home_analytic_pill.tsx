@@ -18,6 +18,13 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
         days: 7,
         type: props.filter_type
     });
+    const formatCurrency = (t: number) => {
+        const s = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        return s.format(t);
+    }
     const [bgColor, setBgColor] = useState("primary");
     const [responseData, setResponseData] = useState<PillAnalyticProps>({
         result: 0,
@@ -56,7 +63,16 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
             <div className={` max-w-sm w-full border ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6`}>
                 <div className="flex justify-between">
                     <div>
-                        <h5 className="leading-none text-3xl font-bold text-white pb-2">{responseData.result}</h5>
+                        <h5 className="leading-none text-3xl font-bold text-white pb-2">
+                            {filter.type ==='profit' && 
+                                formatCurrency(responseData.result)
+                            }
+                            {
+                                filter.type !== 'profit'&&
+                                responseData.result
+                            }
+                            
+                            </h5>
                         <p className="text-base font-normal text-white">{props.heading}</p>
                     </div>
                 </div>

@@ -29,11 +29,34 @@ const MainDashboard = () => {
                     bg_color="custom_red"
                 />
                 <AdminHomeAnalyticPill
-                    heading="Ocekivani profit"
+                    heading="Ocekivani profit (nenaplaceni termini)"
                     filter_type="profit"
                     bg_color="custom_green"
                 />
             </div>
+            <br />
+            {/* <div className="flex flex-col sm:flex-row justify-between">
+                <AdminHomeAnalyticPill
+                    heading="Dugovanja"
+                    bg_color="primary"
+                    filter_type="profit"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Naplacenih proizvoda"
+                    filter_type="appointments"
+                    bg_color="custom_blue"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Ukupno troskova"
+                    filter_type="missed_appointments"
+                    bg_color="custom_red"
+                />
+                <AdminHomeAnalyticPill
+                    heading="Ocekivani profit (nenaplaceni proizvodi)"
+                    filter_type="profit"
+                    bg_color="custom_green"
+                />
+            </div> */}
 
 
             <div className="flex h-64">

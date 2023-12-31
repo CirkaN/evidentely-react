@@ -22,12 +22,12 @@ const Services = () => {
     const actions: Action<ItemDTO>[] = [
         {
             type: ActionTypes.Show,
-            icon: <Eye />,
+            icon: <Eye color="lightblue" />,
             fn: (item: ItemDTO) => { openShowModal(item.id) }
         },
         {
             type: ActionTypes.Delete,
-            icon: <Trash />,
+            icon: <Trash color="red" />,
             fn: (item: ItemDTO) => { raiseDeleteAlert(parseInt(item.id)) }
         },
     ]

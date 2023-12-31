@@ -81,6 +81,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                                 {t('item.selling_price')}
                             </Text>
                             <TextField.Input
+                            required={true}
                                 onChange={(e) => setForm((c) => c && { ...c, selling_price: e.target.value })}
                                 value={form.selling_price}
 
