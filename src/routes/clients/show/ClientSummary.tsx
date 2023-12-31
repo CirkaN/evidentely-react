@@ -4,6 +4,7 @@ import axios_instance from "../../../config/api_defaults";
 import { useNavigate, useParams } from "react-router-dom";
 import ClientDetailsHeader from "../../../layouts/clients/details_header";
 import DataTable, { Field } from "../../../components/datatable";
+import ClientAppointmentSummaryGraph from "../components/client_app_summary";
 
 
 interface SummaryData {
@@ -89,12 +90,18 @@ const ClientSummary = () => {
                 </div>
 
                 <br />
-                <div className=" w-full h-1/3 ">
+                <div className=" w-full h-1/3 flex-col ">
+                    <div className="h-64">
+                        {/* <p className="font-bold text-xl text-slate-800">Zakazivanja u proslih 6 meseci</p> */}
+                       {id&&
+                        <ClientAppointmentSummaryGraph user_id={id} />}
+                    </div>
                     <div className="flex justify-between p-4">
                         <p className="text-black font-bold text-lg">{t('common.latest_appointments')}</p>
                         <button onClick={() => { showAllAppointments() }} className="text-blue-600 ">{t('common.show_all')}</button>
                     </div>
-                    <div className="h-full">
+
+                    <div className="">
                         <DataTable
                             has_actions={false}
                             fields={fields}
@@ -104,6 +111,7 @@ const ClientSummary = () => {
                             queryKey="last_5_client_appointments"
                         />
                     </div>
+
                 </div>
 
                 {/* <div >
