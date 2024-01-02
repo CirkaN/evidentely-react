@@ -45,27 +45,14 @@ const MyLayout = () => {
         {
             name: t('navbar.settings.items_and_products'),
             icon: <Plus size={20} />,
-            href: 'price_plans/products',
-            current: location.pathname === ("price_plans/products")
+            href: 'price_plans/services',
+            current: location.pathname === ("price_plans/services")
         },
         {
             name: t('navbar.settings.employees'),
             icon: <Share2 size={20} />,
             href: '/employees',
             current: location.pathname === ("employees")
-        },
-        {
-            name: t('navbar.main_settings'),
-            key: "settings",
-            icon: <Settings size={20} />,
-            current: location.pathname.startsWith("/company_settings"),
-            items: [
-                {
-                    name: t('navbar.settings.sms_settings'),
-                    href: '/company_settings/sms_settings',
-                    current: location.pathname === ("/company_settings/sms_settings")
-                }
-            ]
         },
         {
             name: t('navbar.analytics_main'),
@@ -85,6 +72,14 @@ const MyLayout = () => {
             ],
             current: location.pathname.startsWith("/analytics"),
         },
+        {
+            name: t('navbar.settings.sms_settings'),
+            icon: <Settings size={20} />,
+            href: '/company_settings/sms_settings',
+            current: location.pathname === ("/company_settings/sms_settings")
+        },
+       
+     
     ];
     const changeState = (key: keyof typeof collapsedMenies) => {
         setCollapsedMenies((c) => c && { ...c, [key]: !c[key] })
@@ -252,8 +247,6 @@ const MyLayout = () => {
             </nav>
 
             <aside id="logo-sidebar"
-
-
                 className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform 
   bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700 ${isNavCollapsed ? '-translate-x-full' : ''
                     }`}
