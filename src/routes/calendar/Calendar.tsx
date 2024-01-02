@@ -27,6 +27,7 @@ interface BackendResponse {
 interface dataFromBackend {
   id: string,
   title: string | undefined,
+  client_name: string,
   start: string,
   end: string,
   price: number | null,
@@ -40,27 +41,30 @@ interface calendarDate {
   start: string | Date,
   end: string | Date,
   price: number | string | null,
-  color: string
+  color: string,
+  client_name:string,
 
 }
 
-
 const MyCalendar = () => {
-  const queryClient = useQueryClient();
 
-  useQuery({
-    queryKey: [],
-    queryFn: () => {
-      return axios_instance().get('appointments')
-        .then(response => { mutateDates(response.data) })
-    }
-  })
   const screenSize = useScreenSize();
   const [dates, setDates] = useState<calendarDate[]>([]);
   const [isCreateAppointmentModalOpen, setIsCreateAppointmentModalOpen] = useState(false);
   const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
   const [showAppointmentId, setShowAppointmentId] = useState<string>("");
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
+
+
+  const queryClient = useQueryClient();
+
+  useQuery({
+    queryKey: ['appointment_list'],
+    queryFn: () => {
+      return axios_instance().get('appointments')
+        .then(response => { mutateDates(response.data) })
+    }
+  })
 
   const setAppointmentData = (data: AppointmentInterface) => {
     setCreateAppointmentData(data);
@@ -76,8 +80,11 @@ const MyCalendar = () => {
 
   const mutateDates = (dataFromBackend: BackendResponse) => {
 
+    console.log(dataFromBackend);
+
     const s = dataFromBackend.data.map(item => ({
       start: new Date(item.start),
+      client_name: item.client_name,
       end: new Date(item.end),
       title: item.title ?? 'Nema imena',
       id: item.id,
@@ -92,7 +99,7 @@ const MyCalendar = () => {
   const reRenderTable = () => {
     setIsCreateAppointmentModalOpen(false);
     setIsShowAppointmentModalOpen(false);
-    queryClient.invalidateQueries();
+    queryClient.invalidateQueries(['appointment_list']);
   }
 
   const closeShowModal = () => {
@@ -107,7 +114,6 @@ const MyCalendar = () => {
     }
   }
 
-
   return (
     <>
       <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
@@ -117,14 +123,14 @@ const MyCalendar = () => {
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
           initialView={gridView()}
           buttonText={{
-            today:"Danas",
-            week:"Nedeljni prikaz",
-            day:"Dnevni prikaz",
-            month:"Mesecni prikaz"
+            today: "Danas",
+            week: "Nedeljni prikaz",
+            day: "Dnevni prikaz",
+            month: "Mesecni prikaz"
           }}
           headerToolbar={{
             left: 'prev,next',
-          
+
             right: 'timeGridWeek,timeGridDay,dayGridMonth'
           }}
           weekends={true}
@@ -134,7 +140,7 @@ const MyCalendar = () => {
           editable={true}
           nowIndicator={true}
           selectable={true}
-          eventContent={(e) => renderEventContent(e.timeText, e.event.title)}
+          eventContent={(e) => renderEventContent(e.timeText, e.event.title, e.event.extendedProps.client_name)}
           eventDrop={(e) => { handleDrop(e.event.startStr, e.event.endStr, e.event.id) }}
           select={(e) => handleSelect(e.startStr, e.endStr)}
           eventClick={(e) => handleClick(e.event.id)}
@@ -148,6 +154,7 @@ const MyCalendar = () => {
   function cancelAction() {
     closeAppointmentCreateModal();
   }
+
 
   function handleClick(id: string) {
     setShowAppointmentId(id);
@@ -195,17 +202,19 @@ const MyCalendar = () => {
       axios_instance().put('appointments/' + id, json).then(response => {
         if (response.status === 200) {
           toast.success(t('toasts.event_succesfully_updated'))
-          reRenderTable()
+          queryClient.invalidateQueries()
         }
       })
     }
   }
 
-  function renderEventContent(timeText: string, title: string) {
+  function renderEventContent(timeText: string, title: string, client_name: string) {
+
+
     return (
       <>
-        <b>{timeText}</b>
-        <i>{title}</i>
+        <p>{timeText}[{client_name}]</p>
+        <i className='text-md font-semibold ml-1'>{title}</i>
       </>
     )
   }
