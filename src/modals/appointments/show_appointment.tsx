@@ -9,8 +9,6 @@ import SweetAlert2 from "react-sweetalert2";
 import { useQueryClient } from "react-query";
 import { t } from "i18next";
 
-
-
 interface ShowAppointmentModalProps {
     isOpen: boolean,
     appointmentId: string,
@@ -23,6 +21,10 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
     const [appointment, setAppointment] = useState<AppointmentType>();
     const [isChargeClientModalOpen, setIsChargeClientModalOpen] = useState(false);
+
+    const [appointmentMissed, setAppointmentMissed] = useState(false);
+    const [appointmentPaid, setAppointmentPaid] = useState(false)
+
     const [swalProps, setSwalProps] = useState({});
     const [showDelete, setShowDelete] = useState(false);
 
@@ -32,8 +34,18 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
             data.start = data.start.replace(' ', 'T');
             data.end = data.end.replace(' ', 'T');
             setAppointment(data);
+
+            if (data.status === 'missed') {
+                setAppointmentMissed(true);
+            }
+
+            if (data.status === 'completed_paid') {
+                setAppointmentPaid(true);
+            }
         })
     }
+
+
     const updateEvent = () => {
         axios_instance().put(`/appointments/${props.appointmentId}`, appointment).then(() => {
             props.eventUpdated();
@@ -53,7 +65,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     }
     const cancelAppointment = () => {
         axios_instance().post(`/appointments/${props.appointmentId}/missed`).then(() => {
-            toast.success("Uspesno markirano kao otkazan")
+            toast.success("Termin uspesno markiran kao otkazan")
         })
     }
 
@@ -61,14 +73,14 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         setSwalProps({
             show: true,
             icon: 'error',
-            title: 'Please confirm',
-            text: 'This action is unreversible and it will delete employee with  all records associated with him',
+            title: t('common.please_confirm'),
+            text: t('common.final_decesion'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Cancel',
-            confirmButtonText: "Go for it",
+            cancelButtonText: t('common.cancel'),
+            confirmButtonText: t('common.accept'),
             confirmButtonColor: "red",
             onConfirm: () => { deleteAppointment(id) },
             onResolve: setSwalOff
@@ -97,18 +109,46 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                 <Dialog.Root open={props.isOpen}>
                     <Dialog.Content style={{ maxWidth: 450 }}>
                         <Flex justify="between">
-                            <Dialog.Title>{t('appointment.details')}</Dialog.Title>
+                            <Dialog.Title className="text-slate-800">{t('appointment.details')}</Dialog.Title>
                             <Dialog.Close>
                                 <Button variant="ghost" color="gray" onClick={() => props.cancelFunction()}>
                                     <X></X>
                                 </Button>
                             </Dialog.Close>
                         </Flex>
-                        <Dialog.Description size="2" mb="4">
-                            {t('appointment.edit_appointment_description')}
-                        </Dialog.Description>
+
 
                         <div>
+                            {appointmentMissed &&
+                                <div className=" flex h-12 bg-[#E36414] justify-center p-3" >
+                                    <p className="text-white"><b>{t('sales.status')}</b>: Otkazan/Propusten</p>
+                                </div>
+                            }
+                            {appointmentPaid &&
+                                <div className=" flex h-12 bg-[#65B741] justify-center p-3" >
+                                    <p className="text-white"><b>{t('sales.status')}</b>: Uplaceno</p>
+                                </div>
+                            }
+                            {appointment?.status === 'completed_unpaid' &&
+
+                                <div className=" flex h-12 bg-[#9BB8CD] justify-center p-3" >
+                                    <p className="text-white"><b>{t('sales.status')}</b>: Nenaplacen</p>
+                                </div>
+                            }
+                            {appointment?.status === 'pending' &&
+
+                                <div className=" flex h-12 bg-[#114062] justify-center p-3" >
+                                    <p className="text-white"><b>{t('sales.status')}</b>:Na cekanju</p>
+                                </div>
+                            }
+
+                            <div className="pt-2">
+                                <label htmlFor="name">{t('common.client')}</label>
+                                <input type="text" name="name" id="name"
+                                    onChange={(e) => { setAppointment((c) => c && { ...c, title: e.target.value }); }}
+                                    value={appointment?.title}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
+                            </div>
                             <div>
                                 <label htmlFor="name">{t('appointment.name')}</label>
                                 <input type="text" name="name" id="name"
@@ -151,9 +191,9 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
                         <Flex gap="3" mt="4" justify="end" className="flex-col ">
                             <Dialog.Close>
-                                <Button className="w-full" color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
+                                <Button disabled={appointmentMissed} className="w-full" color="orange" onClick={() => { cancelAppointment(); }}>{t('appointment.make_missed')}</Button>
                             </Dialog.Close>
-                            <Button className="w-full" onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
+                            <Button disabled={appointmentPaid} className="w-full" onClick={() => { chargeClient(); }}>{t('appointment.charge')}</Button>
                         </Flex>
 
                         <Flex className="pt-1">

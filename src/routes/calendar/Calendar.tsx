@@ -56,6 +56,7 @@ const MyCalendar = () => {
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
 
 
+
   const queryClient = useQueryClient();
 
   useQuery({
@@ -130,7 +131,6 @@ const MyCalendar = () => {
           }}
           headerToolbar={{
             left: 'prev,next',
-
             right: 'timeGridWeek,timeGridDay,dayGridMonth'
           }}
           weekends={true}
@@ -147,6 +147,8 @@ const MyCalendar = () => {
           eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert as unknown as EventChangeArg)}
         />
       </div>
+
+
     </>
   )
 

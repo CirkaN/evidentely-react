@@ -11,6 +11,7 @@ interface Appointment {
     color?:string,
     remind_client: boolean,
     item_id?: string,
+    status:string,
     end_formatted?:string,
     start_formatted?:string
     note?:string
