@@ -104,7 +104,7 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p onClick={() => { applySettingsField('email') }} className="text-blue-400 px-1 cursor-pointer">
-                                        {userDetails?.email ?? <button>+</button>}
+                                        {userDetails?.email ?? <button>Dodaj</button>}
                                     </p>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p onClick={() => { applySettingsField('phone_number') }} className="text-blue-400 cursor-pointer">
-                                        {userDetails?.phone_number ?? <button>+</button>}</p>
+                                        {userDetails?.phone_number ?? <button>Dodaj</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
@@ -124,7 +124,7 @@ const ClientShow = () => {
                                 <div>
                                     <p className="cursor-pointer text-blue-400"
                                         onClick={() => { applySettingsField('birthday') }} >
-                                        {userDetails?.birthday_formatted ?? <button>+</button>}</p>
+                                        {userDetails?.birthday_formatted ?? <button>Dodaj</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
@@ -132,7 +132,7 @@ const ClientShow = () => {
                                     <p>{t('common.address')}:</p>
                                 </div>
                                 <div>
-                                    <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('address') }}>{userDetails?.address ?? <button className="text-blue-400">+</button>}</p>
+                                    <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('address') }}>{userDetails?.address ?? <button className="text-blue-400">Dodaj</button>}</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@ const ClientShow = () => {
                     <div>
                         <div className="flex justify-center space-x-3">
                             <p className=" py-2 text-center text-black text-lg font-bold underline">{t('common.notes')}</p>
-                            <button onClick={() => setShowNoteAddModal(true)} className="text-blue-300 text-3xl">+</button>
+                            <button onClick={() => setShowNoteAddModal(true)} className="text-blue-300 text-3xl"></button>
                         </div>
                         {id && <DetailNoteBox id={id} />}
                     </div>

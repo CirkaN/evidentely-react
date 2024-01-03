@@ -89,7 +89,7 @@ const ClientDetails = () => {
                                     value={form?.settings.address ?? ""}
                                     onChange={(e) => setForm((c) => c && { ...c, settings: { ...c.settings, address: e.target.value } })}
 
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="John Doe" />
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="John Doe" />
                             </div>
                         </div>
                         <div className="flex flex-wrap -mx-3 mb-6">
