@@ -8,6 +8,7 @@ import { Save, Trash, X } from "react-feather";
 import SweetAlert2 from "react-sweetalert2";
 import { useQueryClient } from "react-query";
 import { t } from "i18next";
+import { Trans } from "react-i18next";
 
 interface ShowAppointmentModalProps {
     isOpen: boolean,
@@ -69,12 +70,14 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
         })
     }
 
+ 
+
     const raiseDeleteAlert = (id: string) => {
         setSwalProps({
             show: true,
             icon: 'error',
             title: t('common.please_confirm'),
-            text: t('common.final_decesion'),
+            text: t('common.delete_appointment_message'),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
@@ -198,10 +201,10 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
 
                         <Flex className="pt-1">
                             <Dialog.Close >
-                                <Button className="grow" color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}><Trash size={20} /></Button>
+                                <Button className="grow" color="red" onClick={() => { raiseDeleteAlert(props.appointmentId); }}>{t('common.delete_appointment')}</Button>
                             </Dialog.Close>
                             <Dialog.Close className="">
-                                <Button className="grow ml-1" color="green" onClick={() => { updateEvent(); }}><Save size={20} /></Button>
+                                <Button className="grow ml-1" color="green" onClick={() => { updateEvent(); }}>{t('common.save_appointment')}</Button>
                             </Dialog.Close>
                         </Flex>
 

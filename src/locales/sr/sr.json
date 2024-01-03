@@ -63,7 +63,10 @@
     "author":"Autor",
     "upload_date":"Sacuvano",
     "change_settings":"Uredi podesavanja",
-    "birthday":"Datum rodjenja"
+    "birthday":"Datum rodjenja",
+    "save_appointment":"Sacuvaj izmene",
+    "delete_appointment":"Obrisi termin",
+    "delete_appointment_message":"Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'"
   },
   "register": {
     "register": "Registracija",
