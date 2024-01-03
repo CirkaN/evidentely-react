@@ -1,8 +1,8 @@
 import { FormEvent, useState } from "react";
-import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom";
 import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
+import Select from 'react-select'
 interface Register {
     email: string,
     password: string
@@ -17,7 +17,38 @@ interface RegistrationForm {
 
 
 const Register = () => {
-    const { t } = useTranslation();
+    const servicesTransformed = [
+        {
+            label: "Kozmeticki Salon",
+            value: "kozmeticki_salon"
+        },
+        {
+            label: "Teratana",
+            value: "teretana"
+        },
+        {
+            label: "Frizerski Salon",
+            value: "frizerski_salon"
+        },
+        {
+            label: "Stomatologija",
+            value: "stomatologija"
+        },
+        {
+            label: "Salon Masaze",
+            value: "salon_masaze"
+        },
+        {
+            label: "Edukacioni centar",
+            value: "edukacioni_centar"
+        },
+        {
+            label: "Privatna skola",
+            value: "privatna_skola"
+        },
+
+    ];
+
     const navigate = useNavigate();
     const [registrationForm, setRegistrationForm] = useState<RegistrationForm>({
         "company_name": "",
@@ -44,58 +75,112 @@ const Register = () => {
     }
 
     return (<>
-        <div className="max-h-screen">
-            <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
-                <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">
-                    <div className="px-5 md:w-1/2">
-                        <h2 className="text-2xl font-bold text-[#002D74]">{t('register.register')}</h2>
-                        <p className="mt-4 text-sm text-[#002D74]">{t('register.register_text')}</p>
+        <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+            <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+                <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+                    <div>
+                        <img src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
+                            className="w-32 mx-auto" />
+                    </div>
+                    <div className="mt-10 flex flex-col items-center">
+                        <h1 className="text-2xl xl:text-3xl font-extrabold">
+                            Registruj se
+                        </h1>
+                        <div className="w-full flex-1 mt-1">
+
                         <form className="mt-6" onSubmit={handleSubmit}>
-                            <div>
-                                <label className="block text-gray-700">{t('common.email')}</label>
-                                <input
-                                    value={registrationForm.email}
-                                    onChange={(e) => { setRegistrationForm((c) => c && { ...c, email: e.target.value }) }}
-                                    type="email" name="" id="" placeholder="Enter Email Address" className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus required />
+                            <div className="my-12 border-b text-center">
+                                <div
+                                    className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+                                    Registruj novi nalog
+                                </div>
                             </div>
 
-                            <div className="mt-4">
-                                <label className="block text-gray-700">{t('common.your_name')}</label>
-                                <input
-                                    value={registrationForm.name}
-                                    onChange={(e) => { setRegistrationForm((c) => c && { ...c, name: e.target.value }) }}
-                                    type="text" name="" id="" placeholder={t('common.your_name')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
-                            </div>
-                            <div className="mt-4">
-                                <label className="block text-gray-700">{t('common.company_name')}</label>
-                                <input
-                                    value={registrationForm.company_name}
-                                    onChange={(e) => { setRegistrationForm((c) => c && { ...c, company_name: e.target.value }) }}
-                                    type="text" name="company_name" id="company_name" placeholder={t('common.company_name')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
-                            </div>
-                            <div className="mt-4">
-                                <label className="block text-gray-700">{t('common.password')}</label>
-                                <input type="password"
-                                    value={registrationForm.password}
-                                    onChange={(e) => { setRegistrationForm((c) => c && { ...c, password: e.target.value }) }}
-                                    name="password" id="password" placeholder={t('common.enter_password')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
-                            </div>
+                            <div className="mx-auto max-w-xs">
+                                <div>
+                                    <label className="pt-5">Ime I Prezime:</label>
+                                    <input
+                                        value={registrationForm.name}
+                                        onChange={(e) => { setRegistrationForm((c) => c && { ...c, name: e.target.value }) }}
+                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                        type="text" placeholder="Ime I Prezime" />
+                                </div>
+                                <div>
+                                    <label className="">Email:</label>
+                                    <input
+                                        value={registrationForm.email}
+                                        onChange={(e) => { setRegistrationForm((c) => c && { ...c, email: e.target.value }) }}
+                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                        type="email" placeholder="Email" />
+                                </div>
 
 
-                            <button type="submit" className="mt-6 block w-full rounded-lg bg-blue-500 px-4 py-3 font-semibold text-white hover:bg-blue-400 focus:bg-blue-400">{t('register.register_button')}</button>
-                        </form>
+                                <div className="">
+                                    <label className="pt-5">Ime radnje:</label>
+                                    <input
+                                        value={registrationForm.company_name}
+                                        onChange={(e) => { setRegistrationForm((c) => c && { ...c, company_name: e.target.value }) }}
+                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                        type="text" placeholder="Ime radnje / firme" />
+                                </div>
+                                <div>
+                                    <label className="pt-5">Sifra:</label>
+                                    <input
+                                        value={registrationForm.password}
+                                        onChange={(e) => { setRegistrationForm((c) => c && { ...c, password: e.target.value }) }}
+                                        className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                        type="password" placeholder="Sifra" />
+                                </div>
+                                <div>
+                                    <label>Delatnost:</label>
 
-                        <div className="mt-3 flex items-center justify-between text-sm">
-                            <p>{t('register.already_has_account')}</p>
-                            <button onClick={() => { openLogin() }} className="ml-3 rounded-xl border border-blue-400 bg-white px-5 py-2 duration-300 hover:scale-110">{t('login.login_button')}</button>
+                                    <Select isSearchable={true}
+                                        className="w-full rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                                        options={servicesTransformed} />
+                                </div>
+
+
+                                <button
+                                    className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                                    <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                        <circle cx="8.5" cy="7" r="4" />
+                                        <path d="M20 8v6M23 11h-6" />
+                                    </svg>
+                                    <span className="ml-3">
+                                        Registruj se
+                                    </span>
+                                </button>
+                                <button
+                                onClick={()=>{openLogin()}}
+                                    className="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+
+                                    <span className="ml-3">
+                                       Imate nalog? Ulogujte se
+                                    </span>
+                                </button>
+                                <p className="mt-6 text-xs text-gray-600 text-center">
+                                    Prihvatam
+                                    <a href="#" className="border-b border-gray-500 border-dotted">
+                                        <span> Uslove koriscenja </span>
+                                    </a>
+                                    <span> i </span>
+                                    <a href="#" className="border-b border-gray-500 border-dotted">
+                                        <span> Politiku Privatnosti</span>
+                                    </a>
+                                </p>
+                            </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div className="hidden w-1/2 md:block">
-                        <img src="/moj_biznis_dark.webp" className="rounded-2xl" alt="page img" />
+                </div>
+                <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
+                    <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
+                        <img src="https://admin.moj-biznis.rs/moj_biznis_dark.webp" alt="" />
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
 
