@@ -29,6 +29,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         employee_id: "",
         due_amount: "",
         title: "",
+        status:"pending",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
@@ -55,6 +56,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
+        status:"pending",
         color: "#00D14D",
         remind_client: true,
         remind_setting: {

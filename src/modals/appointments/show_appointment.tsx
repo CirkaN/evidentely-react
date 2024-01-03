@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import { AppointmentType } from "../../shared/interfaces/appointments.interface";
 import ChargeClientModal from "./charge_client";
-import { Save, Trash, X } from "react-feather";
+import {X } from "react-feather";
 import SweetAlert2 from "react-sweetalert2";
 import { useQueryClient } from "react-query";
 import { t } from "i18next";
-import { Trans } from "react-i18next";
+
 
 interface ShowAppointmentModalProps {
     isOpen: boolean,
