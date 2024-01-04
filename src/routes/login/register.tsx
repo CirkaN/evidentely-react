@@ -13,7 +13,7 @@ interface RegistrationForm {
     name: string,
     password: string,
     email: string,
-    business_type: string
+    business_type_slug: string
 }
 
 
@@ -68,7 +68,7 @@ const Register = () => {
         "name": "",
         "password": "",
         "email": "",
-        "business_type": "",
+        "business_type_slug": "",
     });
 
     const openLogin = () => {
@@ -85,7 +85,7 @@ const Register = () => {
     }
     const setBusinessType = (e: SingleValue<{ value: string; label: string; }>) => {
         if (e?.value) {
-            setRegistrationForm((c) => c && { ...c, business_type: e.value })
+            setRegistrationForm((c) => c && { ...c, business_type_slug: e.value })
         }
     }
 
