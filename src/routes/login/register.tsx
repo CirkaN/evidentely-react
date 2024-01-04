@@ -20,6 +20,10 @@ interface RegistrationForm {
 const Register = () => {
     const servicesTransformed = [
         {
+            label: "Advokat",
+            value: "advokat"
+        },
+        {
             label: "Kozmeticki Salon",
             value: "kozmeticki_salon"
         },
@@ -46,6 +50,14 @@ const Register = () => {
         {
             label: "Privatna skola",
             value: "privatna_skola"
+        },
+        {
+            label: "Privatni casovi",
+            value: "privatni_casovi"
+        },
+        {
+            label: "Medicina",
+            value: "medicina"
         },
 
     ];
