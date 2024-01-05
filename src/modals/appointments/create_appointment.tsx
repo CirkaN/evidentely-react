@@ -139,10 +139,12 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         setForm((c) => c && { ...c, end: props?.appointment_data?.end });
     }, [props?.appointment_data?.start, props?.appointment_data?.end]);
 
-    const setServiceForm = (e: SingleValue<{ value: string|number; label: string; }>) => {
+    const setServiceForm = (e: SingleValue<{ value: string | number; label: string; }>) => {
         if (e) {
             const service = serviceList.filter(service => service.id === e.value)[0];
-          
+
+            setForm((c) => c && { ...c, color: service.color })
+
             setForm((c) => c && { ...c, item_id: e.value.toString() })
             if (!form.price) {
                 setForm((c) => c && { ...c, price: service.price })
@@ -161,7 +163,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         }
     }
 
-    const setClientForm = (e: SingleValue<{ value: number|string; label: string; }>) => {
+    const setClientForm = (e: SingleValue<{ value: number | string; label: string; }>) => {
         if (e) {
             const client = clientList.filter(client => client.id === e.value)[0];
             setSelectedClient((c) => c && { ...c, value: e.value });
@@ -236,10 +238,6 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
             queryClient.invalidateQueries({
                 queryKey: ['services'],
             })
-
-
-
-
         });
     }
 
