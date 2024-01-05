@@ -100,6 +100,7 @@ const ShowSaleModal = (props: showSaleModalProps) => {
             refetch();
         }
     }, [props.isOpen])
+    
     const formatCurrency = (t: string) => {
         const s = new Intl.NumberFormat('sr-RS', {
             style: 'currency',

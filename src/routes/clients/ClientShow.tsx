@@ -20,6 +20,7 @@ interface Client {
     phone_number: string,
     address: string,
     settings: ClientSettings,
+    saldo:number,
     gender: string,
     birthday?: string,
     birthday_formatted?: string,
@@ -58,6 +59,18 @@ const ClientShow = () => {
             })
         });
     }
+
+    const formatCurrency = (t: string|undefined) => {
+       if(t){
+        const s = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        return s.format(parseInt(t));
+       }
+       return 0;
+    }
+
     const applySettingsField = (type: AvailableSettingField) => {
         setActiveSettingsModalOpen(true);
         setActiveSettingsField(type)
@@ -133,6 +146,14 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p className="cursor-pointer text-blue-400" onClick={() => { applySettingsField('address') }}>{userDetails?.address ?? <button className="text-blue-400">Dodaj</button>}</p>
+                                </div>
+                            </div>
+                            <div className="flex flex-row">
+                                <div className="text-gray-600 w-1/2">
+                                    <p className="font-bold">Saldo:</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-orange-500">{formatCurrency(userDetails?.saldo.toString())}</p>
                                 </div>
                             </div>
                         </div>
