@@ -26,7 +26,8 @@ interface UserDTO {
     id: number,
     avatar_url: string,
     name: string,
-    email: string
+    email: string,
+    company_name:string,
 }
 
 const ProfileSettings = () => {
@@ -58,7 +59,8 @@ const ProfileSettings = () => {
             id: data.id,
             name: data.name,
             email: data?.email,
-            avatar_url: data.avatar_url
+            avatar_url: data.avatar_url,
+            company_name:data.company_name
         });
         setCurrentUserData(data);
     }

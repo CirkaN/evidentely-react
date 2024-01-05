@@ -4,6 +4,7 @@ interface User {
     id: number,
     name: string,
     email: string,
+    company_name:string,
     avatar_url: string,
 }
 interface UserProviderProps {
@@ -30,7 +31,6 @@ const UserProvider = (props: UserProviderProps) => {
     const [user, setUser] = useState<User | null>(storedUser);
 
     const login = (newUser: User) => {
-
         setUser(() => {
             localStorage.setItem('user', JSON.stringify(newUser));
             return newUser;

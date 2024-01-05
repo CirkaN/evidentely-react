@@ -182,7 +182,7 @@ const MyLayout = () => {
 
                             <Link className="flex ms-2 md:me-24" to="/">
                                 <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="Moj biznis logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">MOJ-BIZNIS.RS</span>
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{user.company_name}</span>
                             </Link>
 
                         </div>
