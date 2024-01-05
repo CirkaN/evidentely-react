@@ -37,7 +37,8 @@ const Login = () => {
         'id': response.data.user.id,
         'name': response.data.user.name,
         'avatar_url': response.data.user.avatar_url,
-        'company_name': response.data.user.company_name
+        'company_name': response.data.user.company_name,
+        'business_type_slug':response.data.user.business_type_slug,
       })
     }).catch(() => {
       setHasErrors(true);

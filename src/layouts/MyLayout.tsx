@@ -32,6 +32,13 @@ const MyLayout = () => {
             href: '/clients', current: location.pathname.startsWith("/clients")
         },
         {
+            name: t('Clanarine'),
+            icon: <Users size={20} />,
+            href: '/memberships',
+            module:['teretana'],
+            current: location.pathname === ("memberships")
+        },
+        {
             name: t('navbar.calendar'),
             icon: <Calendar size={20} />,
             href: '/calendar', current: location.pathname === "/calendar"
@@ -42,6 +49,7 @@ const MyLayout = () => {
             href: '/sales',
             current: location.pathname === "/sales"
         },
+        
         {
             name: t('navbar.settings.items_and_products'),
             icon: <Plus size={20} />,
@@ -54,6 +62,7 @@ const MyLayout = () => {
             href: '/employees',
             current: location.pathname === ("employees")
         },
+     
         {
             name: t('navbar.analytics_main'),
             key: "analytics",
@@ -130,8 +139,16 @@ const MyLayout = () => {
 
 
     const mapRoutes = () => {
+        if(!user){
+           return ;
+        }
         return navRoutes.map((e) => {
+            
+            if (e.module && !e.module.includes(user?.business_type_slug)) {
+                return null; // Do not render the route if isGym is false
+            }
             return (
+            
                 <li key={e.name}>
                     {e.href &&
                         <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" to={e.href}>
