@@ -34,9 +34,9 @@ const MyLayout = () => {
         {
             name: t('Clanarine'),
             icon: <Users size={20} />,
-            href: '/memberships',
+            href: '/gym/memberships',
             module:['teretana'],
-            current: location.pathname === ("memberships")
+            current: location.pathname === ("gym/memberships")
         },
         {
             name: t('navbar.calendar'),

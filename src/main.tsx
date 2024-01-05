@@ -33,9 +33,10 @@ import { UserProvider } from './context/UserContext.tsx';
 import ReactGA from "react-ga4";
 import ProfileSettings from './routes/settings/profile_settings.tsx';
 import ClientNotes from './routes/clients/show/ClientNotes.tsx';
+import GymMemberships from './routes/gym_memberships/gym_memberships.tsx';
 
 
-ReactGA.initialize('G-5MTC2FVP3C'); 
+ReactGA.initialize('G-5MTC2FVP3C');
 
 
 const queryClient = new QueryClient()
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
         element: <ClientAnalytics />
       },
       {
+        path: "/gym/memberships",
+        element: <GymMemberships />
+      },
+      {
         path: "/sales",
         element: <SalesIndex />
       },
@@ -75,8 +80,8 @@ const router = createBrowserRouter([
         element: <Employees />,
       },
       {
-        path:"/profile_settings",
-        element:<ProfileSettings/>
+        path: "/profile_settings",
+        element: <ProfileSettings />
       },
       {
         path: "/company_settings",
@@ -138,7 +143,7 @@ const router = createBrowserRouter([
             path: "documents", element: <ClientDocuments />
           },
           {
-            path:"notes", element:<ClientNotes/>
+            path: "notes", element: <ClientNotes />
           }
         ]
       }
