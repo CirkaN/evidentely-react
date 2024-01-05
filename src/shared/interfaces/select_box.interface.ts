@@ -1,4 +1,4 @@
 export interface TransformedDataForSelect {
-    value: number,
+    value: number|string,
     label: string
 }

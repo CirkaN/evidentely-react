@@ -11,6 +11,9 @@ import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_mod
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
 import { useTranslation } from "react-i18next";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
+import CreateItemModal from "../items/create_item_modal";
+import { ItemDTO } from "../../shared/interfaces/item.interface";
+import { useQueryClient } from "react-query";
 
 interface CreateAppointmentModalProps {
     cancelFunction: () => void,
@@ -29,7 +32,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         employee_id: "",
         due_amount: "",
         title: "",
-        status:"pending",
+        status: "pending",
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
@@ -56,7 +59,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         start: props?.appointment_data?.start,
         end: props?.appointment_data?.end,
         price: "",
-        status:"pending",
+        status: "pending",
         color: "#00D14D",
         remind_client: true,
         remind_setting: {
@@ -77,7 +80,9 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
     const [employeeList, setEmployeeList] = useState<EmployeeDTO[]>([]);
     const [clientTransformedList, setClientTransformedList] = useState<TransformedDataForSelect[]>();
     const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
+    const [isCreateServiceModalOpen, setIsCreateServiceModalOpen] = useState(false);
     const [hasValidationErrors, setHasValidationErrors] = useState(false);
+    const queryClient = useQueryClient();
 
     const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(
         {
@@ -86,6 +91,12 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         }
     );
 
+    const [selectedService, setSelectedService] = useState<TransformedDataForSelect>(
+        {
+            label: t('appointment.select_service'),
+            value: 0,
+        }
+    );
     const servicesTransformed = serviceList.map((element: ServiceType) => ({
         value: element.id,
         label: element.name
@@ -128,10 +139,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         setForm((c) => c && { ...c, end: props?.appointment_data?.end });
     }, [props?.appointment_data?.start, props?.appointment_data?.end]);
 
-    const setServiceForm = (e: SingleValue<{ value: string; label: string; }>) => {
+    const setServiceForm = (e: SingleValue<{ value: string|number; label: string; }>) => {
         if (e) {
             const service = serviceList.filter(service => service.id === e.value)[0];
-            setForm((c) => c && { ...c, item_id: e.value })
+          
+            setForm((c) => c && { ...c, item_id: e.value.toString() })
             if (!form.price) {
                 setForm((c) => c && { ...c, price: service.price })
             } else {
@@ -149,13 +161,13 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         }
     }
 
-    const setClientForm = (e: SingleValue<{ value: number; label: string; }>) => {
+    const setClientForm = (e: SingleValue<{ value: number|string; label: string; }>) => {
         if (e) {
             const client = clientList.filter(client => client.id === e.value)[0];
             setSelectedClient((c) => c && { ...c, value: e.value });
             setSelectedClient((c) => c && { ...c, label: e.label });
             setForm((c) => c && { ...c, user_id: client.id.toString() });
-                
+
             setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: client.settings.sms_remind_day_before } })
             setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: client.settings.sms_remind_same_day } })
@@ -181,7 +193,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     }
                 )
                 props?.saveFunction();
-                
+
             }
         }).catch(() => {
             setHasValidationErrors(true);
@@ -192,8 +204,16 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         setSelectedClient((c) => c && { ...c, value: r.id })
         setForm((c) => c && { ...c, user_id: r.id.toString() });
     }
+    const setActiveService = (r: ItemDTO) => {
+        setSelectedService((c) => c && { ...c, label: r.name })
+        setSelectedService((c) => c && { ...c, value: parseInt(r.id) })
+        setForm((c) => c && { ...c, item_id: r.id.toString() });
+    }
     const cancelAction = () => {
         setIsCreateClientModalOpen(false);
+    }
+    const cancelServiceOpenModal = () => {
+        setIsCreateServiceModalOpen(false);
     }
 
     const saveRecord = (form: ClientCreateDTO) => {
@@ -208,7 +228,27 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
         saveAppointment()
     }
 
+    const saveItemAndInject = (form: ItemDTO) => {
+        axios_instance().post('/items', form).then((r) => {
+            myFetchFunc();
+            setIsCreateServiceModalOpen(false);
+            setActiveService(r.data)
+            queryClient.invalidateQueries({
+                queryKey: ['services'],
+            })
+
+
+
+
+        });
+    }
+
     return (<>
+        <CreateItemModal
+            saveFunction={(form) => { saveItemAndInject(form) }}
+            isOpen={isCreateServiceModalOpen}
+            modalType="service"
+            cancelFunction={cancelServiceOpenModal} />
         <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
         <Dialog.Root open={props.isOpen} >
 
@@ -230,18 +270,24 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                             type="text"
                             value={form.title}
                             onChange={(e) => setForm((c) => c && { ...c, title: e.target.value })} />
-
                     </div>
 
                     <div>
-                        <label>{t('appointment.service')}</label>
-                        <Select onChange={(e) => { setServiceForm(e) }} options={servicesTransformed} />
+                        <div className="flex justify-between">
+                            <label>{t('appointment.service')}</label>
+                            <p className="hover:cursor-pointer" onClick={() => { setIsCreateServiceModalOpen(true) }}><Plus color="green"></Plus></p>
+                        </div>
+
+                        <Select
+                            value={selectedService}
+                            onChange={(e) => { setServiceForm(e) }}
+                            options={servicesTransformed} />
                     </div>
+
                     <div>
                         <label>{t('appointment.employee')}</label>
                         <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
                     </div>
-
 
                     <div>
 
@@ -249,7 +295,11 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                             <label>{t('common.client')} <span className="text-red-600">*</span></label>
                             <p className="hover:cursor-pointer" onClick={() => { setIsCreateClientModalOpen(true) }}><Plus color="green"></Plus></p>
                         </div>
-                        <Select required={true} value={selectedClient} options={clientTransformedList} onChange={(e) => { setClientForm(e) }} />
+                        <Select
+                            required={true}
+                            value={selectedClient}
+                            options={clientTransformedList}
+                            onChange={(e) => { setClientForm(e) }} />
                     </div>
 
 
