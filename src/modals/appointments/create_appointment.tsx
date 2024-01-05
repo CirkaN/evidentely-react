@@ -6,7 +6,6 @@ import Select, { SingleValue } from 'react-select'
 import { ServiceType } from "../../shared/interfaces/service.interface";
 import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
-import { Plus } from "react-feather";
 import CreateClientModal, { ClientCreateDTO } from "../clients/create_client_modal";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
 import { useTranslation } from "react-i18next";
@@ -273,7 +272,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
                     <div>
                         <div className="flex justify-between">
                             <label>{t('appointment.service')}</label>
-                            <p className="hover:cursor-pointer" onClick={() => { setIsCreateServiceModalOpen(true) }}><Plus color="green"></Plus></p>
+                            <p className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md" onClick={() => { setIsCreateServiceModalOpen(true) }}>Dodaj</p>
                         </div>
 
                         <Select
@@ -291,7 +290,7 @@ const CreateAppointmentModal = (props: CreateAppointmentModalProps) => {
 
                         <div className="flex justify-between">
                             <label>{t('common.client')} <span className="text-red-600">*</span></label>
-                            <p className="hover:cursor-pointer" onClick={() => { setIsCreateClientModalOpen(true) }}><Plus color="green"></Plus></p>
+                            <p className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md" onClick={() => { setIsCreateClientModalOpen(true) }}>Dodaj</p>
                         </div>
                         <Select
                             required={true}
