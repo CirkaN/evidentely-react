@@ -20,6 +20,7 @@ interface ChargeParams {
 const ChargeClientModal = (props: ChargeClientProps) => {
     const {t}=useTranslation();
     const queryClient = useQueryClient();
+
     const [chargeParams, setChargeParams] = useState<ChargeParams>({
         payment_method: undefined,
         paid_amount: 0,
@@ -34,7 +35,6 @@ const ChargeClientModal = (props: ChargeClientProps) => {
         })
     })
 
-
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         saveCharge()
@@ -42,6 +42,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
     const saveCharge = () => {
         axios_instance().post(`/appointments/${props.appointment_id}/charge`, chargeParams).then(() => {
             setChargeParams((c) => c && { ...c, paid_amount: 0 })
+            props.cancelFunction();
             queryClient.invalidateQueries({
                 queryKey: ['charge_clients'],
             })
@@ -71,7 +72,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 <input
                                     required={true}
                                     className="w-full border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:border-blue-400"
-                                    placeholder="Title"
+                                    placeholder="Vrednost"
                                     type="number"
                                     min="1"
                                     max={chargeParams.amount_to_be_paid}
@@ -94,7 +95,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 <input
                                     required={true}
                                     className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                    placeholder="Title"
+                                    placeholder="Vrednost"
                                     type="number"
                                     max={chargeParams.amount_to_be_paid}
                                     value={chargeParams.paid_amount}
@@ -114,7 +115,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                 <input
                                     required={true}
                                     className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                    placeholder="Title"
+                                    placeholder="Vrednost"
                                     type="number"
                                     max={chargeParams.amount_to_be_paid}
                                     value={chargeParams.paid_amount}

@@ -145,15 +145,9 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                 </div>
                             }
 
-                            <div className="pt-2">
-                                <label htmlFor="name">{t('common.client')}</label>
-                                <input type="text" name="name" id="name"
-                                    onChange={(e) => { setAppointment((c) => c && { ...c, title: e.target.value }); }}
-                                    value={appointment?.title}
-                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400" />
-                            </div>
+                         
                             <div>
-                                <label htmlFor="name">{t('appointment.name')}</label>
+                                <label htmlFor="name">Ime termina:</label>
                                 <input type="text" name="name" id="name"
                                     onChange={(e) => { setAppointment((c) => c && { ...c, title: e.target.value }); }}
                                     value={appointment?.title}
