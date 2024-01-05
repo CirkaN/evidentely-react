@@ -78,17 +78,17 @@ const CreateSaleModal = (props: CreateSaleProps) => {
             transformProductList(response.data)
         })
     }
-    const setClientForm = (e: SingleValue<{ value: number; label: string; }>) => {
+    const setClientForm = (e: SingleValue<{ value: number|string; label: string; }>) => {
         if (e) {
             setForm((c) => c && { ...c, user_id: e.value.toString() });
         }
     }
-    const setEmployeeForm = (e: SingleValue<{ value: number; label: string; }>) => {
+    const setEmployeeForm = (e: SingleValue<{ value: number|string; label: string; }>) => {
         if (e) {
             setForm((c) => c && { ...c, employee_id: e.value.toString() });
         }
     }
-    const setProductForm = (e: SingleValue<{ value: number; label: string; }>) => {
+    const setProductForm = (e: SingleValue<{ value: number|string; label: string; }>) => {
         if (e) {
             if (itemList) {
                 const item = itemList.find((item) => item.id == e.value.toString())
