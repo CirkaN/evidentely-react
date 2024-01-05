@@ -96,10 +96,10 @@ const Register = () => {
 
     return (<>
         <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-            <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+            <div className="max-w-screen-lg m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
                 <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
                     <div>
-                        <img src="https://storage.googleapis.com/devitary-image-host.appspot.com/15846435184459982716-LogoMakr_7POjrN.png"
+                        <img src="/moj_biznis_dark.webp"
                             className="w-32 mx-auto" />
                     </div>
                     <div className="mt-10 flex flex-col items-center">
@@ -193,11 +193,6 @@ const Register = () => {
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-                <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
-                    <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat">
-                        <img src="https://admin.moj-biznis.rs/moj_biznis_dark.webp" alt="" />
                     </div>
                 </div>
             </div>
