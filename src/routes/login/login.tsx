@@ -32,7 +32,7 @@ const Login = () => {
     axios_instance().post('/auth/login', loginForm).then(response => {
       localStorage.setItem('auth_token', response.data.auth.access_token);
       navigate('/main_dashboard')
-      login({ 'email': response.data.user.email, 'id': response.data.user.id,'name':response.data.user.name,'avatar_url':response.data.user.avatar_url })
+      login({ 'email': response.data.user.email, 'id': response.data.user.id, 'name': response.data.user.name, 'avatar_url': response.data.user.avatar_url })
     }).catch(() => {
       setHasErrors(true);
     })
@@ -67,44 +67,88 @@ const Login = () => {
     loginRequest()
   }
   return (<>
+    <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+      <div className="max-w-screen-lg m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+        <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+          <div>
+            <img src="/moj_biznis_dark.webp"
+              className="w-32 mx-auto" />
+          </div>
+          <div className="mt-10 flex flex-col items-center">
+            <h1 className="text-2xl xl:text-3xl font-extrabold">
+              Ulogujte se
+            </h1>
+            <div className="w-full flex-1 mt-1">
 
-    <div className="max-h-screen">
-      <section className="flex min-h-screen items-center justify-center border-red-500 bg-gray-200">
-        <div className="flex max-w-3xl rounded-2xl bg-gray-100 p-5 shadow-lg">
-          <div className="px-5 md:w-1/2">
-            <h2 className="text-2xl font-bold text-[#002D74]">{t('login.login')}</h2>
-            {hasErrors &&
-              <p className="mt-4 text-sm text-center text-red-600">{t('login.check_credentials')}</p>}
+              <form className="mt-6" onSubmit={handleSubmit}>
+                <div className="my-12 border-b text-center">
+                  <div
+                    className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+                    Ulogujte se u vas nalog
+                  </div>
+                </div>
+                {hasErrors &&
+                  <p className="mt-4 text-sm text-center text-red-600">{t('login.check_credentials')}</p>}
+                <div className="mx-auto max-w-xs">
+
+                  <div>
+                    <label className="">Email:</label>
+                    <input
+                      onChange={(e) => { setLoginForm((c) => c && { ...c, email: e.target.value }) }}
+                      placeholder={t('common.enter_email')} autoFocus={true} required
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                      type="email" />
+                  </div>
 
 
-            <form className="mt-6" onSubmit={handleSubmit} >
-              <div>
-                <label className="block text-gray-700">{t('common.email')}</label>
-                <input onChange={(e) => { setLoginForm((c) => c && { ...c, email: e.target.value }) }} type="email" name="" id="" placeholder={t('common.enter_email')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" autoFocus={true} required />
-              </div>
+                  <div>
+                    <label className="pt-5">Sifra:</label>
+                    <input
+                      onChange={(e) => { setLoginForm((c) => c && { ...c, password: e.target.value }) }} placeholder={t('common.enter_password')}
 
-              <div className="mt-4">
-                <label className="block text-gray-700">{t('common.password')}</label>
-                <input onChange={(e) => { setLoginForm((c) => c && { ...c, password: e.target.value }) }} type="password" name="" id="" placeholder={t('common.enter_password')} className="mt-2 w-full rounded-lg border bg-gray-200 px-4 py-3 focus:border-blue-500 focus:bg-white focus:outline-none" required />
-              </div>
+                      required
 
-              <div className="mt-2 text-right">
-                <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">{t('login.lost_password')}</a>            </div>
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                      type="password" />
+                  </div>
 
-              <button type="submit" className="mt-6 block w-full rounded-lg bg-blue-500 px-4 py-3 font-semibold text-white hover:bg-blue-400 focus:bg-blue-400">{t('login.login_button')}</button>
-            </form>
+                  <button
+                    className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                    <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2"
+                      strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                      <circle cx="8.5" cy="7" r="4" />
+                      <path d="M20 8v6M23 11h-6" />
+                    </svg>
+                    <span className="ml-3">
+                      Uloguj se
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => { openRegistration() }}
+                    className="mt-5 tracking-wide font-semibold bg-blue-500 text-gray-100 w-full py-2 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
 
-            <div className="mt-3 flex items-center justify-between text-sm">
-              <p>{t('login.dont_have_account')}</p>
-              <button onClick={() => { openRegistration() }} className="ml-3 rounded-xl border border-blue-400 bg-white px-5 py-2 duration-300 hover:scale-110">{t('login.register_button')}</button>
+                    <span className="ml-3">
+                      Nemate nalog? Registrujte se
+                    </span>
+                  </button>
+                  <p className="mt-6 text-xs text-gray-600 text-center">
+                    Prihvatam
+                    <a href="#" className="border-b border-gray-500 border-dotted">
+                      <span> Uslove koriscenja </span>
+                    </a>
+                    <span> i </span>
+                    <a href="#" className="border-b border-gray-500 border-dotted">
+                      <span> Politiku Privatnosti</span>
+                    </a>
+                  </p>
+                </div>
+              </form>
             </div>
           </div>
-
-          <div className="hidden w-1/2 md:block">
-            <img src="/moj_biznis_dark.webp" className="rounded-2xl" alt="page img" />
-          </div>
         </div>
-      </section>
+
+      </div>
     </div>
   </>);
 
