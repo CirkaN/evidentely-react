@@ -171,6 +171,15 @@
     "total_paid": "Ukupno uplaceno",
     "sold_by_employee": "Prodaju izvrsio zaposleni?"
   },
+  "gym_memberships":{
+    "memberships":"Clanarine",
+    "create_membership":"Unesi clanarinu",
+    "start_date":"Pocetak trajanja",
+    "end_date":"Kraj trajanja",
+    "plan":"Plan Clanarine",
+    "price":"Cena clanarine",
+    "client":"Klijent"
+  },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
     "delete_attachment": "Molimo potvrdite brisanje fajla?"
