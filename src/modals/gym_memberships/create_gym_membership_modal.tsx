@@ -9,6 +9,7 @@ import { GymMembershipPlanDTO } from "../../shared/interfaces/gym_membership_pla
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
 import Select, { SingleValue } from 'react-select'
 import { ClientDTO } from "../../shared/interfaces/client.interface";
+import toast from "react-hot-toast";
 
 interface CreateGymMembershipProps {
     closeModalFunction: () => void,
@@ -51,8 +52,9 @@ const CreateGymMembershipModal = (props: CreateGymMembershipProps) => {
 
     }
     const saveFunction = () => {
-        axios_instance().post('gym_memberships', form).then(r => {
-            console.log(r);
+        axios_instance().post('gym_memberships', form).then(()=> {
+            toast.success(t('gym_memberships.create_success'))
+            props.closeModalFunction();
             queryClient.invalidateQueries(['gym_memberships'])
         })
     }

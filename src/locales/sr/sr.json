@@ -178,7 +178,8 @@
     "end_date":"Kraj trajanja",
     "plan":"Plan Clanarine",
     "price":"Cena clanarine",
-    "client":"Klijent"
+    "client":"Klijent",
+    "create_success":"Clanarina uspesno zabelezena"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
