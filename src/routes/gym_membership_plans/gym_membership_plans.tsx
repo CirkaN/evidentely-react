@@ -1,4 +1,4 @@
-import { Eye, Plus, Trash } from "react-feather";
+import { Archive, Check, Eye, Plus, Trash, X } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
 import { GymMembershipPlanDTO } from "../../shared/interfaces/gym_membership_plan.interface";
 import { useState } from "react";
@@ -39,6 +39,14 @@ const GymMembershipPlans = () => {
             editable_from_table: false,
         },
         {
+            name: "Arhivirano",
+            show: true,
+            original_name: "archived",
+            formatFn: (plan) => formatArchiveField(plan),
+            has_sort: true,
+            editable_from_table: false,
+        },
+        {
             name: "Cena",
             show: true,
             original_name: "price",
@@ -46,6 +54,14 @@ const GymMembershipPlans = () => {
             editable_from_table: false,
         }
     ]
+    const formatArchiveField = (plan: string) => {
+
+        if (plan) {
+            return <Check color="green" />
+        } else {
+            return <X color="red" />
+        }
+    }
 
     const actions: Action<GymMembershipPlanDTO>[] = [
         {
@@ -54,15 +70,49 @@ const GymMembershipPlans = () => {
             fn: (gymMembership: GymMembershipPlanDTO) => { editMembership(gymMembership.id) }
         },
         {
+            type: ActionTypes.Archive,
+            icon: <Archive color="gray" />,
+            fn: (gymMembership: GymMembershipPlanDTO) => { raiseArchiveMessage(gymMembership.id,gymMembership.archived) }
+        },
+        {
             type: ActionTypes.Delete,
             icon: <Trash color="red" />,
             fn: (gymMembership: GymMembershipPlanDTO) => { raiseDeleteAlert(gymMembership.id) }
         }
 
     ];
+
+    const archiveMembership = (id: string | number) => {
+        axios_instance().put(`/gym_membership_plans/${id}/archive`).then(() => {
+            toast.success('Uspesno izmenjen plan');
+            queryClient.invalidateQueries({
+                queryKey: ['gym_memberships'],
+            })
+        })
+    }
+
     const editMembership = (id: string | number) => {
         setActiveMembershipId(id)
         setIsGymMembershipPlanUpdateModalOpen(true);
+    }
+
+    const raiseArchiveMessage = (id: number | string, alreadyArchived:boolean) => {
+        
+        setSwalProps({
+            show: true,
+            icon: alreadyArchived ? 'success' : "error",
+            title: t('common.please_confirm'),
+            text:  alreadyArchived ? t('common.unarchive_gym_plan') : t('common.archive_gym_plan'),
+            cancelButtonColor: alreadyArchived ? "red" :"green",
+            reverseButtons: true,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: 'Odustani',
+            confirmButtonText: t('common.confirm'),
+            confirmButtonColor: alreadyArchived ? "green" :"red",
+            onConfirm: () => { archiveMembership(id) },
+            onResolve: setSwalOff
+        });
     }
 
     const raiseDeleteAlert = (id: number | string) => {
