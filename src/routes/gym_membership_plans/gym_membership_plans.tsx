@@ -8,12 +8,14 @@ import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import SweetAlert2 from "react-sweetalert2";
+import UpdateGymMembershipModal from "../../modals/gym_membership_plans/update_gym_membership_plan_modal";
 
 const GymMembershipPlans = () => {
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const [isGymMembershipPlanCreateModalOpen, setIsGymMembershipPlanCreateModalOpen] = useState(false);
-
+    const [isGymMembershipPlanUpdateModalOpen, setIsGymMembershipPlanUpdateModalOpen] = useState(false);
+    const [activeMembershipId, setActiveMembershipId] = useState<number | string>();
     const fields: Field[] = [
         {
             name: "Ime clanarine",
@@ -48,7 +50,8 @@ const GymMembershipPlans = () => {
     const actions: Action<GymMembershipPlanDTO>[] = [
         {
             type: ActionTypes.Edit,
-            icon: <Eye color="lightblue" />
+            icon: <Eye color="lightblue" />,
+            fn: (gymMembership: GymMembershipPlanDTO) => { editMembership(gymMembership.id) }
         },
         {
             type: ActionTypes.Delete,
@@ -57,6 +60,10 @@ const GymMembershipPlans = () => {
         }
 
     ];
+    const editMembership = (id: string | number) => {
+        setActiveMembershipId(id)
+        setIsGymMembershipPlanUpdateModalOpen(true);
+    }
 
     const raiseDeleteAlert = (id: number | string) => {
         setSwalProps({
@@ -82,10 +89,9 @@ const GymMembershipPlans = () => {
         setSwalProps(dataCopied);
     }
 
-    const deleteItem = (id: number|string) => {
+    const deleteItem = (id: number | string) => {
         axios_instance().delete(`/gym_membership_plans/${id}`).then(() => {
             toast.success(t('toasts.delete_success'));
-
             queryClient.invalidateQueries({
                 queryKey: ['gym_memberships'],
             })
@@ -99,7 +105,14 @@ const GymMembershipPlans = () => {
     ];
     return (
         <>
-         <SweetAlert2 {...swalProps} />
+            <SweetAlert2 {...swalProps} />
+            {activeMembershipId &&
+                <UpdateGymMembershipModal
+                    isOpen={isGymMembershipPlanUpdateModalOpen}
+                    gym_membership_id={activeMembershipId}
+                    closeModalFunction={() => { setIsGymMembershipPlanUpdateModalOpen(false) }}
+                />
+            }
             <CreateGymMembershipModal
                 isOpen={isGymMembershipPlanCreateModalOpen}
                 closeModalFunction={() => { setIsGymMembershipPlanCreateModalOpen(false) }}
