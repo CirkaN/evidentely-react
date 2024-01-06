@@ -179,7 +179,10 @@
     "plan":"Plan Clanarine",
     "price":"Cena clanarine",
     "client":"Klijent",
-    "create_success":"Clanarina uspesno zabelezena"
+    "create_success":"Clanarina uspesno zabelezena",
+    "delete_membership_message":"Da li zelite da oznacite clanarinu kao neaktivnu? Ova clanarina ce ostati zapisana u profilu klijentima",
+    "confirm_button_delete":"Oznaci",
+    "success_delete":"Uspesno ste oznacili clanarinu kao neaktivnu"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
