@@ -32,7 +32,7 @@ const GymMembershipPlans = () => {
             editable_from_table: false,
         },
         {
-            name: "Trajanje",
+            name: "Trajanje (meseci)",
             show: true,
             original_name: "duration_months",
             has_sort: true,
