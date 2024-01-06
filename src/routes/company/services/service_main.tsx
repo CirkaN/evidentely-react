@@ -1,19 +1,28 @@
 import { Link, Outlet, useLocation } from "react-router-dom"
+import { useUser } from "../../../context/UserContext";
 
 const ServiceMain = () => {
     const location = useLocation();
+    const { user } = useUser();
 
     const navigation = [
         { name: 'Usluge', href: 'services', current: location.pathname === "/price_plans/services" },
         { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
         // { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
-        { name: 'Paketi clanarina', href: 'gym_membership_plans', current: location.pathname === "/price_plans/gym_membership_plans" },
+        { name: 'Paketi clanarina', href: 'gym_membership_plans', business_type_includes: ['teretana'], current: location.pathname === "/price_plans/gym_membership_plans" },
 
     ]
 
+    const classNames = (...classes: string[]) => {
+        return classes.filter(Boolean).join(' ')
+    }
+
     const transformedHtml = navigation.map((element) => {
-        const classNames = (...classes: string[]) => {
-            return classes.filter(Boolean).join(' ')
+        if(!user){
+            return ;
+         }
+        if (element.business_type_includes && !element.business_type_includes.includes(user?.business_type_slug)) {
+            return null;
         }
         return <li key={element.name} role="presentation">
             <Link
