@@ -7,6 +7,8 @@ const ServiceMain = () => {
         { name: 'Usluge', href: 'services', current: location.pathname === "/price_plans/services" },
         { name: 'Proizvodi', href: 'products', current: location.pathname === "/price_plans/products" },
         // { name: 'Paketi', href: 'packages', current: location.pathname === "/price_plans/packages" },
+        { name: 'Paketi clanarina', href: 'gym_membership_plans', current: location.pathname === "/price_plans/gym_membership_plans" },
+
     ]
 
     const transformedHtml = navigation.map((element) => {
