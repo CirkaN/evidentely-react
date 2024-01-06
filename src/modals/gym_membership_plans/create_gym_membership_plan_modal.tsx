@@ -10,7 +10,7 @@ interface CreateGymMembershipModal {
     isOpen: boolean,
 }
 
-type PreparedGymMembershipDTO = Omit<GymMembershipPlanDTO, 'id'>
+type PreparedGymMembershipDTO = Omit<GymMembershipPlanDTO, 'id'|'archived'>
 
 const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
     const defaultFormValues: PreparedGymMembershipDTO = {
