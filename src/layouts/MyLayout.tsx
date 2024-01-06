@@ -32,7 +32,7 @@ const MyLayout = () => {
             href: '/clients', current: location.pathname.startsWith("/clients")
         },
         {
-            name: t('Clanarine'),
+            name: 'Članarine',
             icon: <Users size={20} />,
             href: '/gym/memberships',
             module:['teretana'],

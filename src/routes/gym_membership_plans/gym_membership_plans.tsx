@@ -18,7 +18,7 @@ const GymMembershipPlans = () => {
     const [activeMembershipId, setActiveMembershipId] = useState<number | string>();
     const fields: Field[] = [
         {
-            name: "Ime clanarine",
+            name: "Ime Članarine",
             show: true,
             original_name: "name",
             has_sort: true,
@@ -170,7 +170,7 @@ const GymMembershipPlans = () => {
             <DataTable
                 table_actions={table_actions}
                 queryKey="gym_memberships"
-                table_name="Clanarine"
+                table_name="Članarine"
                 url="gym_membership_plans?per_page=10"
                 actions={actions}
                 fields={fields}
