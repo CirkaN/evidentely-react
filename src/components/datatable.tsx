@@ -40,7 +40,8 @@ export interface Action<T> {
 export enum ActionTypes {
     Edit = 'edit',
     Delete = 'delete',
-    Show = 'show'
+    Show = 'show',
+    Archive = 'archive'
 }
 
 export interface Field<T = unknown> {
