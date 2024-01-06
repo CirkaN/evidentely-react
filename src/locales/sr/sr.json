@@ -67,6 +67,8 @@
     "save_appointment":"Sacuvaj izmene",
     "delete_appointment":"Obrisi termin",
     "description":"Opis",
+    "unarchive_gym_plan":"Vracanje ovog plana u sistem omogucava da ga koristite u clanarinama",
+    "archive_gym_plan":"Arhiviranjem ovog plana, zadrzavate sve podatke, ali ga ne mozete koristiti za clanarine",
     "delete_appointment_message":"Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'"
   },
   "register": {
