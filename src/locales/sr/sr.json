@@ -66,6 +66,7 @@
     "birthday":"Datum rodjenja",
     "save_appointment":"Sacuvaj izmene",
     "delete_appointment":"Obrisi termin",
+    "description":"Opis",
     "delete_appointment_message":"Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'"
   },
   "register": {
