@@ -48,7 +48,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                         <Text as="div" size="2" mb="1" weight="bold">
                             {t('common.full_name')}<span className="text-red-600">*</span>
                         </Text>
-                        <TextField.Input
+                        <TextField.Input 
                             onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
                             value={form.name}
 
@@ -62,7 +62,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                             {t('common.gender')}
                         </Text>
                         <select name="gender"
-                            className="w-full rounded px-3 py-2 focus:outline-none "
+                            className="bg-gray-50 border border-gray-300 text-slate-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
                             onChange={(e) => setForm((c) => c && { ...c, gender: e.target.value })}
                             value={form.gender} id="gender">
                             <option value="male">{t('common.male')}</option>
