@@ -152,7 +152,7 @@ const SmsSettings = () => {
                                 }
                                 <div className="flex justify-center">
                                     <div className="w-1/3 text-center">
-                                        <label htmlFor="code">{t('sms.code')}:</label>
+                                        <label htmlFor="code">{t('code')}:</label>
                                         <input type="text"
                                             onChange={(e) => { setCodeReceived(e.target.value) }}
                                             name="code"

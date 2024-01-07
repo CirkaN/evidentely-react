@@ -60,7 +60,7 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
 
     return (
         <>
-            <div className={` max-w-sm w-full border ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6`}>
+            <div className={`max-w-sm w-full border  ${bgColor}  border-slate-300 rounded-lg  shadow-2xl  p-4 md:p-6 mt-2`}>
                 <div className="flex justify-between">
                     <div>
                         <h5 className="leading-none text-3xl font-bold text-white pb-2">
@@ -71,7 +71,6 @@ const AdminHomeAnalyticPill = (props: HomePillProps) => {
                                 filter.type !== 'profit'&&
                                 responseData.result
                             }
-                            
                             </h5>
                         <p className="text-base font-normal text-white">{props.heading}</p>
                     </div>

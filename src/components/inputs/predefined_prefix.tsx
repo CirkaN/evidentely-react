@@ -14,6 +14,7 @@ const PrefixNumberInput = (props: PredefinedNumberPrefixProps) => {
         if (input.charAt(0) === "0") {
             input = input.slice(1);
         }
+        
         setUserInput(input.trim());
 
         props.parseNumber(input.trim());
@@ -26,10 +27,13 @@ const PrefixNumberInput = (props: PredefinedNumberPrefixProps) => {
     return (
         <>
             <div className="flex">
-                <input type="text" value={prefix} disabled className="p-1 w-16 border text-slate-900" />
+                <input type="text" value={prefix} disabled className="p-1 w-2/12 border text-slate-900" />
                 <input required={props.isRequired ?? false}
                     className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
                     type="number"
+                    minLength={9}
+                    min={1}
+                    maxLength={10}
                     value={userInput}
                     onChange={(e) => { changeUserInput(e.target.value) }} />
             </div>

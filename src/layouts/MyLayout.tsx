@@ -206,10 +206,16 @@ const MyLayout = () => {
                                 </svg>
                             </button>
 
-                            <Link className="flex ms-2 md:me-24" to="/">
-                                <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="Moj biznis logo" />
+                            <Link className="flex ms-2 md:me-24 dark:hidden" to="/">
+                                <img src="/moj_biznis_dark.webp" className="h-8 me-3" alt="Moj biznis logo" />
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{user?.company_name}</span>
                             </Link>
+                            <Link className="flex ms-2 md:me-24 invisible  dark:visible" to="/">
+                                <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="Moj biznis logo" />
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{user?.company_name} br br</span>
+                            </Link>
+                           
+
 
                         </div>
                         <div className="flex items-center">
@@ -222,6 +228,8 @@ const MyLayout = () => {
                                             src={user?.avatar_url} alt="user photo" />
                                     </button>
                                 </div>
+
+
                                 <div
                                     className={clsx("w-full z-50 show my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 ", toggleBar && 'block', !toggleBar && 'hidden')}
                                     id="dropdown-user"
@@ -278,7 +286,25 @@ const MyLayout = () => {
                     }`}
 
                 aria-label="Sidebar">
-                <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+                <div className="flex-row  bg-slate-600 dark:bg-slate-600 py-10 px-5 space-y-2">
+                    <div className="flex justify-between w-full py-1">
+                        <div>
+                            <p className="text-white bg:text-white text-xl">Preostalo:</p>
+                        </div>
+                        <div>
+                            <p className="text-white font-bold text-xl">500 SMS-a</p>
+                        </div>
+                    </div>
+                    <div className="flex justify-between w-full">
+                        <div>
+                            <p className="text-white text-xl">Paket:</p>
+                        </div>
+                        <div>
+                            <p className="text-white font-bold text-xl">Premium++</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="h-full px-3 pb-4 pt-5 overflow-y-auto bg-white dark:bg-gray-800">
                     <ul className="space-y-2 font-medium">
                         {mapRoutes()}
                     </ul>
