@@ -5,6 +5,7 @@ import { X } from "react-feather";
 import axios_instance from "../../config/api_defaults";
 import { AvailableSettingField } from "../../routes/clients/ClientShow";
 import { useQueryClient } from "react-query";
+import PrefixNumberInput from "../../components/inputs/predefined_prefix";
 
 interface createProps {
     isOpen: boolean,
@@ -43,11 +44,11 @@ const AddUserSettings = (props: createProps) => {
     }
     const saveForm = () => {
         axios_instance().put(`/clients/${props.user_id}`, {
-            [props.type]:form[props.type]
-        }).then(()=>{
+            [props.type]: form[props.type]
+        }).then(() => {
             queryClient.invalidateQueries(["client_show_detail"])
             props.cancelFunction()
-        } );
+        });
 
     }
     const generateProperFormField = () => {
@@ -71,12 +72,14 @@ const AddUserSettings = (props: createProps) => {
                     type="email"
                     onChange={(e) => setForm((c) => c && { ...c, [props.type]: e.target.value })}
                 /> : ''}
-                {props.type == 'phone_number' ? <TextField.Input
-                    value={form[props.type]}
-                    type="number"
-                    onChange={(e) => setForm((c) => c && { ...c, [props.type]: e.target.value })}
-                /> : ''}
 
+                {props.type == 'phone_number' ?
+                    <PrefixNumberInput
+                        parseNumber={(number) => { setForm((c) => c && { ...c, [props.type]: number }) }}
+                        initial_value={form[props.type]}
+                        isRequired={true}
+                    /> : ''
+                }
             </label>
         </Flex>)
     }
@@ -84,6 +87,7 @@ const AddUserSettings = (props: createProps) => {
         if (props.isOpen) {
             fetchCurrentSettings();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isOpen])
     return (
         <Dialog.Root open={props.isOpen} >

@@ -3,6 +3,7 @@ import { Text } from "@radix-ui/themes";
 import { useState } from "react";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
 import { t } from "i18next";
+import PrefixNumberInput from "../../components/inputs/predefined_prefix";
 
 interface CreateClientProps {
     cancelFunction: () => void,
@@ -48,7 +49,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                         <Text as="div" size="2" mb="1" weight="bold">
                             {t('common.full_name')}<span className="text-red-600">*</span>
                         </Text>
-                        <TextField.Input 
+                        <TextField.Input
                             onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
                             value={form.name}
 
@@ -95,12 +96,12 @@ const CreateClientModal = (props: CreateClientProps) => {
                 <Flex direction="column" gap="3">
                     <label>
                         <Text as="div" size="2" mb="1" weight="bold">
-                            {t('common.phone_number')}: <span className="text-sm text-red-400">
-                                {t('sms.phone_format')}</span>
+                            {t('common.phone_number')}:
                         </Text>
-                        <input
-                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                            type="number" name="phone_number" onChange={(e) => { setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: e.target.value } }) }} value={form.settings.phone_number} id="" />
+                        <PrefixNumberInput
+                            isRequired={false}
+                            parseNumber={(number) => setForm((c) => c && { ...c, settings: { ...c.settings, phone_number: number } })}
+                        />
                     </label>
                 </Flex>
                 <Flex direction="column" gap="3">

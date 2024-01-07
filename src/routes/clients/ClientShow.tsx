@@ -127,7 +127,7 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p onClick={() => { applySettingsField('phone_number') }} className="text-blue-400 cursor-pointer">
-                                        {userDetails?.phone_number ?? <button>Dodaj</button>}</p>
+                                        { "+381 0" + userDetails?.phone_number ?? <button>Dodaj</button>}</p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
