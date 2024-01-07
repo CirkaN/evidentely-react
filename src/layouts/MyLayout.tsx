@@ -212,9 +212,9 @@ const MyLayout = () => {
                             </Link>
                             <Link className="flex ms-2 md:me-24 invisible  dark:visible" to="/">
                                 <img src="/moj_biznis_logo.webp" className="h-8 me-3" alt="Moj biznis logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{user?.company_name} br br</span>
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">{user?.company_name}</span>
                             </Link>
-                           
+
 
 
                         </div>
@@ -286,21 +286,29 @@ const MyLayout = () => {
                     }`}
 
                 aria-label="Sidebar">
-                <div className="flex-row  bg-slate-600 dark:bg-slate-600 py-10 px-5 space-y-2">
+                <div className="flex-row  bg-slate-600 dark:bg-slate-600 py-3 px-5 space-y-2">
                     <div className="flex justify-between w-full py-1">
                         <div>
-                            <p className="text-white bg:text-white text-xl">Preostalo:</p>
+                            <p className="text-white bg:text-white text-lg">Preostalo:</p>
                         </div>
                         <div>
-                            <p className="text-white font-bold text-xl">500 SMS-a</p>
+                            <p className="text-white font-bold text-lg">500 SMS-a</p>
                         </div>
                     </div>
                     <div className="flex justify-between w-full">
                         <div>
-                            <p className="text-white text-xl">Paket:</p>
+                            <p className="text-white text-lg">Paket:</p>
                         </div>
                         <div>
-                            <p className="text-white font-bold text-xl">Premium++</p>
+                            <p className="text-white font-bold text-lg">Premium++</p>
+                        </div>
+                    </div>
+                    <div className="flex justify-between w-full">
+                        <div>
+                            <p className="text-white text-lg">Istice:</p>
+                        </div>
+                        <div>
+                            <p className="text-white font-bold text-lg">za 15 dana</p>
                         </div>
                     </div>
                 </div>
