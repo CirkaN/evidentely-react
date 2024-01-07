@@ -35,7 +35,6 @@ import ProfileSettings from './routes/settings/profile_settings.tsx';
 import ClientNotes from './routes/clients/show/ClientNotes.tsx';
 import GymMemberships from './routes/gym_memberships/gym_memberships.tsx';
 import GymMembershipPlans from './routes/gym_membership_plans/gym_membership_plans.tsx';
-import Playground from './routes/playground.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
