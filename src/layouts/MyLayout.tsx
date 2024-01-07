@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
+import { BarChart, Box, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
 import { useUser } from "../context/UserContext";
 import ReactGA from "react-ga4";
 
@@ -35,7 +35,7 @@ const MyLayout = () => {
             name: 'Članarine',
             icon: <Users size={20} />,
             href: '/gym/memberships',
-            module:['teretana'],
+            module: ['teretana'],
             current: location.pathname === ("gym/memberships")
         },
         {
@@ -49,7 +49,7 @@ const MyLayout = () => {
             href: '/sales',
             current: location.pathname === "/sales"
         },
-        
+
         {
             name: t('navbar.settings.items_and_products'),
             icon: <Plus size={20} />,
@@ -62,7 +62,7 @@ const MyLayout = () => {
             href: '/employees',
             current: location.pathname === ("employees")
         },
-     
+
         {
             name: t('navbar.analytics_main'),
             key: "analytics",
@@ -70,13 +70,21 @@ const MyLayout = () => {
             items: [
                 {
                     name: t('navbar.analytics.clients'),
+                    icon: <Users size={20} />,
                     href: '/analytics/clients',
                     current: location.pathname === ("/analytics/clients")
                 },
                 {
-                    name: t('navbar.analytics.finance'),
-                    href: '/analytics/finance',
-                    current: location.pathname === ("/analytics/finance")
+                    name: t('navbar.analytics.products'),
+                    href: '/analytics/products',
+                    icon: <Box size={20} />,
+                    current: location.pathname === ("/analytics/products")
+                },
+                {
+                    name: t('navbar.analytics.services'),
+                    icon: <Calendar size={20} />,
+                    href: '/analytics/services',
+                    current: location.pathname === ("/analytics/services")
                 },
             ],
             current: location.pathname.startsWith("/analytics"),
@@ -87,8 +95,8 @@ const MyLayout = () => {
             href: '/company_settings/sms_settings',
             current: location.pathname === ("/company_settings/sms_settings")
         },
-       
-     
+
+
     ];
     const changeState = (key: keyof typeof collapsedMenies) => {
         setCollapsedMenies((c) => c && { ...c, [key]: !c[key] })
@@ -139,16 +147,16 @@ const MyLayout = () => {
 
 
     const mapRoutes = () => {
-        if(!user){
-           return ;
+        if (!user) {
+            return;
         }
         return navRoutes.map((e) => {
-            
+
             if (e.module && !e.module.includes(user?.business_type_slug)) {
                 return null; // Do not render the route if isGym is false
             }
             return (
-            
+
                 <li key={e.name}>
                     {e.href &&
                         <Link className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" to={e.href}>
@@ -162,11 +170,12 @@ const MyLayout = () => {
                                 {e.icon}
                                 <span className="ms-3">{e.name}</span>
                             </button>
-                            <ul className={`space-y-2 font-medium ${isMenuCollapsed(e.key as keyof typeof collapsedMenies) ? 'block' : 'hidden'}`}>
+                            <ul className={`space-y-1 font-medium mx-10 ${isMenuCollapsed(e.key as keyof typeof collapsedMenies) ? 'block' : 'hidden'}`}>
                                 {e.items?.map((e) => {
                                     return (
                                         <li key={e.name}>
                                             <Link className={clsx('flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group', e.current && 'font-bold')} to={e.href}>
+                                                {e.icon}
                                                 <span className="ms-3"> {e.name}</span>
                                             </Link>
                                         </li>
@@ -209,7 +218,7 @@ const MyLayout = () => {
                                     <button type="button" onClick={() => setToggleBar(!toggleBar)} className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span className="sr-only">Otvori meni</span>
                                         <img className="w-8 h-8 rounded-full"
-                                        
+
                                             src={user?.avatar_url} alt="user photo" />
                                     </button>
                                 </div>
@@ -235,13 +244,13 @@ const MyLayout = () => {
 
                                     <ul className="py-1" role="none">
                                         <li>
-                                            <Link onClick={()=>{setToggleBar(!toggleBar)}}  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'/'}>
+                                            <Link onClick={() => { setToggleBar(!toggleBar) }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'/'}>
                                                 Komandna tabla
                                             </Link>
 
                                         </li>
                                         <li>
-                                            <Link onClick={()=>{setToggleBar(!toggleBar)}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'/profile_settings'}>
+                                            <Link onClick={() => { setToggleBar(!toggleBar) }} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" to={'/profile_settings'}>
                                                 Podesavanja
                                             </Link>
                                         </li>

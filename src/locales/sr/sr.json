@@ -203,7 +203,9 @@
     "analytics_main": "Analitika",
     "analytics": {
       "clients": "Klijenti",
-      "finance": "Finansijski izvestaji"
+      "finance": "Finansijski izvestaji",
+      "products":"Proizvodi",
+      "services":"Usluge"
     },
     "settings": {
       "employees": "Zaposleni",
