@@ -35,6 +35,7 @@ import ProfileSettings from './routes/settings/profile_settings.tsx';
 import ClientNotes from './routes/clients/show/ClientNotes.tsx';
 import GymMemberships from './routes/gym_memberships/gym_memberships.tsx';
 import GymMembershipPlans from './routes/gym_membership_plans/gym_membership_plans.tsx';
+import { ActivePlanProvider } from './context/PricePlanContext.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
@@ -166,6 +167,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserProvider>
+      <ActivePlanProvider>
       <QueryClientProvider client={queryClient}>
         <Theme>
           <Toaster
@@ -176,6 +178,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <RouterProvider router={router}></RouterProvider>
         </Theme>
       </QueryClientProvider>
+      </ActivePlanProvider>
     </UserProvider>
   </React.StrictMode>,
 )
