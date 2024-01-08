@@ -289,7 +289,7 @@ const MyLayout = () => {
                 <div className="flex-row  bg-slate-600 dark:bg-slate-600 py-3 px-5 space-y-2">
                     <div className="flex justify-between w-full py-1">
                         <div>
-                            <p className="text-white bg:text-white text-lg">Preostalo:</p>
+                            <p className="text-white bg:text-white text-lg">{t('plan_subscription.available_sms')}:</p>
                         </div>
                         <div>
                             <p className="text-white font-bold text-lg">500 SMS-a</p>
@@ -297,7 +297,7 @@ const MyLayout = () => {
                     </div>
                     <div className="flex justify-between w-full">
                         <div>
-                            <p className="text-white text-lg">Paket:</p>
+                            <p className="text-white text-lg">{t('plan_subscription.plan')}:</p>
                         </div>
                         <div>
                             <p className="text-white font-bold text-lg">Premium++</p>
@@ -305,7 +305,7 @@ const MyLayout = () => {
                     </div>
                     <div className="flex justify-between w-full">
                         <div>
-                            <p className="text-white text-lg">Istice:</p>
+                            <p className="text-white text-lg">{t('plan_subscription.expires')}:</p>
                         </div>
                         <div>
                             <p className="text-white font-bold text-lg">za 15 dana</p>
