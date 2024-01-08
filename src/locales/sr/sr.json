@@ -60,18 +60,18 @@
     "last_five_appointments": "Poslednja 5 zakazivanja",
     "start": "Pocetak",
     "end": "Kraj",
-    "author":"Autor",
-    "upload_date":"Sacuvano",
-    "change_settings":"Uredi podesavanja",
-    "birthday":"Datum rodjenja",
-    "save_appointment":"Sacuvaj izmene",
-    "delete_appointment":"Obrisi termin",
-    "description":"Opis",
-    "duration_months":"Trajanje (meseci)",
-    "unarchive_gym_plan":"Vracanje ovog plana u sistem omogucava da ga koristite u clanarinama",
-    "archive_gym_plan":"Arhiviranjem ovog plana, zadrzavate sve podatke, ali ga ne mozete koristiti za clanarine",
-    "delete_appointment_message":"Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'",
-    "full_name":"Puno ime i prezime"
+    "author": "Autor",
+    "upload_date": "Sacuvano",
+    "change_settings": "Uredi podesavanja",
+    "birthday": "Datum rodjenja",
+    "save_appointment": "Sacuvaj izmene",
+    "delete_appointment": "Obrisi termin",
+    "description": "Opis",
+    "duration_months": "Trajanje (meseci)",
+    "unarchive_gym_plan": "Vracanje ovog plana u sistem omogucava da ga koristite u clanarinama",
+    "archive_gym_plan": "Arhiviranjem ovog plana, zadrzavate sve podatke, ali ga ne mozete koristiti za clanarine",
+    "delete_appointment_message": "Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'",
+    "full_name": "Puno ime i prezime"
   },
   "register": {
     "register": "Registracija",
@@ -172,18 +172,23 @@
     "total_paid": "Ukupno uplaceno",
     "sold_by_employee": "Prodaju izvrsio zaposleni?"
   },
-  "gym_memberships":{
-    "memberships":"Clanarine",
-    "create_membership":"Unesi clanarinu",
-    "start_date":"Pocetak trajanja",
-    "end_date":"Kraj trajanja",
-    "plan":"Plan Clanarine",
-    "price":"Cena clanarine",
-    "client":"Klijent",
-    "create_success":"Clanarina uspesno zabelezena",
-    "delete_membership_message":"Da li zelite da oznacite clanarinu kao neaktivnu? Ova clanarina ce ostati zapisana u profilu klijentima",
-    "confirm_button_delete":"Oznaci",
-    "success_delete":"Uspesno ste oznacili clanarinu kao neaktivnu"
+  "plan_subscription": {
+    "available_sms": "Dostupno",
+    "plan": "Plan",
+    "expires": "Paket istice"
+  },
+  "gym_memberships": {
+    "memberships": "Clanarine",
+    "create_membership": "Unesi clanarinu",
+    "start_date": "Pocetak trajanja",
+    "end_date": "Kraj trajanja",
+    "plan": "Plan Clanarine",
+    "price": "Cena clanarine",
+    "client": "Klijent",
+    "create_success": "Clanarina uspesno zabelezena",
+    "delete_membership_message": "Da li zelite da oznacite clanarinu kao neaktivnu? Ova clanarina ce ostati zapisana u profilu klijentima",
+    "confirm_button_delete": "Oznaci",
+    "success_delete": "Uspesno ste oznacili clanarinu kao neaktivnu"
   },
   "media": {
     "delete_success": "Uspesno brisanje medija fajla",
@@ -192,7 +197,7 @@
   "summary": {
     "total_profit": "Ukupan profit:",
     "last_appointment": "Poslednji termin:",
-    "total_completed_appointments":"Ukupno kompletiranih termina "
+    "total_completed_appointments": "Ukupno kompletiranih termina "
   },
   "navbar": {
     "main_dashboard": "Komandna tabla",
@@ -204,8 +209,8 @@
     "analytics": {
       "clients": "Klijenti",
       "finance": "Finansijski izvestaji",
-      "products":"Proizvodi",
-      "services":"Usluge"
+      "products": "Proizvodi",
+      "services": "Usluge"
     },
     "settings": {
       "employees": "Zaposleni",
@@ -281,8 +286,7 @@
     "please_upload_valid_avatar": "Molimo izaberite ispravnu datoteku",
     "note_deleted_succesfully": "Napomena uspesno obrisana",
     "note_created_succesfully": "Napomena uspesno kreirana",
-    "event_deleted":"Termin uspesno obrisan"
-    
+    "event_deleted": "Termin uspesno obrisan"
   },
   "analytics": {
     "top_clients": "Top 5 klijenata po profitu ove nedelje"
