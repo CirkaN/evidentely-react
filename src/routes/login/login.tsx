@@ -1,7 +1,6 @@
 import axios_instance from "../../config/api_defaults";
 import { FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
@@ -13,9 +12,12 @@ interface Login {
 
 const Login = () => {
   const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const { login } = useUser();
+
 
   const [loginForm, setLoginForm] = useState<Login>({
     email: "",
@@ -39,7 +41,9 @@ const Login = () => {
         'avatar_url': response.data.user.avatar_url,
         'company_name': response.data.user.company_name,
         'business_type_slug': response.data.user.business_type_slug,
+        'email_verified_at': response.data.user.email_verified_at
       })
+
     }).catch(() => {
       setHasErrors(true);
     })
@@ -47,13 +51,25 @@ const Login = () => {
 
   useEffect(() => {
 
-    const { pathname, search } = location;
-    const isSuccess =
-      pathname.includes("/login/registration_success") || search.includes("registration_success");
+    // const { pathname, search } = location;
 
-    if (isSuccess) {
-      toast.success(t('registration.success'));
+    // const isSuccess =
+    //   pathname.includes("/login/registration_success") || search.includes("registration_success");
+
+    // if (isSuccess) {
+    //   toast.success(t('registration.success'));
+    // }
+
+    const { pathname, search } = location;
+
+    const isReauth =
+      pathname.includes("/login") || search.includes("re-auth");
+
+    if (isReauth) {
+      localStorage.removeItem('auth_token');
+      navigate('/login');
     }
+
 
     if (localStorage.getItem('auth_token')) {
       axios_instance().post('/auth/me').then(res => {
