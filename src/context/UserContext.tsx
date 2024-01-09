@@ -7,6 +7,7 @@ interface User {
     company_name:string,
     avatar_url: string,
     business_type_slug:string,
+    email_verified_at:string|null,
 }
 interface UserProviderProps {
     children: ReactNode,
