@@ -12,6 +12,14 @@ const TopClientsTable = (props: Props) => {
     const generateLink = (client_name: string, r: ClientDTO) => {
         return (<Link to={`/clients/${r.id}/summary/`} className="text-blue-500">{client_name}</Link>)
     }
+    const formatCurrency = (t: number) => {
+        const s = new Intl.NumberFormat('sr-RS', {
+            style: 'currency',
+            currency: 'RSD',
+        });
+        return s.format(t);
+    }
+
     const fields: Field[] = [
         {
             name: t('common.name'),
@@ -32,7 +40,7 @@ const TopClientsTable = (props: Props) => {
             name: t('common.profit'),
             editable_from_table: false,
             original_name: "totalProfit",
-            formatFn: (t) => <><span className="text-green-800">{t}</span></>,
+            formatFn: (t) => <><span className="text-green-800">{formatCurrency(parseInt(t))}</span></>,
             has_sort: false,
             show: true,
         },
