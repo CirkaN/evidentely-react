@@ -29,6 +29,7 @@ interface UserDTO {
     email: string,
     company_name:string,
     business_type_slug:string,
+    email_verified_at:string|null,
 }
 
 const ProfileSettings = () => {
@@ -63,6 +64,7 @@ const ProfileSettings = () => {
             avatar_url: data.avatar_url,
             company_name:data.company_name,
             business_type_slug:data.business_type_slug,
+            email_verified_at:data.email_verified_at,
         });
         setCurrentUserData(data);
     }
