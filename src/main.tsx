@@ -161,7 +161,11 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />
-  }
+  },
+  {
+    path: "/re-auth/",
+    element: <Login />
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
