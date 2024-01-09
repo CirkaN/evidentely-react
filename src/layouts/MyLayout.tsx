@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Box, Calendar, DollarSign, Grid, Plus, Settings, Share2, Users } from "react-feather";
+import { BarChart, Box, Calendar, DollarSign, Grid, Info, Plus, Settings, Share2, Users } from "react-feather";
 import { useUser } from "../context/UserContext";
 import ReactGA from "react-ga4";
+import { Callout } from "@radix-ui/themes";
+import toast from "react-hot-toast";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -98,6 +100,10 @@ const MyLayout = () => {
 
 
     ];
+
+    const sendReVerifyLink = () => {
+        toast.success('Proverite vase sanduce, ako ne dobijete e-mail kroz 5 minuta, proverite spam odeljak');
+    }
     const changeState = (key: keyof typeof collapsedMenies) => {
         setCollapsedMenies((c) => c && { ...c, [key]: !c[key] })
     }
@@ -120,6 +126,7 @@ const MyLayout = () => {
         }
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     useEffect(() => {
@@ -321,6 +328,19 @@ const MyLayout = () => {
             </aside>
             <div className="p-4 sm:ml-64">
                 <div className="p-4  border-gray-200  rounded-lg dark:border-gray-700 mt-14">
+                    {
+                        !user?.email_verified_at &&
+
+                        <Callout.Root>
+                            <Callout.Icon>
+                                <Info size={18} />
+                            </Callout.Icon>
+                            <Callout.Text color="iris">
+                                Molimo verifikujte vas email, poslali smo vam email sa linkom za verifikaciju. <button className="text-purple-800" onClick={() => { sendReVerifyLink() }}>klik ovde ako niste dobili link</button>
+                            </Callout.Text>
+                        </Callout.Root>
+                    }
+
                     <Outlet />
                 </div>
             </div>
