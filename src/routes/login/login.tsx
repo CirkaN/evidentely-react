@@ -3,6 +3,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import toast from "react-hot-toast";
 
 
 interface Login {
@@ -51,16 +52,14 @@ const Login = () => {
 
   useEffect(() => {
 
-    // const { pathname, search } = location;
-
-    // const isSuccess =
-    //   pathname.includes("/login/registration_success") || search.includes("registration_success");
-
-    // if (isSuccess) {
-    //   toast.success(t('registration.success'));
-    // }
-
     const { pathname, search } = location;
+
+    const isSuccess =
+      pathname.includes("/login/registration_success") || search.includes("registration_success");
+
+    if (isSuccess) {
+      toast.success(t('registration.success'));
+    }
 
     const isReauth =
       pathname.includes("/login") || search.includes("re-auth");
