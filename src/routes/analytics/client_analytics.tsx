@@ -38,6 +38,8 @@ interface BackendClientAnalyticResponse {
 }
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+
 const Analytics = () => {
 
     const [activeFilter, setActiveFilter] = useState<AnalyticFilter>({
