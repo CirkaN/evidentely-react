@@ -3,6 +3,7 @@ import ServicesTenMissed from './charts/services/ten_missed';
 import ServicesTenMostUsed from './charts/services/ten_most_used';
 import AnalyticsDatePicker from './components/analytics_date_picker';
 import { DateRangeReturnValues } from '../../shared/interfaces/daterange_analytics_filter.interface';
+import DetailedServiceTableAnalytic from './tables/services/detailed_service_table';
 
 interface filterValues {
     start_date: Date | string
@@ -25,21 +26,23 @@ const ServiceAnalytics = () => {
         })
     }
 
-
     return (
         <>
             <AnalyticsDatePicker
                 fetchFn={(input) => applyFilter(input as DateRangeReturnValues)}
             />
-            <div className='h-screen pt-5'>
-                <div className='flex flex-col flex-wrap sm:flex-row h-screen '>
-                    <div className='w-full h-72 sm:w-1/2  sm:h-1/2'>
-                        <ServicesTenMostUsed filterData={filterValues} />
-                    </div>
-                    <div className=' w-full h-72 sm:w-1/2  sm:h-1/2'>
-                        <ServicesTenMissed filterData={filterValues} />
-                    </div>
+
+            <div className='flex flex-col sm:flex-row pt-10'>
+                <div className='w-1/2 h-96'>
+                    <ServicesTenMostUsed filterData={filterValues} />
                 </div>
+                <div className='w-1/2 h-96'>
+                    <ServicesTenMissed filterData={filterValues} />
+                </div>
+            </div>
+
+            <div className='pt-10'>
+                <DetailedServiceTableAnalytic />
             </div>
         </>
     )
