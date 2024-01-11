@@ -77,17 +77,18 @@ const MyLayout = () => {
                     current: location.pathname === ("/analytics/clients")
                 },
                 {
-                    name: t('navbar.analytics.products'),
-                    href: '/analytics/products',
-                    icon: <Box size={20} />,
-                    current: location.pathname === ("/analytics/products")
-                },
-                {
                     name: t('navbar.analytics.services'),
                     icon: <Calendar size={20} />,
                     href: '/analytics/services',
                     current: location.pathname === ("/analytics/services")
                 },
+                {
+                    name: t('navbar.analytics.products'),
+                    href: '/analytics/products',
+                    icon: <Box size={20} />,
+                    current: location.pathname === ("/analytics/products")
+                }
+
             ],
             current: location.pathname.startsWith("/analytics"),
         },
@@ -126,7 +127,7 @@ const MyLayout = () => {
         }
         setCollapsedMenies((c) => c && { ...c, "analytics": location.pathname.startsWith('/analytics') })
         setCollapsedMenies((c) => c && { ...c, "settings": location.pathname.startsWith('/company_settings') })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location])
 
     useEffect(() => {
