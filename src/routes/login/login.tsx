@@ -16,9 +16,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-
   const { login } = useUser();
-
 
   const [loginForm, setLoginForm] = useState<Login>({
     email: "",
@@ -53,7 +51,6 @@ const Login = () => {
   useEffect(() => {
 
     const { pathname, search } = location;
-
     const isSuccess =
       pathname.includes("/login/registration_success") || search.includes("registration_success");
 
@@ -127,9 +124,7 @@ const Login = () => {
                     <label className="pt-5">Sifra:</label>
                     <input
                       onChange={(e) => { setLoginForm((c) => c && { ...c, password: e.target.value }) }} placeholder={t('common.enter_password')}
-
                       required
-
                       className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                       type="password" />
                   </div>
