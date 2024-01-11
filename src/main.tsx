@@ -36,6 +36,7 @@ import ClientNotes from './routes/clients/show/ClientNotes.tsx';
 import GymMemberships from './routes/gym_memberships/gym_memberships.tsx';
 import GymMembershipPlans from './routes/gym_membership_plans/gym_membership_plans.tsx';
 import { ActivePlanProvider } from './context/PricePlanContext.tsx';
+import ServiceAnalytics from './routes/analytics/service_analytics.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
@@ -62,6 +63,14 @@ const router = createBrowserRouter([
         element: <ClientAnalytics />
       },
       {
+        path: "/analytics/finance",
+        element: <FinancialAnalytics />
+      },
+      {
+        path: "/analytics/services",
+        element: <ServiceAnalytics />
+      },
+      {
         path: "/gym/memberships",
         element: <GymMemberships />
       },
@@ -69,10 +78,7 @@ const router = createBrowserRouter([
         path: "/sales",
         element: <SalesIndex />
       },
-      {
-        path: "/analytics/finance",
-        element: <FinancialAnalytics />
-      },
+
       {
         path: "/main_dashboard",
         element: <MainDashboard />,
@@ -172,16 +178,16 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserProvider>
       <ActivePlanProvider>
-      <QueryClientProvider client={queryClient}>
-        <Theme>
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-            containerClassName="overflow-auto"
-          />
-          <RouterProvider router={router}></RouterProvider>
-        </Theme>
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <Theme>
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              containerClassName="overflow-auto"
+            />
+            <RouterProvider router={router}></RouterProvider>
+          </Theme>
+        </QueryClientProvider>
       </ActivePlanProvider>
     </UserProvider>
   </React.StrictMode>,
