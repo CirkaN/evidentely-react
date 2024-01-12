@@ -18,22 +18,13 @@ const CreateItemModal = (props: CreateItemProps) => {
         name: "",
         price: "",
         selling_price: "",
-        color: "",
+        color: "#56A3A6",
         type: props.modalType,
         duration: "60",
         note: "",
     }
 
-    const [form, setForm] = useState<ItemDTO>({
-        id: "",
-        name: "",
-        price: "",
-        selling_price: "",
-        color: "",
-        type: props.modalType,
-        duration: "60",
-        note: "",
-    });
+    const [form, setForm] = useState<ItemDTO>(blankForm);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
