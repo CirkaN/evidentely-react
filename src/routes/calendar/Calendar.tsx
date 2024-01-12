@@ -3,7 +3,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridWeek from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from 'react';
-import CreateAppointmentModal from '../../modals/appointments/create_appointment';
 import axios_instance from '../../config/api_defaults';
 import { toast } from 'react-hot-toast';
 import { EventChangeArg } from '@fullcalendar/core/index.js';
@@ -11,6 +10,7 @@ import ShowAppointmentModal from '../../modals/appointments/show_appointment';
 import { useQuery, useQueryClient } from 'react-query';
 import { t } from 'i18next';
 import useScreenSize from '../../hooks/useScreenSize';
+import CreateNewAppointmentModal from '../../modals/appointments/create_new_appointment';
 
 interface AppointmentInterface {
   title: string | undefined,
@@ -42,7 +42,7 @@ interface calendarDate {
   end: string | Date,
   price: number | string | null,
   color: string,
-  client_name:string,
+  client_name: string,
 
 }
 
@@ -56,7 +56,8 @@ const MyCalendar = () => {
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
 
 
-
+  const nowStart = new Date().toLocaleString();
+  const nowEnd = new Date().toLocaleString();
   const queryClient = useQueryClient();
 
   useQuery({
@@ -75,13 +76,7 @@ const MyCalendar = () => {
     setIsCreateAppointmentModalOpen(true);
   };
 
-  const closeAppointmentCreateModal = () => {
-    setIsCreateAppointmentModalOpen(false);
-  };
-
   const mutateDates = (dataFromBackend: BackendResponse) => {
-
-    console.log(dataFromBackend);
 
     const s = dataFromBackend.data.map(item => ({
       start: new Date(item.start),
@@ -118,7 +113,11 @@ const MyCalendar = () => {
   return (
     <>
       <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
-      <CreateAppointmentModal appointment_data={createAppointmentData} cancelFunction={cancelAction} saveFunction={reRenderTable} isOpen={isCreateAppointmentModalOpen} />
+      <CreateNewAppointmentModal
+        appointment_data={createAppointmentData}
+        closeModalFunction={reRenderTable}
+        isOpen={isCreateAppointmentModalOpen}
+      />
       <div className="h-screen">
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
@@ -147,16 +146,13 @@ const MyCalendar = () => {
           eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert as unknown as EventChangeArg)}
         />
       </div>
-
-
+      <div className="fixed bottom-10 right-10 z-50">
+        <button onClick={() => handleSelect(nowStart, nowEnd)} className=" bg-white hover:bg-slate-200 text-black border-1 border shadow-xl font-bold py-4 px-6 rounded-full">
+          +
+        </button>
+      </div>
     </>
   )
-
-
-  function cancelAction() {
-    closeAppointmentCreateModal();
-  }
-
 
   function handleClick(id: string) {
     setShowAppointmentId(id);
