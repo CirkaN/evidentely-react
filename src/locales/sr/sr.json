@@ -175,7 +175,7 @@
   "plan_subscription": {
     "available_sms": "Dostupno",
     "plan": "Plan",
-    "expires": "Paket istice"
+    "expires": "Paket istice" 
   },
   "gym_memberships": {
     "memberships": "Clanarine",
@@ -226,6 +226,7 @@
     "cash": "Gotovina"
   },
   "appointment": {
+    "select_service":"Izaberi uslugu",
     "create": "Kreiraj Termin",
     "name": "Ime",
     "enter_client": "Molimo unesite klijenta",
