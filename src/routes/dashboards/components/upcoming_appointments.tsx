@@ -1,14 +1,15 @@
 import { t } from "i18next";
 import DataTable, { Field } from "../../../components/datatable";
 import { Link } from "react-router-dom";
-import { AppointmentType } from "../../../shared/interfaces/appointments.interface";
+import { AppointmentDTO } from "../../../shared/interfaces/appointments.interface";
+
 interface Props {
     appointment_count: number,
 }
 const UpcomingAppointments = (props: Props) => {
     const url = `appointments?per_page=${props.appointment_count}&custom_sort=upcoming`
 
-    const generateLink = (client_name: string, r: AppointmentType) => {
+    const generateLink = (client_name: string, r: AppointmentDTO) => {
         return (<Link to={`/clients/${r.user_id}/summary/`} className="text-blue-500">{client_name}</Link>)
     }
     const fields: Field[] = [
@@ -29,7 +30,7 @@ const UpcomingAppointments = (props: Props) => {
         {
             name: t('common.client_name'),
             editable_from_table: false,
-            formatFn: (client_name, resource) => generateLink(client_name, resource as AppointmentType),
+            formatFn: (client_name, resource) => generateLink(client_name, resource as AppointmentDTO),
             original_name: "client_name",
             has_sort: false,
             show: true,
