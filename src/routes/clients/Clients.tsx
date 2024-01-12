@@ -6,7 +6,7 @@ import { useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
-import CreateClientModal, { ClientCreateDTO } from "../../modals/clients/create_client_modal";
+import CreateClientModal from "../../modals/clients/create_client_modal";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
 import CountryFilter from "../../components/filters/country_filter";
 import { t } from "i18next";
@@ -17,14 +17,6 @@ const Clients = () => {
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const [isCreateClientModalOpen, setisCreateClientModalOpen] = useState(false);
-
-    const openClientCreateModal = () => {
-        setisCreateClientModalOpen(true);
-    };
-
-    const closeClientCreateModal = () => {
-        setisCreateClientModalOpen(false);
-    };
 
     const url = "clients?per_page=10"
     const raiseDeleteAlert = (id: number) => {
@@ -79,7 +71,7 @@ const Clients = () => {
     const tableActions: TableAction[] = [
         {
             icon: <Plus></Plus>,
-            fn: () => { openClientCreateModal() }
+            fn: () => { setisCreateClientModalOpen(true) }
         }
     ]
     const generateLink = (client_name: string, r: ClientDTO) => {
@@ -124,17 +116,11 @@ const Clients = () => {
         },
 
     ]
-    const cancelAction = () => {
-        closeClientCreateModal();
-    }
-
-    const saveRecord = (form: ClientCreateDTO) => {
-        axios_instance().post('/clients', form).then(() => {
-            queryClient.invalidateQueries({
-                queryKey: ['clients'],
-            })
-            closeClientCreateModal();
+    const reValidate = () => {
+        queryClient.invalidateQueries({
+            queryKey: ['clients'],
         })
+        setisCreateClientModalOpen(false);
     }
     const tableFilters: TableFilter[] = [
         {
@@ -142,11 +128,12 @@ const Clients = () => {
             component: <CountryFilter backend_key='country_id' />,
         },
     ]
-
     return (
         <>
             <InfoBox type={InfoBoxType.Info} text="U ovom modulu mozete dodavati nove klijente kao i pratiti sve vezano za vase klijente" headerText="Klijenti"></InfoBox>
-            <CreateClientModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateClientModalOpen}></CreateClientModal>
+            <CreateClientModal
+                cancelFunction={() => { reValidate() }}
+                isOpen={isCreateClientModalOpen} />
             <SweetAlert2 {...swalProps} />
             <div className="py-5">
                 <DataTable queryKey="clients"
