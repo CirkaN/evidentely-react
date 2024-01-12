@@ -142,7 +142,6 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
     }
     useEffect(() => {
         if (searchParams.search_param.length >= 1) {
-            console.log('salljem request');
             const url = new URL(builtUrl);
             url.searchParams.set('search', searchParams.search_param);
             setBuiltUrl(url);
