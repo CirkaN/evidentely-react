@@ -60,8 +60,6 @@ const ShowPackageModal = (props: ModalProps) => {
     );
     const fetchPackage = () => {
         axios_instance().get(`/packages/${props.package_id}`).then(r => {
-            console.log(r);
-
             setForm(r.data);
         });
     }
