@@ -99,9 +99,9 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
             const myServiceList: Array<ItemDTO> = serviceList as unknown as ItemDTO[]
             const service = myServiceList.filter(service => service.id === e.value)[0];
 
-            
 
-            if(service.color){
+
+            if (service.color) {
                 setForm((c) => c && { ...c, color: service.color })
             }
             setForm((c) => c && { ...c, item_id: e.value.toString() })
@@ -163,7 +163,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         setForm((c) => c && { ...c, item_id: r.id.toString() });
         if (form.price == 0) {
             setForm((c) => c && { ...c, price: r.price })
-        } 
+        }
 
         if (!form.title) {
             setForm((c) => c && { ...c, title: r.name });
@@ -181,9 +181,9 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
     useEffect(() => {
         if (props.isOpen) {
             console.log(props.appointment_data);
-                setForm((c)=>c&&{...c,start:dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm")})
-                console.log(dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm"))
-                setForm((c)=>c&&{...c,end:dayjs(props.appointment_data.end).format("YYYY-MM-DDThh:mm")})
+            setForm((c) => c && { ...c, start: dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm") })
+            console.log(dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm"))
+            setForm((c) => c && { ...c, end: dayjs(props.appointment_data.end).format("YYYY-MM-DDThh:mm") })
 
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,25 +213,25 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                             <input
                                 required={true}
                                 className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                placeholder="Title"
+                                placeholder="Ime usluge"
                                 type="text"
                                 value={form.title}
                                 onChange={(e) => setForm((c) => c && { ...c, title: e.target.value })} />
                         </div>
                         <div>
-                            <label>{t('common.start_date')}<span className="text-red-600">*</span></label>
+                            <label>{t('appointment.start')}<span className="text-red-600">*</span></label>
                             <input
                                 required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
                                 type="datetime-local"
                                 value={form.start}
                                 onChange={(e) => setForm((c) => c && { ...c, start: e.target.value })} />
                         </div>
                         <div>
-                            <label>{t('common.end_date')}<span className="text-red-600">*</span></label>
+                            <label>{t('appointment.end')}<span className="text-red-600">*</span></label>
                             <input
                                 required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
                                 type="datetime-local"
                                 value={form.end}
                                 onChange={(e) => setForm((c) => c && { ...c, end: e.target.value })} />
