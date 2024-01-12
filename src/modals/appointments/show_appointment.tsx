@@ -2,7 +2,7 @@ import toast from "react-hot-toast"
 import { Button, Dialog, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
-import { AppointmentType } from "../../shared/interfaces/appointments.interface";
+import { AppointmentDTO } from "../../shared/interfaces/appointments.interface";
 import ChargeClientModal from "./charge_client";
 import {X } from "react-feather";
 import SweetAlert2 from "react-sweetalert2";
@@ -20,7 +20,7 @@ interface ShowAppointmentModalProps {
 const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
     const queryClient = useQueryClient();
 
-    const [appointment, setAppointment] = useState<AppointmentType>();
+    const [appointment, setAppointment] = useState<AppointmentDTO>();
     const [isChargeClientModalOpen, setIsChargeClientModalOpen] = useState(false);
 
     const [appointmentMissed, setAppointmentMissed] = useState(false);
@@ -39,7 +39,6 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
             if (data.status === 'missed') {
                 setAppointmentMissed(true);
             }
-
             if (data.status === 'completed_paid') {
                 setAppointmentPaid(true);
             }
