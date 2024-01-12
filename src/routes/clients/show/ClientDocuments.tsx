@@ -63,7 +63,6 @@ const ClientDocuments = () => {
     })
 
     const mutateResponse = (response: DocumentApiResponse[]) => {
-        console.log(response)
         return response.map((e) => {
             return { url: e.url, note: e.note, name: e.media[0].file_name, id: e.id }
         })

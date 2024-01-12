@@ -142,10 +142,8 @@ const FinancialAnalytics = () => {
     const callEndpoints = () => {
         const data = getValuesFromCalendar();
         axios_instance().post('/analytics/financial/services', data).then(response => {
-            console.log(response);
             setTop5ServicesByAppointments(response.data.per_appointment)
             setTop5ServicesByProfit(response.data.per_profit)
-
         })
 
     }

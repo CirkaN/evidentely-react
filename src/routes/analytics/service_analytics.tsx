@@ -17,9 +17,7 @@ const ServiceAnalytics = () => {
         end_date: new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).setDate(0)).toISOString().split('T')[0],
     })
 
-
     const applyFilter = (dates: DateRangeReturnValues) => {
-        console.log(dates);
         setFilterValues({
             start_date: dates[0],
             end_date: dates[1],
