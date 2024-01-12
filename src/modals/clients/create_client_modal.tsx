@@ -21,7 +21,6 @@ export interface ClientCreateDTO {
         address: string,
         phone_number?: string
     }
-
 }
 
 const CreateClientModal = (props: CreateClientProps) => {
@@ -41,6 +40,8 @@ const CreateClientModal = (props: CreateClientProps) => {
         axios_instance().post('/clients', form).then((r) => {
             if (props.savedClient) {
                 props.savedClient(r.data)
+            }else{
+                props.cancelFunction();
             }
         })
     }
