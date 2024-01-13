@@ -6,6 +6,7 @@ import axios_instance from "../../config/api_defaults";
 import { AvailableSettingField } from "../../routes/clients/ClientShow";
 import { useQueryClient } from "react-query";
 import PrefixNumberInput from "../../components/inputs/predefined_prefix";
+import toast from "react-hot-toast";
 
 interface createProps {
     isOpen: boolean,
@@ -16,6 +17,7 @@ interface createProps {
 }
 interface ClientSettings {
     email?: string,
+    name?: string,
     phone_number?: string,
     address?: string,
     gender?: string,
@@ -30,6 +32,7 @@ const AddUserSettings = (props: createProps) => {
         address: "",
         gender: "",
         birthday: "",
+        name: "",
     })
     const fetchCurrentSettings = () => {
         axios_instance().get(`/clients/${props.user_id}`).then(r => {
@@ -46,6 +49,7 @@ const AddUserSettings = (props: createProps) => {
         axios_instance().put(`/clients/${props.user_id}`, {
             [props.type]: form[props.type]
         }).then(() => {
+            toast.success('Podesavanje uspesno izmenjeno')
             queryClient.invalidateQueries(["client_show_detail"])
             props.cancelFunction()
         });
@@ -64,6 +68,10 @@ const AddUserSettings = (props: createProps) => {
                     onChange={(e) => setForm((c) => c && { ...c, [props.type]: e.target.value })}
                 /> : ''}
                 {props.type == 'address' ? <TextField.Input
+                    value={form[props.type]}
+                    onChange={(e) => setForm((c) => c && { ...c, [props.type]: e.target.value })}
+                /> : ''}
+                {props.type == 'name' ? <TextField.Input
                     value={form[props.type]}
                     onChange={(e) => setForm((c) => c && { ...c, [props.type]: e.target.value })}
                 /> : ''}
@@ -87,7 +95,7 @@ const AddUserSettings = (props: createProps) => {
         if (props.isOpen) {
             fetchCurrentSettings();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isOpen])
     return (
         <Dialog.Root open={props.isOpen} >
@@ -103,8 +111,6 @@ const AddUserSettings = (props: createProps) => {
 
                 <form onSubmit={handleSubmit}>
                     {generateProperFormField()}
-
-
                     <Flex gap="3" mt="4" justify="end">
                         <Dialog.Close>
                             <Button onClick={props.cancelFunction} variant="soft" color="gray">
