@@ -22,7 +22,7 @@ import Packages from './routes/company/services/packages.tsx';
 import Register from './routes/login/register.tsx';
 import './i18n.ts';
 import ClientSummary from './routes/clients/show/ClientSummary.tsx';
-import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
+// import FinancialAnalytics from './routes/analytics/financial_analytics.tsx';
 import SalesIndex from './routes/sales/sales_home.tsx';
 import { Toaster } from 'react-hot-toast';
 import MyLayout from './layouts/MyLayout.tsx';
@@ -63,10 +63,10 @@ const router = createBrowserRouter([
         path: "/analytics/clients",
         element: <ClientAnalytics />
       },
-      {
-        path: "/analytics/finance",
-        element: <FinancialAnalytics />
-      },
+      // {
+      //   path: "/analytics/finance",
+      //   element: <FinancialAnalytics />
+      // },
       {
         path: "/analytics/services",
         element: <ServiceAnalytics />
