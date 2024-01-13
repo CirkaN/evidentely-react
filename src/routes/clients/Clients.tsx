@@ -1,5 +1,5 @@
 import { Eye, Plus, Trash } from "react-feather";
-import DataTable, { Action, ActionTypes, Field, TableAction, TableFilter } from "../../components/datatable";
+import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
 import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from "react-sweetalert2";
 import { useState } from "react";
@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import CreateClientModal from "../../modals/clients/create_client_modal";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
-import CountryFilter from "../../components/filters/country_filter";
 import { t } from "i18next";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 
@@ -104,14 +103,14 @@ const Clients = () => {
             name: t('common.address'),
             editable_from_table: false,
             original_name: "address",
-            has_sort: true,
+            has_sort: false,
             show: true,
         },
         {
             name: t('common.note'),
             editable_from_table: false,
             original_name: "note",
-            has_sort: true,
+            has_sort: false,
             show: true,
         },
 
@@ -122,12 +121,7 @@ const Clients = () => {
         })
         setisCreateClientModalOpen(false);
     }
-    const tableFilters: TableFilter[] = [
-        {
-            backend_key: "Country Filters",
-            component: <CountryFilter backend_key='country_id' />,
-        },
-    ]
+  
     return (
         <>
             <InfoBox type={InfoBoxType.Info} text="U ovom modulu mozete dodavati nove klijente kao i pratiti sve vezano za vase klijente" headerText="Klijenti"></InfoBox>
@@ -137,8 +131,7 @@ const Clients = () => {
             <SweetAlert2 {...swalProps} />
             <div className="py-5">
                 <DataTable queryKey="clients"
-                    has_table_filters={true}
-                    table_filters={tableFilters}
+                    has_table_filters={false}
                     table_actions={tableActions}
                     actions={actions}
                     url={url}
