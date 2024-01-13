@@ -20,7 +20,7 @@ interface Client {
     phone_number: string,
     address: string,
     settings: ClientSettings,
-    saldo:number,
+    saldo: number,
     gender: string,
     birthday?: string,
     birthday_formatted?: string,
@@ -28,7 +28,7 @@ interface Client {
 
 export type ContextType = Client | null;
 type PreparedNoteDTO = Omit<NoteDTO, 'created_by'>
-export type AvailableSettingField = "email" | "phone_number" | "gender" | "address" | "birthday"
+export type AvailableSettingField = "email" | "phone_number" | "gender" | "address" | "birthday" | "name"
 const ClientShow = () => {
 
     const [userDetails, setUserDetails] = useState<Client | null>(null);
@@ -60,15 +60,15 @@ const ClientShow = () => {
         });
     }
 
-    const formatCurrency = (t: string|undefined) => {
-       if(t){
-        const s = new Intl.NumberFormat('sr-RS', {
-            style: 'currency',
-            currency: 'RSD',
-        });
-        return s.format(parseInt(t));
-       }
-       return 0;
+    const formatCurrency = (t: string | undefined) => {
+        if (t) {
+            const s = new Intl.NumberFormat('sr-RS', {
+                style: 'currency',
+                currency: 'RSD',
+            });
+            return s.format(parseInt(t));
+        }
+        return 0;
     }
 
     const applySettingsField = (type: AvailableSettingField) => {
@@ -104,7 +104,7 @@ const ClientShow = () => {
                     </div>
                     <div className="pt-10">
                         <div className="pt-3 text-center">
-                            <p className="font-semibold text-4xl uppercase text-slate-700 underline">{userDetails?.name}</p>
+                            <p onClick={() => { applySettingsField('name') }} className="font-semibold text-4xl uppercase text-blue-600 cursor-pointer underline">{userDetails?.name}</p>
                         </div>
                     </div>
 
@@ -127,7 +127,8 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p onClick={() => { applySettingsField('phone_number') }} className="text-blue-400 cursor-pointer">
-                                        { "+381 0" + userDetails?.phone_number ?? <button>Dodaj</button>}</p>
+                                        {userDetails?.phone_number ? "0" + userDetails.phone_number : <button>Dodaj</button>}
+                                    </p>
                                 </div>
                             </div>
                             <div className="flex flex-row">
