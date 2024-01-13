@@ -36,7 +36,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         start: "",
         end: "",
         price: 0,
-        color: "#00D14D",
+        color: "#56A3A6",
         remind_client: true,
         remind_setting: {
             remind_day_before: false,
