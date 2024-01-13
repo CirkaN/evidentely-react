@@ -60,19 +60,18 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
     const queryClient = useQueryClient();
     const [form, setForm] = useState<AppointmentDTO>(defaultForm);
 
-    const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(
-        {
-            label: t('appointment.select_client'),
-            value: 0,
-        }
-    );
+    const defaultSelectedService = {
+        label: t('appointment.select_service'),
+        value: 0,
+    }
+    const defaultSelectedClient =  {
+        label: t('appointment.select_client'),
+        value: 0,
+    }
 
-    const [selectedService, setSelectedService] = useState<TransformedDataForSelect>(
-        {
-            label: t('appointment.select_service'),
-            value: 0,
-        }
-    );
+    const [selectedClient, setSelectedClient] = useState<TransformedDataForSelect>(defaultSelectedClient);
+
+    const [selectedService, setSelectedService] = useState<TransformedDataForSelect>(defaultSelectedService);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -84,6 +83,8 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
             if (response.status === 200) {
                 toast.success(t('toasts.appointment_created'));
                 setForm(defaultForm);
+                setSelectedService(defaultSelectedService);
+                setSelectedClient(defaultSelectedClient)
                 props?.closeModalFunction();
 
             }
@@ -98,8 +99,6 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         if (e) {
             const myServiceList: Array<ItemDTO> = serviceList as unknown as ItemDTO[]
             const service = myServiceList.filter(service => service.id === e.value)[0];
-
-
 
             if (service.color) {
                 setForm((c) => c && { ...c, color: service.color })
@@ -180,11 +179,8 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     useEffect(() => {
         if (props.isOpen) {
-            console.log(props.appointment_data);
             setForm((c) => c && { ...c, start: dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm") })
-            console.log(dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm"))
             setForm((c) => c && { ...c, end: dayjs(props.appointment_data.end).format("YYYY-MM-DDThh:mm") })
-
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isOpen])
