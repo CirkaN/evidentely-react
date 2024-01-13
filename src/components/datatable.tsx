@@ -224,7 +224,7 @@ const DataTable = <T,>(props: DatatableProps<T>) => {
                                             {data?.data.map((record: GenericEntry) => {
 
                                                 return (
-                                                    <tr key={record.id}>
+                                                    <tr className="hover:bg-slate-200" key={record.id}>
                                                         {props.fields.map((f, index) => {
                                                             if (f.original_name in record) {
                                                                 if (f.formatFn) {
