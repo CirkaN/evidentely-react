@@ -127,7 +127,7 @@ const ClientShow = () => {
                                 </div>
                                 <div>
                                     <p onClick={() => { applySettingsField('phone_number') }} className="text-blue-400 cursor-pointer">
-                                        {userDetails?.phone_number ? userDetails.phone_number : <button>Dodaj</button>}
+                                        {userDetails?.phone_number ? "0" + userDetails.phone_number : <button>Dodaj</button>}
                                     </p>
                                 </div>
                             </div>
