@@ -12,6 +12,7 @@ interface CreateClientProps {
     savedClient?: (savedClient: ClientDTO) => void,
     isOpen: boolean
 }
+
 export interface ClientCreateDTO {
     name: string,
     gender: string,
@@ -24,8 +25,7 @@ export interface ClientCreateDTO {
 }
 
 const CreateClientModal = (props: CreateClientProps) => {
-
-    const [form, setForm] = useState<ClientCreateDTO>({
+    const blankForm = {
         name: "",
         gender: "male",
         email: "",
@@ -34,15 +34,25 @@ const CreateClientModal = (props: CreateClientProps) => {
             address: "",
             phone_number: ""
         }
-    });
+    }
+    const [form, setForm] = useState<ClientCreateDTO>(blankForm);
+
+    const [validationErrors, setValidationErrors] = useState<Array<string>>([])
 
     const saveRecord = () => {
         axios_instance().post('/clients', form).then((r) => {
             if (props.savedClient) {
                 props.savedClient(r.data)
-            }else{
+            } else {
                 props.cancelFunction();
             }
+            setForm(blankForm);
+        }).catch(e => {
+            const errors: Array<string> = []
+            Object.keys(e.response.data.errors).forEach(field => {
+                errors.push(`Greska: ${e.response.data.errors[field].join(', ')}`);
+            });
+            setValidationErrors(errors);
         })
     }
 
@@ -51,7 +61,6 @@ const CreateClientModal = (props: CreateClientProps) => {
         saveRecord();
     }
 
-
     return (<>
         <Dialog.Root open={props.isOpen} >
             <Dialog.Content style={{ maxWidth: 450 }}>
@@ -59,6 +68,12 @@ const CreateClientModal = (props: CreateClientProps) => {
                     {t('client.create_client')}
                 </Dialog.Title>
                 <InfoBox fontSize={'text-sm'} text="Ukoliko ne unesete telefon, sms obavestenja nece biti omogucena" headerText="Vazna napomena" type={InfoBoxType.Warning}></InfoBox>
+
+                {validationErrors &&
+                    validationErrors.map((e) => {
+                        return <p key={e} className="text-red-600 p-2 text-center text-md">{e}</p>
+                    })
+                }
 
                 <form onSubmit={handleSubmit}>
 
@@ -70,7 +85,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                             <TextField.Input
                                 onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
                                 value={form.name}
-
+                                required
                             />
                         </label>
                     </Flex>
