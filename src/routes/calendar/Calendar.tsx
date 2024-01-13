@@ -91,8 +91,7 @@ const MyCalendar = () => {
     setDates(s);
   }
 
-
-  const reRenderTable = () => {
+  const reRenderAppointments = () => {
     setIsCreateAppointmentModalOpen(false);
     setIsShowAppointmentModalOpen(false);
     queryClient.invalidateQueries(['appointment_list']);
@@ -112,10 +111,10 @@ const MyCalendar = () => {
 
   return (
     <>
-      <ShowAppointmentModal eventUpdated={reRenderTable} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
+      <ShowAppointmentModal eventUpdated={reRenderAppointments} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateNewAppointmentModal
         appointment_data={createAppointmentData}
-        closeModalFunction={reRenderTable}
+        closeModalFunction={reRenderAppointments}
         isOpen={isCreateAppointmentModalOpen}
       />
       <div className="h-screen">
@@ -191,16 +190,14 @@ const MyCalendar = () => {
     if (!confirm("Are you sure you want to update the event?")) {
       revert.revert();
     } else {
-      const json = {
+      axios_instance().put('appointments/' + id, {
         start: startStr,
         update_via: 'drop',
         end: endStr,
-      }
-
-      axios_instance().put('appointments/' + id, json).then(response => {
+      }).then(response => {
         if (response.status === 200) {
           toast.success(t('toasts.event_succesfully_updated'))
-          queryClient.invalidateQueries()
+          //reRenderAppointments();
         }
       })
     }
