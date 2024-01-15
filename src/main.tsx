@@ -38,6 +38,7 @@ import GymMembershipPlans from './routes/gym_membership_plans/gym_membership_pla
 import { ActivePlanProvider } from './context/PricePlanContext.tsx';
 import ServiceAnalytics from './routes/analytics/service_analytics.tsx';
 import ClientSmsHistory from './routes/clients/show/ClientSmsHistory.tsx';
+import PricingPlans from './routes/pricing_plans/pricing_plans.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/profile_settings",
         element: <ProfileSettings />
+      },
+      {
+        path: "/plans",
+        element: <PricingPlans />
       },
       {
         path: "/company_settings",
@@ -158,7 +163,7 @@ const router = createBrowserRouter([
             path: "notes", element: <ClientNotes />
           },
           {
-            path:"sms_history",element:<ClientSmsHistory/>
+            path: "sms_history", element: <ClientSmsHistory />
           }
         ]
       }
