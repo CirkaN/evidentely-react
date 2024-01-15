@@ -12,12 +12,13 @@ import { t } from "i18next";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 
 const Clients = () => {
+
     const navigate = useNavigate()
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const [isCreateClientModalOpen, setisCreateClientModalOpen] = useState(false);
-
     const url = "clients?per_page=10"
+
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
             show: true,
@@ -58,24 +59,27 @@ const Clients = () => {
     const actions: Action<ClientDTO>[] = [
         {
             type: ActionTypes.Show,
-            icon: <Eye color="lightblue"></Eye>,
+            icon: <Eye color="lightblue" />,
             fn: (client: ClientDTO) => navigate(`/clients/${client.id}/summary/`),
         },
         {
             type: ActionTypes.Delete,
-            icon: <Trash color="red"></Trash>,
+            icon: <Trash color="red" />,
             fn: (client: ClientDTO) => { raiseDeleteAlert(client.id) }
         },
     ];
+
     const tableActions: TableAction[] = [
         {
-            icon: <Plus></Plus>,
+            icon: <Plus />,
             fn: () => { setisCreateClientModalOpen(true) }
         }
     ]
+
     const generateLink = (client_name: string, r: ClientDTO) => {
         return (<Link to={`/clients/${r.id}/summary/`} className="text-blue-500">{client_name}</Link>)
     }
+
     const fields: Field[] = [
         {
             name: t('common.name'),
@@ -113,31 +117,43 @@ const Clients = () => {
             has_sort: false,
             show: true,
         },
-
     ]
+
     const reValidate = () => {
         queryClient.invalidateQueries({
             queryKey: ['clients'],
         })
         setisCreateClientModalOpen(false);
     }
-  
+
     return (
         <>
-            <InfoBox type={InfoBoxType.Info} text="U ovom modulu mozete dodavati nove klijente kao i pratiti sve vezano za vase klijente" headerText="Klijenti"></InfoBox>
+
+            <InfoBox
+                type={InfoBoxType.Info}
+                text="U ovom modulu mozete 
+                dodavati nove klijente kao i pratiti sve vezano za vase klijente"
+                headerText="Klijenti"
+            />
+
             <CreateClientModal
                 cancelFunction={() => { reValidate() }}
-                isOpen={isCreateClientModalOpen} />
+                isOpen={isCreateClientModalOpen}
+            />
+
             <SweetAlert2 {...swalProps} />
+
             <div className="py-5">
-                <DataTable queryKey="clients"
+                <DataTable
+                    queryKey="clients"
                     has_table_filters={false}
                     table_actions={tableActions}
                     actions={actions}
                     url={url}
                     fields={fields}
                     table_name="Lista klijenata"
-                    has_actions={true} />
+                    has_actions={true}
+                />
             </div>
         </>
     );
