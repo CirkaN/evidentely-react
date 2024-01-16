@@ -39,6 +39,7 @@ import { ActivePlanProvider } from './context/PricePlanContext.tsx';
 import ServiceAnalytics from './routes/analytics/service_analytics.tsx';
 import ClientSmsHistory from './routes/clients/show/ClientSmsHistory.tsx';
 import PricingPlans from './routes/pricing_plans/pricing_plans.tsx';
+import SmsCampaign from './routes/sms_campaign/sms_campaign.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/profile_settings",
         element: <ProfileSettings />
+      },
+      {
+        path: "/sms_campaign",
+        element: <SmsCampaign />
       },
       {
         path: "/plans",

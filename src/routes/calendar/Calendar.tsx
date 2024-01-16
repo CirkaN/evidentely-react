@@ -11,6 +11,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { t } from 'i18next';
 import useScreenSize from '../../hooks/useScreenSize';
 import CreateNewAppointmentModal from '../../modals/appointments/create_new_appointment';
+import SweetAlert2 from 'react-sweetalert2';
 
 interface AppointmentInterface {
   title: string | undefined,
@@ -54,6 +55,7 @@ const MyCalendar = () => {
   const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] = useState(false);
   const [showAppointmentId, setShowAppointmentId] = useState<string>("");
   const [createAppointmentData, setCreateAppointmentData] = useState<AppointmentInterface>({ title: "", start: new Date().toISOString(), end: new Date().toISOString(), price: 0, remind_client: false });
+  const [swalProps, setSwalProps] = useState({});
 
 
   const nowStart = new Date().toLocaleString();
@@ -75,6 +77,21 @@ const MyCalendar = () => {
   const openAppointmentCreateModal = () => {
     setIsCreateAppointmentModalOpen(true);
   };
+
+
+  const handleSelect = (start: string, end: string) => {
+
+    const preparedJson: AppointmentInterface = {
+      start: start,
+      end: end,
+      title: "",
+      price: null,
+      remind_client: true
+    };
+
+    setAppointmentData(preparedJson);
+    openAppointmentCreateModal();
+  }
 
   const mutateDates = (dataFromBackend: BackendResponse) => {
 
@@ -109,8 +126,77 @@ const MyCalendar = () => {
     }
   }
 
+  const handleDrop = (start: string, end: string, id: string) => {
+    const jsonPrepared = {
+      start: start,
+      end: end,
+      update_via: 'drop',
+    }
+
+    axios_instance().put('appointments/' + id, jsonPrepared).then(response => {
+      if (response.status === 200) {
+        toast.success(t('toasts.event_succesfully_updated'))
+      }
+    })
+  }
+  const handleClick = (id: string) => {
+    setShowAppointmentId(id);
+    setIsShowAppointmentModalOpen(true);
+  }
+
+  const renderEventContent = (timeText: string, title: string, client_name: string) => {
+    return (
+      <>
+        <p>{timeText}[{client_name}]</p>
+        <i className='text-md font-semibold ml-1'>{title}</i>
+      </>
+    )
+  }
+  const handleEventResizeStop = (startStr: string, endStr: string, id: string, revert: EventChangeArg) => {
+    setSwalProps({
+      show: true,
+      icon: 'warning',
+      title: t('common.please_confirm'),
+      text: "Da li ste sigurni da zelite da izmenite trajanje vaseg termina",
+      cancelButtonColor: "green",
+      reverseButtons: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: t('common.cancel'),
+      confirmButtonText: t('common.change'),
+      confirmButtonColor: "red",
+      onConfirm: () => { updateAppointmentSweet(id, startStr, endStr,revert) },
+      onResolve: () => { setSwalOff() }
+    });
+
+  }
+  const setSwalOff = (revert?: EventChangeArg) => {
+    console.log(
+      'i am being run'
+    )
+    const dataCopied = JSON.parse(JSON.stringify(swalProps));
+    dataCopied.show = false;
+    setSwalProps(dataCopied);
+    if(revert){
+      console.log('we are revertging');
+    }
+
+  }
+  const updateAppointmentSweet = (id: string, startStr: string, endStr: string,revert) => {
+    axios_instance().put('appointments/' + id, {
+      start: startStr,
+      update_via: 'drop',
+      end: endStr,
+    }).then(response => {
+      if (response.status === 200) {
+        toast.success(t('toasts.event_succesfully_updated'))
+        setSwalOff(revert);
+      }
+    })
+  }
   return (
     <>
+      <SweetAlert2 {...swalProps} />
       <ShowAppointmentModal eventUpdated={reRenderAppointments} cancelFunction={closeShowModal} appointmentId={showAppointmentId} isOpen={isShowAppointmentModalOpen}></ShowAppointmentModal>
       <CreateNewAppointmentModal
         appointment_data={createAppointmentData}
@@ -142,7 +228,7 @@ const MyCalendar = () => {
           eventDrop={(e) => { handleDrop(e.event.startStr, e.event.endStr, e.event.id) }}
           select={(e) => handleSelect(e.startStr, e.endStr)}
           eventClick={(e) => handleClick(e.event.id)}
-          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e.revert as unknown as EventChangeArg)}
+          eventResize={(e) => handleEventResizeStop(e.event.startStr, e.event.endStr, e.event.id, e as unknown as EventChangeArg)}
         />
       </div>
       <div className="fixed bottom-10 right-10 z-50">
@@ -153,66 +239,9 @@ const MyCalendar = () => {
     </>
   )
 
-  function handleClick(id: string) {
-    setShowAppointmentId(id);
-    setIsShowAppointmentModalOpen(true);
-  }
-
-  function handleSelect(start: string, end: string) {
-
-    const preparedJson: AppointmentInterface = {
-      start: start,
-      end: end,
-      title: "",
-      price: null,
-      remind_client: true
-    };
-
-    setAppointmentData(preparedJson);
-    openAppointmentCreateModal();
-  }
-
-  function handleDrop(start: string, end: string, id: string) {
-    const jsonPrepared = {
-      start: start,
-      end: end,
-      update_via: 'drop',
-    }
-
-    axios_instance().put('appointments/' + id, jsonPrepared).then(response => {
-      if (response.status === 200) {
-        toast.success(t('toasts.event_succesfully_updated'))
-      }
-    })
-  }
-
-  function handleEventResizeStop(startStr: string, endStr: string, id: string, revert: EventChangeArg) {
-    if (!confirm("Are you sure you want to update the event?")) {
-      revert.revert();
-    } else {
-      axios_instance().put('appointments/' + id, {
-        start: startStr,
-        update_via: 'drop',
-        end: endStr,
-      }).then(response => {
-        if (response.status === 200) {
-          toast.success(t('toasts.event_succesfully_updated'))
-          //reRenderAppointments();
-        }
-      })
-    }
-  }
-
-  function renderEventContent(timeText: string, title: string, client_name: string) {
 
 
-    return (
-      <>
-        <p>{timeText}[{client_name}]</p>
-        <i className='text-md font-semibold ml-1'>{title}</i>
-      </>
-    )
-  }
+
 }
 
 
