@@ -198,7 +198,6 @@ const MyLayout = () => {
         });
     }
 
-
     return (
         <>
             <nav
