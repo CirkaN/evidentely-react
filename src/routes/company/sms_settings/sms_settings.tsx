@@ -8,11 +8,11 @@ import EditSmsSettingsModal from "../../../modals/settings/sms_settings/EditSmsS
 import { useQuery, useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import { t } from "i18next";
+import PrefixNumberInput from "../../../components/inputs/predefined_prefix";
 
 
 const SmsSettings = () => {
-
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
     const [phoneVerificationForm, setPhoneVerificationForm] = useState({
         phone_number: ""
     });
@@ -105,6 +105,8 @@ const SmsSettings = () => {
             if (response.status === 201) {
                 setPhoneVerificationInProgress(true);
             }
+        }).catch((e) => {
+            toast.error(e.response.data.message);
         })
     }
     return (
@@ -122,15 +124,11 @@ const SmsSettings = () => {
                                         <p className="text-xs sm:text-sm md:text-base text-red-600">
                                             {t('sms.phone_format')}
                                         </p>
-                                        <input
-                                            type="text"
-                                            onChange={(e) => {
-                                                setPhoneVerificationForm((c) => c && { ...c, phone_number: e.target.value });
-                                            }}
-                                            name="phone_number"
-                                            id="phone_number"
-                                            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 mt-2"
+                                        <PrefixNumberInput
+                                            isRequired={true}
+                                            parseNumber={(number) => setPhoneVerificationForm((c) => c && { ...c, phone_number: number as string })}
                                         />
+
                                         <div className="mt-2">
                                             <button className="text-md sm:text-lg rounded-md bg-blue-500 text-white p-2 w-full">
                                                 {t('common.accept')}
@@ -170,15 +168,15 @@ const SmsSettings = () => {
             }
             {userHasMobileVerified &&
                 <>
-                  <InfoBox type={InfoBoxType.Warning}
-                   headerText={t('common.important_notice')}
-                   text={t('sms.sms_char_warning')}></InfoBox>
-                   <br />
+                    <InfoBox type={InfoBoxType.Warning}
+                        headerText={t('common.important_notice')}
+                        text={t('sms.sms_char_warning')}></InfoBox>
+                    <br />
 
                     <div className="px-4">
                         <p className="text-2xl text-center mb-5">{t('sms.notify_clients_about_appointments')}</p>
                         <div className="flex flex-col md:flex-row">
-                            <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.reservation_confirmed, 'reservation_confirmed') }} headerText={t('sms.client_reservation_confirmation')}type="reservation_confirmed" subHeaderText="Pri kreiranju termina" mainText={smsSettings.sms_templates.reservation_confirmed}></SmsSettingsBox>
+                            <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.reservation_confirmed, 'reservation_confirmed') }} headerText={t('sms.client_reservation_confirmation')} type="reservation_confirmed" subHeaderText="Pri kreiranju termina" mainText={smsSettings.sms_templates.reservation_confirmed}></SmsSettingsBox>
                             <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.day_before, 'day_before') }} headerText={t('sms.day_before')} type="day_before" subHeaderText="u 19:00h" mainText={smsSettings.sms_templates.day_before}></SmsSettingsBox>
                             <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.same_day, 'same_day') }} headerText={t('sms.same_day')} type="same_day" subHeaderText="2h pre termina" mainText={smsSettings.sms_templates.same_day}></SmsSettingsBox>
                         </div>

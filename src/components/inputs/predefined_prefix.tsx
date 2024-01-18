@@ -27,7 +27,7 @@ const PrefixNumberInput = (props: PredefinedNumberPrefixProps) => {
     return (
         <>
             <div className="flex">
-                <input type="text" value={prefix} disabled className="p-1 w-2/12 border text-slate-900" />
+                <input type="text" value={prefix} disabled className="p-1 w-1/4 sm:w-1/6 border text-slate-900" />
                 <input required={props.isRequired ?? false}
                     className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
                     type="number"
