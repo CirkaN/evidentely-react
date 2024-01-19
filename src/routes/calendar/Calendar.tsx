@@ -165,7 +165,7 @@ const MyCalendar = () => {
       cancelButtonText: t('common.cancel'),
       confirmButtonText: t('common.change'),
       confirmButtonColor: "red",
-      onConfirm: () => { updateAppointmentSweet(id, startStr, endStr,revert) },
+      onConfirm: () => { updateAppointmentSweet(id, startStr, endStr, revert) },
       onResolve: () => { setSwalOff() }
     });
 
@@ -177,12 +177,12 @@ const MyCalendar = () => {
     const dataCopied = JSON.parse(JSON.stringify(swalProps));
     dataCopied.show = false;
     setSwalProps(dataCopied);
-    if(revert){
+    if (revert) {
       console.log('we are revertging');
     }
 
   }
-  const updateAppointmentSweet = (id: string, startStr: string, endStr: string,revert) => {
+  const updateAppointmentSweet = (id: string, startStr: string, endStr: string, revert: EventChangeArg | undefined) => {
     axios_instance().put('appointments/' + id, {
       start: startStr,
       update_via: 'drop',
