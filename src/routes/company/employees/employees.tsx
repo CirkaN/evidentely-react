@@ -1,4 +1,4 @@
-import { Check, Plus, Trash, X } from "react-feather";
+import { Check, Info, Plus, Trash, X } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
 import { useState } from "react";
 import CreateEmployeeModal from "../../../modals/employees/create_employee_modal";
@@ -7,9 +7,9 @@ import axios_instance from "../../../config/api_defaults";
 import { useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import { EmployeeDTO } from "../../../shared/interfaces/employees.interface";
-import InfoBox, { InfoBoxType } from "../../../components/info-box";
 import { t } from "i18next";
 import { Link } from "react-router-dom";
+import { Callout } from "@radix-ui/themes";
 
 const Employees = () => {
 
@@ -71,7 +71,7 @@ const Employees = () => {
 
     }
     const generateView = (t: string) => {
-        return(<span className="text-blue-500">{t}</span>)
+        return (<span className="text-blue-500">{t}</span>)
         return (<Link to="/" className="text-blue-500">{t}</Link>)
     }
     const fields: Field<EmployeeDTO>[] = [
@@ -149,7 +149,17 @@ const Employees = () => {
     return (
         <>
             <SweetAlert2 {...swalProps} />
-            <InfoBox type={InfoBoxType.Info} headerText={t('employees.employees')} text={t('employees.manage')}></InfoBox>
+
+            <Callout.Root>
+                <Callout.Icon>
+                    <Info size={18} />
+                </Callout.Icon>
+                <Callout.Text color="blue">
+                    {t('employees.manage')}
+                </Callout.Text>
+            </Callout.Root>
+
+
             <CreateEmployeeModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateEmployeeModalOpen} ></CreateEmployeeModal>
             <div className="py-5">
                 <DataTable queryKey="employees" table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>

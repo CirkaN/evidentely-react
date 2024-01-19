@@ -1,4 +1,4 @@
-import { Eye, Plus, Trash } from "react-feather";
+import { Eye, Info, Plus, Trash } from "react-feather";
 import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
 import SalesHomeHeader from "./components/header";
 import { PendingSaleDTO, SaleDTO } from "../../shared/interfaces/sales.interface";
@@ -10,7 +10,7 @@ import axios_instance from "../../config/api_defaults";
 import { useTranslation } from "react-i18next";
 import CreateSaleModal from "../../modals/sales/create_sale_modal";
 import ShowSaleModal from "../../modals/sales/show_sale_modal";
-import InfoBox, { InfoBoxType } from "../../components/info-box";
+import { Callout } from "@radix-ui/themes";
 
 const SalesIndex = () => {
 
@@ -160,11 +160,16 @@ const SalesIndex = () => {
     return (
         <>
             <SalesHomeHeader />
-            <InfoBox
-                headerText={t('sales.info_box_title')}
-                type={InfoBoxType.Info}
-                text={t('sales.info_box_description')}
-            />
+          <div className="pt-2 pb-2">
+          <Callout.Root>
+                <Callout.Icon>
+                    <Info size={18} />
+                </Callout.Icon>
+                <Callout.Text color="blue">
+                    {t('sales.info_box_description')}
+                </Callout.Text>
+            </Callout.Root>
+          </div>
 
             <SweetAlert2 {...swalProps} />
             <CreateSaleModal
