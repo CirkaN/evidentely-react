@@ -179,8 +179,8 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     useEffect(() => {
         if (props.isOpen) {
-            setForm((c) => c && { ...c, start: dayjs(props.appointment_data.start).format("YYYY-MM-DDThh:mm") })
-            setForm((c) => c && { ...c, end: dayjs(props.appointment_data.end).format("YYYY-MM-DDThh:mm") })
+            setForm((c) => c && { ...c, start: dayjs(props.appointment_data.start).format("YYYY-MM-DDTHH:mm") })
+            setForm((c) => c && { ...c, end: dayjs(props.appointment_data.end).format("YYYY-MM-DDTHH:mm") })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.isOpen])
