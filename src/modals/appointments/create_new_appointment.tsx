@@ -5,15 +5,16 @@ import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { AppointmentDTO } from "../../shared/interfaces/appointments.interface";
 import Select, { SingleValue } from 'react-select'
-import useTransformedClients from "../../hooks/useTransformedClients";
+import useTransformedClients from "../../hooks/useClients";
 import { TransformedDataForSelect } from "../../shared/interfaces/select_box.interface";
-import useTransformedServices from "../../hooks/useTransformedServices";
+import useTransformedServices from "../../hooks/useServices";
 import { ItemDTO } from "../../shared/interfaces/item.interface";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 import CreateClientModal from "../clients/create_client_modal";
 import { useQueryClient } from "react-query";
 import CreateItemModal from "../items/create_item_modal";
 import dayjs from "dayjs";
+import useEmployees from "../../hooks/useEmployees";
 
 
 interface CreateAppointmentModalProps {
@@ -51,9 +52,10 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         note: "",
 
     }
-    const [showSettingsForRemind, setShowSettingsForRemind] = useState(true)
+    const [showSettingsForRemind, setShowSettingsForRemind] = useState(true);
     const { clientTransformedList, clientList } = useTransformedClients();
-    const { serviceTransformedList, serviceList } = useTransformedServices()
+    const { serviceTransformedList, serviceList } = useTransformedServices();
+    const { employeeTransformedList } = useEmployees();
     const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
     const [isCreateServiceModalOpen, setIsCreateServiceModalOpen] = useState(false);
 
@@ -64,7 +66,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         label: t('appointment.select_service'),
         value: 0,
     }
-    const defaultSelectedClient =  {
+    const defaultSelectedClient = {
         label: t('appointment.select_client'),
         value: 0,
     }
@@ -120,7 +122,11 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
             setSelectedService((c) => c && { ...c, value: parseInt(service.id) })
         }
     }
-
+    const setEmployeeForm = (e: SingleValue<{ value: number | string; label: string; }>) => {
+        if (e) {
+            setForm((c) => c && { ...c, employee_id: e.value.toString() });
+        }
+    }
     const setClientForm = (e: SingleValue<{ value: number | string; label: string; }>) => {
         if (e) {
             const clientListTyped = clientList as unknown as Array<ClientDTO>
@@ -245,10 +251,12 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 options={serviceTransformedList} />
                         </div>
 
-                        {/* <div>
-                        <label>{t('appointment.employee')}</label>
-                        <Select onChange={(e) => { setEmployeeForm(e) }} options={employeesTransformed} />
-                    </div> */}
+                        <div>
+                            <label>{t('appointment.employee')}</label>
+                            <Select
+                                onChange={(e) => { setEmployeeForm(e) }}
+                                options={employeeTransformedList} />
+                        </div>
 
                         <div>
 
