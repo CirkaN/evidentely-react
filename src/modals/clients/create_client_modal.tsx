@@ -1,11 +1,11 @@
-import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
+import { Button, Callout, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
-import InfoBox, { InfoBoxType } from "../../components/info-box";
 import { t } from "i18next";
 import PrefixNumberInput from "../../components/inputs/predefined_prefix";
 import axios_instance from "../../config/api_defaults";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
+import { Info } from "react-feather";
 
 interface CreateClientProps {
     cancelFunction: () => void,
@@ -67,7 +67,15 @@ const CreateClientModal = (props: CreateClientProps) => {
                 <Dialog.Title>
                     {t('client.create_client')}
                 </Dialog.Title>
-                <InfoBox fontSize={'text-sm'} text="Ukoliko ne unesete telefon, sms obavestenja nece biti omogucena" headerText="Vazna napomena" type={InfoBoxType.Warning}></InfoBox>
+
+                <Callout.Root>
+                    <Callout.Icon>
+                        <Info size={18} />
+                    </Callout.Icon>
+                    <Callout.Text color="iris">
+                        Ukoliko ne unesete telefon, sms obavestenja nece biti omogucena.
+                    </Callout.Text>
+                </Callout.Root>
 
                 {validationErrors &&
                     validationErrors.map((e) => {
@@ -75,7 +83,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                     })
                 }
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="pt-5">
 
                     <Flex direction="column" gap="3">
                         <label>
@@ -90,7 +98,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                         </label>
                     </Flex>
 
-                    <Flex direction="column" gap="3">
+                    <Flex direction="column" gap="3" className="pt-1">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('common.gender')}
@@ -104,7 +112,10 @@ const CreateClientModal = (props: CreateClientProps) => {
                             </select>
                         </label>
                     </Flex>
-                    <Flex direction="column" gap="3">
+
+
+
+                    <Flex direction="column" gap="3" className="pt-1">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('common.email')}
@@ -115,7 +126,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                             />
                         </label>
                     </Flex>
-                    <Flex direction="column" gap="3">
+                    <Flex direction="column" gap="3" className="pt-1">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('common.address')}
@@ -126,7 +137,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                             />
                         </label>
                     </Flex>
-                    <Flex direction="column" gap="3">
+                    <Flex direction="column" gap="3" className="pt-1">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('common.phone_number')}:
@@ -137,7 +148,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                             />
                         </label>
                     </Flex>
-                    <Flex direction="column" gap="3">
+                    <Flex direction="column" gap="3" className="pt-2">
                         <label>
                             <Text as="div" size="2" mb="1" weight="bold">
                                 {t('common.note')}
