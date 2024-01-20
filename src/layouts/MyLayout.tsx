@@ -72,20 +72,20 @@ const MyLayout = () => {
             items: [
                 {
                     name: t('navbar.analytics.clients'),
-                    icon: <Users size={20} />,
+                    icon: <Users size={18} />,
                     href: '/analytics/clients',
                     current: location.pathname === ("/analytics/clients")
                 },
                 {
                     name: t('navbar.analytics.services'),
-                    icon: <Calendar size={20} />,
+                    icon: <Calendar size={18} />,
                     href: '/analytics/services',
                     current: location.pathname === ("/analytics/services")
                 },
                 {
                     name: t('navbar.analytics.products'),
                     href: '/analytics/products',
-                    icon: <Box size={20} />,
+                    icon: <Box size={18} />,
                     current: location.pathname === ("/analytics/products")
                 }
 
@@ -93,11 +93,29 @@ const MyLayout = () => {
             current: location.pathname.startsWith("/analytics"),
         },
         {
-            name: t('navbar.settings.sms_settings'),
+            name: t('navbar.company_settings'),
+            key: "main_company_settings",
             icon: <Settings size={20} />,
-            href: '/company_settings/sms_settings',
-            current: location.pathname === ("/company_settings/sms_settings")
+            items: [
+                {
+                    name: t('navbar.settings.sms_settings'),
+                    icon: <Settings size={18} />,
+                    href: '/company_settings/sms_settings',
+                    current: location.pathname === ("/company_settings/sms_settings")
+                },
+                {
+                    name: t('navbar.plans'),
+                    icon: <Settings size={20} />,
+                    href: '/company/plans',
+                    current: location.pathname === ("/company/settings")
+                },
+
+
+            ],
+            current: location.pathname.startsWith("/analytics"),
         },
+
+
 
 
     ];

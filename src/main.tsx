@@ -40,6 +40,7 @@ import ServiceAnalytics from './routes/analytics/service_analytics.tsx';
 import ClientSmsHistory from './routes/clients/show/ClientSmsHistory.tsx';
 import PricingPlans from './routes/pricing_plans/pricing_plans.tsx';
 import SmsCampaign from './routes/sms_campaign/sms_campaign.tsx';
+import MainCompanySettings from './routes/company/settings/main_settings.tsx';
 
 
 ReactGA.initialize('G-5MTC2FVP3C');
@@ -99,10 +100,6 @@ const router = createBrowserRouter([
         element: <SmsCampaign />
       },
       {
-        path: "/plans",
-        element: <PricingPlans />
-      },
-      {
         path: "/company_settings",
         element: <CompanySettings />,
         children: [
@@ -145,7 +142,21 @@ const router = createBrowserRouter([
           }
         ]
       },
-
+      
+      {
+        path: "company",
+        element: <MainCompanySettings />,
+        children: [
+          {
+            path: "settings",
+            element: <MainCompanySettings />
+          },
+          {
+            path: "plans",
+            element: <PricingPlans />
+          },
+        ]
+      },
 
       {
         path: "/clients/:id",
@@ -174,6 +185,7 @@ const router = createBrowserRouter([
       }
     ]
   },
+
   {
     path: "/login/",
     element: <Login />

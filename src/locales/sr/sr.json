@@ -212,6 +212,8 @@
       "products": "Proizvodi",
       "services": "Usluge"
     },
+    "company_settings":"Glavna podesavanja",
+    "plans":"Paket usluga",
     "settings": {
       "employees": "Zaposleni",
       "sms_settings": "SMS Podešavanja",

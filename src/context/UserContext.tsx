@@ -4,10 +4,18 @@ interface User {
     id: number,
     name: string,
     email: string,
-    company_name:string,
+    company_name: string,
     avatar_url: string,
-    business_type_slug:string,
-    email_verified_at:string|null,
+    business_type_slug: string,
+    email_verified_at: string | null,
+    price_plan_details?: PricePlanDetails
+}
+interface PricePlanDetails {
+    is_trial: boolean,
+    available_sms_count: number,
+    plan_expires_within: number,
+    plan_name: string,
+    plan_id: number
 }
 interface UserProviderProps {
     children: ReactNode,
