@@ -6,6 +6,7 @@ import PrefixNumberInput from "../../components/inputs/predefined_prefix";
 import axios_instance from "../../config/api_defaults";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 import { Info } from "react-feather";
+import toast, { Toaster } from "react-hot-toast";
 
 interface CreateClientProps {
     cancelFunction: () => void,
@@ -48,9 +49,14 @@ const CreateClientModal = (props: CreateClientProps) => {
             }
             setForm(blankForm);
         }).catch(e => {
+           
+            if(e.response.data.limit_reached){
+                toast.error(e.response.data.limit_reached,{duration:7000})
+            }
             const errors: Array<string> = []
             Object.keys(e.response.data.errors).forEach(field => {
                 errors.push(`Greska: ${e.response.data.errors[field].join(', ')}`);
+                toast.error('greska');
             });
             setValidationErrors(errors);
         })
@@ -82,7 +88,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                         return <p key={e} className="text-red-600 p-2 text-center text-md">{e}</p>
                     })
                 }
-
+                <Toaster/>
                 <form onSubmit={handleSubmit} className="pt-5">
 
                     <Flex direction="column" gap="3">
