@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
-import { BarChart, Box, Calendar, DollarSign, Grid, Info, Plus, Settings, Share2, Users } from "react-feather";
+import { BarChart, Calendar, DollarSign, Grid, Info, Plus, Settings, Share2, Users } from "react-feather";
 import { useUser } from "../context/UserContext";
 import ReactGA from "react-ga4";
 import { Callout } from "@radix-ui/themes";
@@ -82,12 +82,12 @@ const MyLayout = () => {
                     href: '/analytics/services',
                     current: location.pathname === ("/analytics/services")
                 },
-                {
-                    name: t('navbar.analytics.products'),
-                    href: '/analytics/products',
-                    icon: <Box size={18} />,
-                    current: location.pathname === ("/analytics/products")
-                }
+                // {
+                //     name: t('navbar.analytics.products'),
+                //     href: '/analytics/products',
+                //     icon: <Box size={18} />,
+                //     current: location.pathname === ("/analytics/products")
+                // }
 
             ],
             current: location.pathname.startsWith("/analytics"),
