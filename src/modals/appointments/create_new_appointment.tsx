@@ -273,38 +273,60 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </div>
 
                         {form.user_id &&
+                            <>
 
-                            <div>
-                                <label>{t('appointment.remind_client')} {form.remind_client}</label>
-                                <Switch
-                                    checked={form.remind_client}
-                                    onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
-                                />
-                            </div>
+                                <div className="flex justify-between pl-2 pr-2 pt-2">
+                                    <div>
+                                        <label>{t('appointment.remind_client')} {form.remind_client}</label>
+                                    </div>
+                                    <div>
+                                    <Switch
+                                            checked={form.remind_client}
+                                            onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
+                                        />
+                                    </div>
+                                </div>
+                            </>
+
+
                         }
 
                         {form.user_id && showSettingsForRemind && form.remind_client && (
                             <>
-                                <div>
-                                    <label>{t('appointment.remind_day_before')}</label>
-                                    <Switch
-                                        checked={form?.remind_setting?.remind_day_before}
-                                        onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: check } })}
-                                    />
+
+
+                                <div className="flex justify-between pl-2 pr-2 pt-1">
+                                    <div>
+                                        <label>{t('appointment.remind_day_before')}</label>
+                                    </div>
+                                    <div>
+                                        <Switch
+                                            checked={form?.remind_setting?.remind_day_before}
+                                            onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_day_before: check } })}
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label>{t('appointment.remind_same_day')}</label>
-                                    <Switch
-                                        checked={form.remind_setting.remind_same_day}
-                                        onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: check } })}
-                                    />
+                                <div className="flex justify-between  pl-2 pr-2 pt-1">
+                                    <div>
+                                        <label>{t('appointment.remind_same_day')}</label>
+                                    </div>
+                                    <div>
+                                        <Switch
+                                            checked={form.remind_setting.remind_same_day}
+                                            onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_same_day: check } })}
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label>{t('appointment.send_confirmation_client')}</label>
-                                    <Switch
-                                        checked={form.remind_setting.remind_now}
-                                        onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_now: check } })}
-                                    />
+                                <div className="flex justify-between  pl-2 pr-2 pt-1">
+                                    <div>
+                                        <label>{t('appointment.send_confirmation_client')}</label>
+                                    </div>
+                                    <div>
+                                        <Switch
+                                            checked={form.remind_setting.remind_now}
+                                            onCheckedChange={(check) => setForm((c) => c && { ...c, remind_setting: { ...c.remind_setting, remind_now: check } })}
+                                        />
+                                    </div>
                                 </div>
 
                             </>
