@@ -15,6 +15,7 @@ import { useQueryClient } from "react-query";
 import CreateItemModal from "../items/create_item_modal";
 import dayjs from "dayjs";
 import useEmployees from "../../hooks/useEmployees";
+import AddUserSettings from "../clients/add_user_settings_modal";
 
 
 interface CreateAppointmentModalProps {
@@ -36,7 +37,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         status: "pending",
         start: "",
         end: "",
-        price: 0,
+        price: "",
         color: "#56A3A6",
         remind_client: true,
         remind_setting: {
@@ -58,6 +59,8 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
     const { employeeTransformedList } = useEmployees();
     const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
     const [isCreateServiceModalOpen, setIsCreateServiceModalOpen] = useState(false);
+    const [updateClientPhoneNumber, setUpdateClientPhoneNumber] = useState(false);
+    const [updateClientProfileModalOpen, setUpdateClientProfileModalOpen] = useState(false);
 
     const queryClient = useQueryClient();
     const [form, setForm] = useState<AppointmentDTO>(defaultForm);
@@ -140,6 +143,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                 setForm((c) => c && { ...c, remind_client: client.settings.receive_sms })
             } else {
                 setForm((c) => c && { ...c, remind_client: false });
+                setUpdateClientPhoneNumber(true)
             }
 
             setForm((c) => c && { ...c, user_id: client.id.toString() });
@@ -174,13 +178,25 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
             setForm((c) => c && { ...c, title: r.name });
         }
     }
+    const setRemindClient = (checked: boolean) => {
+        if (form.user_id && updateClientPhoneNumber) {
+            setUpdateClientProfileModalOpen(true);
+        } else {
+            setForm((c) => c && { ...c, remind_client: checked })
+        }
 
+    }
     const saveItemAndInject = (form: ItemDTO) => {
         axios_instance().post('/items', form).then((r) => {
             queryClient.invalidateQueries(['fetch_services']);
             setIsCreateServiceModalOpen(false);
             setActiveService(r.data)
         });
+    }
+    const handleSaved = (isSaved:boolean) => {
+        setForm((c) => c && { ...c, remind_client: isSaved })
+        setUpdateClientPhoneNumber(false);
+        setUpdateClientProfileModalOpen(false);
     }
 
     useEffect(() => {
@@ -193,6 +209,16 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
 
     return (
         <>
+            {form.user_id &&
+                <AddUserSettings
+                    isOpen={updateClientProfileModalOpen}
+                    user_id={form.user_id}
+                    type="phone_number"
+                    custom_message="Da bi ste aktivirali SMS obavestenja, molimo unesite validan telefonski  broj"
+                    cancelFunction={() => { handleSaved(false) }}
+                    onSave={() => { handleSaved(true) }}
+                />
+            }
             <CreateItemModal
                 saveFunction={(form) => { saveItemAndInject(form) }}
                 isOpen={isCreateServiceModalOpen}
@@ -280,15 +306,13 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                         <label>{t('appointment.remind_client')} {form.remind_client}</label>
                                     </div>
                                     <div>
-                                    <Switch
+                                        <Switch
                                             checked={form.remind_client}
-                                            onCheckedChange={(checked) => setForm((c) => c && { ...c, remind_client: checked })}
+                                            onCheckedChange={(checked) => { setRemindClient(checked) }}
                                         />
                                     </div>
                                 </div>
                             </>
-
-
                         }
 
                         {form.user_id && showSettingsForRemind && form.remind_client && (
@@ -317,7 +341,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="flex justify-between  pl-2 pr-2 pt-1">
+                                <div className="flex justify-between  pl-2 pr-2 pt-1 pb-2">
                                     <div>
                                         <label>{t('appointment.send_confirmation_client')}</label>
                                     </div>

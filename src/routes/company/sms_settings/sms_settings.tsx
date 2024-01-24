@@ -12,7 +12,7 @@ import PrefixNumberInput from "../../../components/inputs/predefined_prefix";
 
 
 const SmsSettings = () => {
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
     const [phoneVerificationForm, setPhoneVerificationForm] = useState({
         phone_number: ""
     });
@@ -182,13 +182,13 @@ const SmsSettings = () => {
                         </div>
                     </div>
 
-                    <div className="px-4">
+                    {/* <div className="px-4">
                         <p className="text-2xl text-center mb-5">{t('sms.show_clients_you_care')}</p>
                         <div className="flex flex-col md:flex-row">
                             <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.thanks_note, 'thanks_note') }} headerText={t('sms.thank_you_note')} type="thanks_note" subHeaderText="2 sata posle termina" mainText={smsSettings.sms_templates.thanks_note}></SmsSettingsBox>
                             <SmsSettingsBox onClickFunction={() => { openModal(smsSettings.sms_templates.birthday_wish, 'birthday_wish') }} headerText={t('sms.birthday_wish')} type="birthday_wish" subHeaderText="U 10:00am" mainText={smsSettings.sms_templates.birthday_wish}></SmsSettingsBox>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="px-4">
                         <p className="text-2xl text-center mb-5">{t('sms.employee_sms_settings')}</p>

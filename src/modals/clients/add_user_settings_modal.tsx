@@ -12,8 +12,9 @@ interface createProps {
     isOpen: boolean,
     user_id: string,
     cancelFunction: () => void,
+    onSave?: (isSaved:boolean) => void,
     type: AvailableSettingField,
-    saveFunction: () => void,
+    custom_message?: string
 }
 interface ClientSettings {
     email?: string,
@@ -38,6 +39,10 @@ const AddUserSettings = (props: createProps) => {
         axios_instance().get(`/clients/${props.user_id}`).then(r => {
             if (r.data[props.type]) {
                 setForm((c) => c && { ...c, [props.type]: r.data[props.type] })
+                queryClient.invalidateQueries(['fetch_clients']);
+                if(props.onSave){
+                    props.onSave(true); 
+                }
             }
         })
     }
@@ -108,7 +113,9 @@ const AddUserSettings = (props: createProps) => {
                         </Button>
                     </Dialog.Close>
                 </Flex>
-
+                {props.custom_message &&
+                    <p className="p-4">{props.custom_message}</p>
+                }
                 <form onSubmit={handleSubmit}>
                     {generateProperFormField()}
                     <Flex gap="3" mt="4" justify="end">

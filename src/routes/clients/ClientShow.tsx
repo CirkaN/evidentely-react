@@ -86,7 +86,6 @@ const ClientShow = () => {
                         isOpen={activeSettingsModalOpen}
                         user_id={id}
                         cancelFunction={() => setActiveSettingsModalOpen(false)}
-                        saveFunction={() => setActiveSettingsModalOpen(false)}
                         type={activeSettingsField}
                     />
                 </>
