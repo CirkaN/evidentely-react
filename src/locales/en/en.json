@@ -1,61 +1,61 @@
 {
-  "common": {
-    "email": "Email Address",
-    "password": "Password",
-    "enter_email": "Enter your email address",
-    "enter_password": "Enter your password",
-    "company_name": "Company Name",
-    "your_name": "Your Name",
-    "search": "Search...",
-    "please_wait": "Please wait",
-    "cancel": "Cancel",
-    "save": "Save",
-    "create": "Create",
-    "please_confirm": "Please confirm",
-    "this_action_is_final": "This action is irreversible",
-    "confirm": "Confirm",
-    "delete_success": "Deletion successful!",
-    "edit": "Edit",
-    "update_success": "Update successful"
-  },
-  "register": {
-    "register": "Register",
-    "register_text": "You can register here",
-    "already_has_account": "Already have an account? Please log in",
-    "register_button": "Register",
-    "login_button": "Log In",
-    "success": "You have successfully registered. Please log in",
-    "failed": "Registration failed. Please check your inputs"
-  },
-  "login": {
-    "login": "Log In",
-    "login_text": "You can log in here",
-    "lost_password": "Forgot your password?",
-    "dont_have_account": "Don't have an account? Register now",
-    "login_button": "Log In",
-    "register_button": "Register",
-    "check_credentials": "You entered incorrect credentials"
-  },
-  "create_package": {
-    "modal_title": "Create Package",
-    "modal_description": "Create a package of services",
-    "name": "Name",
-    "price": "Full Price",
-    "sale_price": "Discounted Price",
-    "expires_at": "Package expires on:",
-    "description": "Package Description",
-    "services": "List of Services"
-  },
-  "edit_package": {
-    "modal_title": "Edit Package",
-    "modal_description": "Edit package of services"
-  },
-  "item": {
-    "name": "Product Name",
-    "discount_price": "Discounted Price",
-    "price": "Price",
-    "duration": "Duration",
-    "color": "Calendar Color",
-    "note": "Note"
-  }
+    "common": {
+        "email": "Email Address",
+        "password": "Password",
+        "enter_email": "Enter your email address",
+        "enter_password": "Enter your password",
+        "company_name": "Company Name",
+        "your_name": "Your Name",
+        "search": "Search...",
+        "please_wait": "Please wait",
+        "cancel": "Cancel",
+        "save": "Save",
+        "create": "Create",
+        "please_confirm": "Please confirm",
+        "this_action_is_final": "This action is irreversible",
+        "confirm": "Confirm",
+        "delete_success": "Deletion successful!",
+        "edit": "Edit",
+        "update_success": "Update successful"
+    },
+    "register": {
+        "register": "Register",
+        "register_text": "You can register here",
+        "already_has_account": "Already have an account? Please log in",
+        "register_button": "Register",
+        "login_button": "Log In",
+        "success": "You have successfully registered. Please log in",
+        "failed": "Registration failed. Please check your inputs"
+    },
+    "login": {
+        "login": "Log In",
+        "login_text": "You can log in here",
+        "lost_password": "Forgot your password?",
+        "dont_have_account": "Don't have an account? Register now",
+        "login_button": "Log In",
+        "register_button": "Register",
+        "check_credentials": "You entered incorrect credentials"
+    },
+    "create_package": {
+        "modal_title": "Create Package",
+        "modal_description": "Create a package of services",
+        "name": "Name",
+        "price": "Full Price",
+        "sale_price": "Discounted Price",
+        "expires_at": "Package expires on:",
+        "description": "Package Description",
+        "services": "List of Services"
+    },
+    "edit_package": {
+        "modal_title": "Edit Package",
+        "modal_description": "Edit package of services"
+    },
+    "item": {
+        "name": "Product Name",
+        "discount_price": "Discounted Price",
+        "price": "Price",
+        "duration": "Duration",
+        "color": "Calendar Color",
+        "note": "Note"
+    }
 }

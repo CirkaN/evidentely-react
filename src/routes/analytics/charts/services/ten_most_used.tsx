@@ -6,35 +6,34 @@ import {
     Title,
     Tooltip,
     Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
-import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import axios_instance from '../../../../config/api_defaults';
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import axios_instance from "../../../../config/api_defaults";
 
 interface BackendResponse {
     most_missed: {
-        labels: Array<string>,
-        data: Array<number>
-    },
+        labels: Array<string>;
+        data: Array<number>;
+    };
     most_used: {
-        labels: Array<string>,
-        data: Array<number>
-    }
+        labels: Array<string>;
+        data: Array<number>;
+    };
 }
 
 interface AnalyticsProps {
     filterData: {
-        start_date: string | Date,
-        end_date: string | Date
-    }
+        start_date: string | Date;
+        end_date: string | Date;
+    };
 }
 const ServicesTenMostUsed = (props: AnalyticsProps) => {
-
     const [analyticsData, setAnalyticsData] = useState<BackendResponse>();
-    const [labels, setLabels] = useState<Array<string>>([])
-    const [analyticData, setData] = useState<Array<number>>([])
+    const [labels, setLabels] = useState<Array<string>>([]);
+    const [analyticData, setData] = useState<Array<number>>([]);
 
     ChartJS.register(
         CategoryScale,
@@ -42,17 +41,19 @@ const ServicesTenMostUsed = (props: AnalyticsProps) => {
         BarElement,
         Title,
         Tooltip,
-        Legend
+        Legend,
     );
 
     useQuery({
-        queryKey: ['ten_service_used', props.filterData],
-        refetchOnWindowFocus:false,
-        queryFn: () => axios_instance().post('/analytics/services_summary', props.filterData)
-            .then(r => {
-                setAnalyticsData(r.data)
-            })
-    })
+        queryKey: ["ten_service_used", props.filterData],
+        refetchOnWindowFocus: false,
+        queryFn: () =>
+            axios_instance()
+                .post("/analytics/services_summary", props.filterData)
+                .then((r) => {
+                    setAnalyticsData(r.data);
+                }),
+    });
 
     const data = {
         labels,
@@ -60,37 +61,35 @@ const ServicesTenMostUsed = (props: AnalyticsProps) => {
             {
                 label: "Usluge",
                 data: analyticData,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            }
-        ]
-    }
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+        ],
+    };
 
     const options = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top' as const,
+                position: "top" as const,
             },
             title: {
                 display: true,
-                text: 'Top 10 najvise koristenih usluga, ',
+                text: "Top 10 najvise koristenih usluga, ",
             },
         },
     };
     const injectAnalyticsData = () => {
         if (analyticsData) {
-            setData(analyticsData.most_used.data)
-            setLabels(analyticsData.most_used.labels)
+            setData(analyticsData.most_used.data);
+            setLabels(analyticsData.most_used.labels);
         }
-    }
+    };
     useEffect(() => {
-        injectAnalyticsData()
+        injectAnalyticsData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [analyticsData])
+    }, [analyticsData]);
 
-    return (
-        <Bar options={options} data={data} />
-    )
-}
+    return <Bar options={options} data={data} />;
+};
 export default ServicesTenMostUsed;

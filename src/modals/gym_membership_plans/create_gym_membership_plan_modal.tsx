@@ -1,16 +1,16 @@
 import { FormEvent, useState } from "react";
-import { GymMembershipPlanDTO } from "../../shared/interfaces/gym_membership_plan.interface"
+import { GymMembershipPlanDTO } from "../../shared/interfaces/gym_membership_plan.interface";
 import { Button, Dialog, Flex, TextField, Text } from "@radix-ui/themes";
 import axios_instance from "../../config/api_defaults";
 import { t } from "i18next";
 import { useQueryClient } from "react-query";
 
 interface CreateGymMembershipModal {
-    closeModalFunction: () => void,
-    isOpen: boolean,
+    closeModalFunction: () => void;
+    isOpen: boolean;
 }
 
-type PreparedGymMembershipDTO = Omit<GymMembershipPlanDTO, 'id'|'archived'>
+type PreparedGymMembershipDTO = Omit<GymMembershipPlanDTO, "id" | "archived">;
 
 const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
     const defaultFormValues: PreparedGymMembershipDTO = {
@@ -21,25 +21,27 @@ const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
     };
 
     const queryClient = useQueryClient();
-    const [form, setForm] = useState<PreparedGymMembershipDTO>(defaultFormValues);
+    const [form, setForm] =
+        useState<PreparedGymMembershipDTO>(defaultFormValues);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        saveFunction()
-    }
+        saveFunction();
+    };
     const saveFunction = () => {
-        axios_instance().post('/gym_membership_plans', form).then(() => {
-            queryClient.invalidateQueries({
-                queryKey: ['gym_memberships'],
-            })
-            setForm(defaultFormValues);
-            props.closeModalFunction();
-
-        })
-    }
+        axios_instance()
+            .post("/gym_membership_plans", form)
+            .then(() => {
+                queryClient.invalidateQueries({
+                    queryKey: ["gym_memberships"],
+                });
+                setForm(defaultFormValues);
+                props.closeModalFunction();
+            });
+    };
     return (
         <>
-            <Dialog.Root open={props.isOpen} >
+            <Dialog.Root open={props.isOpen}>
                 <Dialog.Content style={{ maxWidth: 450 }}>
                     <Dialog.Title>Kreiraj plan clanarine</Dialog.Title>
                     <form onSubmit={handleSubmit}>
@@ -50,7 +52,15 @@ const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
                                 </Text>
                                 <TextField.Input
                                     required={true}
-                                    onChange={(e) => setForm((c) => c && { ...c, name: e.target.value })}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    name: e.target.value,
+                                                },
+                                        )
+                                    }
                                     value={form.name}
                                 />
                             </label>
@@ -62,10 +72,17 @@ const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
                                 </Text>
                                 <textarea
                                     className="p-2.5 w-full text-sm text-gray-900 bg-gray-50 border"
-                                    onChange={(e) => setForm((c) => c && { ...c, description: e.target.value })}
-                                    value={form.description} >
-
-                                </textarea>
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    description: e.target.value,
+                                                },
+                                        )
+                                    }
+                                    value={form.description}
+                                ></textarea>
                             </label>
                         </Flex>
                         <Flex direction="column" gap="3">
@@ -76,7 +93,17 @@ const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
                                 <TextField.Input
                                     type="number"
                                     required={true}
-                                    onChange={(e) => setForm((c) => c && { ...c, price: parseInt(e.target.value) })}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    price: parseInt(
+                                                        e.target.value,
+                                                    ),
+                                                },
+                                        )
+                                    }
                                     value={form.price}
                                 />
                             </label>
@@ -89,25 +116,38 @@ const CreateGymMembershipModal = (props: CreateGymMembershipModal) => {
                                 <TextField.Input
                                     type="number"
                                     required={true}
-                                    onChange={(e) => setForm((c) => c && { ...c, duration_months: parseInt(e.target.value) })}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    duration_months: parseInt(
+                                                        e.target.value,
+                                                    ),
+                                                },
+                                        )
+                                    }
                                     value={form.duration_months}
                                 />
                             </label>
                         </Flex>
 
-
                         <Flex gap="3" mt="4" justify="end">
                             <Dialog.Close>
-                                <Button onClick={props.closeModalFunction} variant="soft" color="gray">
-                                    {t('common.cancel')}
+                                <Button
+                                    onClick={props.closeModalFunction}
+                                    variant="soft"
+                                    color="gray"
+                                >
+                                    {t("common.cancel")}
                                 </Button>
                             </Dialog.Close>
-                            <Button type="submit" >{t('common.save')}</Button>
+                            <Button type="submit">{t("common.save")}</Button>
                         </Flex>
                     </form>
                 </Dialog.Content>
-            </Dialog.Root >
+            </Dialog.Root>
         </>
-    )
-}
-export default CreateGymMembershipModal
+    );
+};
+export default CreateGymMembershipModal;

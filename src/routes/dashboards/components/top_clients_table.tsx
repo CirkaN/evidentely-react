@@ -4,52 +4,62 @@ import { t } from "i18next";
 import { ClientDTO } from "../../../shared/interfaces/client.interface";
 
 interface Props {
-    client_count: number,
+    client_count: number;
 }
 const TopClientsTable = (props: Props) => {
-    const url = `clients?per_page=${props.client_count}&custom_sort=highest_profit`
+    const url = `clients?per_page=${props.client_count}&custom_sort=highest_profit`;
 
     const generateLink = (client_name: string, r: ClientDTO) => {
-        return (<Link to={`/clients/${r.id}/summary/`} className="text-blue-500">{client_name}</Link>)
-    }
+        return (
+            <Link to={`/clients/${r.id}/summary/`} className="text-blue-500">
+                {client_name}
+            </Link>
+        );
+    };
     const formatCurrency = (t: number) => {
-        const s = new Intl.NumberFormat('sr-RS', {
-            style: 'currency',
-            currency: 'RSD',
+        const s = new Intl.NumberFormat("sr-RS", {
+            style: "currency",
+            currency: "RSD",
         });
         return s.format(t);
-    }
+    };
 
     const fields: Field[] = [
         {
-            name: t('common.name'),
-            formatFn: (client_name, r) => generateLink(client_name, r as ClientDTO),
+            name: t("common.name"),
+            formatFn: (client_name, r) =>
+                generateLink(client_name, r as ClientDTO),
             editable_from_table: false,
             original_name: "name",
             has_sort: false,
-            show: true
+            show: true,
         },
         {
-            name: t('common.email'),
+            name: t("common.email"),
             editable_from_table: false,
             original_name: "email",
             has_sort: false,
             show: true,
         },
         {
-            name: t('common.profit'),
+            name: t("common.profit"),
             editable_from_table: false,
             original_name: "totalProfit",
-            formatFn: (t) => <><span className="text-green-800">{formatCurrency(parseInt(t))}</span></>,
+            formatFn: (t) => (
+                <>
+                    <span className="text-green-800">
+                        {formatCurrency(parseInt(t))}
+                    </span>
+                </>
+            ),
             has_sort: false,
             show: true,
         },
-
-    ]
+    ];
     return (
         <>
             <DataTable
-                table_name={t('analytics.top_clients')}
+                table_name={t("analytics.top_clients")}
                 url={url}
                 has_actions={false}
                 has_search={false}
@@ -57,6 +67,6 @@ const TopClientsTable = (props: Props) => {
                 fields={fields}
             />
         </>
-    )
-}
+    );
+};
 export default TopClientsTable;

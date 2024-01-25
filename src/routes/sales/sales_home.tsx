@@ -1,7 +1,15 @@
 import { Eye, Info, Plus, Trash } from "react-feather";
-import DataTable, { Action, ActionTypes, Field, TableAction } from "../../components/datatable";
+import DataTable, {
+    Action,
+    ActionTypes,
+    Field,
+    TableAction,
+} from "../../components/datatable";
 import SalesHomeHeader from "./components/header";
-import { PendingSaleDTO, SaleDTO } from "../../shared/interfaces/sales.interface";
+import {
+    PendingSaleDTO,
+    SaleDTO,
+} from "../../shared/interfaces/sales.interface";
 import { useState } from "react";
 import SweetAlert2 from "react-sweetalert2";
 import toast from "react-hot-toast";
@@ -13,8 +21,7 @@ import ShowSaleModal from "../../modals/sales/show_sale_modal";
 import { Callout } from "@radix-ui/themes";
 
 const SalesIndex = () => {
-
-    const url = "sales?per_page=5"
+    const url = "sales?per_page=5";
     const queryClient = useQueryClient();
     const { t } = useTranslation();
     const [openSaleCreateModal, setOpenSaleCreateModal] = useState(false);
@@ -25,48 +32,53 @@ const SalesIndex = () => {
     const tableActions: TableAction[] = [
         {
             icon: <Plus />,
-            fn: () => { setOpenSaleCreateModal(true) }
-        }
-    ]
+            fn: () => {
+                setOpenSaleCreateModal(true);
+            },
+        },
+    ];
 
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
             show: true,
-            icon: 'error',
-            title: t('common.please_confirm'),
-            text: t('sales.confirm_delete'),
+            icon: "error",
+            title: t("common.please_confirm"),
+            text: t("sales.confirm_delete"),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: t('common.cancel'),
-            confirmButtonText: t('common.confirm'),
+            cancelButtonText: t("common.cancel"),
+            confirmButtonText: t("common.confirm"),
             confirmButtonColor: "red",
-            onConfirm: () => { deleteSale(id) },
-            onResolve: setSwalOff
+            onConfirm: () => {
+                deleteSale(id);
+            },
+            onResolve: setSwalOff,
         });
-
-    }
+    };
     const deleteSale = (id: number) => {
-        axios_instance().delete(`/sales/${id}`).then(() => {
-            toast.success(t('sales.delete_success'));
-            queryClient.invalidateQueries({
-                queryKey: ['sales'],
+        axios_instance()
+            .delete(`/sales/${id}`)
+            .then(() => {
+                toast.success(t("sales.delete_success"));
+                queryClient.invalidateQueries({
+                    queryKey: ["sales"],
+                });
             })
-
-        }).catch((e) => {
-            toast.error(e.response.message)
-        })
-    }
+            .catch((e) => {
+                toast.error(e.response.message);
+            });
+    };
     function setSwalOff() {
         const dataCopied = JSON.parse(JSON.stringify(swalProps));
         dataCopied.show = false;
         setSwalProps(dataCopied);
     }
     const openShowModal = (saleId: number) => {
-        setActiveSaleId(saleId)
-        setShowSaleModal(true)
-    }
+        setActiveSaleId(saleId);
+        setShowSaleModal(true);
+    };
     const actions: Action<SaleDTO>[] = [
         {
             type: ActionTypes.Show,
@@ -76,124 +88,145 @@ const SalesIndex = () => {
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red" />,
-            fn: (sale: SaleDTO) => { raiseDeleteAlert(sale.id) }
+            fn: (sale: SaleDTO) => {
+                raiseDeleteAlert(sale.id);
+            },
         },
     ];
     const generateStatus = (status: string) => {
         switch (status) {
-            case 'paid':
-                return (<span className=" font-medium me-2 px-2.5 py-0.5 rounded bg-green-600 text-green-100">{t('sales.paid')}</span>)
+            case "paid":
+                return (
+                    <span className=" font-medium me-2 px-2.5 py-0.5 rounded bg-green-600 text-green-100">
+                        {t("sales.paid")}
+                    </span>
+                );
                 break;
-            case 'partially_paid':
-                return (<span className="bg-orange-500 text-white  font-medium me-2 px-2.5 py-0.5 rounded ">{t('sales.partially_paid')}</span>)
+            case "partially_paid":
+                return (
+                    <span className="bg-orange-500 text-white  font-medium me-2 px-2.5 py-0.5 rounded ">
+                        {t("sales.partially_paid")}
+                    </span>
+                );
                 break;
             default:
-                return (<span className="bg-red-600 text-white  font-medium me-2 px-2.5 py-0.5 rounded">{t('sales.unpaid')}</span>)
+                return (
+                    <span className="bg-red-600 text-white  font-medium me-2 px-2.5 py-0.5 rounded">
+                        {t("sales.unpaid")}
+                    </span>
+                );
         }
-    }
+    };
     const formatCurrency = (t: string) => {
-        const s = new Intl.NumberFormat('sr-RS', {
-            style: 'currency',
-            currency: 'RSD',
+        const s = new Intl.NumberFormat("sr-RS", {
+            style: "currency",
+            currency: "RSD",
         });
         return s.format(parseInt(t));
-    }
+    };
     const fields: Field[] = [
         {
-            name: t('common.name'),
+            name: t("common.name"),
             editable_from_table: false,
             original_name: "item_name",
             has_sort: true,
-            show: true
+            show: true,
         },
         {
-            name: t('sales.left_to_pay'),
+            name: t("sales.left_to_pay"),
             editable_from_table: false,
             original_name: "pending_amount",
             formatFn: (t: string) => formatCurrency(t),
             has_sort: true,
-            show: true
+            show: true,
         },
         {
-            name: t('sales.total_paid'),
+            name: t("sales.total_paid"),
             editable_from_table: false,
             original_name: "total_paid",
             formatFn: (t: string) => formatCurrency(t),
             has_sort: true,
-            show: true
+            show: true,
         },
 
         {
-            name: t('sales.total_amount'),
+            name: t("sales.total_amount"),
             editable_from_table: false,
             formatFn: (t: string) => formatCurrency(t),
             original_name: "price",
             has_sort: true,
-            show: true
+            show: true,
         },
         {
-            name: t('sales.status'),
+            name: t("sales.status"),
             editable_from_table: false,
             original_name: "status",
             formatFn: (t: string) => generateStatus(t),
             has_sort: true,
-            show: true
+            show: true,
         },
         {
-            name: t('note'),
+            name: t("note"),
             editable_from_table: false,
             original_name: "note",
             has_sort: true,
             show: true,
         },
-
-
-    ]
+    ];
     const saveSale = (form: PendingSaleDTO) => {
-        axios_instance().post('/sales', form).then(() => {
-            setOpenSaleCreateModal(false);
-            queryClient.invalidateQueries({
-                queryKey: ['sales'],
-            })
-        })
-    }
+        axios_instance()
+            .post("/sales", form)
+            .then(() => {
+                setOpenSaleCreateModal(false);
+                queryClient.invalidateQueries({
+                    queryKey: ["sales"],
+                });
+            });
+    };
     return (
         <>
             <SalesHomeHeader />
-          <div className="pt-2 pb-2">
-          <Callout.Root>
-                <Callout.Icon>
-                    <Info size={18} />
-                </Callout.Icon>
-                <Callout.Text color="blue">
-                    {t('sales.info_box_description')}
-                </Callout.Text>
-            </Callout.Root>
-          </div>
+            <div className="pt-2 pb-2">
+                <Callout.Root>
+                    <Callout.Icon>
+                        <Info size={18} />
+                    </Callout.Icon>
+                    <Callout.Text color="blue">
+                        {t("sales.info_box_description")}
+                    </Callout.Text>
+                </Callout.Root>
+            </div>
 
             <SweetAlert2 {...swalProps} />
             <CreateSaleModal
                 isOpen={openSaleCreateModal}
-                cancelFunction={() => { setOpenSaleCreateModal(false) }}
-                saveFunction={(form) => { saveSale(form) }}
+                cancelFunction={() => {
+                    setOpenSaleCreateModal(false);
+                }}
+                saveFunction={(form) => {
+                    saveSale(form);
+                }}
             />
-            {activeSaleId &&
+            {activeSaleId && (
                 <ShowSaleModal
                     saleId={activeSaleId}
                     isOpen={showSaleModal}
-                    cancelFunction={() => { setShowSaleModal(false) }}
-                />}
+                    cancelFunction={() => {
+                        setShowSaleModal(false);
+                    }}
+                />
+            )}
             <DataTable
                 queryKey="sales"
                 table_actions={tableActions}
                 actions={actions}
                 url={url}
                 fields={fields}
-                table_name={t('sales.table_name')}
+                table_name={t("sales.table_name")}
                 has_actions={true}
             />
         </>
-    )
-}
+    );
+};
 
 export default SalesIndex;

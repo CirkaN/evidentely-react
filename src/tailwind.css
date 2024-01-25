@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.fc{
+.fc {
     height: 100%;
 }
 .fc-day-today {
     background: rgb(166, 188, 212) !important;
     border: none !important;
-} 
+}

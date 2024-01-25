@@ -1,6 +1,10 @@
-
 import { Eye, Plus, Trash } from "react-feather";
-import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
+import DataTable, {
+    Action,
+    ActionTypes,
+    Field,
+    TableAction,
+} from "../../../components/datatable";
 import { ItemDTO } from "../../../shared/interfaces/item.interface";
 import CreateItemModal from "../../../modals/items/create_item_modal";
 import axios_instance from "../../../config/api_defaults";
@@ -23,60 +27,65 @@ const Services = () => {
         {
             type: ActionTypes.Show,
             icon: <Eye color="lightblue" />,
-            fn: (item: ItemDTO) => { openShowModal(item.id) }
+            fn: (item: ItemDTO) => {
+                openShowModal(item.id);
+            },
         },
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red" />,
-            fn: (item: ItemDTO) => { raiseDeleteAlert(parseInt(item.id)) }
+            fn: (item: ItemDTO) => {
+                raiseDeleteAlert(parseInt(item.id));
+            },
         },
-    ]
+    ];
     const openShowModal = (id: string) => {
         setActiveShowItem(id);
         setIsShowItemModalOpen(true);
-    }
+    };
 
     const fields: Field[] = [
         {
-            name: t('common.name'),
+            name: t("common.name"),
             editable_from_table: true,
             show: true,
             original_name: "name",
-            has_sort: true
+            has_sort: true,
         },
         {
-            name: t('common.price'),
+            name: t("common.price"),
             editable_from_table: true,
             show: true,
             original_name: "price",
-            has_sort: true
+            has_sort: true,
         },
         {
-            name: t('common.selling_price'),
+            name: t("common.selling_price"),
             editable_from_table: true,
             show: true,
             original_name: "selling_price",
-            has_sort: true
+            has_sort: true,
         },
-    
-    ]
+    ];
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
             show: true,
-            icon: 'error',
-            title: t('common.please_confirm'),
-            text: 'This action is unreversible and it will delete service with  all records associated with this service',
+            icon: "error",
+            title: t("common.please_confirm"),
+            text: "This action is unreversible and it will delete service with  all records associated with this service",
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: 'Opozovi',
-            confirmButtonText: t('common.confirm'),
+            cancelButtonText: "Opozovi",
+            confirmButtonText: t("common.confirm"),
             confirmButtonColor: "red",
-            onConfirm: () => { deleteItem(id) },
-            onResolve: setSwalOff
+            onConfirm: () => {
+                deleteItem(id);
+            },
+            onResolve: setSwalOff,
         });
-    }
+    };
 
     function setSwalOff() {
         const dataCopied = JSON.parse(JSON.stringify(swalProps));
@@ -85,40 +94,50 @@ const Services = () => {
     }
 
     const deleteItem = (id: number) => {
-        axios_instance().delete(`/items/${id}`).then(() => {
-            toast.success(t('toasts.delete_success'));
+        axios_instance()
+            .delete(`/items/${id}`)
+            .then(() => {
+                toast.success(t("toasts.delete_success"));
 
-            queryClient.invalidateQueries({
-                queryKey: ['services'],
-            })
-        })
-    }
+                queryClient.invalidateQueries({
+                    queryKey: ["services"],
+                });
+            });
+    };
 
-    const table_actions: TableAction[] = [{
-        icon: <Plus />,
-        fn: () => { setIsCreateItemModalOpen(true) }
-    }]
+    const table_actions: TableAction[] = [
+        {
+            icon: <Plus />,
+            fn: () => {
+                setIsCreateItemModalOpen(true);
+            },
+        },
+    ];
     const cancelFunction = () => {
         setIsCreateItemModalOpen(false);
-    }
+    };
     const saveFunction = (form: ItemDTO) => {
-        axios_instance().post('/items', form).then(() => {
-            queryClient.invalidateQueries({
-                queryKey: ['services'],
-            })
-            setIsCreateItemModalOpen(false);
-        });
-    }
+        axios_instance()
+            .post("/items", form)
+            .then(() => {
+                queryClient.invalidateQueries({
+                    queryKey: ["services"],
+                });
+                setIsCreateItemModalOpen(false);
+            });
+    };
     const cancelShowFunction = () => {
-        setIsShowItemModalOpen(false)
-    }
+        setIsShowItemModalOpen(false);
+    };
     const saveShowFunction = (form: ItemDTO) => {
-        axios_instance().put(`/items/${form.id}`, form).then(() => {
-            toast.success(t('common.update_success'))
-            queryClient.invalidateQueries({ queryKey: ['services'] })
-            setIsShowItemModalOpen(false);
-        })
-    }
+        axios_instance()
+            .put(`/items/${form.id}`, form)
+            .then(() => {
+                toast.success(t("common.update_success"));
+                queryClient.invalidateQueries({ queryKey: ["services"] });
+                setIsShowItemModalOpen(false);
+            });
+    };
 
     return (
         <>
@@ -140,13 +159,13 @@ const Services = () => {
                 queryKey="services"
                 table_actions={table_actions}
                 has_actions={true}
-                table_name={t('common.services')}
+                table_name={t("common.services")}
                 url="items?type=service&per_page=10"
                 actions={actions}
                 fields={fields}
             ></DataTable>
         </>
-    )
-}
+    );
+};
 
 export default Services;

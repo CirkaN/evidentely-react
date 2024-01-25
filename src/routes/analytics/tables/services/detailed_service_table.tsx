@@ -1,6 +1,6 @@
-import { Callout } from "@radix-ui/themes"
-import { Info } from "react-feather"
-import DataTable, { Field } from "../../../../components/datatable"
+import { Callout } from "@radix-ui/themes";
+import { Info } from "react-feather";
+import DataTable, { Field } from "../../../../components/datatable";
 
 // interface ServiceTableProps {
 //     filterData: {
@@ -15,24 +15,23 @@ const fields: Field[] = [
         original_name: "name",
         editable_from_table: false,
         has_sort: false,
-        show: true
+        show: true,
     },
     {
         name: "Broj zakazivanja",
         original_name: "appointments_count",
         editable_from_table: false,
         has_sort: true,
-        show: true
+        show: true,
     },
     {
         name: "Uplate",
         original_name: "total_amount_paid",
         editable_from_table: false,
         has_sort: true,
-        show: true
+        show: true,
     },
-
-]
+];
 
 const DetailedServiceTableAnalytic = () => {
     return (
@@ -43,7 +42,8 @@ const DetailedServiceTableAnalytic = () => {
                         <Info size={18} />
                     </Callout.Icon>
                     <Callout.Text color="iris">
-                        Uplate su vidljive samo za usluge koje imaju kompletiran status (naplaceni u potpunosti)
+                        Uplate su vidljive samo za usluge koje imaju kompletiran
+                        status (naplaceni u potpunosti)
                     </Callout.Text>
                 </Callout.Root>
             </div>
@@ -57,6 +57,6 @@ const DetailedServiceTableAnalytic = () => {
                 />
             </div>
         </>
-    )
-}
-export default DetailedServiceTableAnalytic
+    );
+};
+export default DetailedServiceTableAnalytic;

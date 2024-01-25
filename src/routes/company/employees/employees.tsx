@@ -1,5 +1,10 @@
 import { Check, Info, Plus, Trash, X } from "react-feather";
-import DataTable, { Action, ActionTypes, Field, TableAction } from "../../../components/datatable";
+import DataTable, {
+    Action,
+    ActionTypes,
+    Field,
+    TableAction,
+} from "../../../components/datatable";
 import { useState } from "react";
 import CreateEmployeeModal from "../../../modals/employees/create_employee_modal";
 import SweetAlert2 from "react-sweetalert2";
@@ -12,8 +17,8 @@ import { Link } from "react-router-dom";
 import { Callout } from "@radix-ui/themes";
 
 const Employees = () => {
-
-    const [isCreateEmployeeModalOpen, setisCreateEmployeeModalOpen] = useState(false);
+    const [isCreateEmployeeModalOpen, setisCreateEmployeeModalOpen] =
+        useState(false);
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const openEmployeeCreateModal = () => {
@@ -24,14 +29,16 @@ const Employees = () => {
         setisCreateEmployeeModalOpen(false);
     };
 
-    const url = "employees?per_page=5"
+    const url = "employees?per_page=5";
 
     const tableActions: TableAction[] = [
         {
             icon: <Plus></Plus>,
-            fn: () => { openEmployeeCreateModal() }
-        }
-    ]
+            fn: () => {
+                openEmployeeCreateModal();
+            },
+        },
+    ];
 
     const actions: Action<EmployeeDTO>[] = [
         // {
@@ -42,7 +49,9 @@ const Employees = () => {
         {
             type: ActionTypes.Delete,
             icon: <Trash color="red"></Trash>,
-            fn: (employee: EmployeeDTO) => { employee.id && raiseDeleteAlert(employee.id) }
+            fn: (employee: EmployeeDTO) => {
+                employee.id && raiseDeleteAlert(employee.id);
+            },
         },
     ];
 
@@ -55,97 +64,105 @@ const Employees = () => {
     const raiseDeleteAlert = (id: string) => {
         setSwalProps({
             show: true,
-            icon: 'error',
-            title: t('common.please_confirm'),
-            text: t('common.this_action_is_final'),
+            icon: "error",
+            title: t("common.please_confirm"),
+            text: t("common.this_action_is_final"),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
             showConfirmButton: true,
-            cancelButtonText: t('common.cancel'),
-            confirmButtonText: t('common.confirm'),
+            cancelButtonText: t("common.cancel"),
+            confirmButtonText: t("common.confirm"),
             confirmButtonColor: "red",
-            onConfirm: () => { deleteEmployee(id) },
-            onResolve: setSwalOff
+            onConfirm: () => {
+                deleteEmployee(id);
+            },
+            onResolve: setSwalOff,
         });
-
-    }
+    };
     const generateView = (t: string) => {
-        return (<span className="text-blue-500">{t}</span>)
-        return (<Link to="/" className="text-blue-500">{t}</Link>)
-    }
+        return <span className="text-blue-500">{t}</span>;
+        return (
+            <Link to="/" className="text-blue-500">
+                {t}
+            </Link>
+        );
+    };
     const fields: Field<EmployeeDTO>[] = [
         {
-            name: t('common.name'),
+            name: t("common.name"),
             editable_from_table: false,
             original_name: "name",
             has_sort: true,
             formatFn: (t) => generateView(t),
-            show: true
+            show: true,
         },
         {
-            name: t('common.email'),
+            name: t("common.email"),
             editable_from_table: false,
             original_name: "email",
             has_sort: true,
             show: true,
         },
         {
-            name: t('common.note'),
+            name: t("common.note"),
             editable_from_table: false,
             original_name: "note",
             has_sort: false,
             show: true,
         },
         {
-            name: t('employees.job_description'),
+            name: t("employees.job_description"),
             editable_from_table: false,
             original_name: "job_description",
             has_sort: false,
             show: true,
         },
         {
-            name: t('employees.login_enabled'),
+            name: t("employees.login_enabled"),
             editable_from_table: false,
             original_name: "login_enabled",
             has_sort: true,
             show: true,
             formatFn: (t) => formatLogin(t),
         },
-
-    ]
+    ];
     const formatLogin = (t: string) => {
         if (parseInt(t)) {
-            return <Check color="green" />
+            return <Check color="green" />;
         } else {
             return <X color="red"></X>;
         }
-    }
+    };
     const deleteEmployee = (id: string) => {
-        axios_instance().delete(`/employees/${id}`).then(() => {
-            toast.success(t('toasts.employee_deleted_success'));
+        axios_instance()
+            .delete(`/employees/${id}`)
+            .then(() => {
+                toast.success(t("toasts.employee_deleted_success"));
 
-            queryClient.invalidateQueries({
-                queryKey: ['employees'],
+                queryClient.invalidateQueries({
+                    queryKey: ["employees"],
+                });
             })
-
-        }).catch((e) => {
-            toast.error(e.response.message)
-        })
-    }
+            .catch((e) => {
+                toast.error(e.response.message);
+            });
+    };
 
     const cancelAction = () => {
         closeEmployeeCreateModal();
-    }
+    };
 
     const saveRecord = (form: EmployeeDTO) => {
-        axios_instance().post('/employees', form).then(() => {
-            queryClient.invalidateQueries({
-                queryKey: ['employees'],
-            })
-            closeEmployeeCreateModal();
-        })
-    }
+        axios_instance()
+            .post("/employees", form)
+            .then(() => {
+                queryClient.invalidateQueries({
+                    queryKey: ["employees"],
+                });
+                closeEmployeeCreateModal();
+            });
+    };
     return (
         <>
             <SweetAlert2 {...swalProps} />
@@ -155,16 +172,27 @@ const Employees = () => {
                     <Info size={18} />
                 </Callout.Icon>
                 <Callout.Text color="blue">
-                    {t('employees.manage')}
+                    {t("employees.manage")}
                 </Callout.Text>
             </Callout.Root>
 
-
-            <CreateEmployeeModal saveFunction={saveRecord} cancelFunction={cancelAction} isOpen={isCreateEmployeeModalOpen} ></CreateEmployeeModal>
+            <CreateEmployeeModal
+                saveFunction={saveRecord}
+                cancelFunction={cancelAction}
+                isOpen={isCreateEmployeeModalOpen}
+            ></CreateEmployeeModal>
             <div className="py-5">
-                <DataTable queryKey="employees" table_actions={tableActions} actions={actions} url={url} fields={fields} table_name="Lista zaposlenih" has_actions={true} ></DataTable>
+                <DataTable
+                    queryKey="employees"
+                    table_actions={tableActions}
+                    actions={actions}
+                    url={url}
+                    fields={fields}
+                    table_name="Lista zaposlenih"
+                    has_actions={true}
+                ></DataTable>
             </div>
         </>
-    )
-}
+    );
+};
 export default Employees;

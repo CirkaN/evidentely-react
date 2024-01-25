@@ -1,35 +1,54 @@
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
     const logout = () => {
-        localStorage.removeItem('auth_token');
-        navigate('/login');
+        localStorage.removeItem("auth_token");
+        navigate("/login");
     };
 
     const navigation = [
-        { name: 'Klijenti', href: '/clients', current: location.pathname.startsWith("/clients") },
-        { name: 'Kalendar', href: '/calendar', current: location.pathname === "/calendar" },
-        { name: 'Prodaja', href: '/sales', current: location.pathname === "/sales" },
-        { name: 'Podesavanja', href: '/company_settings/employees', current: location.pathname.startsWith("/company_settings") },
         {
-            name: 'Analitika',
+            name: "Klijenti",
+            href: "/clients",
+            current: location.pathname.startsWith("/clients"),
+        },
+        {
+            name: "Kalendar",
+            href: "/calendar",
+            current: location.pathname === "/calendar",
+        },
+        {
+            name: "Prodaja",
+            href: "/sales",
+            current: location.pathname === "/sales",
+        },
+        {
+            name: "Podesavanja",
+            href: "/company_settings/employees",
+            current: location.pathname.startsWith("/company_settings"),
+        },
+        {
+            name: "Analitika",
             items: [
-                { name: 'Clients', href: '/analytics' },
-                { name: 'Finance', href: '/analytics/finance' },
-                { name: 'Dropdown Item 2', href: '/company_settings/dropdown-item-2' },
+                { name: "Clients", href: "/analytics" },
+                { name: "Finance", href: "/analytics/finance" },
+                {
+                    name: "Dropdown Item 2",
+                    href: "/company_settings/dropdown-item-2",
+                },
             ],
             current: location.pathname.startsWith("/analytics"),
         },
     ];
 
     const classNames = (...classes: string[]) => {
-        return classes.filter(Boolean).join(' ');
+        return classes.filter(Boolean).join(" ");
     };
 
     return (
@@ -42,11 +61,19 @@ const NavBar = () => {
                                 {/* Mobile menu button*/}
                                 <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                                     <span className="absolute -inset-0.5" />
-                                    <span className="sr-only">Open main menu</span>
+                                    <span className="sr-only">
+                                        Open main menu
+                                    </span>
                                     {open ? (
-                                        <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                                        <XMarkIcon
+                                            className="block h-6 w-6"
+                                            aria-hidden="true"
+                                        />
                                     ) : (
-                                        <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                                        <Bars3Icon
+                                            className="block h-6 w-6"
+                                            aria-hidden="true"
+                                        />
                                     )}
                                 </Disclosure.Button>
                             </div>
@@ -63,13 +90,18 @@ const NavBar = () => {
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
                                         {navigation.map((item) => (
-                                            <div key={item.name} className="relative ">
+                                            <div
+                                                key={item.name}
+                                                className="relative "
+                                            >
                                                 {item.items ? (
                                                     <Menu>
                                                         <Menu.Button
                                                             className={classNames(
-                                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                                'rounded-md  py-2 text-sm font-medium'
+                                                                item.current
+                                                                    ? "bg-gray-900 text-white"
+                                                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                                "rounded-md  py-2 text-sm font-medium",
                                                             )}
                                                         >
                                                             {item.name}
@@ -84,33 +116,55 @@ const NavBar = () => {
                                                             leaveTo="transform opacity-0 scale-95"
                                                         >
                                                             <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                                {item.items.map((subItem) => (
-                                                                    <Menu.Item key={subItem.name}>
-                                                                        {({ active }) => (
-                                                                            <a
-                                                                                href={subItem.href}
-                                                                                className={classNames(
-                                                                                    active ? 'bg-gray-100' : '',
-                                                                                    'block px-4 py-2 text-sm text-gray-700'
-                                                                                )}
-                                                                            >
-                                                                                {subItem.name}
-                                                                            </a>
-                                                                        )}
-                                                                    </Menu.Item>
-                                                                ))}
+                                                                {item.items.map(
+                                                                    (
+                                                                        subItem,
+                                                                    ) => (
+                                                                        <Menu.Item
+                                                                            key={
+                                                                                subItem.name
+                                                                            }
+                                                                        >
+                                                                            {({
+                                                                                active,
+                                                                            }) => (
+                                                                                <a
+                                                                                    href={
+                                                                                        subItem.href
+                                                                                    }
+                                                                                    className={classNames(
+                                                                                        active
+                                                                                            ? "bg-gray-100"
+                                                                                            : "",
+                                                                                        "block px-4 py-2 text-sm text-gray-700",
+                                                                                    )}
+                                                                                >
+                                                                                    {
+                                                                                        subItem.name
+                                                                                    }
+                                                                                </a>
+                                                                            )}
+                                                                        </Menu.Item>
+                                                                    ),
+                                                                )}
                                                             </Menu.Items>
                                                         </Transition>
                                                     </Menu>
                                                 ) : (
-                                                    <div className='pt-1'>
+                                                    <div className="pt-1">
                                                         <a
                                                             href={item.href}
                                                             className={classNames(
-                                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                                'rounded-md px-2 py-2 text-sm font-medium'
+                                                                item.current
+                                                                    ? "bg-gray-900 text-white"
+                                                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                                "rounded-md px-2 py-2 text-sm font-medium",
                                                             )}
-                                                            aria-current={item.current ? 'page' : undefined}
+                                                            aria-current={
+                                                                item.current
+                                                                    ? "page"
+                                                                    : undefined
+                                                            }
                                                         >
                                                             {item.name}
                                                         </a>
@@ -127,15 +181,22 @@ const NavBar = () => {
                                     className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                                 >
                                     <span className="absolute -inset-1.5" />
-                                    <span className="sr-only">Notifikacije</span>
-                                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                                    <span className="sr-only">
+                                        Notifikacije
+                                    </span>
+                                    <BellIcon
+                                        className="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
                                 </button>
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
                                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                             <span className="absolute -inset-1.5" />
-                                            <span className="sr-only">Open user menu</span>
+                                            <span className="sr-only">
+                                                Open user menu
+                                            </span>
                                             <img
                                                 className="h-8 w-8 rounded-full"
                                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -157,7 +218,12 @@ const NavBar = () => {
                                                 {({ active }) => (
                                                     <a
                                                         href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100"
+                                                                : "",
+                                                            "block px-4 py-2 text-sm text-gray-700",
+                                                        )}
                                                     >
                                                         Profil
                                                     </a>
@@ -167,7 +233,12 @@ const NavBar = () => {
                                                 {({ active }) => (
                                                     <a
                                                         href="#"
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100"
+                                                                : "",
+                                                            "block px-4 py-2 text-sm text-gray-700",
+                                                        )}
                                                     >
                                                         Settings
                                                     </a>
@@ -176,8 +247,15 @@ const NavBar = () => {
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <button
-                                                        onClick={() => { logout() }}
-                                                        className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm w-full text-start text-gray-700')}
+                                                        onClick={() => {
+                                                            logout();
+                                                        }}
+                                                        className={classNames(
+                                                            active
+                                                                ? "bg-gray-100"
+                                                                : "",
+                                                            "block px-4 py-2 text-sm w-full text-start text-gray-700",
+                                                        )}
                                                     >
                                                         Odjavi se
                                                     </button>
@@ -199,10 +277,16 @@ const NavBar = () => {
                                                 as="a"
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                    'block rounded-md px-3 py-2 text-base font-medium'
+                                                    item.current
+                                                        ? "bg-gray-900 text-white"
+                                                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                    "block rounded-md px-3 py-2 text-base font-medium",
                                                 )}
-                                                aria-current={item.current ? 'page' : undefined}
+                                                aria-current={
+                                                    item.current
+                                                        ? "page"
+                                                        : undefined
+                                                }
                                             >
                                                 {item.name}
                                             </Menu.Button>
@@ -216,21 +300,35 @@ const NavBar = () => {
                                                 leaveTo="transform opacity-0 scale-95"
                                             >
                                                 <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                                    {item.items.map((subItem) => (
-                                                        <Menu.Item key={subItem.name}>
-                                                            {({ active }) => (
-                                                                <a
-                                                                    href={subItem.href}
-                                                                    className={classNames(
-                                                                        active ? 'bg-gray-100' : '',
-                                                                        'block px-4 py-2 text-sm text-gray-700'
-                                                                    )}
-                                                                >
-                                                                    {subItem.name}
-                                                                </a>
-                                                            )}
-                                                        </Menu.Item>
-                                                    ))}
+                                                    {item.items.map(
+                                                        (subItem) => (
+                                                            <Menu.Item
+                                                                key={
+                                                                    subItem.name
+                                                                }
+                                                            >
+                                                                {({
+                                                                    active,
+                                                                }) => (
+                                                                    <a
+                                                                        href={
+                                                                            subItem.href
+                                                                        }
+                                                                        className={classNames(
+                                                                            active
+                                                                                ? "bg-gray-100"
+                                                                                : "",
+                                                                            "block px-4 py-2 text-sm text-gray-700",
+                                                                        )}
+                                                                    >
+                                                                        {
+                                                                            subItem.name
+                                                                        }
+                                                                    </a>
+                                                                )}
+                                                            </Menu.Item>
+                                                        ),
+                                                    )}
                                                 </Menu.Items>
                                             </Transition>
                                         </Menu>
@@ -239,10 +337,16 @@ const NavBar = () => {
                                             as="a"
                                             href={item.href}
                                             className={classNames(
-                                                item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                                                'block rounded-md px-3 py-2 text-base font-medium'
+                                                item.current
+                                                    ? "bg-gray-900 text-white"
+                                                    : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                "block rounded-md px-3 py-2 text-base font-medium",
                                             )}
-                                            aria-current={item.current ? 'page' : undefined}
+                                            aria-current={
+                                                item.current
+                                                    ? "page"
+                                                    : undefined
+                                            }
                                         >
                                             {item.name}
                                         </Disclosure.Button>

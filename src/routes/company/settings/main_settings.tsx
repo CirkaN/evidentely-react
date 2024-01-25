@@ -1,10 +1,10 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
 const MainCompanySettings = () => {
     return (
         <>
-            <Outlet/>
+            <Outlet />
         </>
-    )
-}
-export default MainCompanySettings
+    );
+};
+export default MainCompanySettings;
