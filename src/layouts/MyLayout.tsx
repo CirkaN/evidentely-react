@@ -7,6 +7,7 @@ import { useUser } from "../context/UserContext";
 import ReactGA from "react-ga4";
 import { Callout } from "@radix-ui/themes";
 import toast from "react-hot-toast";
+import dayjs from "dayjs";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -317,7 +318,7 @@ const MyLayout = () => {
                             <p className="text-white bg:text-white text-lg">{t('plan_subscription.available_sms')}:</p>
                         </div>
                         <div>
-                            <p className="text-white font-bold text-lg">500 SMS-a</p>
+                            <p className="text-white font-bold text-lg">{user?.company.available_sms_to_spend} SMS-a</p>
                         </div>
                     </div>
                     <div className="flex justify-between w-full">
@@ -325,7 +326,7 @@ const MyLayout = () => {
                             <p className="text-white text-lg">{t('plan_subscription.plan')}:</p>
                         </div>
                         <div>
-                            <p className="text-white font-bold text-lg">Premium++</p>
+                            <p className="text-white font-bold text-lg">{user?.company.plan_name}</p>
                         </div>
                     </div>
                     <div className="flex justify-between w-full">
@@ -333,7 +334,7 @@ const MyLayout = () => {
                             <p className="text-white text-lg">{t('plan_subscription.expires')}:</p>
                         </div>
                         <div>
-                            <p className="text-white font-bold text-lg">za 15 dana</p>
+                            <p className="text-white font-bold text-lg">za {dayjs(user?.company.trial_expires_at).diff(dayjs(),'day')} dan/a</p>
                         </div>
                     </div>
                 </div>
@@ -346,7 +347,8 @@ const MyLayout = () => {
             </aside>
             <div className="p-4 sm:ml-64">
                 <div className="p-4  border-gray-200  rounded-lg dark:border-gray-700 mt-14">
-                    {
+                   <div className="pb-2">
+                   {
                         !user?.email_verified_at &&
 
                         <Callout.Root>
@@ -358,6 +360,7 @@ const MyLayout = () => {
                             </Callout.Text>
                         </Callout.Root>
                     }
+                   </div>
 
                     <Outlet />
                 </div>

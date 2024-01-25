@@ -16,7 +16,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useUser();
+  const { refreshUserState } = useUser();
 
   const [loginForm, setLoginForm] = useState<Login>({
     email: "",
@@ -33,16 +33,7 @@ const Login = () => {
     axios_instance().post('/auth/login', loginForm).then(response => {
       localStorage.setItem('auth_token', response.data.auth.access_token);
       navigate('/main_dashboard')
-      login({
-        'email': response.data.user.email,
-        'id': response.data.user.id,
-        'name': response.data.user.name,
-        'avatar_url': response.data.user.avatar_url,
-        'company_name': response.data.user.company_name,
-        'business_type_slug': response.data.user.business_type_slug,
-        'email_verified_at': response.data.user.email_verified_at
-      })
-
+      refreshUserState();
     }).catch(() => {
       setHasErrors(true);
     })

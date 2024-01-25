@@ -33,7 +33,7 @@ interface UserDTO {
 }
 
 const ProfileSettings = () => {
-    const { user, login } = useUser();
+    const { user, refreshUserState } = useUser();
     const [currentUserData, setCurrentUserData] = useState<UserDTO>();
     const [userSettings, setUserSettings] = useState<ProfileSettingsInterface>({
         name: user?.name,
@@ -57,15 +57,7 @@ const ProfileSettings = () => {
         axios_instance().post('/auth/me').then(r => applyFreshData(r.data));
     }
     const applyFreshData = (data:UserDTO) => {
-        login({
-            id: data.id,
-            name: data.name,
-            email: data?.email,
-            avatar_url: data.avatar_url,
-            company_name:data.company_name,
-            business_type_slug:data.business_type_slug,
-            email_verified_at:data.email_verified_at,
-        });
+        refreshUserState()
         setCurrentUserData(data);
     }
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -446,3 +438,4 @@ const ProfileSettings = () => {
     )
 }
 export default ProfileSettings;
+

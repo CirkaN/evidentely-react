@@ -29,13 +29,11 @@ import MyLayout from './layouts/MyLayout.tsx';
 import MainDashboard from './routes/dashboards/main_dashboard.tsx';
 import ClientAnalytics from './routes/analytics/client_analytics.tsx';
 import { UserProvider } from './context/UserContext.tsx';
-
 import ReactGA from "react-ga4";
 import ProfileSettings from './routes/settings/profile_settings.tsx';
 import ClientNotes from './routes/clients/show/ClientNotes.tsx';
 import GymMemberships from './routes/gym_memberships/gym_memberships.tsx';
 import GymMembershipPlans from './routes/gym_membership_plans/gym_membership_plans.tsx';
-import { ActivePlanProvider } from './context/PricePlanContext.tsx';
 import ServiceAnalytics from './routes/analytics/service_analytics.tsx';
 import ClientSmsHistory from './routes/clients/show/ClientSmsHistory.tsx';
 import PricingPlans from './routes/pricing_plans/pricing_plans.tsx';
@@ -203,7 +201,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <UserProvider>
-      <ActivePlanProvider>
         <QueryClientProvider client={queryClient}>
           <Theme>
             <Toaster
@@ -214,7 +211,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <RouterProvider router={router}></RouterProvider>
           </Theme>
         </QueryClientProvider>
-      </ActivePlanProvider>
     </UserProvider>
   </React.StrictMode>,
 )
