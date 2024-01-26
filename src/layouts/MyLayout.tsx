@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import {
+    AlertCircle,
     BarChart,
     Calendar,
     DollarSign,
@@ -122,6 +123,12 @@ const MyLayout = () => {
                     icon: <Settings size={20} />,
                     href: "/company/plans",
                     current: location.pathname === "/company/settings",
+                },
+                {
+                    name: t("navbar.recharge_sms"),
+                    icon: <Settings size={20} />,
+                    href: "/company/recharge_sms",
+                    current: location.pathname === "/company/recharge_sms",
                 },
             ],
             current: location.pathname.startsWith("/analytics"),
@@ -290,7 +297,7 @@ const MyLayout = () => {
                                 type="button"
                                 className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                             >
-                                <span className="sr-only">Open sidebar</span>
+                                <span className="sr-only">Otvori meni</span>
                                 <svg
                                     onClick={toggleNavbar}
                                     className="w-6 h-6"
@@ -477,8 +484,14 @@ const MyLayout = () => {
                         </div>
                     </div>
                 </div>
-                <div className="h-full px-3 pb-4 pt-5 overflow-y-auto bg-white dark:bg-gray-800">
-                    <ul className="space-y-2 font-medium">{mapRoutes()}</ul>
+                <div className="flex flex-col justify-between px-3 pb-4 pt-5 overflow-y-auto bg-white dark:bg-gray-800">
+                    <div>
+                        <ul className="space-y-2 font-medium">{mapRoutes()}</ul>
+                    </div>
+
+                    <button className="bg-slate-600 rounded px-2 py-2 shadow-lg mt-[30px] underline decoration-solid text-white">
+                        Prijavi problem
+                    </button>
                 </div>
             </aside>
             <div className="p-4 sm:ml-64">
