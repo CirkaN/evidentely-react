@@ -3,7 +3,6 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import {
-    AlertCircle,
     BarChart,
     Calendar,
     DollarSign,
@@ -36,10 +35,7 @@ const MyLayout = () => {
     });
     const { ref, isComponentVisible, setIsComponentVisible } =
         useClickedOutside(toggleBar);
-
-    const hideMenu = () => {
-        setToggleBar(!toggleBar);
-    };
+        
     useEffect(() => {
         setIsComponentVisible(toggleBar);
     }, [toggleBar]);
@@ -355,7 +351,7 @@ const MyLayout = () => {
                                 <div>
                                     <button
                                         type="button"
-                                        onClick={() =>setToggleBar(!toggleBar)}
+                                        onClick={() => setToggleBar(!toggleBar)}
                                         className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                         aria-expanded="false"
                                         data-dropdown-toggle="dropdown-user"
