@@ -238,15 +238,21 @@ const MyCalendar = () => {
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
                     initialView={gridView()}
+                    views={{
+                        timeGridThreeDays: {
+                            type: "timeGrid",
+                            duration: { days: 3 },
+                            buttonText: "Trodnevni prikaz",
+                        },
+                    }}
                     buttonText={{
                         today: "Danas",
                         week: "Nedeljni prikaz",
-                        day: "Dnevni prikaz",
-              
+                        day: "Jednodnevni prikaz",
                     }}
                     headerToolbar={{
                         left: "prev,next",
-                        right: "timeGridWeek,timeGridDay",
+                        right: "timeGridWeek,timeGridDay,timeGridThreeDays",
                     }}
                     weekends={true}
                     longPressDelay={500}
