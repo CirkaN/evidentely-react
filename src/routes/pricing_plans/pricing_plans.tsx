@@ -1,11 +1,24 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
+
+type PriceLinks = Record<string,string>
 
 const PricingPlans = () => {
+    const { user } = useUser();
     const changeToFree = () => {
         console.log("initate free plan");
     };
 
+    const priceLinks:PriceLinks = 
+        {
+            premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=User`,
+            premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=User`,
+            premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=User`,
+
+        }
+    
+    
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
@@ -15,35 +28,6 @@ const PricingPlans = () => {
         <>
             <section className="bg-white ">
                 <div className="container px-6 py-8 mx-auto">
-                    <div className="sm:flex sm:items-center sm:justify-between">
-                        <div>
-                            <h2 className="text-2xl font-bold  lg:text-3xl ">
-                                Paketi usluga
-                            </h2>
-                            <p className="mt-4 text-gray-500 ">
-                                Svi paketi se naplacuju mesecno, u svakom
-                                trenutku mozete menjati planove, sa tim sto
-                                ukoliko vec imate placeni plan koji zelite da
-                                promenite za neki drugi, ukoliko birate plan
-                                ispod vaseg, on ce biti postavljen nakon isteka
-                                vec placenog paketa, dok ako se odlucite za
-                                unapredjenje usluga, vas paket ce biti odmah
-                                promenjen.
-                            </p>
-                            <p className="mt-4 text-gray-500 ">
-                                Dostupne SMS poruke koje imate se ne gube
-                                prilikom prelaska na plan iznad / ispod
-                            </p>
-                            <Link
-                                className="mt-4 text-blue-500 text-lg text-center cursor-pointer lemonsqueezy-button"
-                                to="https://billing.moj-biznis.rs/checkout/buy/1207a923-f6d2-444d-9db3-2fd2d6d20e59?embed=1"
-                            >
-                                Ukoliko zelite da dopunite vas SMS kredit,
-                                kliknite ovde
-                            </Link>
-                        </div>
-                    </div>
-
                     <div className="grid gap-6 mt-16 -mx-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div className=" flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
                             <div className="px-6 py-4">
@@ -423,7 +407,7 @@ const PricingPlans = () => {
 
                             <Link
                                 className="lemonsqueezy-button w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                to="https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?embed=1"
+                                to={priceLinks.premium_link}
                             >
                                 Izaberi Plan
                             </Link>
@@ -590,7 +574,7 @@ const PricingPlans = () => {
 
                             <Link
                                 className="lemonsqueezy-button py-3 rounded-b w-full px-4 text-center  mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                to="https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?embed=1"
+                                to={priceLinks.premiumplus_link}
                             >
                                 Izaberi Plan
                             </Link>
@@ -795,7 +779,7 @@ const PricingPlans = () => {
 
                             <Link
                                 className="lemonsqueezy-button w-full px-4 text-center rounded-b py-3 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                to="https://billing.moj-biznis.rs/checkout/buy/5fe513b3-fa11-49b0-bf54-d93bb819cdb7?embed=1"
+                                to={priceLinks.premiumplusplus_link}
                             >
                                 Izaberi Plan
                             </Link>
