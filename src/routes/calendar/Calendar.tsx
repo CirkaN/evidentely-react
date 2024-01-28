@@ -242,17 +242,17 @@ const MyCalendar = () => {
                         timeGridThreeDays: {
                             type: "timeGrid",
                             duration: { days: 3 },
-                            buttonText: "Trodnevni prikaz",
+                            buttonText: "3 dana",
                         },
                     }}
                     buttonText={{
                         today: "Danas",
-                        week: "Nedeljni prikaz",
-                        day: "Jednodnevni prikaz",
+                        week: "7 dana",
+                        day: "Danas",
                     }}
                     headerToolbar={{
                         left: "prev,next",
-                        right: "timeGridWeek,timeGridDay,timeGridThreeDays",
+                        right: "timeGridDay,timeGridThreeDays,timeGridWeek",
                     }}
                     weekends={true}
                     longPressDelay={500}
