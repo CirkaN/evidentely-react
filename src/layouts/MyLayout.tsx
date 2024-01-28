@@ -19,6 +19,7 @@ import ReactGA from "react-ga4";
 import { Callout } from "@radix-ui/themes";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
+import useClickedOutside from "../hooks/useClickedOutside";
 
 const MyLayout = () => {
     const location = useLocation();
@@ -33,7 +34,15 @@ const MyLayout = () => {
         analytics: location.pathname.startsWith("/analytics"),
         settings: false,
     });
+    const { ref, isComponentVisible, setIsComponentVisible } =
+        useClickedOutside(toggleBar);
 
+    const hideMenu = () => {
+        setToggleBar(!toggleBar);
+    };
+    useEffect(() => {
+        setIsComponentVisible(toggleBar);
+    }, [toggleBar]);
     const navRoutes = [
         {
             name: t("navbar.main_dashboard"),
@@ -346,7 +355,7 @@ const MyLayout = () => {
                                 <div>
                                     <button
                                         type="button"
-                                        onClick={() => setToggleBar(!toggleBar)}
+                                        onClick={() =>setToggleBar(!toggleBar)}
                                         className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                         aria-expanded="false"
                                         data-dropdown-toggle="dropdown-user"
@@ -363,10 +372,11 @@ const MyLayout = () => {
                                 </div>
 
                                 <div
+                                    ref={ref}
                                     className={clsx(
                                         "w-full z-50 show my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 ",
-                                        toggleBar && "block",
-                                        !toggleBar && "hidden",
+                                        isComponentVisible && "block",
+                                        !isComponentVisible && "hidden",
                                     )}
                                     id="dropdown-user"
                                     style={{
