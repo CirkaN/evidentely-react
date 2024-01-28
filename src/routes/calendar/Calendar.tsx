@@ -242,11 +242,11 @@ const MyCalendar = () => {
                         today: "Danas",
                         week: "Nedeljni prikaz",
                         day: "Dnevni prikaz",
-                        month: "Mesecni prikaz",
+              
                     }}
                     headerToolbar={{
                         left: "prev,next",
-                        right: "timeGridWeek,timeGridDay,dayGridMonth",
+                        right: "timeGridWeek,timeGridDay",
                     }}
                     weekends={true}
                     longPressDelay={500}
