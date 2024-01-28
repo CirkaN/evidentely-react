@@ -3,7 +3,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios_instance from "../../config/api_defaults";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft } from "react-feather";
+import { ArrowLeft, Plus } from "react-feather";
 import DetailNoteBox from "../../layouts/clients/details_note_box";
 import AddUserNoteModal from "../../modals/clients/add_user_note_modal";
 import { useQuery, useQueryClient } from "react-query";
@@ -244,7 +244,7 @@ const ClientShow = () => {
                             <button
                                 onClick={() => setShowNoteAddModal(true)}
                                 className="text-blue-300 text-3xl"
-                            ></button>
+                            ><Plus color="green"/></button>
                         </div>
                         {id && <DetailNoteBox id={id} />}
                     </div>
