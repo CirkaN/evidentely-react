@@ -209,7 +209,7 @@ const router = createBrowserRouter([
         element: <Register />,
     },
     {
-        path: "/re-auth/",
+        path: "/email-confirm/",
         element: <Login />,
     },
 ]);

@@ -55,11 +55,11 @@ const Login = () => {
         }
 
         const isReauth =
-            pathname.includes("/login") || search.includes("re-auth");
+            pathname.includes("/login") && search.includes("email-confirm");
 
         if (isReauth) {
-            localStorage.removeItem("auth_token");
-            navigate("/login");
+            toast.success('Uspesno potvrdjen email!')
+            refreshUserState();
         }
 
         if (localStorage.getItem("auth_token")) {
