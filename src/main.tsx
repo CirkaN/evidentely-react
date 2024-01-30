@@ -40,6 +40,7 @@ import PricingPlans from "./routes/pricing_plans/pricing_plans.tsx";
 import SmsCampaign from "./routes/sms_campaign/sms_campaign.tsx";
 import MainCompanySettings from "./routes/company/settings/main_settings.tsx";
 import RechargeSms from "./routes/pricing_plans/recharge_sms.tsx";
+import EmailConfirm from "./routes/login/email-confirm.tsx";
 
 ReactGA.initialize("G-5MTC2FVP3C");
 
@@ -199,7 +200,6 @@ const router = createBrowserRouter([
             },
         ],
     },
-
     {
         path: "/login/",
         element: <Login />,
@@ -209,8 +209,8 @@ const router = createBrowserRouter([
         element: <Register />,
     },
     {
-        path: "/email-confirm/",
-        element: <Login />,
+        path: "/email-confirm",
+        element: <EmailConfirm />,
     },
 ]);
 
