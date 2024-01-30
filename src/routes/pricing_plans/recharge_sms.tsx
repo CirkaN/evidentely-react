@@ -4,9 +4,9 @@ type PriceLinks = Record<string, string>;
 const RechargeSms = () => {
     const { user } = useUser();
     const priceLinks: PriceLinks = {
-        first_plan: `https://billing.moj-biznis.rs/checkout/buy/1207a923-f6d2-444d-9db3-2fd2d6d20e59?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
-        second_plan: `https://billing.moj-biznis.rs/checkout/buy/9d64cf5e-93fb-416b-97e0-2003f730e68a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
-        third_plan: `https://billing.moj-biznis.rs/checkout/buy/e6b79fe7-f1bc-439a-8bc3-139b6c5b778e?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        first_plan: `https://billing.moj-biznis.rs/checkout/buy/1207a923-f6d2-444d-9db3-2fd2d6d20e59?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
+        second_plan: `https://billing.moj-biznis.rs/checkout/buy/9d64cf5e-93fb-416b-97e0-2003f730e68a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
+        third_plan: `https://billing.moj-biznis.rs/checkout/buy/e6b79fe7-f1bc-439a-8bc3-139b6c5b778e?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
     };
     return (
         <>
