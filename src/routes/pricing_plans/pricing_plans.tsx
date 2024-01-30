@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import clsx from "clsx";
 
-type PriceLinks = Record<string,string>
+type PriceLinks = Record<string, string>;
 
 const PricingPlans = () => {
     const { user } = useUser();
@@ -10,15 +11,21 @@ const PricingPlans = () => {
         console.log("initate free plan");
     };
 
-    const priceLinks:PriceLinks = 
-        {
-            premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
-            premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
-            premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/
+    const priceLinks: PriceLinks = {
+        premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/
             5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+    };
+
+    const getPlanButtonPlaceholder = (type: string) => {
+        if (user?.company.plan_name.toLowerCase() === type) {
+            return "Otkazi";
+        } else {
+            return "Promeni plan";
         }
-    
-    
+    };
+
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
@@ -204,7 +211,7 @@ const PricingPlans = () => {
                                 }}
                                 className="w-full px-4 py-3 rounded-b mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                             >
-                                Izaberi Plan
+                                {getPlanButtonPlaceholder("besplatan plan")}
                             </button>
                         </div>
 
@@ -406,10 +413,15 @@ const PricingPlans = () => {
                             </div>
 
                             <Link
-                                className="lemonsqueezy-button w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                className={clsx(
+                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                                    user?.company.plan_name == "Premium"
+                                        ? "bg-red-500 hover:bg-red-600 "
+                                        : "bg-blue-200 hover:bg-blue-600",
+                                )}
                                 to={priceLinks.premium_link}
                             >
-                                Izaberi Plan
+                                {getPlanButtonPlaceholder("premium")}
                             </Link>
                         </div>
 
@@ -576,7 +588,7 @@ const PricingPlans = () => {
                                 className="lemonsqueezy-button py-3 rounded-b w-full px-4 text-center  mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                 to={priceLinks.premiumplus_link}
                             >
-                                Izaberi Plan
+                                {getPlanButtonPlaceholder("premium+")}
                             </Link>
                         </div>
 
@@ -781,7 +793,7 @@ const PricingPlans = () => {
                                 className="lemonsqueezy-button w-full px-4 text-center rounded-b py-3 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                 to={priceLinks.premiumplusplus_link}
                             >
-                                Izaberi Plan
+                                {getPlanButtonPlaceholder("premium++")}
                             </Link>
                         </div>
                     </div>
