@@ -60,164 +60,155 @@ const ChargeClientModal = (props: ChargeClientProps) => {
     };
 
     return (
-        <>
-            <Dialog.Root open={props.isOpen}>
-                <Dialog.Content style={{ maxWidth: 450 }}>
-                    <Dialog.Title className="text-center">
-                        {t("charge.charge_client")}
-                    </Dialog.Title>
-                    <p className="text-md text-center p-2">
-                        {t("charge.amount_to_be_paid")}:{" "}
-                        {chargeParams.amount_to_be_paid}{" "}
-                    </p>
-                    <form onSubmit={handleSubmit}>
-                        {!isLoading && (
-                            <div className="flex flex-col">
-                                <button
-                                    type="button"
-                                    onClick={() => {
+        <Dialog.Root open={props.isOpen}>
+            <Dialog.Content style={{ maxWidth: 450 }}>
+                <Dialog.Title className="text-center">
+                    {t("charge.charge_client")}
+                </Dialog.Title>
+                <p className="text-md text-center p-2">
+                    {t("charge.amount_to_be_paid")}:{" "}
+                    {chargeParams.amount_to_be_paid}{" "}
+                </p>
+                <form onSubmit={handleSubmit}>
+                    {!isLoading && (
+                        <div className="flex flex-col">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setChargeParams(
+                                        (c) =>
+                                            c && {
+                                                ...c,
+                                                payment_method: "cash",
+                                            },
+                                    );
+                                }}
+                                className=" border bg-green-500 text-white"
+                            >
+                                <div className="flex justify-center m">
+                                    <DollarSign size={22} />
+                                    <p className="ml-2">{t("charge.cash")}</p>
+                                </div>
+                            </button>
+                            {chargeParams.payment_method == "cash" && (
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:border-blue-400"
+                                    placeholder="Vrednost"
+                                    type="number"
+                                    min="1"
+                                    max={chargeParams.amount_to_be_paid}
+                                    value={chargeParams.paid_amount}
+                                    onChange={(e) =>
                                         setChargeParams(
                                             (c) =>
                                                 c && {
                                                     ...c,
-                                                    payment_method: "cash",
+                                                    paid_amount: e.target.value,
                                                 },
-                                        );
-                                    }}
-                                    className=" border bg-green-500 text-white"
-                                >
-                                    <div className="flex justify-center m">
-                                        <DollarSign size={22} />
-                                        <p className="ml-2">
-                                            {t("charge.cash")}
-                                        </p>
-                                    </div>
-                                </button>
-                                {chargeParams.payment_method == "cash" && (
-                                    <input
-                                        required={true}
-                                        className="w-full border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring focus:border-blue-400"
-                                        placeholder="Vrednost"
-                                        type="number"
-                                        min="1"
-                                        max={chargeParams.amount_to_be_paid}
-                                        value={chargeParams.paid_amount}
-                                        onChange={(e) =>
-                                            setChargeParams(
-                                                (c) =>
-                                                    c && {
-                                                        ...c,
-                                                        paid_amount:
-                                                            e.target.value,
-                                                    },
-                                            )
-                                        }
-                                    />
-                                )}
+                                        )
+                                    }
+                                />
+                            )}
 
-                                <button
-                                    type="button"
-                                    onClick={() => {
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setChargeParams(
+                                        (c) =>
+                                            c && {
+                                                ...c,
+                                                payment_method: "card",
+                                            },
+                                    );
+                                }}
+                                className=" border bg-slate-500 text-white"
+                            >
+                                <div className="flex justify-center m">
+                                    <CreditCard size={22} />
+                                    <p className="ml-2 text-sm">
+                                        {t("charge.card")}
+                                    </p>
+                                </div>
+                            </button>
+                            {chargeParams.payment_method == "card" && (
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    placeholder="Vrednost"
+                                    type="number"
+                                    max={chargeParams.amount_to_be_paid}
+                                    value={chargeParams.paid_amount}
+                                    onChange={(e) =>
                                         setChargeParams(
                                             (c) =>
                                                 c && {
                                                     ...c,
-                                                    payment_method: "card",
+                                                    paid_amount: e.target.value,
                                                 },
-                                        );
-                                    }}
-                                    className=" border bg-slate-500 text-white"
-                                >
-                                    <div className="flex justify-center m">
-                                        <CreditCard size={22} />
-                                        <p className="ml-2 text-sm">
-                                            {t("charge.card")}
-                                        </p>
-                                    </div>
-                                </button>
-                                {chargeParams.payment_method == "card" && (
-                                    <input
-                                        required={true}
-                                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                        placeholder="Vrednost"
-                                        type="number"
-                                        max={chargeParams.amount_to_be_paid}
-                                        value={chargeParams.paid_amount}
-                                        onChange={(e) =>
-                                            setChargeParams(
-                                                (c) =>
-                                                    c && {
-                                                        ...c,
-                                                        paid_amount:
-                                                            e.target.value,
-                                                    },
-                                            )
-                                        }
-                                    />
-                                )}
-                                <button
-                                    type="button"
-                                    onClick={() => {
+                                        )
+                                    }
+                                />
+                            )}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setChargeParams(
+                                        (c) =>
+                                            c && {
+                                                ...c,
+                                                payment_method: "loan",
+                                            },
+                                    );
+                                }}
+                                className=" border bg-orange-600 text-white"
+                            >
+                                <div className="flex justify-center m">
+                                    <Loader size={24} />
+                                    <p className="ml-2">{t("charge.loan")}</p>
+                                </div>
+                            </button>
+                            {chargeParams.payment_method == "loan" && (
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    placeholder="Vrednost"
+                                    type="number"
+                                    max={chargeParams.amount_to_be_paid}
+                                    value={chargeParams.paid_amount}
+                                    onChange={(e) =>
                                         setChargeParams(
                                             (c) =>
                                                 c && {
                                                     ...c,
-                                                    payment_method: "loan",
+                                                    paid_amount: e.target.value,
                                                 },
-                                        );
-                                    }}
-                                    className=" border bg-orange-600 text-white"
-                                >
-                                    <div className="flex justify-center m">
-                                        <Loader size={24} />
-                                        <p className="ml-2">
-                                            {t("charge.loan")}
-                                        </p>
-                                    </div>
-                                </button>
-                                {chargeParams.payment_method == "loan" && (
-                                    <input
-                                        required={true}
-                                        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                        placeholder="Vrednost"
-                                        type="number"
-                                        max={chargeParams.amount_to_be_paid}
-                                        value={chargeParams.paid_amount}
-                                        onChange={(e) =>
-                                            setChargeParams(
-                                                (c) =>
-                                                    c && {
-                                                        ...c,
-                                                        paid_amount:
-                                                            e.target.value,
-                                                    },
-                                            )
-                                        }
-                                    />
-                                )}
-                            </div>
-                        )}
+                                        )
+                                    }
+                                />
+                            )}
+                        </div>
+                    )}
 
-                        <Flex gap="3" mt="4" justify="end">
-                            <Dialog.Close>
-                                <Button
-                                    onClick={() => {
-                                        props.cancelFunction();
-                                    }}
-                                    variant="soft"
-                                    color="gray"
-                                >
-                                    {t("common.cancel")}
-                                </Button>
-                            </Dialog.Close>
-                            <Button type="submit" color="green">
-                                <Save size={20} />
+                    <Flex gap="3" mt="4" justify="end">
+                        <Dialog.Close>
+                            <Button
+                                onClick={() => {
+                                    props.cancelFunction();
+                                }}
+                                variant="soft"
+                                color="gray"
+                            >
+                                {t("common.cancel")}
                             </Button>
-                        </Flex>
-                    </form>
-                </Dialog.Content>
-            </Dialog.Root>
-        </>
+                        </Dialog.Close>
+                        <Button type="submit" color="green">
+                            <Save size={20} />
+                        </Button>
+                    </Flex>
+                </form>
+            </Dialog.Content>
+        </Dialog.Root>
     );
 };
 

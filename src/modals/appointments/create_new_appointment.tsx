@@ -316,7 +316,8 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         {t("appointment.create_appointment_modal_title")}
                     </Dialog.Title>
                     <form onSubmit={handleSubmit}>
-                        <div>
+                      <div className="space-y-2">
+                      <div>
                             <label>
                                 {t("appointment.name")}
                                 <span className="text-red-600">*</span>
@@ -379,7 +380,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </div>
 
                         <div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between items-center">
                                 <label>{t("appointment.service")}</label>
                                 <p
                                     className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md"
@@ -411,7 +412,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </div>
 
                         <div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between items-center">
                                 <label>
                                     {t("common.client")}{" "}
                                     <span className="text-red-600">*</span>
@@ -436,24 +437,22 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         </div>
 
                         {form.user_id && (
-                            <>
-                                <div className="flex justify-between pl-2 pr-2 pt-2">
-                                    <div>
-                                        <label>
-                                            {t("appointment.remind_client")}{" "}
-                                            {form.remind_client}
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <Switch
-                                            checked={form.remind_client}
-                                            onCheckedChange={(checked) => {
-                                                setRemindClient(checked);
-                                            }}
-                                        />
-                                    </div>
+                            <div className="flex justify-between pl-2 pr-2 pt-2">
+                                <div>
+                                    <label>
+                                        {t("appointment.remind_client")}{" "}
+                                        {form.remind_client}
+                                    </label>
                                 </div>
-                            </>
+                                <div>
+                                    <Switch
+                                        checked={form.remind_client}
+                                        onCheckedChange={(checked) => {
+                                            setRemindClient(checked);
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         )}
 
                         {form.user_id &&
@@ -576,8 +575,9 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 }
                             />
                         </div>
-                        <div className="pt-2">
-                            <label>{t("appointment.color")}:</label>
+                        <div className="pt-2 ">
+                           <div className="flex items-center">
+                           <label className="pr-2">{t("appointment.color")}:</label>
                             <input
                                 type="color"
                                 onChange={(e) =>
@@ -591,7 +591,9 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 }
                                 value={form.color}
                             />
+                           </div>
                         </div>
+                      </div>
 
                         <Flex gap="3" mt="4" justify="end">
                             <Dialog.Close>
