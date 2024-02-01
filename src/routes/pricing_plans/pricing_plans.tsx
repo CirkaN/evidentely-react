@@ -1,37 +1,132 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import clsx from "clsx";
+import axios_instance from "../../config/api_defaults";
+import { t } from "i18next";
+import SweetAlert2 from "react-sweetalert2";
+import toast from "react-hot-toast";
 
 type PriceLinks = Record<string, string>;
 
 const PricingPlans = () => {
     const { user } = useUser();
-
+    const [swalProps, setSwalProps] = useState({});
     const priceLinks: PriceLinks = {
         free_link: `https://billing.moj-biznis.rs/checkout/buy/d7de9e27-5d0a-4712-bbbf-21c0dfeb7485?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
-        premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/
-            5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
     };
+    const raiseCancelAlert = () => {
+        setSwalProps({
+            show: true,
+            icon: "error",
+            title: t("common.please_confirm"),
+            text: t("subscription.cancel_plan_sweet"),
+            cancelButtonColor: "green",
+            reverseButtons: true,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: t("common.cancel"),
+            confirmButtonText: t("common.delete"),
+            confirmButtonColor: "red",
+            onConfirm: () => {
+                cancelPlan();
+            },
+            onResolve: setSwalOff,
+        });
+    };
+    function setSwalOff() {
+        const dataCopied = JSON.parse(JSON.stringify(swalProps));
+        dataCopied.show = false;
+        setSwalProps(dataCopied);
+    }
 
-    const getPlanButtonPlaceholder = (type: string) => {
+    const generateButton = (type: string) => {
         if (user?.company.plan_name.toLowerCase() === type) {
-            return "Otkazi";
+            return (
+                <button
+                    className={clsx(
+                        "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                        user?.company.plan_name.toLocaleLowerCase() == type
+                            ? "bg-red-500 hover:bg-red-600 "
+                            : "bg-blue-500 hover:bg-blue-600",
+                    )}
+                    onClick={() => {
+                        raiseCancelAlert();
+                    }}
+                >
+                    Otkazi
+                </button>
+            );
+        } else if (user?.company.plan_name.toLowerCase() === "trial") {
+            return (
+                <Link
+                    className={clsx(
+                        "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                        user?.company.plan_name == "Premium"
+                            ? "bg-red-500 hover:bg-red-600 "
+                            : "bg-blue-500 hover:bg-blue-600",
+                    )}
+                    to={getPackageLink(type)}
+                >
+                    Kupi sada
+                </Link>
+            );
         } else {
-            return "Promeni plan";
+            return (
+                <button
+                    className={clsx(
+                        "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                        user?.company.plan_name.toLowerCase() == type
+                            ? "bg-red-500 hover:bg-red-600 "
+                            : "bg-blue-500 hover:bg-blue-600",
+                    )}
+                    onClick={() => {
+                        changePlan(type);
+                    }}
+                >
+                    Promeni plan
+                </button>
+            );
         }
     };
+    const getPackageLink = (type: string) => {
+        const productType = type.toLowerCase();
+        if (productType == "premium") {
+            return priceLinks.premium_link;
+        }
+        if (productType == "premium+") {
+            return priceLinks.premiumplus_link;
+        }
+        if (productType == "premium++") {
+            return priceLinks.premiumplusplus_link;
+        }
 
-    useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        window.createLemonSqueezy();
-    }, []);
+        return "";
+    };
+    const changePlan = (desired_plan: string) => {
+        //
+    };
+    const cancelPlan = () => {
+        axios_instance()
+            .post("/subscriptions/cancel/")
+            .then(() => {
+                toast.success(t('subscription.cancel_plan_success'));
+            });
+    };
     return (
         <>
+            <SweetAlert2 {...swalProps} />
             <section className="bg-white ">
+                <div>
+                    Trenutno ste na trial verziji softvera, idealan za
+                    testiranje pre nego sto odlucite da li zelite da koristite
+                    nasu aplikaciju U ponudi imamo vise tipova paketa, ukoliko
+                    vam ni jedan od paketa ne odgovara, postoji mogucnost da se
+                    paket dodatno personalizuje uz pomoc naseg tima za podrsku.
+                </div>
                 <div className="container px-6 py-8 mx-auto">
                     <div className="grid gap-6 mt-16 -mx-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div className=" flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
@@ -203,17 +298,7 @@ const PricingPlans = () => {
                                 </div>
                             </div>
 
-                            <Link
-                                className={clsx(
-                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
-                                    user?.company.plan_name == "Besplatan Plan"
-                                        ? "bg-red-500 hover:bg-red-600 "
-                                        : "bg-blue-500 hover:bg-blue-600",
-                                )}
-                                to={priceLinks.free_link}
-                            >
-                                {getPlanButtonPlaceholder("besplatan plan")}
-                            </Link>
+                            {generateButton("besplatan plan")}
                         </div>
 
                         <div className="flex flex-col justify-between bg-gray-200  transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
@@ -413,17 +498,7 @@ const PricingPlans = () => {
                                 </div>
                             </div>
 
-                            <Link
-                                className={clsx(
-                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
-                                    user?.company.plan_name == "Premium"
-                                        ? "bg-red-500 hover:bg-red-600 "
-                                        : "bg-blue-500 hover:bg-blue-600",
-                                )}
-                                to={priceLinks.premium_link}
-                            >
-                                {getPlanButtonPlaceholder("premium")}
-                            </Link>
+                            {generateButton("premium")}
                         </div>
 
                         <div className="flex flex-col justify-between transition-colors duration-300 transform bg-slate-600 hover:bg-gray-700 rounded-lg">
@@ -584,18 +659,7 @@ const PricingPlans = () => {
                       </div> */}
                                 </div>
                             </div>
-
-                            <Link
-                                className={clsx(
-                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
-                                    user?.company.plan_name == "Premium+"
-                                        ? "bg-red-500 hover:bg-red-600 "
-                                        : "bg-blue-500 hover:bg-blue-600",
-                                )}
-                                to={priceLinks.premiumplus_link}
-                            >
-                                {getPlanButtonPlaceholder("premium+")}
-                            </Link>
+                            {generateButton("premium+")}
                         </div>
 
                         <div className="flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
@@ -794,18 +858,7 @@ const PricingPlans = () => {
                   </div> */}
                                 </div>
                             </div>
-
-                            <Link
-                                className={clsx(
-                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
-                                    user?.company.plan_name == "Premium++"
-                                        ? "bg-red-500 hover:bg-red-600 "
-                                        : "bg-blue-500 hover:bg-blue-600",
-                                )}
-                                to={priceLinks.premiumplusplus_link}
-                            >
-                                {getPlanButtonPlaceholder("premium++")}
-                            </Link>
+                            {generateButton("premium++")}
                         </div>
                     </div>
                 </div>
