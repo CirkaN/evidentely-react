@@ -211,7 +211,7 @@ const ClientShow = () => {
                                     </p>
                                 </div>
                             </div>
-                            <div className="flex flex-row">
+                            {/* <div className="flex flex-row">
                                 <div className="text-gray-600 w-1/2">
                                     <p className="font-bold">Saldo:</p>
                                 </div>
@@ -222,7 +222,7 @@ const ClientShow = () => {
                                         )}
                                     </p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
