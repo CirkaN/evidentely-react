@@ -137,9 +137,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                     </Button>
                                 </Dialog.Close>
                             </Flex>
-
-                            <div>
-                                {appointmentMissed && (
+                            {appointment?.status === "missed" && (
                                     <div className=" flex h-12 bg-[#E36414] justify-center p-3">
                                         <p className="text-white">
                                             <b>{t("sales.status")}</b>:
@@ -147,7 +145,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                         </p>
                                     </div>
                                 )}
-                                {appointmentPaid && (
+                                {appointment?.status === "completed_paid" && (
                                     <div className=" flex h-12 bg-[#65B741] justify-center p-3">
                                         <p className="text-white">
                                             <b>{t("sales.status")}</b>: Uplaceno
@@ -170,6 +168,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                         </p>
                                     </div>
                                 )}
+                            <div className="space-y-2 pt-2">
 
                                 <div>
                                     <label htmlFor="name">Ime termina:</label>
