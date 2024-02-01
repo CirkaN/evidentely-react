@@ -12,6 +12,7 @@ import { t } from "i18next";
 import useScreenSize from "../../hooks/useScreenSize";
 import CreateNewAppointmentModal from "../../modals/appointments/create_new_appointment";
 import SweetAlert2 from "react-sweetalert2";
+import ApproveExternalAppointmentModal from "../../modals/appointments/approve_external_appointment";
 
 interface AppointmentInterface {
     title: string | undefined;
@@ -24,11 +25,18 @@ interface AppointmentInterface {
 interface BackendResponse {
     data: dataFromBackend[];
 }
-
+type AppointmentAvailableStatuses =
+    | "missed"
+    | "pending"
+    | "in_progress"
+    | "completed_unpaid"
+    | "completed_paid"
+    | "approval_required";
 interface dataFromBackend {
     id: string;
     title: string | undefined;
     client_name: string;
+    status: AppointmentAvailableStatuses;
     start: string;
     end: string;
     price: number | null;
@@ -54,6 +62,9 @@ const MyCalendar = () => {
     const [isShowAppointmentModalOpen, setIsShowAppointmentModalOpen] =
         useState(false);
     const [showAppointmentId, setShowAppointmentId] = useState<string>("");
+    const [approveAppointmentId, setApproveAppointmentId] = useState<string>();
+    const [approveModalOpen, setApproveModalOpen] = useState(false);
+
     const [createAppointmentData, setCreateAppointmentData] =
         useState<AppointmentInterface>({
             title: "",
@@ -62,20 +73,17 @@ const MyCalendar = () => {
             price: 0,
             remind_client: false,
         });
-    const [swalProps, setSwalProps] = useState({});
 
+    const [swalProps, setSwalProps] = useState({});
     const nowStart = new Date().toLocaleString();
     const nowEnd = new Date().toLocaleString();
     const queryClient = useQueryClient();
 
     useQuery({
         queryKey: ["appointment_list"],
-        queryFn: () => {
-            return axios_instance()
-                .get("appointments")
-                .then((response) => {
-                    mutateDates(response.data);
-                });
+        queryFn: async () => {
+            const response = await axios_instance().get("appointments");
+            mutateDates(response.data);
         },
     });
 
@@ -95,7 +103,6 @@ const MyCalendar = () => {
             price: null,
             remind_client: true,
         };
-
         setAppointmentData(preparedJson);
         openAppointmentCreateModal();
     };
@@ -104,6 +111,7 @@ const MyCalendar = () => {
         const s = dataFromBackend.data.map((item) => ({
             start: new Date(item.start),
             client_name: item.client_name,
+            status: item.status,
             end: new Date(item.end),
             title: item.title ?? "Nema imena",
             id: item.id,
@@ -147,23 +155,39 @@ const MyCalendar = () => {
                 }
             });
     };
-    const handleClick = (id: string) => {
-        setShowAppointmentId(id);
-        setIsShowAppointmentModalOpen(true);
+    const handleClick = (id: string, status: AppointmentAvailableStatuses) => {
+        if (status === "missed") {
+            setApproveAppointmentId(id);
+            setApproveModalOpen(true);
+        } else {
+            setShowAppointmentId(id);
+            setIsShowAppointmentModalOpen(true);
+        }
     };
 
     const renderEventContent = (
         timeText: string,
         title: string,
         client_name: string,
+        status: AppointmentAvailableStatuses,
     ) => {
         return (
-            <>
-                <p>
-                    {timeText}[{client_name}]
-                </p>
-                <i className="text-md font-semibold ml-1">{title}</i>
-            </>
+            <div className="flex flex-col justify-between h-full overflow-hidden">
+                <div>
+                    <p>
+                        {timeText}{" "}
+                        {status === "missed" ? (
+                            <span className="pl-1 bg-black border-white text-white text-center rounded-b-sm px-2">
+                                Ceka na odobrenje
+                            </span>
+                        ) : (
+                            ""
+                        )}
+                        [{client_name}]
+                    </p>
+                    <i className="text-md font-semibold ml-1">{title}</i>
+                </div>
+            </div>
         );
     };
     const handleEventResizeStop = (
@@ -193,7 +217,6 @@ const MyCalendar = () => {
         });
     };
     const setSwalOff = (revert?: EventChangeArg) => {
-        console.log("i am being run");
         const dataCopied = JSON.parse(JSON.stringify(swalProps));
         dataCopied.show = false;
         setSwalProps(dataCopied);
@@ -223,6 +246,12 @@ const MyCalendar = () => {
     return (
         <>
             <SweetAlert2 {...swalProps} />
+            <ApproveExternalAppointmentModal
+                appointmentId={approveAppointmentId}
+                cancelFunction={() => setApproveModalOpen(false)}
+                saveFunction={() => setApproveModalOpen(false)}
+                isOpen={approveModalOpen}
+            />
             <ShowAppointmentModal
                 eventUpdated={reRenderAppointments}
                 cancelFunction={closeShowModal}
@@ -266,6 +295,7 @@ const MyCalendar = () => {
                             e.timeText,
                             e.event.title,
                             e.event.extendedProps.client_name,
+                            e.event.extendedProps.status,
                         )
                     }
                     eventDrop={(e) => {
@@ -276,7 +306,9 @@ const MyCalendar = () => {
                         );
                     }}
                     select={(e) => handleSelect(e.startStr, e.endStr)}
-                    eventClick={(e) => handleClick(e.event.id)}
+                    eventClick={(e) =>
+                        handleClick(e.event.id, e.event.extendedProps.status)
+                    }
                     eventResize={(e) =>
                         handleEventResizeStop(
                             e.event.startStr,
