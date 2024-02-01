@@ -298,5 +298,9 @@
     },
     "dashboard": {
         "upcoming_appointments": "Naredna 5 termina"
+    },
+    "subscription":{
+        "cancel_plan_sweet":"Da li ste sigurni da zelite da otkazete plan? Mocicete da koristite aplikaciju do isteka vaseg paketa.",
+        "cancel_plan_success":"Uspesno ste otkazali vas plan"
     }
 }
