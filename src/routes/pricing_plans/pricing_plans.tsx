@@ -7,11 +7,9 @@ type PriceLinks = Record<string, string>;
 
 const PricingPlans = () => {
     const { user } = useUser();
-    const changeToFree = () => {
-        console.log("initate free plan");
-    };
 
     const priceLinks: PriceLinks = {
+        free_link: `https://billing.moj-biznis.rs/checkout/buy/d7de9e27-5d0a-4712-bbbf-21c0dfeb7485?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/
@@ -205,14 +203,17 @@ const PricingPlans = () => {
                                 </div>
                             </div>
 
-                            <button
-                                onClick={() => {
-                                    changeToFree();
-                                }}
-                                className="w-full px-4 py-3 rounded-b mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                            <Link
+                                className={clsx(
+                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                                    user?.company.plan_name == "Besplatan Plan"
+                                        ? "bg-red-500 hover:bg-red-600 "
+                                        : "bg-blue-500 hover:bg-blue-600",
+                                )}
+                                to={priceLinks.free_link}
                             >
                                 {getPlanButtonPlaceholder("besplatan plan")}
-                            </button>
+                            </Link>
                         </div>
 
                         <div className="flex flex-col justify-between bg-gray-200  transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
@@ -417,7 +418,7 @@ const PricingPlans = () => {
                                     "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
                                     user?.company.plan_name == "Premium"
                                         ? "bg-red-500 hover:bg-red-600 "
-                                        : "bg-blue-200 hover:bg-blue-600",
+                                        : "bg-blue-500 hover:bg-blue-600",
                                 )}
                                 to={priceLinks.premium_link}
                             >
@@ -585,7 +586,12 @@ const PricingPlans = () => {
                             </div>
 
                             <Link
-                                className="lemonsqueezy-button py-3 rounded-b w-full px-4 text-center  mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                className={clsx(
+                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                                    user?.company.plan_name == "Premium+"
+                                        ? "bg-red-500 hover:bg-red-600 "
+                                        : "bg-blue-500 hover:bg-blue-600",
+                                )}
                                 to={priceLinks.premiumplus_link}
                             >
                                 {getPlanButtonPlaceholder("premium+")}
@@ -790,7 +796,12 @@ const PricingPlans = () => {
                             </div>
 
                             <Link
-                                className="lemonsqueezy-button w-full px-4 text-center rounded-b py-3 mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500  hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                className={clsx(
+                                    "lemonsqueezy-button  w-full px-4 text-center py-3 rounded-b  cursor-pointer mt-10 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform  focus:outline-none focus:bg-blue-600",
+                                    user?.company.plan_name == "Premium++"
+                                        ? "bg-red-500 hover:bg-red-600 "
+                                        : "bg-blue-500 hover:bg-blue-600",
+                                )}
                                 to={priceLinks.premiumplusplus_link}
                             >
                                 {getPlanButtonPlaceholder("premium++")}
