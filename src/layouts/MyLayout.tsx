@@ -35,7 +35,7 @@ const MyLayout = () => {
     });
     const { ref, isComponentVisible, setIsComponentVisible } =
         useClickedOutside(toggleBar);
-        
+
     useEffect(() => {
         setIsComponentVisible(toggleBar);
     }, [toggleBar]);
@@ -159,6 +159,9 @@ const MyLayout = () => {
         setIsNavCollapsed(!isNavCollapsed);
     };
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        window.createLemonSqueezy();
         const pool = setInterval(() => {
             refreshUserState();
         }, 10000);
