@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import axios_instance from "../config/api_defaults";
+import { AxiosError } from "axios";
 
 interface User {
     id: number;
@@ -53,6 +54,11 @@ const UserProvider = (props: UserProviderProps) => {
             .post("/auth/me")
             .then((r) => {
                 login(r.data);
+            })
+            .catch((e: AxiosError) => {
+                if (e.response?.status === 401) {
+                    logout();
+                }
             });
     };
     const logout = () => {
