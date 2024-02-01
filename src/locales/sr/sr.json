@@ -301,6 +301,8 @@
     },
     "subscription":{
         "cancel_plan_sweet":"Da li ste sigurni da želite da otkažete trenutni paket? Aplikacija će biti dostupna do isteka ovog paketa.",
-        "cancel_plan_success":"Uspesno ste otkazali vas plan"
+        "cancel_plan_success":"Uspesno ste otkazali vas plan",
+        "reactivate_for_free":"Reaktivacija ovog paketa je besplatna u toku trajanja samog paketa, naredno placanje ce se izvrsiti regularno na datum kada je plan prvobitno aktiviran.",
+        "reactivation_success":"Uspesno ste reaktivirali plan"
     }
 }
