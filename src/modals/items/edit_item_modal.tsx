@@ -87,7 +87,7 @@ const EditItemModal = (props: EditItemProps) => {
                             </label>
                             <label>
                                 <Text as="div" size="2" mb="1" weight="bold">
-                                    {t("item.discount_price")}
+                                    {t("item.selling_price")}
                                 </Text>
                                 <TextField.Input
                                     onChange={(e) =>
