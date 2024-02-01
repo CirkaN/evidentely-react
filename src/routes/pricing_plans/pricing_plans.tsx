@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 type PriceLinks = Record<string, string>;
 
 const PricingPlans = () => {
-    const { user } = useUser();
+    const { user, refreshUserState } = useUser();
     const [swalProps, setSwalProps] = useState({});
     const priceLinks: PriceLinks = {
         free_link: `https://billing.moj-biznis.rs/checkout/buy/d7de9e27-5d0a-4712-bbbf-21c0dfeb7485?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
@@ -42,11 +42,45 @@ const PricingPlans = () => {
             onResolve: setSwalOff,
         });
     };
+    const raiseReactivationAlert = () => {
+        setSwalProps({
+            show: true,
+            icon: "success",
+            title: t("common.please_confirm"),
+            text: t("subscription.reactivate_for_free"),
+            cancelButtonColor: "red",
+            reverseButtons: true,
+            showCancelButton: true,
+            showConfirmButton: true,
+            cancelButtonText: t("common.cancel"),
+            confirmButtonText: t("common.accept"),
+            confirmButtonColor: "green",
+            onConfirm: () => {
+                reactivatePlan();
+            },
+            onResolve: setSwalOff,
+        });
+    };
+
     function setSwalOff() {
         const dataCopied = JSON.parse(JSON.stringify(swalProps));
         dataCopied.show = false;
         setSwalProps(dataCopied);
     }
+
+    const reactivatePlan = () => {
+        axios_instance()
+            .post("/subscription/resume/")
+            .then((r) => {
+                if (r.data.success) {
+                    toast.success(t("subscription.reactivation_success"));
+                    refreshUserState();
+                } else {
+                    toast.error("Nemate permisije za ovu akciju");
+                    refreshUserState();
+                }
+            });
+    };
 
     const generateButton = (type: string) => {
         if (user?.company.plan_name.toLowerCase() === type) {
@@ -59,10 +93,16 @@ const PricingPlans = () => {
                             : "bg-blue-500 hover:bg-blue-600",
                     )}
                     onClick={() => {
-                        raiseCancelAlert();
+                        user.company.is_plan_cancelled &&
+                        user.company.is_subscription_resumable
+                            ? raiseReactivationAlert()
+                            : raiseCancelAlert();
                     }}
                 >
-                    Otkazi
+                    {user.company.is_plan_cancelled &&
+                    user.company.is_subscription_resumable
+                        ? "[Otkazan] Reaktiviraj"
+                        : "Otkazi"}
                 </button>
             );
         } else if (user?.company.plan_name.toLowerCase() === "probni") {
@@ -123,17 +163,23 @@ const PricingPlans = () => {
             .post("/subscriptions/cancel/")
             .then(() => {
                 toast.success(t("subscription.cancel_plan_success"));
+                refreshUserState();
             });
     };
     return (
         <>
             <SweetAlert2 {...swalProps} />
             <section className="bg-white ">
-               <p>Trenutno ste na probnom paketu aplikacije, idealan za
+                <p>
+                    Trenutno ste na probnom paketu aplikacije, idealan za
                     testiranje dok se odlučite za paket usluga. U ponudi imamo
                     vise tipova paketa, ukoliko vam je potreban poseban izbor
-                    usluga, kontaktirajte našu korisničku službu radi <p className="underline">kreiranja
-                    personalizovanog paketa</p>.</p>
+                    usluga, kontaktirajte našu korisničku službu radi{" "}
+                    <p className="underline">
+                        kreiranja personalizovanog paketa
+                    </p>
+                    .
+                </p>
                 <div className="container px-6 py-8 mx-auto">
                     <div className="grid gap-6 mt-16 -mx-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div className=" flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
