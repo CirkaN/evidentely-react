@@ -20,7 +20,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
         job_description: "",
         login_enabled: false,
     };
-    const [form, setForm] = useState<EmployeeDTO>({
+    const defaultFormValues = {
         id: "",
         name: "",
         email: "",
@@ -28,11 +28,13 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
         note: "",
         job_description: "",
         login_enabled: false,
-    });
+    };
+    const [form, setForm] = useState<EmployeeDTO>(defaultFormValues);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         props.saveFunction(form);
+        setForm(defaultFormValues);
         setForm(blankForm);
     };
 
@@ -163,6 +165,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                                 </Text>
                                 <TextField.Input
                                     value={form.note}
+                                    placeholder="Primer: radi samo drugu smenu / student   "
                                     onChange={(e) =>
                                         setForm(
                                             (c) =>

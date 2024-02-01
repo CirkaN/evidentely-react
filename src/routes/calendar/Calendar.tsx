@@ -267,6 +267,14 @@ const MyCalendar = () => {
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin, timeGridWeek]}
                     initialView={gridView()}
+                    slotMinTime={"06:00:00"}
+                    slotMaxTime={"22:00:00"}
+                    allDaySlot={false}
+                    businessHours={{
+                        daysOfWeek: [1, 2, 3, 4, 5], // Monday to Friday
+                        startTime: '07:00', // Start time
+                        endTime: '17:00' // End time
+                      }}
                     views={{
                         timeGridThreeDays: {
                             type: "timeGrid",

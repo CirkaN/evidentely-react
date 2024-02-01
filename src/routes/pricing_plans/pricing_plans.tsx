@@ -18,6 +18,11 @@ const PricingPlans = () => {
         premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
     };
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        window.createLemonSqueezy();
+    }, []);
     const raiseCancelAlert = () => {
         setSwalProps({
             show: true,
@@ -29,7 +34,7 @@ const PricingPlans = () => {
             showCancelButton: true,
             showConfirmButton: true,
             cancelButtonText: t("common.cancel"),
-            confirmButtonText: t("common.delete"),
+            confirmButtonText: t("common.accept"),
             confirmButtonColor: "red",
             onConfirm: () => {
                 cancelPlan();
@@ -60,7 +65,7 @@ const PricingPlans = () => {
                     Otkazi
                 </button>
             );
-        } else if (user?.company.plan_name.toLowerCase() === "trial") {
+        } else if (user?.company.plan_name.toLowerCase() === "probni") {
             return (
                 <Link
                     className={clsx(
@@ -71,7 +76,7 @@ const PricingPlans = () => {
                     )}
                     to={getPackageLink(type)}
                 >
-                    Kupi sada
+                    Odaberi Plan
                 </Link>
             );
         } else {
@@ -107,26 +112,28 @@ const PricingPlans = () => {
         return "";
     };
     const changePlan = (desired_plan: string) => {
-        //
+        axios_instance()
+            .post(`/subscriptions/swap/${desired_plan}`)
+            .then((r) => {
+                console.log(r);
+            });
     };
     const cancelPlan = () => {
         axios_instance()
             .post("/subscriptions/cancel/")
             .then(() => {
-                toast.success(t('subscription.cancel_plan_success'));
+                toast.success(t("subscription.cancel_plan_success"));
             });
     };
     return (
         <>
             <SweetAlert2 {...swalProps} />
             <section className="bg-white ">
-                <div>
-                    Trenutno ste na trial verziji softvera, idealan za
-                    testiranje pre nego sto odlucite da li zelite da koristite
-                    nasu aplikaciju U ponudi imamo vise tipova paketa, ukoliko
-                    vam ni jedan od paketa ne odgovara, postoji mogucnost da se
-                    paket dodatno personalizuje uz pomoc naseg tima za podrsku.
-                </div>
+               <p>Trenutno ste na probnom paketu aplikacije, idealan za
+                    testiranje dok se odlučite za paket usluga. U ponudi imamo
+                    vise tipova paketa, ukoliko vam je potreban poseban izbor
+                    usluga, kontaktirajte našu korisničku službu radi <p className="underline">kreiranja
+                    personalizovanog paketa</p>.</p>
                 <div className="container px-6 py-8 mx-auto">
                     <div className="grid gap-6 mt-16 -mx-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div className=" flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
