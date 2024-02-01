@@ -16,6 +16,8 @@ interface CompanyDetails {
     plan_expires_at: string;
     trial_expires_at: string;
     plan_name: string;
+    is_plan_cancelled: boolean;
+    is_subscription_resumable: boolean;
 }
 interface UserProviderProps {
     children: ReactNode;
