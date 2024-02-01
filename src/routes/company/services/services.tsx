@@ -72,7 +72,7 @@ const Services = () => {
             show: true,
             icon: "error",
             title: t("common.please_confirm"),
-            text: "This action is unreversible and it will delete service with  all records associated with this service",
+            text: "Ukoliko obrisete ovu uslugu, necete moci praviti nova zakazivanja sa ovom uslugom",
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
@@ -95,10 +95,9 @@ const Services = () => {
 
     const deleteItem = (id: number) => {
         axios_instance()
-            .delete(`/items/${id}`)
+            .post(`/items/${id}/archive`)
             .then(() => {
                 toast.success(t("toasts.delete_success"));
-
                 queryClient.invalidateQueries({
                     queryKey: ["services"],
                 });

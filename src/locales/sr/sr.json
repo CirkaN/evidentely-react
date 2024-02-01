@@ -109,7 +109,7 @@
         "name": "Naziv",
         "discount_price": "Cena sa popustom",
         "price": "Cena",
-        "duration": "Trajanje",
+        "duration": "Trajanje (u minutama)",
         "color": "Boja u kalendaru",
         "selling_price": "Prodajna cena",
         "note": "Napomena",
