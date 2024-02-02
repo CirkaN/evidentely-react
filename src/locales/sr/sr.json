@@ -72,7 +72,8 @@
         "archive_gym_plan": "Arhiviranjem ovog plana, zadržavate sve podatke, ali ga ne možete koristiti za članarine",
         "delete_appointment_message": "Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'",
         "full_name": "Puno ime i prezime",
-        "problem_reported_succesfully":"Problem je uspesno prijavljen!"
+        "problem_reported_succesfully":"Problem je uspesno prijavljen!",
+        "close":"Zatvori"
     },
     "register": {
         "register": "Registracija",
