@@ -4,6 +4,7 @@ import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { X } from "react-feather";
 import { useState } from "react";
+import { useQueryClient } from "react-query";
 interface ApproveExternalAppointmentModalProps {
     isOpen: boolean;
     appointmentId: string | undefined;
@@ -14,7 +15,7 @@ const ApproveExternalAppointmentModal = (
     props: ApproveExternalAppointmentModalProps,
 ) => {
     const [notifyClient, setNotifyClient] = useState(true);
-
+    const queryClient = useQueryClient();
     const raiseAction = (action: "delete" | "approve") => {
         if (action === "delete") {
             axios_instance()
@@ -24,6 +25,8 @@ const ApproveExternalAppointmentModal = (
                 .then(() => {
                     toast.success("Uspesno obrisan termin");
                     setNotifyClient(true);
+                    props.cancelFunction();
+                    queryClient.invalidateQueries(["appointment_list"]);
                 });
         } else {
             axios_instance()
@@ -33,6 +36,8 @@ const ApproveExternalAppointmentModal = (
                 .then(() => {
                     toast.success("Uspesno prihvacen termin");
                     setNotifyClient(true);
+                    props.cancelFunction();
+                    queryClient.invalidateQueries(["appointment_list"]);
                 });
         }
     };
