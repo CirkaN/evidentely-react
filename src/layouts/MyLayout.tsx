@@ -19,13 +19,15 @@ import { Callout } from "@radix-ui/themes";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
 import useClickedOutside from "../hooks/useClickedOutside";
+import ReportProblemModal from "../modals/report/report_problem";
 
 const MyLayout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { t } = useTranslation();
     const { user, logout, refreshUserState } = useUser();
-
+    const [isReportProblemModalOpen, setIsReportProblemModalOpen] =
+        useState(false);
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const [toggleBar, setToggleBar] = useState(false);
     const [rightPixels, setRightPixels] = useState<number | null>(null);
@@ -159,9 +161,6 @@ const MyLayout = () => {
         setIsNavCollapsed(!isNavCollapsed);
     };
     useEffect(() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        window.createLemonSqueezy();
         const pool = setInterval(() => {
             refreshUserState();
         }, 10000);
@@ -291,6 +290,12 @@ const MyLayout = () => {
 
     return (
         <>
+            <ReportProblemModal
+                isOpen={isReportProblemModalOpen}
+                cancelFunction={() => {
+                    setIsReportProblemModalOpen(false);
+                }}
+            />
             <nav
                 className="fixed top-0 z-50 w-full bg-white border-b
  border-gray-200 dark:bg-gray-800 dark:border-gray-700"
@@ -498,7 +503,12 @@ const MyLayout = () => {
                         <ul className="space-y-2 font-medium">{mapRoutes()}</ul>
                     </div>
 
-                    <button className="bg-slate-600 rounded px-2 py-2 shadow-lg mt-[30px] underline decoration-solid text-white">
+                    <button
+                        onClick={() => {
+                            setIsReportProblemModalOpen(true);
+                        }}
+                        className="bg-slate-600 rounded px-2 py-2 shadow-lg mt-[30px] underline decoration-solid text-white"
+                    >
                         Prijavi problem
                     </button>
                 </div>
