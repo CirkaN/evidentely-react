@@ -1,7 +1,9 @@
-import { Button, Dialog, Flex } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Switch } from "@radix-ui/themes";
 import { t } from "i18next";
 import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
+import { X } from "react-feather";
+import { useState } from "react";
 interface ApproveExternalAppointmentModalProps {
     isOpen: boolean;
     appointmentId: string | undefined;
@@ -11,28 +13,48 @@ interface ApproveExternalAppointmentModalProps {
 const ApproveExternalAppointmentModal = (
     props: ApproveExternalAppointmentModalProps,
 ) => {
+    const [notifyClient, setNotifyClient] = useState(true);
+
     const raiseAction = (action: "delete" | "approve") => {
         if (action === "delete") {
             axios_instance()
-                .delete(`/appointments/${props.appointmentId}`)
+                .post(`/appointments/${props.appointmentId}/decline_external`, {
+                    notify_client: notifyClient,
+                })
                 .then(() => {
                     toast.success("Uspesno obrisan termin");
+                    setNotifyClient(true);
                 });
         } else {
             axios_instance()
-                .post(`/appointments/${props.appointmentId}/approve_external`)
+                .post(`/appointments/${props.appointmentId}/approve_external`, {
+                    notify_client: notifyClient,
+                })
                 .then(() => {
                     toast.success("Uspesno prihvacen termin");
+                    setNotifyClient(true);
                 });
         }
     };
     return (
         <Dialog.Root open={props.isOpen}>
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title className="text-center">
-                    {t("appointment.decide_external")}
-                </Dialog.Title>
-                <div className="text-center">
+                <Flex justify="between">
+                    <Dialog.Title className="text-center">
+                        {t("appointment.decide_external")}
+                    </Dialog.Title>
+                    <Dialog.Close>
+                        <Button
+                            variant="ghost"
+                            color="gray"
+                            onClick={() => props.cancelFunction()}
+                        >
+                            <X />
+                        </Button>
+                    </Dialog.Close>
+                </Flex>
+
+                <div className="text-center pt-5">
                     <p className="font-bold">
                         Da li zelite da potvrdite ovaj termin?
                     </p>
@@ -43,7 +65,23 @@ const ApproveExternalAppointmentModal = (
                     </p>
                 </div>
 
-                <div className="flex justify-between pt-3">
+                <div className="flex justify-between pt-5">
+                    <div>
+                        <label className="font-bold">
+                            Obavesti klijenta o ishodu zakazivanja?
+                        </label>
+                    </div>
+                    <div>
+                        <Switch
+                            checked={notifyClient}
+                            onCheckedChange={(checked) => {
+                                setNotifyClient(checked);
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="flex justify-between pt-10">
                     <button
                         onClick={() => {
                             raiseAction("delete");
@@ -62,20 +100,6 @@ const ApproveExternalAppointmentModal = (
                         Prihvati termin
                     </button>
                 </div>
-
-                <Flex gap="3" mt="4" justify="end">
-                    <Dialog.Close>
-                        <Button
-                            onClick={() => {
-                                props.cancelFunction();
-                            }}
-                            variant="soft"
-                            color="gray"
-                        >
-                            {t("common.cancel")}
-                        </Button>
-                    </Dialog.Close>
-                </Flex>
             </Dialog.Content>
         </Dialog.Root>
     );
