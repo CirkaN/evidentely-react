@@ -37,7 +37,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         end: "",
         price: "",
         color: "#56A3A6",
-        remind_client: true,
+        remind_client: false,
         remind_setting: {
             remind_day_before: false,
             remind_same_day: false,
@@ -305,6 +305,11 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                     setIsCreateClientModalOpen(false);
                 }}
                 savedClient={(savedClient: ClientDTO) => {
+                    if (!savedClient.settings.phone_number) {
+                        setForm((c) => c && { ...c, remind_client: false });
+                    } else {
+                        setForm((c) => c && { ...c, remind_client: true });
+                    }
                     setClient(savedClient);
                 }}
                 isOpen={isCreateClientModalOpen}
@@ -316,284 +321,289 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                         {t("appointment.create_appointment_modal_title")}
                     </Dialog.Title>
                     <form onSubmit={handleSubmit}>
-                      <div className="space-y-2">
-                      <div>
-                            <label>
-                                {t("appointment.name")}
-                                <span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                placeholder="Ime usluge"
-                                type="text"
-                                value={form.title}
-                                onChange={(e) =>
-                                    setForm(
-                                        (c) =>
-                                            c && {
-                                                ...c,
-                                                title: e.target.value,
-                                            },
-                                    )
-                                }
-                            />
-                        </div>
-                        <div>
-                            <label>
-                                {t("appointment.start")}
-                                <span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
-                                type="datetime-local"
-                                value={form.start}
-                                onChange={(e) =>
-                                    setForm(
-                                        (c) =>
-                                            c && {
-                                                ...c,
-                                                start: e.target.value,
-                                            },
-                                    )
-                                }
-                            />
-                        </div>
-                        <div>
-                            <label>
-                                {t("appointment.end")}
-                                <span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
-                                type="datetime-local"
-                                value={form.end}
-                                onChange={(e) =>
-                                    setForm(
-                                        (c) =>
-                                            c && { ...c, end: e.target.value },
-                                    )
-                                }
-                            />
-                        </div>
-
-                        <div>
-                            <div className="flex justify-between items-center">
-                                <label>{t("appointment.service")}</label>
-                                <p
-                                    className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md"
-                                    onClick={() => {
-                                        setIsCreateServiceModalOpen(true);
-                                    }}
-                                >
-                                    Dodaj
-                                </p>
-                            </div>
-
-                            <Select
-                                value={selectedService}
-                                onChange={(e) => {
-                                    setServiceForm(e);
-                                }}
-                                options={serviceTransformedList}
-                            />
-                        </div>
-
-                        <div>
-                            <label>{t("appointment.employee")}</label>
-                            <Select
-                                onChange={(e) => {
-                                    setEmployeeForm(e);
-                                }}
-                                options={employeeTransformedList}
-                            />
-                        </div>
-
-                        <div>
-                            <div className="flex justify-between items-center">
+                        <div className="space-y-2">
+                            <div>
                                 <label>
-                                    {t("common.client")}{" "}
+                                    {t("appointment.name")}
                                     <span className="text-red-600">*</span>
                                 </label>
-                                <p
-                                    className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md"
-                                    onClick={() => {
-                                        setIsCreateClientModalOpen(true);
-                                    }}
-                                >
-                                    Dodaj
-                                </p>
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    placeholder="Ime usluge"
+                                    type="text"
+                                    value={form.title}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    title: e.target.value,
+                                                },
+                                        )
+                                    }
+                                />
                             </div>
-                            <Select
-                                required={true}
-                                value={selectedClient}
-                                options={clientTransformedList}
-                                onChange={(e) => {
-                                    setClientForm(e);
-                                }}
-                            />
-                        </div>
+                            <div>
+                                <label>
+                                    {t("appointment.start")}
+                                    <span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
+                                    type="datetime-local"
+                                    value={form.start}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    start: e.target.value,
+                                                },
+                                        )
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <label>
+                                    {t("appointment.end")}
+                                    <span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400 appearance-none"
+                                    type="datetime-local"
+                                    value={form.end}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    end: e.target.value,
+                                                },
+                                        )
+                                    }
+                                />
+                            </div>
 
-                        {form.user_id && (
-                            <div className="flex justify-between pl-2 pr-2 pt-2">
-                                <div>
-                                    <label>
-                                        {t("appointment.remind_client")}{" "}
-                                        {form.remind_client}
-                                    </label>
-                                </div>
-                                <div>
-                                    <Switch
-                                        checked={form.remind_client}
-                                        onCheckedChange={(checked) => {
-                                            setRemindClient(checked);
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <label>{t("appointment.service")}</label>
+                                    <p
+                                        className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md"
+                                        onClick={() => {
+                                            setIsCreateServiceModalOpen(true);
                                         }}
+                                    >
+                                        Dodaj
+                                    </p>
+                                </div>
+
+                                <Select
+                                    value={selectedService}
+                                    onChange={(e) => {
+                                        setServiceForm(e);
+                                    }}
+                                    options={serviceTransformedList}
+                                />
+                            </div>
+
+                            <div>
+                                <label>{t("appointment.employee")}</label>
+                                <Select
+                                    onChange={(e) => {
+                                        setEmployeeForm(e);
+                                    }}
+                                    options={employeeTransformedList}
+                                />
+                            </div>
+
+                            <div>
+                                <div className="flex justify-between items-center">
+                                    <label>
+                                        {t("common.client")}{" "}
+                                        <span className="text-red-600">*</span>
+                                    </label>
+                                    <p
+                                        className="hover:cursor-pointer text-green-700 font-bold pt-1 text-md"
+                                        onClick={() => {
+                                            setIsCreateClientModalOpen(true);
+                                        }}
+                                    >
+                                        Dodaj
+                                    </p>
+                                </div>
+                                <Select
+                                    required={true}
+                                    value={selectedClient}
+                                    options={clientTransformedList}
+                                    onChange={(e) => {
+                                        setClientForm(e);
+                                    }}
+                                />
+                            </div>
+
+                            {form.user_id && (
+                                <div className="flex justify-between pl-2 pr-2 pt-2">
+                                    <div>
+                                        <label>
+                                            {t("appointment.remind_client")}{" "}
+                                            {form.remind_client}
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <Switch
+                                            checked={form.remind_client}
+                                            onCheckedChange={(checked) => {
+                                                setRemindClient(checked);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
+                            {form.user_id &&
+                                showSettingsForRemind &&
+                                form.remind_client && (
+                                    <>
+                                        <div className="flex justify-between pl-2 pr-2 pt-1">
+                                            <div>
+                                                <label>
+                                                    {t(
+                                                        "appointment.remind_day_before",
+                                                    )}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <Switch
+                                                    checked={
+                                                        form?.remind_setting
+                                                            ?.remind_day_before
+                                                    }
+                                                    onCheckedChange={(check) =>
+                                                        setForm(
+                                                            (c) =>
+                                                                c && {
+                                                                    ...c,
+                                                                    remind_setting:
+                                                                        {
+                                                                            ...c.remind_setting,
+                                                                            remind_day_before:
+                                                                                check,
+                                                                        },
+                                                                },
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-between  pl-2 pr-2 pt-1">
+                                            <div>
+                                                <label>
+                                                    {t(
+                                                        "appointment.remind_same_day",
+                                                    )}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <Switch
+                                                    checked={
+                                                        form.remind_setting
+                                                            .remind_same_day
+                                                    }
+                                                    onCheckedChange={(check) =>
+                                                        setForm(
+                                                            (c) =>
+                                                                c && {
+                                                                    ...c,
+                                                                    remind_setting:
+                                                                        {
+                                                                            ...c.remind_setting,
+                                                                            remind_same_day:
+                                                                                check,
+                                                                        },
+                                                                },
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-between  pl-2 pr-2 pt-1 pb-2">
+                                            <div>
+                                                <label>
+                                                    {t(
+                                                        "appointment.send_confirmation_client",
+                                                    )}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <Switch
+                                                    checked={
+                                                        form.remind_setting
+                                                            .remind_now
+                                                    }
+                                                    onCheckedChange={(check) =>
+                                                        setForm(
+                                                            (c) =>
+                                                                c && {
+                                                                    ...c,
+                                                                    remind_setting:
+                                                                        {
+                                                                            ...c.remind_setting,
+                                                                            remind_now:
+                                                                                check,
+                                                                        },
+                                                                },
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            <div>
+                                <label>
+                                    {t("common.price")}{" "}
+                                    <span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    required={true}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                    value={form.price}
+                                    onChange={(e) =>
+                                        setForm(
+                                            (c) =>
+                                                c && {
+                                                    ...c,
+                                                    price: e.target.value,
+                                                },
+                                        )
+                                    }
+                                />
+                            </div>
+                            <div className="pt-2 ">
+                                <div className="flex items-center">
+                                    <label className="pr-2">
+                                        {t("appointment.color")}:
+                                    </label>
+                                    <input
+                                        type="color"
+                                        onChange={(e) =>
+                                            setForm(
+                                                (c) =>
+                                                    c && {
+                                                        ...c,
+                                                        color: e.target.value,
+                                                    },
+                                            )
+                                        }
+                                        value={form.color}
                                     />
                                 </div>
                             </div>
-                        )}
-
-                        {form.user_id &&
-                            showSettingsForRemind &&
-                            form.remind_client && (
-                                <>
-                                    <div className="flex justify-between pl-2 pr-2 pt-1">
-                                        <div>
-                                            <label>
-                                                {t(
-                                                    "appointment.remind_day_before",
-                                                )}
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <Switch
-                                                checked={
-                                                    form?.remind_setting
-                                                        ?.remind_day_before
-                                                }
-                                                onCheckedChange={(check) =>
-                                                    setForm(
-                                                        (c) =>
-                                                            c && {
-                                                                ...c,
-                                                                remind_setting:
-                                                                    {
-                                                                        ...c.remind_setting,
-                                                                        remind_day_before:
-                                                                            check,
-                                                                    },
-                                                            },
-                                                    )
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between  pl-2 pr-2 pt-1">
-                                        <div>
-                                            <label>
-                                                {t(
-                                                    "appointment.remind_same_day",
-                                                )}
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <Switch
-                                                checked={
-                                                    form.remind_setting
-                                                        .remind_same_day
-                                                }
-                                                onCheckedChange={(check) =>
-                                                    setForm(
-                                                        (c) =>
-                                                            c && {
-                                                                ...c,
-                                                                remind_setting:
-                                                                    {
-                                                                        ...c.remind_setting,
-                                                                        remind_same_day:
-                                                                            check,
-                                                                    },
-                                                            },
-                                                    )
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="flex justify-between  pl-2 pr-2 pt-1 pb-2">
-                                        <div>
-                                            <label>
-                                                {t(
-                                                    "appointment.send_confirmation_client",
-                                                )}
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <Switch
-                                                checked={
-                                                    form.remind_setting
-                                                        .remind_now
-                                                }
-                                                onCheckedChange={(check) =>
-                                                    setForm(
-                                                        (c) =>
-                                                            c && {
-                                                                ...c,
-                                                                remind_setting:
-                                                                    {
-                                                                        ...c.remind_setting,
-                                                                        remind_now:
-                                                                            check,
-                                                                    },
-                                                            },
-                                                    )
-                                                }
-                                            />
-                                        </div>
-                                    </div>
-                                </>
-                            )}
-                        <div>
-                            <label>
-                                {t("common.price")}{" "}
-                                <span className="text-red-600">*</span>
-                            </label>
-                            <input
-                                type="number"
-                                required={true}
-                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
-                                value={form.price}
-                                onChange={(e) =>
-                                    setForm(
-                                        (c) =>
-                                            c && {
-                                                ...c,
-                                                price: e.target.value,
-                                            },
-                                    )
-                                }
-                            />
                         </div>
-                        <div className="pt-2 ">
-                           <div className="flex items-center">
-                           <label className="pr-2">{t("appointment.color")}:</label>
-                            <input
-                                type="color"
-                                onChange={(e) =>
-                                    setForm(
-                                        (c) =>
-                                            c && {
-                                                ...c,
-                                                color: e.target.value,
-                                            },
-                                    )
-                                }
-                                value={form.color}
-                            />
-                           </div>
-                        </div>
-                      </div>
 
                         <Flex gap="3" mt="4" justify="end">
                             <Dialog.Close>
