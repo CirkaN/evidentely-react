@@ -150,7 +150,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                     }
                                 />
                             )}
-                            <button
+                            {/* <button
                                 type="button"
                                 onClick={() => {
                                     setChargeParams(
@@ -167,7 +167,7 @@ const ChargeClientModal = (props: ChargeClientProps) => {
                                     <Loader size={24} />
                                     <p className="ml-2">{t("charge.loan")}</p>
                                 </div>
-                            </button>
+                            </button> */}
                             {chargeParams.payment_method == "loan" && (
                                 <input
                                     required={true}

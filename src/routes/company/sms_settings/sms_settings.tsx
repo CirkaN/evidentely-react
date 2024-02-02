@@ -1,4 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
+import {
+    PhoneInput,
+    defaultCountries,
+    parseCountry,
+} from "react-international-phone";
+import "react-international-phone/style.css";
 import SmsSettingsBox from "../../../components/sms_settings_box";
 import axios_instance from "../../../config/api_defaults";
 import { CompanyDetails } from "../../../shared/interfaces/company.interface";
@@ -8,10 +14,9 @@ import EditSmsSettingsModal from "../../../modals/settings/sms_settings/EditSmsS
 import { useQuery, useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import { t } from "i18next";
-import PrefixNumberInput from "../../../components/inputs/predefined_prefix";
 
 const SmsSettings = () => {
-    const [userHasMobileVerified, setUserHasMobileVerified] = useState(true);
+    const [userHasMobileVerified, setUserHasMobileVerified] = useState(false);
     const [phoneVerificationForm, setPhoneVerificationForm] = useState({
         phone_number: "",
     });
@@ -163,19 +168,38 @@ const SmsSettings = () => {
                                         <p className="text-xs sm:text-sm md:text-base text-red-600">
                                             {t("sms.phone_format")}
                                         </p>
-                                        <PrefixNumberInput
-                                            isRequired={true}
-                                            parseNumber={(number) =>
+
+                                        <PhoneInput
+                                            defaultCountry="rs"
+                                            countries={defaultCountries.filter(
+                                                (country) => {
+                                                    const { iso2 } =
+                                                        parseCountry(country);
+                                                    return ["rs"].includes(
+                                                        iso2,
+                                                    );
+                                                },
+                                            )}
+                                            value={
+                                                phoneVerificationForm.phone_number
+                                            }
+                                            forceDialCode={true}
+                                            onChange={(e) => {
                                                 setPhoneVerificationForm(
                                                     (c) =>
                                                         c && {
                                                             ...c,
-                                                            phone_number:
-                                                                number as string,
+                                                            phone_number: e,
                                                         },
-                                                )
-                                            }
+                                                );
+                                            }}
                                         />
+                                        {/* <PrefixNumberInput
+                                            isRequired={true}
+                                            parseNumber={(number) =>
+                                              
+                                            }
+                                        /> */}
 
                                         <div className="mt-2">
                                             <button className="text-md sm:text-lg rounded-md bg-blue-500 text-white p-2 w-full">

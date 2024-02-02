@@ -156,7 +156,7 @@ const MyCalendar = () => {
             });
     };
     const handleClick = (id: string, status: AppointmentAvailableStatuses) => {
-        if (status === "missed") {
+        if (status === "approval_required") {
             setApproveAppointmentId(id);
             setApproveModalOpen(true);
         } else {
@@ -176,7 +176,7 @@ const MyCalendar = () => {
                 <div>
                     <p>
                         {timeText}{" "}
-                        {status === "missed" ? (
+                        {status === "approval_required" ? (
                             <span className="pl-1 bg-black border-white text-white text-center rounded-b-sm px-2">
                                 Ceka na odobrenje
                             </span>
