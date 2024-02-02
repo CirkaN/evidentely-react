@@ -157,7 +157,7 @@ const ClientShow = () => {
                                         className="text-blue-400 cursor-pointer"
                                     >
                                         {userDetails?.phone_number ? (
-                                            "0" + userDetails.phone_number
+                                            userDetails.phone_number
                                         ) : (
                                             <button>Dodaj</button>
                                         )}
@@ -233,7 +233,9 @@ const ClientShow = () => {
                             <button
                                 onClick={() => setShowNoteAddModal(true)}
                                 className="text-blue-300 text-3xl"
-                            ><Plus color="green"/></button>
+                            >
+                                <Plus color="green" />
+                            </button>
                         </div>
                         {id && <DetailNoteBox id={id} />}
                     </div>

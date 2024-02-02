@@ -1,12 +1,19 @@
 import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
+import {
+    PhoneInput,
+    defaultCountries,
+    parseCountry,
+} from "react-international-phone";
+import "react-international-phone/style.css";
 import { FormEvent, useEffect, useState } from "react";
 import { t } from "i18next";
 import { X } from "react-feather";
 import axios_instance from "../../config/api_defaults";
 import { AvailableSettingField } from "../../routes/clients/ClientShow";
 import { useQueryClient } from "react-query";
-import PrefixNumberInput from "../../components/inputs/predefined_prefix";
+
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 interface createProps {
     isOpen: boolean;
@@ -26,6 +33,7 @@ interface ClientSettings {
 }
 const AddUserSettings = (props: createProps) => {
     const queryClient = useQueryClient();
+    const [validationErrors, setValidationErrors] = useState<Array<string>>([]);
     const [form, setForm] = useState<ClientSettings>({
         email: "",
         phone_number: "",
@@ -62,6 +70,16 @@ const AddUserSettings = (props: createProps) => {
                 toast.success("Podesavanje uspesno izmenjeno");
                 queryClient.invalidateQueries(["client_show_detail"]);
                 props.cancelFunction();
+            })
+            .catch((e) => {
+                const errors: Array<string> = [];
+                Object.keys(e.response.data.errors).forEach((field) => {
+                    errors.push(
+                        `Greska: ${e.response.data.errors[field].join(", ")}`,
+                    );
+                    toast.error("Gre");
+                });
+                setValidationErrors(errors);
             });
     };
     const generateProperFormField = () => {
@@ -140,14 +158,18 @@ const AddUserSettings = (props: createProps) => {
                     )}
 
                     {props.type == "phone_number" ? (
-                        <PrefixNumberInput
-                            parseNumber={(number) => {
-                                setForm(
-                                    (c) => c && { ...c, [props.type]: number },
-                                );
+                        <PhoneInput
+                            required={true}
+                            defaultCountry="rs"
+                            countries={defaultCountries.filter((country) => {
+                                const { iso2 } = parseCountry(country);
+                                return ["rs"].includes(iso2);
+                            })}
+                            value={form[props.type]}
+                            forceDialCode={true}
+                            onChange={(e) => {
+                                setForm((c) => c && { ...c, [props.type]: e });
                             }}
-                            initial_value={form[props.type]}
-                            isRequired={true}
                         />
                     ) : (
                         ""
@@ -180,6 +202,17 @@ const AddUserSettings = (props: createProps) => {
                 {props.custom_message && (
                     <p className="p-4">{props.custom_message}</p>
                 )}
+                {validationErrors &&
+                    validationErrors.map((e) => {
+                        return (
+                            <p
+                                key={e}
+                                className="text-red-600 p-2 text-center text-md"
+                            >
+                                {e}
+                            </p>
+                        );
+                    })}
                 <form onSubmit={handleSubmit}>
                     {generateProperFormField()}
                     <Flex gap="3" mt="4" justify="end">

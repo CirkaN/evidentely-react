@@ -2,12 +2,16 @@ import { Button, Callout, Dialog, Flex, TextField } from "@radix-ui/themes";
 import { Text } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
 import { t } from "i18next";
-import PrefixNumberInput from "../../components/inputs/predefined_prefix";
 import axios_instance from "../../config/api_defaults";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 import { Info } from "react-feather";
 import toast, { Toaster } from "react-hot-toast";
-
+import {
+    PhoneInput,
+    defaultCountries,
+    parseCountry,
+} from "react-international-phone";
+import "react-international-phone/style.css";
 interface CreateClientProps {
     cancelFunction: () => void;
     savedClient?: (savedClient: ClientDTO) => void;
@@ -62,7 +66,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                     errors.push(
                         `Greska: ${e.response.data.errors[field].join(", ")}`,
                     );
-                    toast.error("greska");
+                    toast.error("Greska: Molimo proverite unose");
                 });
                 setValidationErrors(errors);
             });
@@ -200,20 +204,29 @@ const CreateClientModal = (props: CreateClientProps) => {
                                 <Text as="div" size="2" mb="1" weight="bold">
                                     {t("common.phone_number")}:
                                 </Text>
-                                <PrefixNumberInput
-                                    isRequired={false}
-                                    parseNumber={(number) =>
+                                <PhoneInput
+                                    defaultCountry="rs"
+                                    countries={defaultCountries.filter(
+                                        (country) => {
+                                            const { iso2 } =
+                                                parseCountry(country);
+                                            return ["rs"].includes(iso2);
+                                        },
+                                    )}
+                                    value={form.settings.phone_number}
+                                    forceDialCode={true}
+                                    onChange={(e) => {
                                         setForm(
                                             (c) =>
                                                 c && {
                                                     ...c,
                                                     settings: {
                                                         ...c.settings,
-                                                        phone_number: number,
+                                                        phone_number: e,
                                                     },
                                                 },
-                                        )
-                                    }
+                                        );
+                                    }}
                                 />
                             </label>
                         </Flex>
