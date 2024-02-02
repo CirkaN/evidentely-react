@@ -12,8 +12,6 @@ interface Appointment {
     remind_client: boolean;
     item_id?: string;
     status: string;
-    end_formatted?: string;
-    start_formatted?: string;
     note?: string;
     remind_setting: {
         remind_day_before: boolean;
