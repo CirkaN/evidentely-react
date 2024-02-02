@@ -72,17 +72,6 @@ const ClientShow = () => {
             });
     };
 
-    const formatCurrency = (t: string | undefined) => {
-        if (t) {
-            const s = new Intl.NumberFormat("sr-RS", {
-                style: "currency",
-                currency: "RSD",
-            });
-            return s.format(parseInt(t));
-        }
-        return 0;
-    };
-
     const applySettingsField = (type: AvailableSettingField) => {
         setActiveSettingsModalOpen(true);
         setActiveSettingsField(type);

@@ -477,7 +477,7 @@ const ProfileSettings = () => {
                                                     htmlFor="candidates"
                                                     className="font-medium text-gray-900"
                                                 >
-                                                    Nedeljni izvestaj
+                                                    Nedeljni izvestaj (uskoro)
                                                 </label>
                                                 <p className="text-gray-500">
                                                     Dobijte besplatan nedeljni
@@ -522,7 +522,7 @@ const ProfileSettings = () => {
                                                     htmlFor="candidates"
                                                     className="font-medium text-gray-900"
                                                 >
-                                                    Mesecni izvestaj
+                                                    Mesecni izvestaj (uskoro)
                                                 </label>
                                                 <p className="text-gray-500">
                                                     Dobijte besplatan mesecni
@@ -626,6 +626,7 @@ const ProfileSettings = () => {
                                     </div>
                                 </fieldset> */}
                         </div>
+                        
                     </div>
                 </div>
             </div>

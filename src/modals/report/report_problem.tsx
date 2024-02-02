@@ -1,7 +1,5 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { Text } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
-import { ItemDTO } from "../../shared/interfaces/item.interface";
 import { t } from "i18next";
 import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
