@@ -1,5 +1,5 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { CreditCard, DollarSign, Loader, Save } from "react-feather";
+import { CreditCard, DollarSign, Save } from "react-feather";
 import axios_instance from "../../config/api_defaults";
 import { FormEvent, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
