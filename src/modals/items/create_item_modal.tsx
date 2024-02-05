@@ -36,8 +36,7 @@ const CreateItemModal = (props: CreateItemProps) => {
         <>
             <Dialog.Root open={props.isOpen}>
                 <Dialog.Content style={{maxWidth: 450}}>
-                    <Dialog.Title> {`Kreiraj ${props.modalType}`}
-
+                    <Dialog.Title>
                         {props.modalType == 'service' &&
                         <span>Kreiraj uslugu</span>
                         }
