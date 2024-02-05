@@ -1,8 +1,8 @@
-import { Button, Dialog, Flex, TextField } from "@radix-ui/themes";
-import { Text } from "@radix-ui/themes";
-import { FormEvent, useState } from "react";
-import { ItemDTO } from "../../shared/interfaces/item.interface";
-import { t } from "i18next";
+import {Button, Dialog, Flex, TextField} from "@radix-ui/themes";
+import {Text} from "@radix-ui/themes";
+import {FormEvent, useState} from "react";
+import {ItemDTO} from "../../shared/interfaces/item.interface";
+import {t} from "i18next";
 
 interface CreateItemProps {
     cancelFunction: () => void;
@@ -35,8 +35,17 @@ const CreateItemModal = (props: CreateItemProps) => {
     return (
         <>
             <Dialog.Root open={props.isOpen}>
-                <Dialog.Content style={{ maxWidth: 450 }}>
-                    <Dialog.Title> {`Kreiraj ${props.modalType}`}</Dialog.Title>
+                <Dialog.Content style={{maxWidth: 450}}>
+                    <Dialog.Title> {`Kreiraj ${props.modalType}`}
+
+                        {props.modalType == 'service' &&
+                        <span>Kreiraj uslugu</span>
+                        }
+
+                        {props.modalType !== 'service' &&
+                        <span>Kreiraj proizvod</span>
+                        }
+                    </Dialog.Title>
                     <form onSubmit={handleSubmit}>
                         <div className="space-y-2">
                             <div>
@@ -74,9 +83,9 @@ const CreateItemModal = (props: CreateItemProps) => {
                                             weight="bold"
                                         >
                                             {props.modalType === "product" &&
-                                                t("item.base_price")}
+                                            t("item.base_price")}
                                             {props.modalType !== "product" &&
-                                                t("item.price")}
+                                            t("item.price")}
                                         </Text>
                                         <TextField.Input
                                             type="number"
@@ -113,7 +122,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                                                         c && {
                                                             ...c,
                                                             selling_price:
-                                                                e.target.value,
+                                                            e.target.value,
                                                         },
                                                 )
                                             }
@@ -142,8 +151,8 @@ const CreateItemModal = (props: CreateItemProps) => {
                                                             c && {
                                                                 ...c,
                                                                 duration:
-                                                                    e.target
-                                                                        .value,
+                                                                e.target
+                                                                    .value,
                                                             },
                                                     )
                                                 }
@@ -200,7 +209,7 @@ const CreateItemModal = (props: CreateItemProps) => {
                                                     c && {
                                                         ...c,
                                                         description:
-                                                            e.target.value,
+                                                        e.target.value,
                                                     },
                                             )
                                         }
