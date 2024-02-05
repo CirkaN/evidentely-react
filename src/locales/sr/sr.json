@@ -1,5 +1,6 @@
 {
     "common": {
+        "delete":"Obriši",
         "email": "E-mail adresa",
         "password": "Šifra",
         "enter_email": "Unesite e-mail adresu",
