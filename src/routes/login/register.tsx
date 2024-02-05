@@ -26,10 +26,10 @@ const Register = () => {
             label: "Kozmeticki Salon",
             value: "kozmeticki_salon",
         },
-        {
-            label: "Teratana",
-            value: "teretana",
-        },
+        // {
+        //     label: "Teratana",
+        //     value: "teretana",
+        // },
         {
             label: "Frizerski Salon",
             value: "frizerski_salon",
