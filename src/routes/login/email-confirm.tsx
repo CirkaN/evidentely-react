@@ -7,7 +7,7 @@ const EmailConfirm = () => {
     const navigate = useNavigate();
     useEffect(() => {
         refreshUserState();
-        navigate("main_dashboard");
+        navigate("/main_dashboard");
     }, []);
     return <p>E-mail je uspesno potvrdjen!</p>;
 };
