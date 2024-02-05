@@ -1,4 +1,4 @@
-import { File, Trash } from "react-feather";
+import { Trash } from "react-feather";
 import ShowImage from "../modals/gallery/show_image";
 import { useState } from "react";
 import axios_instance from "../config/api_defaults";
