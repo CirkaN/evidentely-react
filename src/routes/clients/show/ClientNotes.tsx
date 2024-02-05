@@ -70,7 +70,7 @@ const ClientNotes = () => {
             show: true,
             icon: "error",
             title: t("common.please_confirm"),
-            text: t("media.delete_attachment"),
+            text: t("common.delete_user_note"),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
@@ -94,7 +94,7 @@ const ClientNotes = () => {
         axios_instance()
             .delete(`/user/${id}/notes/${note_id}`)
             .then(() => {
-                toast.success(t("media.delete_success"));
+                toast.success(t("common.delete_success"));
                 queryClient.invalidateQueries({
                     queryKey: ["client_notes"],
                 });
