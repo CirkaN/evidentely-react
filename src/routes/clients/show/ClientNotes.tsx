@@ -15,6 +15,7 @@ import { useQueryClient } from "react-query";
 import toast from "react-hot-toast";
 import SweetAlert2 from "react-sweetalert2";
 import AddUserNoteModal from "../../../modals/clients/add_user_note_modal";
+import ShowNoteModal from "../../../modals/clients/show_note _modal";
 type PreparedNoteDTO = Omit<NoteDTO, "created_by">;
 const ClientNotes = () => {
     const { id } = useParams();
@@ -22,6 +23,9 @@ const ClientNotes = () => {
     const queryClient = useQueryClient();
     const [swalProps, setSwalProps] = useState({});
     const [showNoteAddModal, setShowNoteAddModal] = useState(false);
+    const [noteModalShown, setNoteModalShown] = useState(false);
+    const [noteLog, setNoteLog] = useState("");
+
     const fields: Field[] = [
         {
             name: t("common.note"),
@@ -48,7 +52,11 @@ const ClientNotes = () => {
     const actions: Action<NoteDTO>[] = [
         {
             type: ActionTypes.Show,
-            icon: <Eye color="lightblue"></Eye>,
+            fn: (r:NoteDTO) =>{
+                setNoteLog(r.note);
+                setNoteModalShown(true);
+            },
+            icon: <Eye color="lightblue"/>,
         },
         {
             type: ActionTypes.Delete,
@@ -130,6 +138,7 @@ const ClientNotes = () => {
 
             <br />
             <SweetAlert2 {...swalProps} />
+            <ShowNoteModal isOpen={noteModalShown} note={noteLog} closeModal={()=>setNoteModalShown(false)} />
             <DataTable
                 has_actions={true}
                 fields={fields}
