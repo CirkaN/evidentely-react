@@ -33,7 +33,7 @@ const ShowImage = (props: showImageInterface) => {
         axios_instance()
             .put(`document/${imageProperties.id}`, imageProperties)
             .then(() => {
-                toast.success(t("media.delete_success"));
+                toast.success(t("media.update_success"));
             });
     };
     const cleanFunction = () => {

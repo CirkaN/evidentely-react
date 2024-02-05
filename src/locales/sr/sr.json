@@ -195,6 +195,7 @@
         "success_delete": "Uspešno ste označili članarinu kao neaktivnu"
     },
     "media": {
+        "update_success": "Uspešna izmena",
         "delete_success": "Uspešno brisanje medija fajla",
         "delete_attachment": "Molimo potvrdite brisanje fajla"
     },
