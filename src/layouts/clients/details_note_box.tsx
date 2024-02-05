@@ -28,7 +28,7 @@ const DetailNoteBox = (props: NoteBoxProps) => {
             show: true,
             icon: "error",
             title: t("common.please_confirm"),
-            text: t("media.delete_attachment"),
+            text: t("common.delete_user_note"),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,

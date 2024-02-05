@@ -1,6 +1,7 @@
 {
     "common": {
         "delete":"Obriši",
+        "delete_user_note": "Molimo potvrdite brisanje napomene, ova akcija ne moze biti opozvana",
         "email": "E-mail adresa",
         "password": "Šifra",
         "enter_email": "Unesite e-mail adresu",

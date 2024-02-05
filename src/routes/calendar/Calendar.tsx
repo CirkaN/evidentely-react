@@ -136,7 +136,7 @@ const MyCalendar = () => {
         if (screenSize.width < 700) {
             return "timeGridDay";
         } else {
-            return "timeGridWeek";
+            return "timeGridThreeDays";
         }
     };
 
