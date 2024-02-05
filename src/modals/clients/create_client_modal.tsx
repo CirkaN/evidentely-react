@@ -237,7 +237,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                                     {t("common.note")}
                                 </Text>
                                 <TextField.Input
-                                    value={form.settings.note}
+                                    value={form.note}
                                     onChange={(e) =>
                                      setForm((c)=>c&&{...c,note:e.target.value})
                                     }
