@@ -209,7 +209,7 @@ const router = createBrowserRouter([
         element: <Register />,
     },
     {
-        path: "/email-confirm",
+        path: "/email_verified",
         element: <EmailConfirm />,
     },
 ]);
