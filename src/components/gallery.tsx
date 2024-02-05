@@ -1,4 +1,4 @@
-import { Trash } from "react-feather";
+import { File, Trash } from "react-feather";
 import ShowImage from "../modals/gallery/show_image";
 import { useState } from "react";
 import axios_instance from "../config/api_defaults";
@@ -16,6 +16,7 @@ export interface GalleryItem {
     url: string;
     name: string;
     note?: string;
+    media_type: "image/png" | "image/jpg" | "image/jpeg" | "application/pdf";
 }
 
 const Gallery = (galleryItems: GalleryProps) => {
@@ -67,34 +68,44 @@ const Gallery = (galleryItems: GalleryProps) => {
 
     const myMapper = galleryItems.items.map((e) => {
         return (
-            <div
-                key={e.id}
-                className="w-full md:w-1/3 lg:w-1/3 xl:w-1/3 mb-4 px-4 transition duration-300 ease-in-out hover:scale-110 "
-            >
-                <div className="flex justify-between py-2">
-                    <span>{e.note}</span>
+            <div key={e.id} className="w-48">
+                <div className="flex justify-between border-b space-x-2">
+                    <span title={e.name} className="truncate">
+                        {e.name}
+                    </span>
                     <div className="cursor-pointer transition duration-300 ease-in-out hover:scale-110 flex">
                         <span onClick={() => raiseDeleteAlert(e.id)}>
-                            <Trash />
+                            <Trash color="red" />
                         </span>
-                        {/* <span onClick={() => editAttachment(e)}><Edit /></span> */}
                     </div>
                 </div>
-                <img
-                    className="cursor-pointer hover:opacity-80"
-                    src={e.url}
-                    alt={e.name}
-                    onClick={() => {
-                        openZoomed(e);
-                    }}
-                />
+                <div>
+                    {e.media_type == "image/png" ||
+                    e.media_type == "image/jpeg" ||
+                    e.media_type == "image/jpg" ? (
+                        <img
+                            className="cursor-pointer hover:opacity-80"
+                            src={e.url}
+                            alt={e.name}
+                            onClick={() => {
+                                openZoomed(e);
+                            }}
+                        />
+                    ) : (
+                        <img
+                            className="cursor-pointer hover:opacity-60 "
+                            title={e.name}
+                            src="/file_placeholder.webp"
+                            alt="File"
+                        />
+                    )}
+                </div>
             </div>
         );
     });
     return (
         <>
             <SweetAlert2 {...swalProps} />
-
             {activeImage && (
                 <ShowImage
                     image={activeImage}
@@ -102,7 +113,7 @@ const Gallery = (galleryItems: GalleryProps) => {
                         setZoomActive(false);
                     }}
                     isOpen={zoomActive}
-                ></ShowImage>
+                />
             )}
             <div className="flex flex-wrap justify-around p-4">{myMapper}</div>
         </>

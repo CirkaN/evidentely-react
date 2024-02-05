@@ -26,6 +26,7 @@ interface DocumentApiResponse {
     name: string;
     note?: string;
     media: Array<MediaResponse>;
+    media_type: "image/png" | "image/jpg" | "image/jpeg" | "application/pdf";
     url: string;
 }
 const ClientDocuments = () => {
@@ -75,6 +76,7 @@ const ClientDocuments = () => {
                 url: e.url,
                 note: e.note,
                 name: e.media[0].file_name,
+                media_type: e.media_type,
                 id: e.id,
             };
         });
