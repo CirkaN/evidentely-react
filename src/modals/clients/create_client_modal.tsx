@@ -1,17 +1,18 @@
-import { Button, Callout, Dialog, Flex, TextField } from "@radix-ui/themes";
-import { Text } from "@radix-ui/themes";
-import { FormEvent, useState } from "react";
-import { t } from "i18next";
+import {Button, Callout, Dialog, Flex, TextField} from "@radix-ui/themes";
+import {Text} from "@radix-ui/themes";
+import {FormEvent, useState} from "react";
+import {t} from "i18next";
 import axios_instance from "../../config/api_defaults";
-import { ClientDTO } from "../../shared/interfaces/client.interface";
-import { Info } from "react-feather";
-import toast, { Toaster } from "react-hot-toast";
+import {ClientDTO} from "../../shared/interfaces/client.interface";
+import {Info} from "react-feather";
+import toast, {Toaster} from "react-hot-toast";
 import {
     PhoneInput,
     defaultCountries,
     parseCountry,
 } from "react-international-phone";
 import "react-international-phone/style.css";
+
 interface CreateClientProps {
     cancelFunction: () => void;
     savedClient?: (savedClient: ClientDTO) => void;
@@ -22,8 +23,8 @@ export interface ClientCreateDTO {
     name: string;
     gender: string;
     email: string;
+    note: string;
     settings: {
-        note: string;
         address: string;
         phone_number?: string;
     };
@@ -34,8 +35,8 @@ const CreateClientModal = (props: CreateClientProps) => {
         name: "",
         gender: "male",
         email: "",
+        note:"",
         settings: {
-            note: "",
             address: "",
             phone_number: "",
         },
@@ -80,12 +81,12 @@ const CreateClientModal = (props: CreateClientProps) => {
     return (
         <>
             <Dialog.Root open={props.isOpen}>
-                <Dialog.Content style={{ maxWidth: 450 }}>
+                <Dialog.Content style={{maxWidth: 450}}>
                     <Dialog.Title>{t("client.create_client")}</Dialog.Title>
 
                     <Callout.Root>
                         <Callout.Icon>
-                            <Info size={18} />
+                            <Info size={18}/>
                         </Callout.Icon>
                         <Callout.Text color="iris">
                             Ukoliko ne unesete telefon, sms obavestenja nece
@@ -94,17 +95,17 @@ const CreateClientModal = (props: CreateClientProps) => {
                     </Callout.Root>
 
                     {validationErrors &&
-                        validationErrors.map((e) => {
-                            return (
-                                <p
-                                    key={e}
-                                    className="text-red-600 p-2 text-center text-md"
-                                >
-                                    {e}
-                                </p>
-                            );
-                        })}
-                    <Toaster />
+                    validationErrors.map((e) => {
+                        return (
+                            <p
+                                key={e}
+                                className="text-red-600 p-2 text-center text-md"
+                            >
+                                {e}
+                            </p>
+                        );
+                    })}
+                    <Toaster/>
                     <form onSubmit={handleSubmit} className="pt-5">
                         <Flex direction="column" gap="3">
                             <label>
@@ -208,7 +209,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                                     defaultCountry="rs"
                                     countries={defaultCountries.filter(
                                         (country) => {
-                                            const { iso2 } =
+                                            const {iso2} =
                                                 parseCountry(country);
                                             return ["rs"].includes(iso2);
                                         },
@@ -238,16 +239,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                                 <TextField.Input
                                     value={form.settings.note}
                                     onChange={(e) =>
-                                        setForm(
-                                            (c) =>
-                                                c && {
-                                                    ...c,
-                                                    settings: {
-                                                        ...c.settings,
-                                                        note: e.target.value,
-                                                    },
-                                                },
-                                        )
+                                     setForm((c)=>c&&{...c,note:e.target.value})
                                     }
                                 />
                             </label>
