@@ -6,6 +6,8 @@ import axios_instance from "../../config/api_defaults";
 import { t } from "i18next";
 import SweetAlert2 from "react-sweetalert2";
 import toast from "react-hot-toast";
+import { Callout } from "@radix-ui/themes";
+import { Info } from "react-feather";
 
 type PriceLinks = Record<string, string>;
 
@@ -170,16 +172,21 @@ const PricingPlans = () => {
         <>
             <SweetAlert2 {...swalProps} />
             <section className="bg-white ">
-                <p>
-                    Trenutno ste na probnom paketu aplikacije, idealan za
-                    testiranje dok se odlučite za paket usluga. U ponudi imamo
-                    vise tipova paketa, ukoliko vam je potreban poseban izbor
-                    usluga, kontaktirajte našu korisničku službu radi{" "}
-                    <p className="underline">
-                        kreiranja personalizovanog paketa
-                    </p>
-                    .
-                </p>
+                <Callout.Root>
+                    <Callout.Icon>
+                        <Info size={18} />
+                    </Callout.Icon>
+                    <Callout.Text color="iris">
+                        Trenutno ste na probnom paketu aplikacije, idealan za
+                        testiranje dok se odlučite za paket usluga. U ponudi
+                        imamo vise tipova paketa, ukoliko vam je potreban
+                        poseban izbor usluga, kontaktirajte našu korisničku
+                        službu radi.
+                        <p className="underline">
+                            kreiranja personalizovanog paketa
+                        </p>
+                    </Callout.Text>
+                </Callout.Root>
                 <div className="container px-6 py-8 mx-auto">
                     <div className="grid gap-6 mt-16 -mx-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         <div className=" flex flex-col justify-between bg-gray-200 transition-colors duration-300 transform rounded-lg hover:bg-gray-300 ">
