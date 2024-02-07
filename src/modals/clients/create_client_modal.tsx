@@ -67,7 +67,7 @@ const CreateClientModal = (props: CreateClientProps) => {
                     errors.push(
                         `Greska: ${e.response.data.errors[field].join(", ")}`,
                     );
-                    toast.error("Greska: Molimo proverite unose");
+                    toast.error("Greska: Unosi nisu ispravni, molimo proverite");
                 });
                 setValidationErrors(errors);
             });

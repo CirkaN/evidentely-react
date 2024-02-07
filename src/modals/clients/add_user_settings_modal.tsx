@@ -77,7 +77,7 @@ const AddUserSettings = (props: createProps) => {
                     errors.push(
                         `Greska: ${e.response.data.errors[field].join(", ")}`,
                     );
-                    toast.error("Gre");
+                    toast.error("Greska: Unosi nisu ispravni, molimo proverite");
                 });
                 setValidationErrors(errors);
             });
