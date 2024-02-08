@@ -78,13 +78,13 @@ const MyLayout = () => {
             name: t("navbar.settings.items_and_products"),
             icon: <Plus size={20} />,
             href: "price_plans/services",
-            current: location.pathname === "price_plans/services",
+            current: location.pathname === "/price_plans/services",
         },
         {
             name: t("navbar.settings.employees"),
             icon: <Share2 size={20} />,
             href: "/employees",
-            current: location.pathname === "employees",
+            current: location.pathname === "/employees",
         },
 
         {
