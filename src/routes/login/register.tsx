@@ -23,7 +23,7 @@ const Register = () => {
             value: "advokat",
         },
         {
-            label: "Kozmeticki Salon",
+            label: "Kozmetički Salon",
             value: "kozmeticki_salon",
         },
         // {
@@ -39,7 +39,7 @@ const Register = () => {
             value: "stomatologija",
         },
         {
-            label: "Salon Masaze",
+            label: "Salon Masaže",
             value: "salon_masaze",
         },
         {
@@ -47,11 +47,11 @@ const Register = () => {
             value: "edukacioni_centar",
         },
         {
-            label: "Privatna skola",
+            label: "Privatna Škola",
             value: "privatna_skola",
         },
         {
-            label: "Privatni casovi",
+            label: "Privatni Časovi",
             value: "privatni_casovi",
         },
         {
