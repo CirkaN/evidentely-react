@@ -141,14 +141,14 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                     <div className=" flex h-12 bg-[#E36414] justify-center p-3">
                                         <p className="text-white">
                                             <b>{t("sales.status")}</b>:
-                                            Otkazan/Propusten
+                                            Otkazan/Propušten
                                         </p>
                                     </div>
                                 )}
                                 {appointment?.status === "completed_paid" && (
                                     <div className=" flex h-12 bg-[#65B741] justify-center p-3">
                                         <p className="text-white">
-                                            <b>{t("sales.status")}</b>: Uplaceno
+                                            <b>{t("sales.status")}</b>: Uplaćeno
                                         </p>
                                     </div>
                                 )}
@@ -156,7 +156,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                     <div className=" flex h-12 bg-[#9BB8CD] justify-center p-3">
                                         <p className="text-white">
                                             <b>{t("sales.status")}</b>:
-                                            Nenaplacen
+                                            Nenaplaćen
                                         </p>
                                     </div>
                                 )}
@@ -164,7 +164,7 @@ const ShowAppointmentModal = (props: ShowAppointmentModalProps) => {
                                     <div className=" flex h-12 bg-[#114062] justify-center p-3">
                                         <p className="text-white">
                                             <b>{t("sales.status")}</b>:Na
-                                            cekanju
+                                            Čekanju
                                         </p>
                                     </div>
                                 )}

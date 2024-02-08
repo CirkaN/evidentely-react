@@ -1,4 +1,4 @@
-import { Eye, Plus, Trash } from "react-feather";
+import { Eye, Info, Plus, Trash } from "react-feather";
 import DataTable, {
     Action,
     ActionTypes,
@@ -15,6 +15,7 @@ import CreateClientModal from "../../modals/clients/create_client_modal";
 import InfoBox, { InfoBoxType } from "../../components/info-box";
 import { t } from "i18next";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
+import { Callout } from "@radix-ui/themes";
 
 const Clients = () => {
     const navigate = useNavigate();
@@ -146,12 +147,15 @@ const Clients = () => {
 
     return (
         <>
-            <InfoBox
-                type={InfoBoxType.Info}
-                text="U ovom modulu mozete 
-                dodavati nove klijente kao i pratiti sve vezano za vase klijente"
-                headerText="Klijenti"
-            />
+            <Callout.Root>
+                <Callout.Icon>
+                    <Info size={18} />
+                </Callout.Icon>
+                <Callout.Text color="iris">
+                    U ovom modulu mozete dodavati nove klijente kao i pratiti
+                    sve vezano za vase klijente.{" "}
+                </Callout.Text>
+            </Callout.Root>
 
             <CreateClientModal
                 cancelFunction={() => {

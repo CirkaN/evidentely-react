@@ -227,7 +227,7 @@ const SmsSettings = () => {
                                 <div className="flex justify-center">
                                     <div className="w-1/3 text-center">
                                         <label htmlFor="code">
-                                            {t("code")}:
+                                            {t("common.code")}:
                                         </label>
                                         <input
                                             type="text"

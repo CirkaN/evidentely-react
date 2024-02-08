@@ -51,14 +51,14 @@ const Login = () => {
             search.includes("registration_success");
 
         if (isSuccess) {
-            toast.success(t("registration.success"));
+            toast.success(t("common.registration_success"));
         }
 
         const isReauth =
             pathname.includes("/login") && search.includes("email-confirm");
 
         if (isReauth) {
-            toast.success('Uspesno potvrdjen email!')
+            toast.success('Uspešno potvrdjen email!')
             refreshUserState();
         }
 
@@ -134,7 +134,7 @@ const Login = () => {
                                             />
                                         </div>
 
-                                        <div>
+                                        <div className="pt-2">
                                             <label className="pt-5">
                                                 Sifra:
                                             </label>

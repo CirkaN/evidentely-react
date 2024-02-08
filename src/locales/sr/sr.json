@@ -1,6 +1,8 @@
 {
     "common": {
         "delete":"Obriši",
+        "code":"Verifikacioni kod",
+        "registration_success":"Registracija uspešna!",
         "delete_user_note": "Molimo potvrdite brisanje napomene, ova akcija ne moze biti opozvana",
         "email": "E-mail adresa",
         "password": "Šifra",
@@ -296,7 +298,8 @@
         "please_upload_valid_avatar": "Molimo izaberite ispravnu datoteku",
         "note_deleted_succesfully": "Napomena uspešno obrisana",
         "note_created_succesfully": "Napomena uspešno kreirana",
-        "event_deleted": "Termin uspešno obrisan"
+        "event_deleted": "Termin uspešno obrisan",
+        "check_email_confirm":"Proverite vas e-mail, ukoliko ne stigne kroz par minuta, proverite 'spam'"
     },
     "analytics": {
         "top_clients": "Top 5 klijenata po profitu ove nedelje"

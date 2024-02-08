@@ -146,7 +146,7 @@ const Register = () => {
                                                 placeholder="Ime I Prezime"
                                             />
                                         </div>
-                                        <div>
+                                        <div className="pt-2">
                                             <label className="">Email:</label>
                                             <input
                                                 value={registrationForm.email}
@@ -166,7 +166,7 @@ const Register = () => {
                                             />
                                         </div>
 
-                                        <div className="">
+                                        <div className="pt-2">
                                             <label className="pt-5">
                                                 Ime radnje:
                                             </label>
@@ -190,7 +190,7 @@ const Register = () => {
                                                 placeholder="Ime radnje / firme"
                                             />
                                         </div>
-                                        <div>
+                                        <div className="pt-2">
                                             <label className="pt-5">
                                                 Sifra:
                                             </label>
@@ -214,9 +214,8 @@ const Register = () => {
                                                 placeholder="Sifra"
                                             />
                                         </div>
-                                        <div>
+                                        <div className="pt-2">
                                             <label>Delatnost:</label>
-
                                             <Select
                                                 isSearchable={true}
                                                 required={true}

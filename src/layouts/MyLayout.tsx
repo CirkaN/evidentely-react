@@ -142,9 +142,7 @@ const MyLayout = () => {
     ];
 
     const sendReVerifyLink = () => {
-        toast.success(
-            "Proverite vase sanduce, ako ne dobijete e-mail kroz 5 minuta, proverite spam odeljak",
-        );
+        toast.success("toasts.check_email_confirm");
     };
     const changeState = (key: keyof typeof collapsedMenies) => {
         setCollapsedMenies((c) => c && { ...c, [key]: !c[key] });
