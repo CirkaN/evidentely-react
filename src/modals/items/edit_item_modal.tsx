@@ -163,7 +163,6 @@ const EditItemModal = (props: EditItemProps) => {
                                 />
                             </label>
                         </Flex>
-
                         <Flex gap="3" mt="4" justify="end">
                             <Dialog.Close>
                                 <Button

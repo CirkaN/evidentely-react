@@ -89,8 +89,8 @@ const CreateClientModal = (props: CreateClientProps) => {
                             <Info size={18}/>
                         </Callout.Icon>
                         <Callout.Text color="iris">
-                            Ukoliko ne unesete telefon, sms obavestenja nece
-                            biti omogucena.
+                            Ukoliko ne unesete telefon, sms obaveštenja neće
+                            biti omogućena.
                         </Callout.Text>
                     </Callout.Root>
 
