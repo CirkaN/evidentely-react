@@ -488,12 +488,7 @@ const MyLayout = () => {
                         </div>
                         <div>
                             <p className="text-white font-bold text-lg">
-                                za{" "}
-                                {dayjs(user?.company.trial_expires_at).diff(
-                                    dayjs(),
-                                    "day",
-                                )}{" "}
-                                dan/a
+                                za {user?.company.plan_expires_within} dan/a
                             </p>
                         </div>
                     </div>
