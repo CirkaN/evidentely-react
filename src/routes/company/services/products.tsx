@@ -14,6 +14,7 @@ import SweetAlert2 from "react-sweetalert2";
 import toast from "react-hot-toast";
 import EditItemModal from "../../../modals/items/edit_item_modal";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
 const Products = () => {
     const queryClient = useQueryClient();
@@ -78,7 +79,17 @@ const Products = () => {
                 toast.success(t("common.delete_success"));
             });
     };
-
+    const formatCurrency = (t: string, isSellingPrice: boolean) => {
+        const s = new Intl.NumberFormat("sr-RS", {
+            style: "currency",
+            currency: "RSD",
+        });
+        return (
+            <p className={clsx(isSellingPrice && "text-green-600")}>
+                {s.format(parseInt(t))}
+            </p>
+        );
+    };
     const fields: Field[] = [
         {
             name: t("common.name"),
@@ -92,11 +103,13 @@ const Products = () => {
             editable_from_table: true,
             show: true,
             original_name: "price",
+            formatFn: (t: string) => formatCurrency(t, false),
             has_sort: true,
         },
         {
             name: t("common.selling_price"),
             editable_from_table: true,
+            formatFn: (t: string) => formatCurrency(t, true),
             show: true,
             original_name: "selling_price",
             has_sort: true,
