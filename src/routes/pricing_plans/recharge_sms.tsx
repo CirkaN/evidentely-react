@@ -3,11 +3,19 @@ import { useUser } from "../../context/UserContext";
 type PriceLinks = Record<string, string>;
 const RechargeSms = () => {
     const { user } = useUser();
-    const priceLinks: PriceLinks = {
+    const devPriceLinks: PriceLinks = {
         first_plan: `https://billing.moj-biznis.rs/checkout/buy/1207a923-f6d2-444d-9db3-2fd2d6d20e59?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
         second_plan: `https://billing.moj-biznis.rs/checkout/buy/9d64cf5e-93fb-416b-97e0-2003f730e68a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
         third_plan: `https://billing.moj-biznis.rs/checkout/buy/e6b79fe7-f1bc-439a-8bc3-139b6c5b778e?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
     };
+   
+    const prodPriceLinks: PriceLinks = {
+        first_plan: `https://billing.moj-biznis.rs/checkout/buy/195e3c89-f0a4-49c1-a4ca-0ce29456be71?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
+        second_plan: `https://billing.moj-biznis.rs/checkout/buy/05963242-b6dd-44e6-ab66-9995955d0089?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
+        third_plan: `https://billing.moj-biznis.rs/checkout/buy/bcc4306a-d3db-4b2e-82e6-4a29e7eef26b?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default&embed=1`,
+    };
+
+    const priceLinks = import.meta.env.VITE_ENV == 'production' ? prodPriceLinks : devPriceLinks
     return (
         <>
             <section>
