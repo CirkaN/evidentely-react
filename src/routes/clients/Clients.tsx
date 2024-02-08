@@ -12,7 +12,6 @@ import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 import CreateClientModal from "../../modals/clients/create_client_modal";
-import InfoBox, { InfoBoxType } from "../../components/info-box";
 import { t } from "i18next";
 import { ClientDTO } from "../../shared/interfaces/client.interface";
 import { Callout } from "@radix-ui/themes";
