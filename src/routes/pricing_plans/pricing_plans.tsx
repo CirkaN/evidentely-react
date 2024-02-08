@@ -14,12 +14,22 @@ type PriceLinks = Record<string, string>;
 const PricingPlans = () => {
     const { user, refreshUserState } = useUser();
     const [swalProps, setSwalProps] = useState({});
-    const priceLinks: PriceLinks = {
+    const devPriceLinks: PriceLinks = {
         free_link: `https://billing.moj-biznis.rs/checkout/buy/d7de9e27-5d0a-4712-bbbf-21c0dfeb7485?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premium_link: `https://billing.moj-biznis.rs/checkout/buy/a2e85f9d-c486-4b89-b405-0fe6073af18a?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/b99d1ca3-1ce2-4186-b77d-1dfacf2d9405?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
         premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/5fe513b3-fa11-49b0-bf54-d93bb819cdb7?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
     };
+    const prodPriceLinks: PriceLinks = {
+        free_link: `https://billing.moj-biznis.rs/checkout/buy/d7de9e27-5d0a-4712-bbbf-21c0dfeb7485?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premium_link: `https://billing.moj-biznis.rs/checkout/buy/7d71ec03-0015-4432-a886-125748e33106?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premiumplus_link: `https://billing.moj-biznis.rs/checkout/buy/cfb3c3fa-0810-4028-9d18-b403187c1b3e?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+        premiumplusplus_link: `https://billing.moj-biznis.rs/checkout/buy/180af5b5-6562-452c-ab9d-f4e925cede8c?checkout[email]=${user?.email}&checkout[name]=${user?.name}&checkout[billing_address][country]=RS&checkout[custom][billable_id]=${user?.id}&checkout[custom][billable_type]=App\\Models\\User&checkout[custom][subscription_type]=default`,
+    };
+    const priceLinks =
+        import.meta.env.VITE_ENV == "production"
+            ? prodPriceLinks
+            : devPriceLinks;
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
