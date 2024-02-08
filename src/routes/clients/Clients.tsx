@@ -170,6 +170,7 @@ const Clients = () => {
                 <DataTable
                     queryKey="clients"
                     has_table_filters={false}
+                    has_search={true}
                     table_actions={tableActions}
                     actions={actions}
                     url={url}
