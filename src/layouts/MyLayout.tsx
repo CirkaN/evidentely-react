@@ -11,6 +11,7 @@ import {
     Plus,
     Settings,
     Share2,
+    UserPlus,
     Users,
 } from "react-feather";
 import { useUser } from "../context/UserContext";
@@ -81,7 +82,8 @@ const MyLayout = () => {
         },
         {
             name: t("navbar.settings.employees"),
-            icon: <Share2 size={20} />,
+            // icon: <Share2 size={20} />,
+            icon: <UserPlus size={20} />,
             href: "/employees",
             current: location.pathname === "/employees",
         },
