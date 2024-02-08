@@ -186,7 +186,7 @@ const Login = () => {
                                                 Nemate nalog? Registrujte se
                                             </span>
                                         </button>
-                                        <p className="mt-6 text-xs text-gray-600 text-center">
+                                        {/* <p className="mt-6 text-xs text-gray-600 text-center">
                                             Prihvatam
                                             <a
                                                 href="#"
@@ -204,7 +204,7 @@ const Login = () => {
                                                     Politiku Privatnosti
                                                 </span>
                                             </a>
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </form>
                             </div>

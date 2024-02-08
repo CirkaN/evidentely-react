@@ -254,7 +254,7 @@ const Register = () => {
                                                 Imate nalog? Ulogujte se
                                             </span>
                                         </button>
-                                        <p className="mt-6 text-xs text-gray-600 text-center">
+                                        {/* <p className="mt-6 text-xs text-gray-600 text-center">
                                             Prihvatam
                                             <a
                                                 href="#"
@@ -272,7 +272,7 @@ const Register = () => {
                                                     Politiku Privatnosti
                                                 </span>
                                             </a>
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </form>
                             </div>
