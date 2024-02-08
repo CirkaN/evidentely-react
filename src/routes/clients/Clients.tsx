@@ -152,8 +152,8 @@ const Clients = () => {
                     <Info size={18} />
                 </Callout.Icon>
                 <Callout.Text color="iris">
-                    U ovom modulu mozete dodavati nove klijente kao i pratiti
-                    sve vezano za vase klijente.{" "}
+                    U ovom modulu možete dodavati nove klijente kao i pratiti
+                    sve vezano za vaše klijente.{" "}
                 </Callout.Text>
             </Callout.Root>
 
