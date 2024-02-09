@@ -97,9 +97,7 @@ const ClientDocuments = () => {
             },
         },
     ];
-    const openAttachment = (id: number) => {
-        alert(id);
-    };
+
     const raiseDeleteAlert = (id: number) => {
         setSwalProps({
             show: true,
