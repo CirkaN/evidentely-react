@@ -133,7 +133,7 @@ const ClientDocuments = () => {
                 queryClient.invalidateQueries({
                     queryKey: ["client_documents"],
                 });
-                toast.success(t("docs.success_delete"));
+                toast.success(t("media.delete_success"));
             });
     };
 
