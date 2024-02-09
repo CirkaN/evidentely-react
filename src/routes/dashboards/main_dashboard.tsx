@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { useUser } from "../../context/UserContext";
 import AdminHomeAnalyticPill from "./components/admin_home_analytic_pill";
 import DashboardChart from "./components/chart";
@@ -10,31 +11,31 @@ const MainDashboard = () => {
         <>
             <div>
                 <p className="text-2xl uppercase text-slate-700 font-bold">
-                    Dobro dosli, {user?.name}
+                    {t("common.welcome")}, {user?.name}
                 </p>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between">
                 <AdminHomeAnalyticPill
-                    heading="Broj novih klijenata"
+                    heading={t("quick_analytics.no_new_clients")}
                     bg_color="primary"
                     filter_type="new_clients"
                 />
 
                 <AdminHomeAnalyticPill
-                    heading="Broj termina"
+                    heading={t("quick_analytics.no_new_appointments")}
                     filter_type="appointments"
                     bg_color="custom_blue"
                 />
 
                 <AdminHomeAnalyticPill
-                    heading="Broj otkazanih termina"
+                    heading={t("quick_analytics.missed_appointments")}
                     filter_type="missed_appointments"
                     bg_color="custom_red"
                 />
 
                 <AdminHomeAnalyticPill
-                    heading="Ocekivani profit (nenaplaceni termini)"
+                    heading={t("quick_analytics.estimated_profit")}
                     filter_type="profit"
                     bg_color="custom_green"
                 />

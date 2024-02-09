@@ -1,8 +1,8 @@
 {
     "common": {
-        "delete":"Obriši",
-        "code":"Verifikacioni kod",
-        "registration_success":"Registracija uspešna!",
+        "delete": "Obriši",
+        "code": "Verifikacioni kod",
+        "registration_success": "Registracija uspešna!",
         "delete_user_note": "Molimo potvrdite brisanje napomene, ova akcija ne moze biti opozvana",
         "email": "E-mail adresa",
         "password": "Šifra",
@@ -76,8 +76,19 @@
         "archive_gym_plan": "Arhiviranjem ovog plana, zadržavate sve podatke, ali ga ne možete koristiti za članarine",
         "delete_appointment_message": "Ukoliko obrišete ovaj termin, on se neće računati u vašoj analitici. Ako je termin propušten ili otkazan, koristite opciju 'Propušten termin'",
         "full_name": "Puno ime i prezime",
-        "problem_reported_succesfully":"Problem je uspesno prijavljen!",
-        "close":"Zatvori"
+        "problem_reported_succesfully": "Problem je uspesno prijavljen!",
+        "close": "Zatvori",
+        "welcome": "Dobro Došli"
+    },
+    "quick_analytics": {
+        "no_new_clients": "Broj novih klijenata",
+        "no_new_appointments": "Broj termina",
+        "missed_appointments": "Broj otkazanih termina",
+        "estimated_profit": "Ocekivani profit (nenaplaćeni termini)"
+    },
+    "alerts": {
+        "verify_email": "Molimo verifikujte Vaš email, poslali smo vam email sa linkom za verifikaciju",
+        "cta_verify_email":"Klik ovde ako niste dobili link"
     },
     "register": {
         "register": "Registracija",
@@ -210,7 +221,7 @@
         "main_dashboard": "Komandna tabla",
         "clients": "Klijenti",
         "calendar": "Kalendar",
-        "recharge_sms":"Dopuni SMS",
+        "recharge_sms": "Dopuni SMS",
         "sales": "Prodaja",
         "main_settings": "Podešavanja",
         "analytics_main": "Analitika",
@@ -236,7 +247,7 @@
         "cash": "Gotovina"
     },
     "appointment": {
-        "decide_external":"Molimo potvrdite termin",
+        "decide_external": "Molimo potvrdite termin",
         "select_service": "Izaberi uslugu",
         "create": "Kreiraj Termin",
         "name": "Ime",
@@ -299,7 +310,7 @@
         "note_deleted_succesfully": "Napomena uspešno obrisana",
         "note_created_succesfully": "Napomena uspešno kreirana",
         "event_deleted": "Termin uspešno obrisan",
-        "check_email_confirm":"Proverite vas e-mail, ukoliko ne stigne kroz par minuta, proverite 'spam'"
+        "check_email_confirm": "Proverite vas e-mail, ukoliko ne stigne kroz par minuta, proverite 'spam'"
     },
     "analytics": {
         "top_clients": "Top 5 klijenata po profitu ove nedelje"
@@ -307,10 +318,10 @@
     "dashboard": {
         "upcoming_appointments": "Naredna 5 termina"
     },
-    "subscription":{
-        "cancel_plan_sweet":"Da li ste sigurni da želite da otkažete trenutni paket? Aplikacija će biti dostupna do isteka ovog paketa.",
-        "cancel_plan_success":"Uspesno ste otkazali vas plan",
-        "reactivate_for_free":"Reaktivacija ovog paketa je besplatna u toku trajanja samog paketa, naredno placanje ce se izvrsiti regularno na datum kada je plan prvobitno aktiviran.",
-        "reactivation_success":"Uspesno ste reaktivirali plan"
+    "subscription": {
+        "cancel_plan_sweet": "Da li ste sigurni da želite da otkažete trenutni paket? Aplikacija će biti dostupna do isteka ovog paketa.",
+        "cancel_plan_success": "Uspesno ste otkazali vas plan",
+        "reactivate_for_free": "Reaktivacija ovog paketa je besplatna u toku trajanja samog paketa, naredno placanje ce se izvrsiti regularno na datum kada je plan prvobitno aktiviran.",
+        "reactivation_success": "Uspesno ste reaktivirali plan"
     }
 }

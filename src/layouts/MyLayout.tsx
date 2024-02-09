@@ -514,15 +514,14 @@ const MyLayout = () => {
                                     <Info size={18} />
                                 </Callout.Icon>
                                 <Callout.Text color="iris">
-                                    Molimo verifikujte vas email, poslali smo
-                                    vam email sa linkom za verifikaciju.{" "}
+                                    {t('alerts.verify_email')}
                                     <button
                                         className="text-purple-800"
                                         onClick={() => {
                                             sendReVerifyLink();
                                         }}
                                     >
-                                        klik ovde ako niste dobili link
+                                        {t('alerts.cta_verify_email')}
                                     </button>
                                 </Callout.Text>
                             </Callout.Root>
