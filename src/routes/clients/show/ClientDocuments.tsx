@@ -105,7 +105,7 @@ const ClientDocuments = () => {
             show: true,
             icon: "error",
             title: t("common.please_confirm"),
-            text: t("common.something"),
+            text: t("media.delete_attachment"),
             cancelButtonColor: "green",
             reverseButtons: true,
             showCancelButton: true,
