@@ -3,14 +3,16 @@ import { Text } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
 import { EmployeeDTO } from "../../shared/interfaces/employees.interface";
 import { t } from "i18next";
+import axios_instance from "../../config/api_defaults";
+import { useQueryClient } from "react-query";
 
 interface CreateClientProps {
     cancelFunction: () => void;
-    saveFunction: (form: EmployeeDTO) => void;
     isOpen: boolean;
 }
 
 const CreateEmployeeModal = (props: CreateClientProps) => {
+    const queryClient = useQueryClient();
     const blankForm = {
         id: "",
         name: "",
@@ -33,11 +35,20 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        props.saveFunction(form);
-        setForm(defaultFormValues);
-        setForm(blankForm);
+        saveRecord();
     };
-
+    const saveRecord = () => {
+        axios_instance()
+            .post("/employees", form)
+            .then(() => {
+                queryClient.invalidateQueries({
+                    queryKey: ["employees"],
+                });
+                props.cancelFunction();
+                setForm(defaultFormValues);
+                setForm(blankForm);
+            });
+    };
     const isEmailRequired = () => {
         return form.login_enabled;
     };
@@ -47,7 +58,6 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
             <Dialog.Root open={props.isOpen}>
                 <Dialog.Content style={{ maxWidth: 450 }}>
                     <Dialog.Title>{t("common.employee_create")}</Dialog.Title>
-
                     <form onSubmit={handleSubmit}>
                         <Flex direction="column" gap="3">
                             <label>
@@ -145,6 +155,7 @@ const CreateEmployeeModal = (props: CreateClientProps) => {
                                 <TextField.Input
                                     required={isEmailRequired()}
                                     value={form.email}
+                                    type="email"
                                     onChange={(e) =>
                                         setForm(
                                             (c) =>

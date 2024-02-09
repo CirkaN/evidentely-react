@@ -17,16 +17,12 @@ import { Link } from "react-router-dom";
 import { Callout } from "@radix-ui/themes";
 
 const Employees = () => {
-    const [isCreateEmployeeModalOpen, setisCreateEmployeeModalOpen] =
+    const [isCreateEmployeeModalOpen, setIsCreateEmployeeModalOpen] =
         useState(false);
     const [swalProps, setSwalProps] = useState({});
     const queryClient = useQueryClient();
     const openEmployeeCreateModal = () => {
-        setisCreateEmployeeModalOpen(true);
-    };
-
-    const closeEmployeeCreateModal = () => {
-        setisCreateEmployeeModalOpen(false);
+        setIsCreateEmployeeModalOpen(true);
     };
 
     const url = "employees?per_page=5";
@@ -149,20 +145,6 @@ const Employees = () => {
             });
     };
 
-    const cancelAction = () => {
-        closeEmployeeCreateModal();
-    };
-
-    const saveRecord = (form: EmployeeDTO) => {
-        axios_instance()
-            .post("/employees", form)
-            .then(() => {
-                queryClient.invalidateQueries({
-                    queryKey: ["employees"],
-                });
-                closeEmployeeCreateModal();
-            });
-    };
     return (
         <>
             <SweetAlert2 {...swalProps} />
@@ -177,8 +159,9 @@ const Employees = () => {
             </Callout.Root>
 
             <CreateEmployeeModal
-                saveFunction={saveRecord}
-                cancelFunction={cancelAction}
+                cancelFunction={() => {
+                    setIsCreateEmployeeModalOpen(false);
+                }}
                 isOpen={isCreateEmployeeModalOpen}
             ></CreateEmployeeModal>
             <div className="py-5">
