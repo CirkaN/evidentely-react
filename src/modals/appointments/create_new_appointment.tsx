@@ -51,6 +51,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
         note: "",
     };
     const [showSettingsForRemind, setShowSettingsForRemind] = useState(true);
+    const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
     const { clientTransformedList, clientList } = useTransformedClients();
     const { serviceTransformedList, serviceList } = useTransformedServices();
     const { employeeTransformedList } = useEmployees();
@@ -76,12 +77,13 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
     };
 
     const [selectedClient, setSelectedClient] =
-        useState<TransformedDataForSelect>(defaultSelectedClient);
+        useState<TransformedDataForSelect>();
 
     const [selectedService, setSelectedService] =
         useState<TransformedDataForSelect>(defaultSelectedService);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        setSubmitButtonDisabled(true);
         e.preventDefault();
         saveAppointment();
     };
@@ -102,6 +104,9 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                 e.response.data.errors.text.forEach((element: string) => {
                     toast.error(element);
                 });
+            })
+            .finally(() => {
+                setSubmitButtonDisabled(false);
             });
     };
 
@@ -121,7 +126,7 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
             setForm((c) => c && { ...c, item_id: e.value.toString() });
 
             if (form.price == 0) {
-                setForm((c) => c && { ...c, price: service.price });
+                setForm((c) => c && { ...c, price: service.selling_price });
             }
 
             if (!form.title) {
@@ -616,7 +621,10 @@ const CreateNewAppointmentModal = (props: CreateAppointmentModalProps) => {
                                 </Button>
                             </Dialog.Close>
                             <Dialog.Close>
-                                <Button type="submit">
+                                <Button
+                                    disabled={submitButtonDisabled}
+                                    type="submit"
+                                >
                                     {t("common.save")}
                                 </Button>
                             </Dialog.Close>
