@@ -87,7 +87,7 @@
         "estimated_profit": "Ocekivani profit (nenaplaćeni termini)"
     },
     "alerts": {
-        "verify_email": "Molimo verifikujte Vaš email, poslali smo vam email sa linkom za verifikaciju",
+        "verify_email": "Molimo verifikujte Vaš email, poslali smo vam email sa linkom za verifikaciju ",
         "cta_verify_email":"Klik ovde ako niste dobili link"
     },
     "register": {

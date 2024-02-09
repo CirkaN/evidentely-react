@@ -212,10 +212,6 @@ const PricingPlans = () => {
                                     </span>
                                 </h4>
 
-                                <p className="mt-4 text-gray-500">
-                                    Idealan za testiranje softvera.
-                                </p>
-
                                 <div className="mt-8 space-y-8">
                                     <div className="flex items-center">
                                         <svg
@@ -329,7 +325,7 @@ const PricingPlans = () => {
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center">
+                                    {/* <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="w-5 h-5 text-blue-500"
@@ -346,7 +342,7 @@ const PricingPlans = () => {
                                         <span className="mx-4 text-gray-700">
                                             Kreiranje SMS kampanja
                                         </span>
-                                    </div>
+                                    </div> */}
                                     <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -383,11 +379,6 @@ const PricingPlans = () => {
                                         / Mesecno
                                     </span>
                                 </h4>
-
-                                <p className="mt-4 text-gray-500">
-                                    Idealan za biznise koji imaju do 10
-                                    klijenata.
-                                </p>
 
                                 <div className="mt-8 space-y-8">
                                     <div className="flex items-center">
@@ -460,7 +451,25 @@ const PricingPlans = () => {
                                         </svg>
 
                                         <span className="mx-4 text-gray-700">
-                                            Analitka (Usluge/Klijenti)
+                                            Analitka
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+
+                                        <span className="mx-4 text-gray-700">
+                                            Eksterni kalendar (od 12.2.2023)
                                         </span>
                                     </div>
 
@@ -502,7 +511,7 @@ const PricingPlans = () => {
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center">
+                                    {/* <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="w-5 h-5 text-blue-500"
@@ -519,7 +528,7 @@ const PricingPlans = () => {
                                         <span className="mx-4 text-gray-700">
                                             Kreiranje SMS kampanja
                                         </span>
-                                    </div>
+                                    </div> */}
 
                                     <div className="flex items-center">
                                         <svg
@@ -584,12 +593,44 @@ const PricingPlans = () => {
                                     </span>
                                 </h4>
 
-                                <p className="mt-4 text-gray-300">
-                                    Pogodan za biznise koji imaju od 10-25
-                                    klijenata.
-                                </p>
-
                                 <div className="mt-8 space-y-8">
+                                    <div className="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+
+                                        <span className="mx-4 text-gray-300">
+                                            Neogranicen broj termina
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+
+                                        <span className="mx-4 text-gray-300">
+                                            Neogranicen broj klijenata
+                                        </span>
+                                    </div>
+                                 
                                     <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -609,6 +650,8 @@ const PricingPlans = () => {
                                         </span>
                                     </div>
 
+
+
                                     <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -624,7 +667,25 @@ const PricingPlans = () => {
                                         </svg>
 
                                         <span className="mx-4 text-gray-300">
-                                            Analtika (Usluge/Klijenti)
+                                            Analitika
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+
+                                        <span className="mx-4 text-gray-300">
+                                           Eksterni kalendar (od 12.2.2024)
                                         </span>
                                     </div>
 
@@ -666,7 +727,7 @@ const PricingPlans = () => {
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center">
+                                    {/* <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="w-5 h-5 text-blue-500"
@@ -683,7 +744,7 @@ const PricingPlans = () => {
                                         <span className="mx-4 text-gray-300">
                                             Kreiranje SMS kampanja
                                         </span>
-                                    </div>
+                                    </div> */}
                                     <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -744,11 +805,6 @@ const PricingPlans = () => {
                                         / Mesecno
                                     </span>
                                 </h4>
-
-                                <p className="mt-4 text-gray-500">
-                                    Pogodno za biznise koji broje velik broj
-                                    klijenata.
-                                </p>
 
                                 <div className="mt-8 space-y-8">
                                     <div className="flex items-center">
@@ -821,7 +877,26 @@ const PricingPlans = () => {
                                         </svg>
 
                                         <span className="mx-4 text-gray-700">
-                                            Analitka (Usluge/Klijenti)
+                                            Analitika
+                                        </span>
+                                    </div>
+
+                                    <div className="flex items-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="w-5 h-5 text-blue-500"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                fillRule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clipRule="evenodd"
+                                            />
+                                        </svg>
+
+                                        <span className="mx-4 text-gray-700">
+                                            Eksterni kalendar
                                         </span>
                                     </div>
 
@@ -863,7 +938,7 @@ const PricingPlans = () => {
                                         </span>
                                     </div>
 
-                                    <div className="flex items-center">
+                                    {/* <div className="flex items-center">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             className="w-5 h-5 text-blue-500"
@@ -880,7 +955,7 @@ const PricingPlans = () => {
                                         <span className="mx-4 text-gray-700">
                                             Kreiranje SMS kampanja
                                         </span>
-                                    </div>
+                                    </div> */}
 
                                     <div className="flex items-center">
                                         <svg
