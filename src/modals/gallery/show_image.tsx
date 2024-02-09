@@ -4,6 +4,7 @@ import { GalleryItem } from "../../components/gallery";
 import { FormEvent, useEffect, useState } from "react";
 import axios_instance from "../../config/api_defaults";
 import toast from "react-hot-toast";
+import { X } from "react-feather";
 
 interface showImageInterface {
     isOpen: boolean;
@@ -51,26 +52,35 @@ const ShowImage = (props: showImageInterface) => {
     return (
         <Dialog.Root open={props.isOpen}>
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>{t("common.edit_modal")}</Dialog.Title>
+                <Flex justify="between">
+                    <Dialog.Title>{t("common.edit_modal")}</Dialog.Title>
+                    <Dialog.Close>
+                        <Button
+                            variant="ghost"
+                            color="gray"
+                            onClick={() => props.cancelFunction()}
+                        >
+                            <X />
+                        </Button>
+                    </Dialog.Close>
+                </Flex>
 
                 <img src={props.image.url} alt={props.image?.note} />
                 <form onSubmit={handleSubmit}>
-                    {props.image.note}
-                    <div className="mb-4">
-                        <label className="block text-gray-600 text-sm font-medium mb-2">
-                            {t("common.note")}
+                    <div className="pt-2">
+                        <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                            {t("common.note")}:
                         </label>
-                        <input
-                            type="text"
+                        <textarea
+                            name="note"
+                            className="p-2.5 w-full text-sm text-gray-900 bg-gray-50 border"
                             value={imageProperties?.note ?? ""}
                             onChange={(e) => {
                                 setImageProperties(
                                     (c) => c && { ...c, note: e.target.value },
                                 );
                             }}
-                            name="note"
-                            className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:border-blue-500"
-                        />
+                        ></textarea>
                     </div>
 
                     <Flex gap="3" mt="4" justify="end">

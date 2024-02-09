@@ -210,7 +210,9 @@
     "media": {
         "update_success": "Uspešna izmena",
         "delete_success": "Uspešno brisanje medija fajla",
-        "delete_attachment": "Molimo potvrdite brisanje fajla"
+        "delete_attachment": "Molimo potvrdite brisanje fajla",
+        "upload":"Otpremi",
+        "file":"Datoteka"
     },
     "summary": {
         "total_profit": "Ukupan profit:",
@@ -285,8 +287,7 @@
         "sms_char_warning": "Jedan kredit je 1 SMS, 1 SMS moze sadržati maksimalno 160 karaktera da bi bio vođen kao jedan SMS, ako vaš SMS prelazi limit od 160 karaktera, sa vašeg računa biće skinuto dva kredita"
     },
     "client_documents": {
-        "create_modal_title": "Dodaj media fajl..",
-        "help_infobox": "Izaberite fajl..."
+        "create_modal_title": "Dodaj dokument"
     },
     "client": {
         "create_client": "Kreiraj klienta"

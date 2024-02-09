@@ -1,8 +1,8 @@
 import { Button, Dialog, Flex } from "@radix-ui/themes";
-import InfoBox, { InfoBoxType } from "../../components/info-box";
 import { useState } from "react";
 import { ClientAttachmentDTO } from "../../shared/interfaces/client_attachment.interface";
 import { t } from "i18next";
+import { X } from "react-feather";
 
 interface createProps {
     isOpen: boolean;
@@ -19,38 +19,67 @@ const AddDocumentModal = (props: createProps) => {
     return (
         <Dialog.Root open={props.isOpen}>
             <Dialog.Content style={{ maxWidth: 450 }}>
-                <Dialog.Title>
-                    {t("client_documents.create_modal_title")}
-                </Dialog.Title>
-                <InfoBox
-                    fontSize={"text-sm"}
-                    text={t("client_documents.help_infobox")}
-                    headerText={t("common.important_notice")}
-                    type={InfoBoxType.Info}
-                ></InfoBox>
-                <input
-                    className="pt-2"
-                    type="file"
-                    onChange={(e) => {
-                        setForm(
-                            (c) =>
-                                c && {
-                                    ...c,
-                                    file: e.target.files
-                                        ? e.target.files[0]
-                                        : undefined,
-                                },
-                        );
-                    }}
-                />
+                <Flex justify="between">
+                    <Dialog.Title>
+                        {t("client_documents.create_modal_title")}
+                    </Dialog.Title>
+                    <Dialog.Close>
+                        <Button
+                            variant="ghost"
+                            color="gray"
+                            onClick={() => props.cancelFunction()}
+                        >
+                            <X />
+                        </Button>
+                    </Dialog.Close>
+                </Flex>
 
-                <textarea
-                    name="note"
-                    value={form.note}
-                    onChange={(e) => {
-                        setForm((c) => c && { ...c, note: e.target.value });
-                    }}
-                ></textarea>
+                <div>
+                    <label
+                        className="block mb-2 text-sm font-medium text-gray-900 "
+                        htmlFor="file_input"
+                    >
+                        {t("media.file")}
+                    </label>
+                    <input
+                        onChange={(e) => {
+                            setForm(
+                                (c) =>
+                                    c && {
+                                        ...c,
+                                        file: e.target.files
+                                            ? e.target.files[0]
+                                            : undefined,
+                                    },
+                            );
+                        }}
+                        className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none"
+                        aria-describedby="file_input_help"
+                        id="file_input"
+                        type="file"
+                    />
+                    <p
+                        className="mt-1 text-sm text-gray-500 "
+                        id="file_input_help"
+                    >
+                        PNG,JPEG,DOCX,PDF,TXT (MAX. 10MB).
+                    </p>
+                    <div className="pt-2">
+                        <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                            {t("common.note")}
+                        </label>
+                        <textarea
+                            name="note"
+                            className="p-2.5 w-full text-sm text-gray-900 bg-gray-50 border"
+                            value={form.note}
+                            onChange={(e) => {
+                                setForm(
+                                    (c) => c && { ...c, note: e.target.value },
+                                );
+                            }}
+                        ></textarea>
+                    </div>
+                </div>
 
                 <Flex gap="3" mt="4" justify="end">
                     <Dialog.Close>
