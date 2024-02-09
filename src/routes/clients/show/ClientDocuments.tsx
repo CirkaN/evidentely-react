@@ -1,4 +1,4 @@
-import { Eye, Plus, Trash } from "react-feather";
+import {  Plus, Trash } from "react-feather";
 import Datatable, {
     Action,
     ActionTypes,
@@ -42,15 +42,15 @@ const ClientDocuments = () => {
     const [docs, setDocs] = useState<GalleryItem[]>([]);
     const fields: Field[] = [
         {
-            name: t("common.note"),
-            original_name: "note",
+            name: t("common.uploaded_at"),
+            original_name: "carbon_created",
             has_sort: false,
             show: true,
             editable_from_table: false,
         },
         {
-            name: t("common.uploaded_at"),
-            original_name: "carbon_created",
+            name: t("common.note"),
+            original_name: "note",
             has_sort: false,
             show: true,
             editable_from_table: false,
@@ -82,15 +82,15 @@ const ClientDocuments = () => {
         });
     };
     const actions: Action<ClientDocumentDTO>[] = [
+        // {
+        //     type: ActionTypes.Edit,
+        //     icon: <Eye className="text-slate-600" />,
+        //     fn: (client: ClientDocumentDTO) => {
+        //         openAttachment(client.id);
+        //     },
+        // },
         {
-            type: ActionTypes.Edit,
-            icon: <Eye className="text-slate-600" />,
-            fn: (client: ClientDocumentDTO) => {
-                openAttachment(client.id);
-            },
-        },
-        {
-            type: ActionTypes.Edit,
+            type: ActionTypes.Delete,
             icon: <Trash color="red" />,
             fn: (client: ClientDocumentDTO) => {
                 raiseDeleteAlert(client.id);
@@ -139,7 +139,7 @@ const ClientDocuments = () => {
 
     const table_actions: TableAction[] = [
         {
-            icon: <Plus></Plus>,
+            icon: <Plus />,
             fn: () => {
                 setIsAddAttachmentModalOpen(true);
             },
@@ -183,7 +183,7 @@ const ClientDocuments = () => {
                     isOpen={isAddAttachmentModalOpen}
                     cancelFunction={cancelModal}
                     saveFunction={(form) => saveAttachment(form)}
-                ></AddDocumentModal>
+                />
                 <Datatable
                     queryKey="client_documents"
                     table_actions={table_actions}
@@ -192,7 +192,7 @@ const ClientDocuments = () => {
                     url={url}
                     has_actions={true}
                     table_name={t("common.documents")}
-                ></Datatable>
+                />
                 <Gallery items={docs} />
             </div>
         </>
